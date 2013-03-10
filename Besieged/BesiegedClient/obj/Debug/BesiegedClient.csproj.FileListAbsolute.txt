@@ -1,0 +1,12 @@
+C:\Users\Shane\Documents\GitHub\Besieged\Besieged\BesiegedClient\bin\Debug\BesiegedClient.exe
+C:\Users\Shane\Documents\GitHub\Besieged\Besieged\BesiegedClient\bin\Debug\BesiegedClient.pdb
+C:\Users\Shane\Documents\GitHub\Besieged\Besieged\BesiegedClient\obj\Debug\BesiegedClient.csprojResolveAssemblyReference.cache
+C:\Users\Shane\Documents\GitHub\Besieged\Besieged\BesiegedClient\obj\Debug\MainWindow.baml
+C:\Users\Shane\Documents\GitHub\Besieged\Besieged\BesiegedClient\obj\Debug\MainWindow.g.cs
+C:\Users\Shane\Documents\GitHub\Besieged\Besieged\BesiegedClient\obj\Debug\App.g.cs
+C:\Users\Shane\Documents\GitHub\Besieged\Besieged\BesiegedClient\obj\Debug\BesiegedClient_MarkupCompile.cache
+C:\Users\Shane\Documents\GitHub\Besieged\Besieged\BesiegedClient\obj\Debug\BesiegedClient.g.resources
+C:\Users\Shane\Documents\GitHub\Besieged\Besieged\BesiegedClient\obj\Debug\BesiegedClient.Properties.Resources.resources
+C:\Users\Shane\Documents\GitHub\Besieged\Besieged\BesiegedClient\obj\Debug\BesiegedClient.csproj.GenerateResource.Cache
+C:\Users\Shane\Documents\GitHub\Besieged\Besieged\BesiegedClient\obj\Debug\BesiegedClient.exe
+C:\Users\Shane\Documents\GitHub\Besieged\Besieged\BesiegedClient\obj\Debug\BesiegedClient.pdb
