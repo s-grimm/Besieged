@@ -1,7 +1,0 @@
-C:\Users\Shane\Documents\GitHub\Besieged\Besieged\BesiegedLogic\bin\Debug\BesiegedLogic.dll
-C:\Users\Shane\Documents\GitHub\Besieged\Besieged\BesiegedLogic\bin\Debug\BesiegedLogic.pdb
-C:\Users\Shane\Documents\GitHub\Besieged\Besieged\BesiegedLogic\bin\Debug\Model.dll
-C:\Users\Shane\Documents\GitHub\Besieged\Besieged\BesiegedLogic\bin\Debug\Model.pdb
-C:\Users\Shane\Documents\GitHub\Besieged\Besieged\BesiegedLogic\obj\Debug\BesiegedLogic.csprojResolveAssemblyReference.cache
-C:\Users\Shane\Documents\GitHub\Besieged\Besieged\BesiegedLogic\obj\Debug\BesiegedLogic.dll
-C:\Users\Shane\Documents\GitHub\Besieged\Besieged\BesiegedLogic\obj\Debug\BesiegedLogic.pdb
