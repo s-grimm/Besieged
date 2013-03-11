@@ -52,10 +52,6 @@
     <Compile Include="Unit\AllianceUnitFactory.cs" />
     <Compile Include="Server\Client.cs" />
     <Compile Include="Server\Services\IMessageService.cs" />
-    <Compile Include="Unit\ElfArmy.cs" />
-    <Compile Include="Unit\ElfUnitFactory.cs" />
-    <Compile Include="Unit\HumanArmy.cs" />
-    <Compile Include="Unit\HumanUnitFactory.cs" />
     <Compile Include="Unit\IUnit.cs" />
     <Compile Include="Unit\IUnitFactory.cs" />
     <Compile Include="Unit\UndeadArmy.cs" />
