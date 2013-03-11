@@ -17,7 +17,7 @@ namespace BesiegedLogic
             try
             {
                 var newClient = new Framework.Server.Client(Alias);
-                newClient.ClientID = (_clients.Count + 1);
+                newClient.ClientID = (_clients.Max(x=>x.ClientID) + 1);
                 _clients.Add(newClient);
                 return true;
             }
@@ -26,6 +26,11 @@ namespace BesiegedLogic
                 //log ex
                 return false;
             }
+        }
+
+        public static bool ClientDisconnect(int clientID)
+        {
+            return false;
         }
 
         public static List<Framework.Server.Client> GetClients()
