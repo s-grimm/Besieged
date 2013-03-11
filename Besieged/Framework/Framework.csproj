@@ -49,6 +49,7 @@
     <Compile Include="Unit\OrcUnitFactory.cs" />
     <Compile Include="Unit\Unit.cs" />
     <Compile Include="Utilities\BesiegedException.cs" />
+    <Compile Include="Utilities\Message.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Command\Client\" />
