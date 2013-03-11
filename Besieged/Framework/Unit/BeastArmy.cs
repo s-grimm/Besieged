@@ -5,10 +5,6 @@ using System.Text;
 
 namespace Framework.Unit
 {
-    // ------------------------------------
-    //  Concrete implementations of Beast unit types go here. All are subclassed from Unit and must fufill the IUnit interface
-    // ------------------------------------
-
     public class Gnoll : Unit, IUnit
     {
         public int CurrentHealthPoints
