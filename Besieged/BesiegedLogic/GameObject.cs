@@ -17,7 +17,7 @@ namespace BesiegedLogic
             try
             {
                 var newClient = new Framework.Server.Client(Alias);
-                newClient.ClientID = (_clients.Max(x=>x.ClientID) + 1);
+                newClient.ClientID = _clients.Count > 0 ? (_clients.Max(x => x.ClientID) + 1) : 0;
                 _clients.Add(newClient);
                 return true;
             }
