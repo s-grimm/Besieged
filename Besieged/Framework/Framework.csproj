@@ -48,7 +48,6 @@
     <Compile Include="Unit\OrcArmy.cs" />
     <Compile Include="Unit\OrcUnitFactory.cs" />
     <Compile Include="Unit\Unit.cs" />
-    <Compile Include="Unit\UnitType.cs" />
     <Compile Include="Utilities\BesiegedException.cs" />
   </ItemGroup>
   <ItemGroup>
