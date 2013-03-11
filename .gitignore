@@ -59,6 +59,7 @@ local.properties
 *.tli
 *.tlh
 *.tmp
+*.log
 *.vspscc
 .builds
 *.dotCover
