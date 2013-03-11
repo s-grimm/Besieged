@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading;
 
@@ -10,26 +11,34 @@ namespace BesiegedServer
     {
         private static void Main(string[] args)
         {
-            MessageService service = new MessageService();
-            Thread sendThread = new Thread(service.SendMessage);
-            Thread recieveThread = new Thread(service.RecieveMessage);
-
-            //start the threads
-            sendThread.Start();
-            recieveThread.Start();
-            while(!sendThread.IsAlive);
-            while(!recieveThread.IsAlive);
-
-            while (Console.ReadLine().Trim().ToString() != "exit")
+            ServiceHost svcHost = null;
+            try
             {
-                Thread.Sleep(1);
+                svcHost = new ServiceHost(typeof(MessageService), new Uri("net.tcp://localhost:31337/BesiegedServer/"));
+                svcHost.AddServiceEndpoint(typeof(IMessageService), new NetTcpBinding(), "BesiegedMessage");
+                Console.Write("Service Started.\n> ");
             }
-            Console.WriteLine("Stopping Message Threads");
-            sendThread.Abort();
-            recieveThread.Abort();
-            sendThread.Join();
-            recieveThread.Join();
-            Console.WriteLine("Message Threads Stopped");
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                while ( true )
+                {
+                    var serverMessage = Console.ReadLine().Trim().ToString().ToLower();
+                    if (serverMessage == "exit") break;
+                    else if(serverMessage == "?" || serverMessage == "help" || serverMessage == "\\help")
+                    {
+                        Console.WriteLine("Besieged Server Commands\nexit: Stops the server.");
+                        Console.Write("> ");
+                    }
+                }
+                if(svcHost != null)
+                {
+                    svcHost.Close();
+                }
+            }
         }
     }
 }
