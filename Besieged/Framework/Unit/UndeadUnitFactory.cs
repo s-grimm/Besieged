@@ -6,46 +6,46 @@ using System.Threading.Tasks;
 
 namespace Framework.Unit
 {
-    public class HumanUnitFactory : IUnitFactory
+    public class UndeadUnitFactory : IUnitFactory
     {
         public IUnit GetBasicInfantry()
         {
-            throw new NotImplementedException();
+            return new Skeleton();
         }
 
         public IUnit GetAdvancedInfantry()
         {
-            throw new NotImplementedException();
+            return new SkeletonCaptain();
         }
 
         public IUnit GetBasicRanged()
         {
-            throw new NotImplementedException();
+            return new Orc();
         }
 
         public IUnit GetAdvancedRanged()
         {
-            throw new NotImplementedException();
+            return new OrcChief();
         }
 
         public IUnit GetBasicMounted()
         {
-            throw new NotImplementedException();
+            return new WolfRider();
         }
 
         public IUnit GetAdvancedMounted()
         {
-            throw new NotImplementedException();
+            return new WolfLord();
         }
 
-        public IUnit GetBasicSpellCater()
+        public IUnit GetBasicSpellCaster()
         {
-            throw new NotImplementedException();
+            return new Vampire();
         }
 
         public IUnit GetAdvancedSpellCaster()
         {
-            throw new NotImplementedException();
+            return new VampireCount();
         }
     }
 }
