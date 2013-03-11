@@ -41,14 +41,14 @@
   <ItemGroup>
     <Compile Include="Command\ICommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Unit\ElfArmy.cs" />
-    <Compile Include="Unit\ElfUnitFactory.cs" />
-    <Compile Include="Unit\HumanArmy.cs" />
-    <Compile Include="Unit\HumanUnitFactory.cs" />
+    <Compile Include="Unit\BeastArmy.cs" />
+    <Compile Include="Unit\BeastUnitFactory.cs" />
+    <Compile Include="Unit\AllianceArmy.cs" />
+    <Compile Include="Unit\AllianceUnitFactory.cs" />
     <Compile Include="Unit\IUnit.cs" />
     <Compile Include="Unit\IUnitFactory.cs" />
-    <Compile Include="Unit\OrcArmy.cs" />
-    <Compile Include="Unit\OrcUnitFactory.cs" />
+    <Compile Include="Unit\UndeadArmy.cs" />
+    <Compile Include="Unit\UndeadUnitFactory.cs" />
     <Compile Include="Unit\SpriteFactory.cs" />
     <Compile Include="Unit\Unit.cs" />
     <Compile Include="Utilities\BesiegedException.cs" />

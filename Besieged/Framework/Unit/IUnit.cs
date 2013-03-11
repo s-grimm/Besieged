@@ -8,11 +8,14 @@ namespace Framework.Unit
 {
     public interface IUnit
     {
-        int HealthPoints { get; set; }
+        int CurrentHealthPoints { get; set; }
+        int MaxHealthPoints { get; set; }
         int Initiative { get; set; }
         int Skill { get; set; }
         int Range { get; set; }
         int Cost { get; set; }
-        object GetSprite();
+        int Movement { get; set; }
+        string Description { get; set; }
+        //object GetSprite();
     }
 }

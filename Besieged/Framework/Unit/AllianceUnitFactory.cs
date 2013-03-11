@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Framework.Unit
 {
-    public class ElfUnitFactory : IUnitFactory
+    public class AllianceUnitFactory : IUnitFactory
     {
         public IUnit GetBasicInfantry()
         {
-            return new Gnoll();
+            throw new NotImplementedException();
         }
 
         public IUnit GetAdvancedInfantry()
@@ -38,7 +38,7 @@ namespace Framework.Unit
             throw new NotImplementedException();
         }
 
-        public IUnit GetBasicSpellCater()
+        public IUnit GetBasicSpellCaster()
         {
             throw new NotImplementedException();
         }
