@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
 namespace Framework.Command
 {
     public class ChatMessage : ICommand
     {
-        public Object Value { get; set; }
+        public override Object Value { get; set; }
     }
 }

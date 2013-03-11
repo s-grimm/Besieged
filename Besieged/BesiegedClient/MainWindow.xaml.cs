@@ -11,6 +11,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Framework;
+using System.ServiceModel;
 
 namespace BesiegedClient
 {
@@ -29,10 +31,32 @@ namespace BesiegedClient
         private SolidColorBrush _greenBrush = new SolidColorBrush(Colors.Green);
         private SolidColorBrush _blueBrush = new SolidColorBrush(Colors.Blue);
         private List<Rectangle> _rectangles = new List<Rectangle>();
+
+            //// Configure the ABCs of using the MessageBoard service
+            //ChannelFactory<IMessageBoard> channel = new 
+            //ChannelFactory<IMessageBoard>(new NetTcpBinding(),
+            //new EndpointAddress( 
+            //"net.tcp://localhost:12000/MessageBoardLibrary/MessageBoard"));
+            //// Activate a MessageBoard object
+            //msgBrd = channel.CreateChannel();
         public MainWindow()
         {
             InitializeComponent();
             DrawGrid(10, 10);
+            try
+            {
+                Framework.Command.Server.Connect connection = new Framework.Command.Server.Connect();
+                connection.Value = "Shane";
+                ChannelFactory<Framework.Server.Services.IMessageService> channel 
+                = new ChannelFactory<Framework.Server.Services.IMessageService>(new NetTcpBinding(), 
+                new EndpointAddress("net.tcp://localhost:31337/BesiegedServer/BesiegedMessage"));
+                var thingy = channel.CreateChannel();
+                thingy.SendCommand("Shane");
+            }
+            catch (Exception ex)
+            {
+                
+            }
         }
 
         public void DrawGrid(int rows, int columns)
