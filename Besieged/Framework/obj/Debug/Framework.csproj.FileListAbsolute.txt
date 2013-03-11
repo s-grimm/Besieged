@@ -1,0 +1,5 @@
+D:\Development\Besieged\Besieged\Framework\obj\Debug\Framework.csprojResolveAssemblyReference.cache
+D:\Development\Besieged\Besieged\Framework\bin\Debug\Framework.dll
+D:\Development\Besieged\Besieged\Framework\bin\Debug\Framework.pdb
+D:\Development\Besieged\Besieged\Framework\obj\Debug\Framework.dll
+D:\Development\Besieged\Besieged\Framework\obj\Debug\Framework.pdb
