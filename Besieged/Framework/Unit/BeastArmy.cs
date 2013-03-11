@@ -39,7 +39,7 @@ namespace Framework.Unit
         {
             get
             {
-                return 5;
+                return 2;
             }
             set
             {
@@ -138,7 +138,7 @@ namespace Framework.Unit
         {
             get
             {
-                return 7;
+                return 4;
             }
             set
             {
@@ -206,4 +206,600 @@ namespace Framework.Unit
             }
         }
     }
+
+    public class Lizardman : Unit, IUnit
+    {
+        public int CurrentHealthPoints
+        {
+            get
+            {
+                return CurrentHealthPoints;
+            }
+            set
+            {
+                CurrentHealthPoints = value;
+            }
+        }
+
+        public int MaxHealthPoints
+        {
+            get
+            {
+                return 3;
+            }
+            set
+            {
+                MaxHealthPoints = value;
+            }
+        }
+
+        public int Initiative
+        {
+            get
+            {
+                return 4;
+            }
+            set
+            {
+                Initiative = value;
+            }
+        }
+
+        public int Skill
+        {
+            get
+            {
+                return 2;
+            }
+            set
+            {
+                Skill = value;
+            }
+        }
+
+        public int Range
+        {
+            get
+            {
+                return 3;
+            }
+            set
+            {
+                Range = value;
+            }
+        }
+
+        public int Cost
+        {
+            get
+            {
+                return 1;
+            }
+            set
+            {
+                Cost = value;
+            }
+        }
+
+        public int Movement
+        {
+            get
+            {
+                return 5;
+            }
+            set
+            {
+                Movement = value;
+            }
+        }
+
+        public string Description
+        {
+            get
+            {
+                return "Lizardman";
+            }
+            set
+            {
+                Description = value;
+            }
+        }
+    }
+
+    public class LizardmanCaptain : Unit, IUnit
+    {
+        public int CurrentHealthPoints
+        {
+            get
+            {
+                return CurrentHealthPoints;
+            }
+            set
+            {
+                CurrentHealthPoints = value;
+            }
+        }
+
+        public int MaxHealthPoints
+        {
+            get
+            {
+                return 6;
+            }
+            set
+            {
+                MaxHealthPoints = value;
+            }
+        }
+
+        public int Initiative
+        {
+            get
+            {
+                return 5;
+            }
+            set
+            {
+                Initiative = value;
+            }
+        }
+
+        public int Skill
+        {
+            get
+            {
+                return 3;
+            }
+            set
+            {
+                Skill = value;
+            }
+        }
+
+        public int Range
+        {
+            get
+            {
+                return 5;
+            }
+            set
+            {
+                Range = value;
+            }
+        }
+
+        public int Cost
+        {
+            get
+            {
+                return 4;
+            }
+            set
+            {
+                Cost = value;
+            }
+        }
+
+        public int Movement
+        {
+            get
+            {
+                return 5;
+            }
+            set
+            {
+                Movement = value;
+            }
+        }
+
+        public string Description
+        {
+            get
+            {
+                return "Lizardman Captain";
+            }
+            set
+            {
+                Description = value;
+            }
+        }
+    }
+
+    public class Taurus : Unit, IUnit
+    {
+        public int CurrentHealthPoints
+        {
+            get
+            {
+                return CurrentHealthPoints;
+            }
+            set
+            {
+                CurrentHealthPoints = value;
+            }
+        }
+
+        public int MaxHealthPoints
+        {
+            get
+            {
+                return 5;
+            }
+            set
+            {
+                MaxHealthPoints = value;
+            }
+        }
+
+        public int Initiative
+        {
+            get
+            {
+                return 3;
+            }
+            set
+            {
+                Initiative = value;
+            }
+        }
+
+        public int Skill
+        {
+            get
+            {
+                return 3;
+            }
+            set
+            {
+                Skill = value;
+            }
+        }
+
+        public int Range
+        {
+            get
+            {
+                return 1;
+            }
+            set
+            {
+                Range = value;
+            }
+        }
+
+        public int Cost
+        {
+            get
+            {
+                return 4;
+            }
+            set
+            {
+                Cost = value;
+            }
+        }
+
+        public int Movement
+        {
+            get
+            {
+                return 6;
+            }
+            set
+            {
+                Movement = value;
+            }
+        }
+
+        public string Description
+        {
+            get
+            {
+                return "Taurus";
+            }
+            set
+            {
+                Description = value;
+            }
+        }
+    }
+
+    public class TaurusLord : Unit, IUnit
+    {
+        public int CurrentHealthPoints
+        {
+            get
+            {
+                return CurrentHealthPoints;
+            }
+            set
+            {
+                CurrentHealthPoints = value;
+            }
+        }
+
+        public int MaxHealthPoints
+        {
+            get
+            {
+                return 8;
+            }
+            set
+            {
+                MaxHealthPoints = value;
+            }
+        }
+
+        public int Initiative
+        {
+            get
+            {
+                return 5;
+            }
+            set
+            {
+                Initiative = value;
+            }
+        }
+
+        public int Skill
+        {
+            get
+            {
+                return 4;
+            }
+            set
+            {
+                Skill = value;
+            }
+        }
+
+        public int Range
+        {
+            get
+            {
+                return 1;
+            }
+            set
+            {
+                Range = value;
+            }
+        }
+
+        public int Cost
+        {
+            get
+            {
+                return 8;
+            }
+            set
+            {
+                Cost = value;
+            }
+        }
+
+        public int Movement
+        {
+            get
+            {
+                return 8;
+            }
+            set
+            {
+                Movement = value;
+            }
+        }
+
+        public string Description
+        {
+            get
+            {
+                return "Taurus Lord";
+            }
+            set
+            {
+                Description = value;
+            }
+        }
+    }
+
+    public class Genie : Unit, IUnit
+    {
+        public int CurrentHealthPoints
+        {
+            get
+            {
+                return CurrentHealthPoints;
+            }
+            set
+            {
+                CurrentHealthPoints = value;
+            }
+        }
+
+        public int MaxHealthPoints
+        {
+            get
+            {
+                return 3;
+            }
+            set
+            {
+                MaxHealthPoints = value;
+            }
+        }
+
+        public int Initiative
+        {
+            get
+            {
+                return 2;
+            }
+            set
+            {
+                Initiative = value;
+            }
+        }
+
+        public int Skill
+        {
+            get
+            {
+                return 2;
+            }
+            set
+            {
+                Skill = value;
+            }
+        }
+
+        public int Range
+        {
+            get
+            {
+                return 3;
+            }
+            set
+            {
+                Range = value;
+            }
+        }
+
+        public int Cost
+        {
+            get
+            {
+                return 5;
+            }
+            set
+            {
+                Cost = value;
+            }
+        }
+
+        public int Movement
+        {
+            get
+            {
+                return 4;
+            }
+            set
+            {
+                Movement = value;
+            }
+        }
+
+        public string Description
+        {
+            get
+            {
+                return "Genie";
+            }
+            set
+            {
+                Description = value;
+            }
+        }
+    }
+
+    public class MasterGenie : Unit, IUnit
+    {
+        public int CurrentHealthPoints
+        {
+            get
+            {
+                return CurrentHealthPoints;
+            }
+            set
+            {
+                CurrentHealthPoints = value;
+            }
+        }
+
+        public int MaxHealthPoints
+        {
+            get
+            {
+                return 6;
+            }
+            set
+            {
+                MaxHealthPoints = value;
+            }
+        }
+
+        public int Initiative
+        {
+            get
+            {
+                return 3;
+            }
+            set
+            {
+                Initiative = value;
+            }
+        }
+
+        public int Skill
+        {
+            get
+            {
+                return 3;
+            }
+            set
+            {
+                Skill = value;
+            }
+        }
+
+        public int Range
+        {
+            get
+            {
+                return 5;
+            }
+            set
+            {
+                Range = value;
+            }
+        }
+
+        public int Cost
+        {
+            get
+            {
+                return 8;
+            }
+            set
+            {
+                Cost = value;
+            }
+        }
+
+        public int Movement
+        {
+            get
+            {
+                return 4;
+            }
+            set
+            {
+                Movement = value;
+            }
+        }
+
+        public string Description
+        {
+            get
+            {
+                return "Master Genie";
+            }
+            set
+            {
+                Description = value;
+            }
+        }
+    }
+
+
 }
