@@ -1,8 +1,15 @@
 ﻿<Window x:Class="BesiegedClient.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Besieged!" Height="600" Width="800">
     <Grid>
-        
+        <Canvas x:Name="cvsGameWindow" Height="400" Width="600" Margin="0,0,192,170">
+            
+        </Canvas>
+        <GroupBox x:Name="grpChatBox" Header="Chat" HorizontalAlignment="Left" Margin="10,400,0,0" VerticalAlignment="Top" Height="160" Width="590"/>
+        <GroupBox x:Name="grpMenu" Header="Menu" HorizontalAlignment="Left" Margin="605,400,0,0" VerticalAlignment="Top" Height="160" Width="177"/>
+        <GroupBox x:Name="grpPlayers" Header="Players" HorizontalAlignment="Left" Margin="605,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.354,0.225" Height="125" Width="177"/>
+        <GroupBox x:Name="grpSelectedUnit" Header="Selected Unit" HorizontalAlignment="Left" Margin="605,140,0,0" VerticalAlignment="Top" Height="125" Width="177"/>
+        <GroupBox x:Name="grpActions" Header="Actions" HorizontalAlignment="Left" Margin="605,270,0,0" VerticalAlignment="Top" Height="125" Width="177"/>
     </Grid>
 </Window>
