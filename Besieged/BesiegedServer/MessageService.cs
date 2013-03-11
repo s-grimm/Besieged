@@ -12,8 +12,15 @@ namespace BesiegedServer
     public class MessageService : IMessageService
     {
         ConcurrentQueue<Framework.Utilities.Message> _messages = new ConcurrentQueue<Framework.Utilities.Message>();
-        public void DoWork()
+
+        public void SendMessage()
         {
+            throw new NotImplementedException();
+        }
+
+        public void RecieveMessage()
+        {
+            throw new NotImplementedException();
         }
     }
 }
