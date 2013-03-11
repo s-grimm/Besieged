@@ -13,98 +13,50 @@ namespace Framework.Unit
     {
         public int CurrentHealthPoints
         {
-            get
-            {
-                return CurrentHealthPoints;
-            }
-            set
-            {
-                CurrentHealthPoints = value;
-            }
+            get { return CurrentHealthPoints; }
+            set { CurrentHealthPoints = value; }
         }
 
         public int MaxHealthPoints
         {
-            get
-            {
-                return 4;
-            }
-            set
-            {
-                MaxHealthPoints = value;
-            }
+            get { return 4; }
+            set { MaxHealthPoints = value; }
         }
 
         public int Initiative
         {
-            get
-            {
-                return 2;
-            }
-            set
-            {
-                Initiative = value;
-            }
+            get { return 2; }
+            set { Initiative = value; }
         }
 
         public int Skill
         {
-            get
-            {
-                return 2;
-            }
-            set
-            {
-                Skill = value;
-            }
+            get { return 2; }
+            set { Skill = value; }
         }
 
         public int Range
         {
-            get
-            {
-                return 1;
-            }
-            set
-            {
-                Range = value;
-            }
+            get { return 1; }
+            set { Range = value; }
         }
 
         public int Cost
         {
-            get
-            {
-                return 2;
-            }
-            set
-            {
-                Cost = value;
-            }
+            get { return 2; }
+            set { Cost = value; }
         }
 
         public int Movement
         {
-            get
-            {
-                return 4;
-            }
-            set
-            {
-                Movement = value;
-            }
+            get { return 4; }
+            set { Movement = value; }
         }
 
         public string Description
         {
-            get
-            {
-                return "Gnoll";
-            }
-            set
-            {
-                Description = value;
-            }
+            get { return "Gnoll"; }
+            set { Description = value; }
         }
     }
 
@@ -112,98 +64,50 @@ namespace Framework.Unit
     {
         public int CurrentHealthPoints
         {
-            get
-            {
-                return  CurrentHealthPoints;
-            }
-            set
-            {
-                CurrentHealthPoints = value;
-            }
+            get { return CurrentHealthPoints; }
+            set { CurrentHealthPoints = value; }
         }
 
         public int MaxHealthPoints
         {
-            get
-            {
-                return 7;
-            }
-            set
-            {
-                MaxHealthPoints = value;
-            }
+            get { return 6; }
+            set { MaxHealthPoints = value; }
         }
 
         public int Initiative
         {
-            get
-            {
-                return 4;
-            }
-            set
-            {
-                Initiative = value;
-            }
+            get { return 3; }
+            set { Initiative = value; }
         }
 
         public int Skill
         {
-            get
-            {
-                return 4;
-            }
-            set
-            {
-                Skill = value;
-            }
+            get { return 3; }
+            set { Skill = value; }
         }
 
         public int Range
         {
-            get
-            {
-                return 1;
-            }
-            set
-            {
-                Range = value;
-            }
+            get { return 1; }
+            set { Range = value; }
         }
 
         public int Cost
         {
-            get
-            {
-                return 5;
-            }
-            set
-            {
-                Cost = value;
-            }
+            get { return 5; }
+            set { Cost = value; }
         }
 
         public int Movement
         {
-            get
-            {
-                return 5;
-            }
-            set
-            {
-                Movement = value;
-            }
+            get { return 6; }
+            set { Movement = value; }
         }
 
         public string Description
         {
-            get
-            {
-                return "Gnoll Marauder";
-            }
-            set
-            {
-                Description = value;
-            }
+            get { return "Gnoll Marauder"; }
+            set { Description = value; }
         }
     }
 
@@ -211,98 +115,50 @@ namespace Framework.Unit
     {
         public int CurrentHealthPoints
         {
-            get
-            {
-                return CurrentHealthPoints;
-            }
-            set
-            {
-                CurrentHealthPoints = value;
-            }
+            get { return CurrentHealthPoints; }
+            set { CurrentHealthPoints = value; }
         }
 
         public int MaxHealthPoints
         {
-            get
-            {
-                return 3;
-            }
-            set
-            {
-                MaxHealthPoints = value;
-            }
+            get { return 3; }
+            set { MaxHealthPoints = value; }
         }
 
         public int Initiative
         {
-            get
-            {
-                return 4;
-            }
-            set
-            {
-                Initiative = value;
-            }
+            get { return 2; }
+            set { Initiative = value; }
         }
 
         public int Skill
         {
-            get
-            {
-                return 2;
-            }
-            set
-            {
-                Skill = value;
-            }
+            get { return 2; }
+            set { Skill = value; }
         }
 
         public int Range
         {
-            get
-            {
-                return 3;
-            }
-            set
-            {
-                Range = value;
-            }
+            get { return 3; }
+            set { Range = value; }
         }
 
         public int Cost
         {
-            get
-            {
-                return 1;
-            }
-            set
-            {
-                Cost = value;
-            }
+            get { return 2; }
+            set { Cost = value; }
         }
 
         public int Movement
         {
-            get
-            {
-                return 5;
-            }
-            set
-            {
-                Movement = value;
-            }
+            get { return 4; }
+            set { Movement = value; }
         }
 
         public string Description
         {
-            get
-            {
-                return "Lizardman";
-            }
-            set
-            {
-                Description = value;
-            }
+            get { return "Lizardman"; }
+            set { Description = value; }
         }
     }
 
@@ -310,98 +166,50 @@ namespace Framework.Unit
     {
         public int CurrentHealthPoints
         {
-            get
-            {
-                return CurrentHealthPoints;
-            }
-            set
-            {
-                CurrentHealthPoints = value;
-            }
+            get { return CurrentHealthPoints; }
+            set { CurrentHealthPoints = value; }
         }
 
         public int MaxHealthPoints
         {
-            get
-            {
-                return 6;
-            }
-            set
-            {
-                MaxHealthPoints = value;
-            }
+            get { return 5; }
+            set { MaxHealthPoints = value; }
         }
 
         public int Initiative
         {
-            get
-            {
-                return 5;
-            }
-            set
-            {
-                Initiative = value;
-            }
+            get { return 2; }
+            set { Initiative = value; }
         }
 
         public int Skill
         {
-            get
-            {
-                return 3;
-            }
-            set
-            {
-                Skill = value;
-            }
+            get { return 3; }
+            set { Skill = value; }
         }
 
         public int Range
         {
-            get
-            {
-                return 5;
-            }
-            set
-            {
-                Range = value;
-            }
+            get { return 5; }
+            set { Range = value; }
         }
 
         public int Cost
         {
-            get
-            {
-                return 4;
-            }
-            set
-            {
-                Cost = value;
-            }
+            get { return 5; }
+            set { Cost = value; }
         }
 
         public int Movement
         {
-            get
-            {
-                return 5;
-            }
-            set
-            {
-                Movement = value;
-            }
+            get { return 4; }
+            set { Movement = value; }
         }
 
         public string Description
         {
-            get
-            {
-                return "Lizardman Captain";
-            }
-            set
-            {
-                Description = value;
-            }
+            get { return "Lizardman Captain"; }
+            set { Description = value; }
         }
     }
 
@@ -409,98 +217,50 @@ namespace Framework.Unit
     {
         public int CurrentHealthPoints
         {
-            get
-            {
-                return CurrentHealthPoints;
-            }
-            set
-            {
-                CurrentHealthPoints = value;
-            }
+            get { return CurrentHealthPoints; }
+            set { CurrentHealthPoints = value; }
         }
 
         public int MaxHealthPoints
         {
-            get
-            {
-                return 5;
-            }
-            set
-            {
-                MaxHealthPoints = value;
-            }
+            get { return 5; }
+            set { MaxHealthPoints = value; }
         }
 
         public int Initiative
         {
-            get
-            {
-                return 3;
-            }
-            set
-            {
-                Initiative = value;
-            }
+            get { return 3; }
+            set { Initiative = value; }
         }
 
         public int Skill
         {
-            get
-            {
-                return 3;
-            }
-            set
-            {
-                Skill = value;
-            }
+            get { return 3; }
+            set { Skill = value; }
         }
 
         public int Range
         {
-            get
-            {
-                return 1;
-            }
-            set
-            {
-                Range = value;
-            }
+            get { return 1; }
+            set { Range = value; }
         }
 
         public int Cost
         {
-            get
-            {
-                return 4;
-            }
-            set
-            {
-                Cost = value;
-            }
+            get { return 5; }
+            set { Cost = value; }
         }
 
         public int Movement
         {
-            get
-            {
-                return 6;
-            }
-            set
-            {
-                Movement = value;
-            }
+            get { return 8; }
+            set { Movement = value; }
         }
 
         public string Description
         {
-            get
-            {
-                return "Taurus";
-            }
-            set
-            {
-                Description = value;
-            }
+            get { return "Taurus"; }
+            set { Description = value; }
         }
     }
 
@@ -508,98 +268,50 @@ namespace Framework.Unit
     {
         public int CurrentHealthPoints
         {
-            get
-            {
-                return CurrentHealthPoints;
-            }
-            set
-            {
-                CurrentHealthPoints = value;
-            }
+            get { return CurrentHealthPoints; }
+            set { CurrentHealthPoints = value; }
         }
 
         public int MaxHealthPoints
         {
-            get
-            {
-                return 8;
-            }
-            set
-            {
-                MaxHealthPoints = value;
-            }
+            get { return 8; }
+            set { MaxHealthPoints = value; }
         }
 
         public int Initiative
         {
-            get
-            {
-                return 5;
-            }
-            set
-            {
-                Initiative = value;
-            }
+            get { return 4; }
+            set { Initiative = value; }
         }
 
         public int Skill
         {
-            get
-            {
-                return 4;
-            }
-            set
-            {
-                Skill = value;
-            }
+            get { return 4; }
+            set { Skill = value; }
         }
 
         public int Range
         {
-            get
-            {
-                return 1;
-            }
-            set
-            {
-                Range = value;
-            }
+            get { return 1; }
+            set { Range = value; }
         }
 
         public int Cost
         {
-            get
-            {
-                return 8;
-            }
-            set
-            {
-                Cost = value;
-            }
+            get { return 10; }
+            set { Cost = value; }
         }
 
         public int Movement
         {
-            get
-            {
-                return 8;
-            }
-            set
-            {
-                Movement = value;
-            }
+            get { return 8; }
+            set { Movement = value; }
         }
 
         public string Description
         {
-            get
-            {
-                return "Taurus Lord";
-            }
-            set
-            {
-                Description = value;
-            }
+            get { return "Taurus Lord"; }
+            set { Description = value; }
         }
     }
 
@@ -607,98 +319,50 @@ namespace Framework.Unit
     {
         public int CurrentHealthPoints
         {
-            get
-            {
-                return CurrentHealthPoints;
-            }
-            set
-            {
-                CurrentHealthPoints = value;
-            }
+            get { return CurrentHealthPoints; }
+            set { CurrentHealthPoints = value; }
         }
 
         public int MaxHealthPoints
         {
-            get
-            {
-                return 3;
-            }
-            set
-            {
-                MaxHealthPoints = value;
-            }
+            get { return 3; }
+            set { MaxHealthPoints = value; }
         }
 
         public int Initiative
         {
-            get
-            {
-                return 2;
-            }
-            set
-            {
-                Initiative = value;
-            }
+            get { return 2; }
+            set { Initiative = value; }
         }
 
         public int Skill
         {
-            get
-            {
-                return 2;
-            }
-            set
-            {
-                Skill = value;
-            }
+            get { return 2; }
+            set { Skill = value; }
         }
 
         public int Range
         {
-            get
-            {
-                return 3;
-            }
-            set
-            {
-                Range = value;
-            }
+            get { return 3; }
+            set { Range = value; }
         }
 
         public int Cost
         {
-            get
-            {
-                return 5;
-            }
-            set
-            {
-                Cost = value;
-            }
+            get { return 5; }
+            set { Cost = value; }
         }
 
         public int Movement
         {
-            get
-            {
-                return 4;
-            }
-            set
-            {
-                Movement = value;
-            }
+            get { return 4; }
+            set { Movement = value; }
         }
 
         public string Description
         {
-            get
-            {
-                return "Genie";
-            }
-            set
-            {
-                Description = value;
-            }
+            get { return "Genie"; }
+            set { Description = value; }
         }
     }
 
@@ -706,98 +370,50 @@ namespace Framework.Unit
     {
         public int CurrentHealthPoints
         {
-            get
-            {
-                return CurrentHealthPoints;
-            }
-            set
-            {
-                CurrentHealthPoints = value;
-            }
+            get { return CurrentHealthPoints;    }
+            set { CurrentHealthPoints = value; }
         }
 
         public int MaxHealthPoints
         {
-            get
-            {
-                return 6;
-            }
-            set
-            {
-                MaxHealthPoints = value;
-            }
+            get { return 6; }
+            set { MaxHealthPoints = value; }
         }
 
         public int Initiative
         {
-            get
-            {
-                return 3;
-            }
-            set
-            {
-                Initiative = value;
-            }
+            get { return 3; }
+            set { Initiative = value; }
         }
 
         public int Skill
         {
-            get
-            {
-                return 3;
-            }
-            set
-            {
-                Skill = value;
-            }
+            get { return 3; }
+            set { Skill = value; }
         }
 
         public int Range
         {
-            get
-            {
-                return 5;
-            }
-            set
-            {
-                Range = value;
-            }
+            get { return 5; }
+            set { Range = value; }
         }
 
         public int Cost
         {
-            get
-            {
-                return 8;
-            }
-            set
-            {
-                Cost = value;
-            }
+            get { return 8; }
+            set { Cost = value; }
         }
 
         public int Movement
         {
-            get
-            {
-                return 4;
-            }
-            set
-            {
-                Movement = value;
-            }
+            get { return 4; }
+            set { Movement = value; }
         }
 
         public string Description
         {
-            get
-            {
-                return "Master Genie";
-            }
-            set
-            {
-                Description = value;
-            }
+            get { return "Master Genie"; } 
+            set { Description = value; }
         }
     }
 
