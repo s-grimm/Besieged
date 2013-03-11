@@ -13,6 +13,7 @@ namespace Framework.Unit
         int Skill { get; set; }
         int Range { get; set; }
         int Cost { get; set; }
-        object GetSprite();
+        string Description { get; set; }
+        //object GetSprite();
     }
 }

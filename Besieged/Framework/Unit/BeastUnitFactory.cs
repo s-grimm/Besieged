@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Framework.Unit
 {
-    public class ElfUnitFactory : IUnitFactory
+    public class BeastUnitFactory : IUnitFactory
     {
         public IUnit GetBasicInfantry()
         {
