@@ -12,6 +12,9 @@ namespace BesiegedServer
     public interface IMessageService
     {
         [OperationContract]
-        void DoWork();
+        void SendMessage();
+
+        [OperationContract]
+        void RecieveMessage();
     }
 }
