@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Framework.Command
 {
-    public interface ICommand
+    public abstract class ICommand
     {
-        void execute();
+        public abstract Object Value { get; set; }
     }
 }
