@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Command\ChatMessage.cs" />
     <Compile Include="Command\ICommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Unit\BeastArmy.cs" />
@@ -52,7 +53,6 @@
     <Compile Include="Unit\SpriteFactory.cs" />
     <Compile Include="Unit\Unit.cs" />
     <Compile Include="Utilities\BesiegedException.cs" />
-    <Compile Include="Utilities\Message.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Command\Client\" />

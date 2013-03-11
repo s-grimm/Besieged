@@ -64,5 +64,21 @@ namespace BesiegedClient
                 cvsGameWindow.Children.Add(rect);
             }
         }
+
+        private void txtMessage_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (txtMessage.Text == "Send a Message") 
+            {
+                txtMessage.Clear();
+            }
+        }
+
+        private void txtMessage_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (txtMessage.Text.Trim() == "")
+            {
+                txtMessage.Text = "Send a Message";
+            }
+        }
     } 
 }
