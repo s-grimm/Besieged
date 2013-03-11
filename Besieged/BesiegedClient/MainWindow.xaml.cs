@@ -52,6 +52,7 @@ namespace BesiegedClient
                 new EndpointAddress("net.tcp://localhost:31337/BesiegedServer/BesiegedMessage"));
                 var thingy = channel.CreateChannel();
                 thingy.SendCommand("Shane");
+                //Jesse - The SendCommand for Connect objects need to return a client object (wrapped in a ICommand object)
             }
             catch (Exception ex)
             {
