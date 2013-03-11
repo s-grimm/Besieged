@@ -10,7 +10,7 @@ namespace Framework.Unit
     {
         public IUnit GetBasicInfantry()
         {
-            throw new NotImplementedException();
+            return new Gnoll();
         }
 
         public IUnit GetAdvancedInfantry()
