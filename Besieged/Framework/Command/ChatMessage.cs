@@ -10,7 +10,7 @@ namespace Framework.Command
     {
         public string Message { get; set; }
 
-        public void execute()
+        public void Execute()
         {
             throw new NotImplementedException();
         }
