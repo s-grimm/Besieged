@@ -14,7 +14,7 @@ namespace Framework.Unit
         IUnit GetAdvancedRanged();
         IUnit GetBasicMounted();
         IUnit GetAdvancedMounted();
-        IUnit GetBasicSpellCater();
+        IUnit GetBasicSpellCaster();
         IUnit GetAdvancedSpellCaster();
         // something for the hero
     }

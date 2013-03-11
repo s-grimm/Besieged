@@ -38,7 +38,7 @@ namespace Framework.Unit
             throw new NotImplementedException();
         }
 
-        public IUnit GetBasicSpellCater()
+        public IUnit GetBasicSpellCaster()
         {
             throw new NotImplementedException();
         }
