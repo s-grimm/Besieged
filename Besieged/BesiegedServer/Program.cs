@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using BesiegedLogic;
+using System;
 using System.ServiceModel;
-using System.Text;
-using System.Threading;
-using BesiegedLogic;
+
 namespace BesiegedServer
 {
     internal class Program
@@ -15,7 +12,8 @@ namespace BesiegedServer
             try
             {
                 svcHost = new ServiceHost(typeof(MessageService), new Uri("net.tcp://localhost:31337/BesiegedServer/"));
-                svcHost.AddServiceEndpoint(typeof(IMessageService), new NetTcpBinding(), "BesiegedMessage");
+                svcHost.AddServiceEndpoint(typeof(Framework.Server.Services.IMessageService), new NetTcpBinding(), "BesiegedMessage");
+                svcHost.Open();
                 Console.Write("Service Started.\n> ");
             }
             catch (Exception ex)
@@ -24,17 +22,31 @@ namespace BesiegedServer
             }
             finally
             {
-                while ( true )
+                while (true)
                 {
                     var serverMessage = Console.ReadLine().Trim().ToString().ToLower();
                     if (serverMessage == "exit") break;
-                    else if(serverMessage == "?" || serverMessage == "help" || serverMessage == "\\help")
+                    else if (serverMessage == "?" || serverMessage == "help" || serverMessage == "\\help")
                     {
                         Console.WriteLine("Besieged Server Commands\nexit: Stops the server.");
                         Console.Write("> ");
                     }
+                    else if (serverMessage == "list")
+                    {
+                        var clients = GameObject.GetClients();
+                        if (clients.Count <= 0)
+                        {
+                            Console.Write("> ");
+                            continue;
+                        }
+                        Console.WriteLine("Connected Clients");
+                        foreach (Framework.Server.Client client in clients)
+                        {
+                            Console.WriteLine(client.Alias);
+                        }
+                    }
                 }
-                if(svcHost != null)
+                if (svcHost != null)
                 {
                     svcHost.Close();
                 }
