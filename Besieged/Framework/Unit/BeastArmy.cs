@@ -9,23 +9,17 @@ namespace Framework.Unit
     //  Concrete implementations of Beast unit types go here. All are subclassed from Unit and must fufill the IUnit interface
     // ------------------------------------
 
-    /*
-     * Class: Gnoll
-     * Author: Adam Boyce
-     * Date: 2013-03-11
-     * Description: This is the Beasts' Basic Melee unit
-     */
     public class Gnoll : Unit, IUnit
     {
         public int CurrentHealthPoints
         {
             get
             {
-                return this.CurrentHealthPoints;
+                return CurrentHealthPoints;
             }
             set
             {
-                this.CurrentHealthPoints = value;
+                CurrentHealthPoints = value;
             }
         }
 
@@ -37,7 +31,7 @@ namespace Framework.Unit
             }
             set
             {
-                this.MaxHealthPoints = value;
+                MaxHealthPoints = value;
             }
         }
 
@@ -49,7 +43,7 @@ namespace Framework.Unit
             }
             set
             {
-                this.Initiative = value;
+                Initiative = value;
             }
         }
 
@@ -61,7 +55,7 @@ namespace Framework.Unit
             }
             set
             {
-                this.Skill = value;
+                Skill = value;
             }
         }
 
@@ -73,7 +67,7 @@ namespace Framework.Unit
             }
             set
             {
-                this.Range = value;
+                Range = value;
             }
         }
 
@@ -85,7 +79,19 @@ namespace Framework.Unit
             }
             set
             {
-                this.Cost = value;
+                Cost = value;
+            }
+        }
+
+        public int Movement
+        {
+            get
+            {
+                return 4;
+            }
+            set
+            {
+                Movement = value;
             }
         }
 
@@ -97,28 +103,22 @@ namespace Framework.Unit
             }
             set
             {
-                this.Description = value;
+                Description = value;
             }
         }
-    }//end Gnoll
+    }
 
-    /*
-     * Class: GnollMarauder
-     * Author: Adam Boyce
-     * Date: 2013-03-11
-     * Description: This is the Beasts' Advanced Melee unit
-     */
     public class GnollMarauder : Unit, IUnit
     {
         public int CurrentHealthPoints
         {
             get
             {
-                return this.CurrentHealthPoints;
+                return  CurrentHealthPoints;
             }
             set
             {
-                this.CurrentHealthPoints = value;
+                CurrentHealthPoints = value;
             }
         }
 
@@ -130,7 +130,7 @@ namespace Framework.Unit
             }
             set
             {
-                this.MaxHealthPoints = value;
+                MaxHealthPoints = value;
             }
         }
 
@@ -142,7 +142,7 @@ namespace Framework.Unit
             }
             set
             {
-                this.Initiative = value;
+                Initiative = value;
             }
         }
 
@@ -154,7 +154,7 @@ namespace Framework.Unit
             }
             set
             {
-                this.Skill = value;
+                Skill = value;
             }
         }
 
@@ -166,7 +166,7 @@ namespace Framework.Unit
             }
             set
             {
-                this.Range = value;
+                Range = value;
             }
         }
 
@@ -178,7 +178,19 @@ namespace Framework.Unit
             }
             set
             {
-                this.Cost = value;
+                Cost = value;
+            }
+        }
+
+        public int Movement
+        {
+            get
+            {
+                return 5;
+            }
+            set
+            {
+                Movement = value;
             }
         }
 
@@ -190,8 +202,8 @@ namespace Framework.Unit
             }
             set
             {
-                this.Description = value;
+                Description = value;
             }
         }
-    }//end GnollMarauder
+    }
 }

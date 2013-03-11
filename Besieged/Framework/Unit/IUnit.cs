@@ -14,6 +14,7 @@ namespace Framework.Unit
         int Skill { get; set; }
         int Range { get; set; }
         int Cost { get; set; }
+        int Movement { get; set; }
         string Description { get; set; }
         //object GetSprite();
     }
