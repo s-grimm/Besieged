@@ -8,6 +8,6 @@ namespace Framework.Command
 {
     public interface ICommand
     {
-        void execute();
+        void Execute();
     }
 }

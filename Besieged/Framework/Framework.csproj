@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,6 +47,11 @@
     <Compile Include="Unit\BeastUnitFactory.cs" />
     <Compile Include="Unit\AllianceArmy.cs" />
     <Compile Include="Unit\AllianceUnitFactory.cs" />
+    <Compile Include="Server\Client.cs" />
+    <Compile Include="Unit\ElfArmy.cs" />
+    <Compile Include="Unit\ElfUnitFactory.cs" />
+    <Compile Include="Unit\HumanArmy.cs" />
+    <Compile Include="Unit\HumanUnitFactory.cs" />
     <Compile Include="Unit\IUnit.cs" />
     <Compile Include="Unit\IUnitFactory.cs" />
     <Compile Include="Unit\UndeadArmy.cs" />

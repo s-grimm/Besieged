@@ -12,6 +12,6 @@ namespace BesiegedServer
     public interface IMessageService
     {
         [OperationContract]
-        void Process(Framework.Command.ICommand cmd);
+        void SendCommand(Framework.Command.ICommand cmd);
     }
 }
