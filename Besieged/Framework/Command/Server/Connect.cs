@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Framework.Command
+namespace Framework.Command.Server
 {
-    public class ChatMessage : ICommand
+    public class Connect : ICommand
     {
         public Object Value { get; set; }
     }
