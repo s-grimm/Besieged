@@ -4,7 +4,7 @@ using System.ServiceModel;
 using System.Runtime.Serialization;
 namespace BesiegedServer
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "MessageService" in both code and config file together.
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class MessageService : Framework.Server.Services.IMessageService
     {
         public void SendCommand(string cmd)
@@ -13,7 +13,9 @@ namespace BesiegedServer
             //if(cmd is Framework.Command.Server.Connect){
              //   Framework.Command.Server.Connect unWrapped = (Framework.Command.Server.Connect)cmd;
               //  GameObject.AddNewClient((string)unWrapped.Value);
-            GameObject.AddNewClient(cmd);
+            var res = GameObject.AddNewClient(cmd);
+            Framework.IGameState gamestate = OperationContext.Current.GetCallbackChannel<Framework.IGameState>();
+            gamestate.UpdateClient(res.Alias, res.ClientID);
            // }
         }
     }

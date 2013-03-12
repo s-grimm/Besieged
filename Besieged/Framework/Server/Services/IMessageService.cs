@@ -8,7 +8,7 @@ using Framework;
 namespace Framework.Server.Services
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IMessageService" in both code and config file together.
-    [ServiceContract]
+    [ServiceContract(SessionMode = SessionMode.Required, CallbackContract = typeof(IGameState))]
     public interface IMessageService
     {
         [OperationContract]
