@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Framework.Commands;
+using System.Collections.Generic;
 using System.ServiceModel;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,7 +28,7 @@ namespace BesiegedClient
         private SolidColorBrush _blueBrush = new SolidColorBrush(Colors.Blue);
         private List<Rectangle> _rectangles = new List<Rectangle>();
 
-        private app_code.Client game = new app_code.Client();
+        private app_code.Client _client = new app_code.Client();
         private TaskScheduler _taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
         public Framework.ServiceContracts.IMessageService _messageService;
 
@@ -36,12 +38,41 @@ namespace BesiegedClient
             DrawGrid(10, 10);
 
             EndpointAddress endpointAddress = new EndpointAddress("http://localhost:31337/BesiegedServer/BesiegedMessage");
-            DuplexChannelFactory<Framework.ServiceContracts.IMessageService> duplexChannelFactory = new DuplexChannelFactory<Framework.ServiceContracts.IMessageService>(game, new WSDualHttpBinding(), endpointAddress);
+            DuplexChannelFactory<Framework.ServiceContracts.IMessageService> duplexChannelFactory = new DuplexChannelFactory<Framework.ServiceContracts.IMessageService>(_client, new WSDualHttpBinding(), endpointAddress);
             _messageService = duplexChannelFactory.CreateChannel();
 
-            //Task.Factory.StartNew(() => _messageService.Subscribe());
+            Task.Factory.StartNew(() => _messageService.Subscribe());
             //Task.Factory.StartNew(() => _messageService.SendCommand("Shane"));
             //SendMessageToServer("Shane");
+
+            Task.Factory.StartNew(() =>
+            {
+                while (true)
+                {
+                    Command message = _client.MessageQueue.Take();
+                    ProcessMessage(message);
+                }
+            }, TaskCreationOptions.LongRunning);
+        }
+
+        public void ProcessMessage(Command message)
+        {
+            // add custom logic depending on the type of the Message object received from the server
+            if (message is ConnectionSuccessful)
+            {
+                Task.Factory.StartNew(() =>
+                {
+                    MessageBox.Show("Connection successful!");
+                }, CancellationToken.None, TaskCreationOptions.None, _taskScheduler);
+            }
+            else if (message is ChatMessage)
+            {
+                Task.Factory.StartNew(() =>
+                {
+                    ChatMessage chatMessage = message as ChatMessage;
+                   // listboxChatWindow.Items.Add(chatMessage.Contents);
+                }, CancellationToken.None, TaskCreationOptions.None, _taskScheduler);
+            }
         }
 
         private void SendMessageToServer(string message)

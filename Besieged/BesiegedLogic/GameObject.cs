@@ -10,7 +10,7 @@ namespace BesiegedLogic
     public static class GameObject
     {
         private static readonly List<Color> _colors = new List<Color>() { Color.Red, Color.Blue, Color.Green, Color.Yellow, Color.Orange, Color.Violet, Color.Cyan, Color.HotPink };
-        private static ConcurrentBag<Objects.Client> _clients = new ConcurrentBag<Objects.Client>();
+        private static BlockingCollection<Objects.Client> _clients = new BlockingCollection<Objects.Client>();
 
         public static Objects.Client AddNewClient(string Alias)
         {
