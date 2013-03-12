@@ -1,6 +1,7 @@
 ﻿using BesiegedLogic;
 using System;
 using System.ServiceModel;
+using System.ServiceModel.Description;
 
 namespace BesiegedServer
 {
@@ -11,8 +12,9 @@ namespace BesiegedServer
             ServiceHost svcHost = null;
             try
             {
-                svcHost = new ServiceHost(typeof(MessageService), new Uri("net.tcp://localhost:31337/BesiegedServer/"));
-                svcHost.AddServiceEndpoint(typeof(Framework.Server.Services.IMessageService), new NetTcpBinding(), "BesiegedMessage");
+                svcHost = new ServiceHost(typeof(MessageService), new Uri("http://localhost:31337/BesiegedServer/"));
+                svcHost.AddServiceEndpoint(typeof(Framework.ServiceContracts.IMessageService), new WSDualHttpBinding(), "BesiegedMessage");
+                svcHost.Description.Behaviors.Add(new ServiceMetadataBehavior() { HttpGetEnabled = true });
                 svcHost.Open();
                 Console.Write("Service Started.\n> ");
             }
@@ -40,7 +42,7 @@ namespace BesiegedServer
                             continue;
                         }
                         Console.WriteLine("Connected Clients");
-                        foreach (Framework.Server.Client client in clients)
+                        foreach (BesiegedLogic.Objects.Client client in clients)
                         {
                             Console.WriteLine(client.Alias);
                         }

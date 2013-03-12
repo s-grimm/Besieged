@@ -1,26 +1,22 @@
-﻿using System;
+﻿using Framework.Commands;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.ServiceModel;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Framework;
-using System.ServiceModel;
 
 namespace BesiegedClient
 {
     public class Dimensions
     {
-        public int Width   { get; set; }
-        public int Height  { get; set; }
+        public int Width { get; set; }
+
+        public int Height { get; set; }
     }
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -32,32 +28,56 @@ namespace BesiegedClient
         private SolidColorBrush _blueBrush = new SolidColorBrush(Colors.Blue);
         private List<Rectangle> _rectangles = new List<Rectangle>();
 
-            //// Configure the ABCs of using the MessageBoard service
-            //ChannelFactory<IMessageBoard> channel = new 
-            //ChannelFactory<IMessageBoard>(new NetTcpBinding(),
-            //new EndpointAddress( 
-            //"net.tcp://localhost:12000/MessageBoardLibrary/MessageBoard"));
-            //// Activate a MessageBoard object
-            //msgBrd = channel.CreateChannel();
+        private app_code.Client _client = new app_code.Client();
+        private TaskScheduler _taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
+        public Framework.ServiceContracts.IMessageService _messageService;
+
         public MainWindow()
         {
             InitializeComponent();
             DrawGrid(10, 10);
-            try
+
+            EndpointAddress endpointAddress = new EndpointAddress("http://localhost:31337/BesiegedServer/BesiegedMessage");
+            DuplexChannelFactory<Framework.ServiceContracts.IMessageService> duplexChannelFactory = new DuplexChannelFactory<Framework.ServiceContracts.IMessageService>(_client, new WSDualHttpBinding(), endpointAddress);
+            _messageService = duplexChannelFactory.CreateChannel();
+
+            Task.Factory.StartNew(() => _messageService.Subscribe());
+            //Task.Factory.StartNew(() => _messageService.SendCommand("Shane"));
+            //SendMessageToServer("Shane");
+
+            Task.Factory.StartNew(() =>
             {
-                Framework.Command.Server.Connect connection = new Framework.Command.Server.Connect();
-                connection.Value = "Shane";
-                ChannelFactory<Framework.Server.Services.IMessageService> channel 
-                = new ChannelFactory<Framework.Server.Services.IMessageService>(new NetTcpBinding(), 
-                new EndpointAddress("net.tcp://localhost:31337/BesiegedServer/BesiegedMessage"));
-                var thingy = channel.CreateChannel();
-                thingy.SendCommand("Shane");
-                //Jesse - The SendCommand for Connect objects need to return a client object (wrapped in a ICommand object)
-            }
-            catch (Exception ex)
+                while (true)
+                {
+                    Command message = _client.MessageQueue.Take();
+                    ProcessMessage(message);
+                }
+            }, TaskCreationOptions.LongRunning);
+        }
+
+        public void ProcessMessage(Command message)
+        {
+            // add custom logic depending on the type of the Message object received from the server
+            if (message is ConnectionSuccessful)
             {
-                
+                Task.Factory.StartNew(() =>
+                {
+                    MessageBox.Show("Connection successful!");
+                }, CancellationToken.None, TaskCreationOptions.None, _taskScheduler);
             }
+            else if (message is ChatMessage)
+            {
+                Task.Factory.StartNew(() =>
+                {
+                    ChatMessage chatMessage = message as ChatMessage;
+                   // listboxChatWindow.Items.Add(chatMessage.Contents);
+                }, CancellationToken.None, TaskCreationOptions.None, _taskScheduler);
+            }
+        }
+
+        private void SendMessageToServer(string message)
+        {
+            //Task.Factory.StartNew(() => _messageService.SendCommand(message));
         }
 
         public void DrawGrid(int rows, int columns)
@@ -69,7 +89,7 @@ namespace BesiegedClient
             };
 
             //init rectangles
-            for (int i = 0; i < windowDimensions.Width; i+=50)
+            for (int i = 0; i < windowDimensions.Width; i += 50)
             {
                 for (int y = 0; y < windowDimensions.Height; y += 50)
                 {
@@ -92,7 +112,7 @@ namespace BesiegedClient
 
         private void txtMessage_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (txtMessage.Text == "Send a Message") 
+            if (txtMessage.Text == "Send a Message")
             {
                 txtMessage.Clear();
             }
@@ -105,5 +125,5 @@ namespace BesiegedClient
                 txtMessage.Text = "Send a Message";
             }
         }
-    } 
+    }
 }
