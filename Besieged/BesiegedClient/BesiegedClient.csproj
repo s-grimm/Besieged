@@ -106,6 +106,36 @@
       <Name>Framework</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\sprites\alliance\Archer.png" />
+    <Resource Include="resources\sprites\alliance\AscendantWizard.png" />
+    <Resource Include="resources\sprites\alliance\Centaur.png" />
+    <Resource Include="resources\sprites\alliance\CentaurOutrider.png" />
+    <Resource Include="resources\sprites\alliance\Dwarf.png" />
+    <Resource Include="resources\sprites\alliance\DwarfChampion.png" />
+    <Resource Include="resources\sprites\alliance\ElvenRanger.png" />
+    <Resource Include="resources\sprites\alliance\Wizard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\sprites\beasts\Genie.png" />
+    <Resource Include="resources\sprites\beasts\Gnoll.png" />
+    <Resource Include="resources\sprites\beasts\GnollMarauder.png" />
+    <Resource Include="resources\sprites\beasts\Lizardman.png" />
+    <Resource Include="resources\sprites\beasts\LizardmanCaptain.png" />
+    <Resource Include="resources\sprites\beasts\MasterGenie.png" />
+    <Resource Include="resources\sprites\beasts\Taurus.png" />
+    <Resource Include="resources\sprites\beasts\TaurusLord.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\sprites\undead\Orc.png" />
+    <Resource Include="resources\sprites\undead\OrcChief.png" />
+    <Resource Include="resources\sprites\undead\Skeleton.png" />
+    <Resource Include="resources\sprites\undead\SkeletonCaptain.png" />
+    <Resource Include="resources\sprites\undead\Vampire.png" />
+    <Resource Include="resources\sprites\undead\VampireCount.png" />
+    <Resource Include="resources\sprites\undead\WolfLord.png" />
+    <Resource Include="resources\sprites\undead\WolfRider.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
