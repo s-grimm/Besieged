@@ -13,7 +13,7 @@ namespace BesiegedServer
             try
             {
                 svcHost = new ServiceHost(typeof(MessageService), new Uri("http://localhost:31337/BesiegedServer/"));
-                svcHost.AddServiceEndpoint(typeof(Framework.Server.Services.IMessageService), new WSDualHttpBinding(), "BesiegedMessage");
+                svcHost.AddServiceEndpoint(typeof(Framework.ServiceContracts.IMessageService), new WSDualHttpBinding(), "BesiegedMessage");
                 svcHost.Description.Behaviors.Add(new ServiceMetadataBehavior() { HttpGetEnabled = true });
                 svcHost.Open();
                 Console.Write("Service Started.\n> ");
@@ -42,7 +42,7 @@ namespace BesiegedServer
                             continue;
                         }
                         Console.WriteLine("Connected Clients");
-                        foreach (Framework.Server.Client client in clients)
+                        foreach (BesiegedLogic.Objects.Client client in clients)
                         {
                             Console.WriteLine(client.Alias);
                         }

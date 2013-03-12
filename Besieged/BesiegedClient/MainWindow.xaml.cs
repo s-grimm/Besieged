@@ -26,9 +26,9 @@ namespace BesiegedClient
         private SolidColorBrush _blueBrush = new SolidColorBrush(Colors.Blue);
         private List<Rectangle> _rectangles = new List<Rectangle>();
 
-        private Framework.GameState game = new Framework.GameState();
+        private app_code.Client game = new app_code.Client();
         private TaskScheduler _taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
-        public Framework.Server.Services.IMessageService _messageService;
+        public Framework.ServiceContracts.IMessageService _messageService;
 
         public MainWindow()
         {
@@ -36,17 +36,17 @@ namespace BesiegedClient
             DrawGrid(10, 10);
 
             EndpointAddress endpointAddress = new EndpointAddress("http://localhost:31337/BesiegedServer/BesiegedMessage");
-            DuplexChannelFactory<Framework.Server.Services.IMessageService> duplexChannelFactory = new DuplexChannelFactory<Framework.Server.Services.IMessageService>(game, new WSDualHttpBinding(), endpointAddress);
+            DuplexChannelFactory<Framework.ServiceContracts.IMessageService> duplexChannelFactory = new DuplexChannelFactory<Framework.ServiceContracts.IMessageService>(game, new WSDualHttpBinding(), endpointAddress);
             _messageService = duplexChannelFactory.CreateChannel();
 
             //Task.Factory.StartNew(() => _messageService.Subscribe());
-            Task.Factory.StartNew(() => _messageService.SendCommand("Shane"));
+            //Task.Factory.StartNew(() => _messageService.SendCommand("Shane"));
             //SendMessageToServer("Shane");
         }
 
         private void SendMessageToServer(string message)
         {
-            Task.Factory.StartNew(() => _messageService.SendCommand(message));
+            //Task.Factory.StartNew(() => _messageService.SendCommand(message));
         }
 
         public void DrawGrid(int rows, int columns)
