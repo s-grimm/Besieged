@@ -18,7 +18,6 @@ namespace Framework
             Client = new Server.Client();
         }
 
-        
         public void UpdateClient(string alias, int id) //replace this with a client object eventually
         {
             Client.Alias = alias;
