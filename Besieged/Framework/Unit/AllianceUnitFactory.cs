@@ -10,42 +10,42 @@ namespace Framework.Unit
     {
         public IUnit GetBasicInfantry()
         {
-            throw new NotImplementedException();
+            return new Dwarf();
         }
 
         public IUnit GetAdvancedInfantry()
         {
-            throw new NotImplementedException();
+            return new DwarfChampion();
         }
 
         public IUnit GetBasicRanged()
         {
-            throw new NotImplementedException();
+            return new Archer();
         }
 
         public IUnit GetAdvancedRanged()
         {
-            throw new NotImplementedException();
+            return new ElvenRanger();
         }
 
         public IUnit GetBasicMounted()
         {
-            throw new NotImplementedException();
+            return new Centaur();
         }
 
         public IUnit GetAdvancedMounted()
         {
-            throw new NotImplementedException();
+            return new CentaurOutrider();
         }
 
         public IUnit GetBasicSpellCaster()
         {
-            throw new NotImplementedException();
+            return new Wizard();
         }
 
         public IUnit GetAdvancedSpellCaster()
         {
-            throw new NotImplementedException();
+            return new AscendantWizard();
         }
     }
 }
