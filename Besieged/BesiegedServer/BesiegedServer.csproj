@@ -47,7 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MessageService.cs" />
+    <Compile Include="BesiegedGameInstance.cs" />
+    <Compile Include="BesiegedServer.cs" />
+    <Compile Include="ConnectedClient.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

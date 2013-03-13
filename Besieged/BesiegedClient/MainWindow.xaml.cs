@@ -1,4 +1,6 @@
 ﻿using Framework.Commands;
+using Framework.ServiceContracts;
+using Framework.Utilities.Xml;
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.Threading;
@@ -13,7 +15,6 @@ namespace BesiegedClient
     public class Dimensions
     {
         public int Width { get; set; }
-
         public int Height { get; set; }
     }
 
@@ -29,8 +30,10 @@ namespace BesiegedClient
         private List<Rectangle> _rectangles = new List<Rectangle>();
 
         private app_code.Client _client = new app_code.Client();
+        private string _clientIdentifier;
+        private bool _isServerConnectionEstablished = false;
         private TaskScheduler _taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
-        public Framework.ServiceContracts.IMessageService _messageService;
+        private IBesiegedServer _besiegedServer;
 
         public MainWindow()
         {
@@ -38,12 +41,15 @@ namespace BesiegedClient
             DrawGrid(10, 10);
 
             EndpointAddress endpointAddress = new EndpointAddress("http://localhost:31337/BesiegedServer/BesiegedMessage");
-            DuplexChannelFactory<Framework.ServiceContracts.IMessageService> duplexChannelFactory = new DuplexChannelFactory<Framework.ServiceContracts.IMessageService>(_client, new WSDualHttpBinding(), endpointAddress);
-            _messageService = duplexChannelFactory.CreateChannel();
+            DuplexChannelFactory<IBesiegedServer> duplexChannelFactory = new DuplexChannelFactory<IBesiegedServer>(_client, new WSDualHttpBinding(), endpointAddress);
+            _besiegedServer = duplexChannelFactory.CreateChannel();
 
-            Task.Factory.StartNew(() => _messageService.Subscribe());
-            //Task.Factory.StartNew(() => _messageService.SendCommand("Shane"));
-            //SendMessageToServer("Shane");
+            // Subscribe in a separate thread to preserve the UI thread
+            Task.Factory.StartNew(() =>
+            {
+                CommandConnect commandConnect = new CommandConnect();
+                _besiegedServer.SendCommand(commandConnect.ToXml());
+            });
 
             Task.Factory.StartNew(() =>
             {
@@ -55,21 +61,23 @@ namespace BesiegedClient
             }, TaskCreationOptions.LongRunning);
         }
 
-        public void ProcessMessage(Command message)
+        public void ProcessMessage(Command command)
         {
-            // add custom logic depending on the type of the Message object received from the server
-            if (message is ConnectionSuccessful)
+            if (command is CommandConnectionSuccessful)
             {
+                CommandConnectionSuccessful commandConnectionSuccessful = command as CommandConnectionSuccessful;
+                _clientIdentifier = commandConnectionSuccessful.UniqueIdentifier;
+                _isServerConnectionEstablished = true;
                 Task.Factory.StartNew(() =>
                 {
                     MessageBox.Show("Connection successful!");
                 }, CancellationToken.None, TaskCreationOptions.None, _taskScheduler);
             }
-            else if (message is ChatMessage)
+            else if (command is CommandChatMessage)
             {
                 Task.Factory.StartNew(() =>
                 {
-                    ChatMessage chatMessage = message as ChatMessage;
+                    CommandChatMessage chatMessageCommand = command as CommandChatMessage;
                    // listboxChatWindow.Items.Add(chatMessage.Contents);
                 }, CancellationToken.None, TaskCreationOptions.None, _taskScheduler);
             }

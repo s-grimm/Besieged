@@ -18,8 +18,8 @@ namespace BesiegedClient.app_code
         {
             try
             {
-                Command message = serializedMessage.FromXml<Command>();
-                MessageQueue.Add(message);
+                Command command = serializedMessage.FromXml<Command>();
+                MessageQueue.Add(command);
             }
             catch (Exception ex)
             {

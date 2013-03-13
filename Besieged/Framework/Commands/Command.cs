@@ -4,27 +4,51 @@
     {
     }
 
-    public class ClientJoined : Command
+    public class CommandConnect : Command
     {
-    }
-
-    public class ConnectionSuccessful : Command
-    {
-    }
-
-    public class ConnectionTerminated : Command
-    {
-    }
-
-    public class ChatMessage : Command
-    {
-        public ChatMessage()
+        public string Alias { get; set; }
+        
+        public CommandConnect()
         {
         }
 
+        public CommandConnect(string alias)
+        {
+            Alias = alias;
+        }
+    }
+
+    public class CommandClientJoined : Command
+    {
+    }
+
+    public class CommandConnectionSuccessful : Command
+    {
+        public string UniqueIdentifier { get; set; }
+
+        public CommandConnectionSuccessful()
+        { 
+        }
+
+        public CommandConnectionSuccessful(string uniqueIdentifier)
+        {
+            UniqueIdentifier = uniqueIdentifier;
+        }
+    }
+
+    public class CommandConnectionTerminated : Command
+    {
+    }
+
+    public class CommandChatMessage : Command
+    {
         public string Contents { get; set; }
 
-        public ChatMessage(string contents)
+        public CommandChatMessage()
+        {
+        }
+
+        public CommandChatMessage(string contents)
         {
             Contents = contents;
         }
