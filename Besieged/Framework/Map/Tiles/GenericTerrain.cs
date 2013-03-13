@@ -9,87 +9,87 @@ namespace Framework.Map.Tiles
     public class RiverPassable : Tile, ITile
     {
 
-        public int currentHealthPointsModifier
+        public int CurrentHealthPointsModifier
         {
             get
             {
-                return currentHealthPointsModifier;
+                return CurrentHealthPointsModifier;
             }
             set
             {
-                currentHealthPointsModifier = value;
+                CurrentHealthPointsModifier = value;
             }
         }
 
-        public int maxHealthPointsModifier
+        public int MaxHealthPointsModifier
         {
             get
             {
-                return maxHealthPointsModifier;
+                return MaxHealthPointsModifier;
             }
             set
             {
-                maxHealthPointsModifier = value;
+                MaxHealthPointsModifier = value;
             }
         }
 
-        public int initiativeModifier
+        public int InitiativeModifier
         {
             get
             {
-                return initiativeModifier;
+                return InitiativeModifier;
             }
             set
             {
-                initiativeModifier = value;
+                InitiativeModifier = value;
             }
         }
 
-        public int skillModifier
+        public int SkillModifier
         {
             get
             {
-                return skillModifier;
+                return SkillModifier;
             }
             set
             {
-                skillModifier = value;
+                SkillModifier = value;
             }
         }
 
-        public int rangeModifier
+        public int RangeModifier
         {
             get
             {
-                return rangeModifier;
+                return RangeModifier;
             }
             set
             {
-                rangeModifier = value;
+                RangeModifier = value;
             }
         }
 
-        public int movementModifier
+        public int MovementModifier
         {
             get
             {
-                return movementModifier;
+                return MovementModifier;
             }
             set
             {
-                movementModifier = value;
+                MovementModifier = value;
             }
         }
 
-        public bool isPassable
+        public bool IsPassable
         {
             get
             {
-                return isPassable;
+                return IsPassable;
             }
             set
             {
-                isPassable = true;
+                IsPassable = true;
             }
         }
     }
@@ -97,87 +97,87 @@ namespace Framework.Map.Tiles
     public class RiverImpassable : Tile, ITile
     {
 
-        public int currentHealthPointsModifier
+        public int CurrentHealthPointsModifier
         {
             get
             {
-                return currentHealthPointsModifier;
+                return CurrentHealthPointsModifier;
             }
             set
             {
-                currentHealthPointsModifier = value;
+                CurrentHealthPointsModifier = value;
             }
         }
 
-        public int maxHealthPointsModifier
+        public int MaxHealthPointsModifier
         {
             get
             {
-                return maxHealthPointsModifier;
+                return MaxHealthPointsModifier;
             }
             set
             {
-                maxHealthPointsModifier = value;
+                MaxHealthPointsModifier = value;
             }
         }
 
-        public int initiativeModifier
+        public int InitiativeModifier
         {
             get
             {
-                return initiativeModifier;
+                return InitiativeModifier;
             }
             set
             {
-                initiativeModifier = value;
+                InitiativeModifier = value;
             }
         }
 
-        public int skillModifier
+        public int SkillModifier
         {
             get
             {
-                return skillModifier;
+                return SkillModifier;
             }
             set
             {
-                skillModifier = value;
+                SkillModifier = value;
             }
         }
 
-        public int rangeModifier
+        public int RangeModifier
         {
             get
             {
-                return rangeModifier;
+                return RangeModifier;
             }
             set
             {
-                rangeModifier = value;
+                RangeModifier = value;
             }
         }
 
-        public int movementModifier
+        public int MovementModifier
         {
             get
             {
-                return movementModifier;
+                return MovementModifier;
             }
             set
             {
-                movementModifier = value;
+                MovementModifier = value;
             }
         }
 
-        public bool isPassable
+        public bool IsPassable
         {
             get
             {
-                return isPassable;
+                return IsPassable;
             }
             set
             {
-                isPassable = false;
+                IsPassable = false;
             }
         }
     }
@@ -185,87 +185,87 @@ namespace Framework.Map.Tiles
     public class RockPassable : Tile, ITile
     {
 
-        public int currentHealthPointsModifier
+        public int CurrentHealthPointsModifier
         {
             get
             {
-                return currentHealthPointsModifier;
+                return CurrentHealthPointsModifier;
             }
             set
             {
-                currentHealthPointsModifier = value;
+                CurrentHealthPointsModifier = value;
             }
         }
 
-        public int maxHealthPointsModifier
+        public int MaxHealthPointsModifier
         {
             get
             {
-                return maxHealthPointsModifier;
+                return MaxHealthPointsModifier;
             }
             set
             {
-                maxHealthPointsModifier = value;
+                MaxHealthPointsModifier = value;
             }
         }
 
-        public int initiativeModifier
+        public int InitiativeModifier
         {
             get
             {
-                return initiativeModifier;
+                return InitiativeModifier;
             }
             set
             {
-                initiativeModifier = value;
+                InitiativeModifier = value;
             }
         }
 
-        public int skillModifier
+        public int SkillModifier
         {
             get
             {
-                return skillModifier;
+                return SkillModifier;
             }
             set
             {
-                skillModifier = value;
+                SkillModifier = value;
             }
         }
 
-        public int rangeModifier
+        public int RangeModifier
         {
             get
             {
-                return rangeModifier;
+                return RangeModifier;
             }
             set
             {
-                rangeModifier = value;
+                RangeModifier = value;
             }
         }
 
-        public int movementModifier
+        public int MovementModifier
         {
             get
             {
-                return movementModifier;
+                return MovementModifier;
             }
             set
             {
-                movementModifier = value;
+                MovementModifier = value;
             }
         }
 
-        public bool isPassable
+        public bool IsPassable
         {
             get
             {
-                return isPassable;
+                return IsPassable;
             }
             set
             {
-                isPassable = true;
+                IsPassable = true;
             }
         }
     }
@@ -273,87 +273,87 @@ namespace Framework.Map.Tiles
     public class RockImpassable : Tile, ITile
     {
 
-        public int currentHealthPointsModifier
+        public int CurrentHealthPointsModifier
         {
             get
             {
-                return currentHealthPointsModifier;
+                return CurrentHealthPointsModifier;
             }
             set
             {
-                currentHealthPointsModifier = value;
+                CurrentHealthPointsModifier = value;
             }
         }
 
-        public int maxHealthPointsModifier
+        public int MaxHealthPointsModifier
         {
             get
             {
-                return maxHealthPointsModifier;
+                return MaxHealthPointsModifier;
             }
             set
             {
-                maxHealthPointsModifier = value;
+                MaxHealthPointsModifier = value;
             }
         }
 
-        public int initiativeModifier
+        public int InitiativeModifier
         {
             get
             {
-                return initiativeModifier;
+                return InitiativeModifier;
             }
             set
             {
-                initiativeModifier = value;
+                InitiativeModifier = value;
             }
         }
 
-        public int skillModifier
+        public int SkillModifier
         {
             get
             {
-                return skillModifier;
+                return SkillModifier;
             }
             set
             {
-                skillModifier = value;
+                SkillModifier = value;
             }
         }
 
-        public int rangeModifier
+        public int RangeModifier
         {
             get
             {
-                return rangeModifier;
+                return RangeModifier;
             }
             set
             {
-                rangeModifier = value;
+                RangeModifier = value;
             }
         }
 
-        public int movementModifier
+        public int MovementModifier
         {
             get
             {
-                return movementModifier;
+                return MovementModifier;
             }
             set
             {
-                movementModifier = value;
+                MovementModifier = value;
             }
         }
 
-        public bool isPassable
+        public bool IsPassable
         {
             get
             {
-                return isPassable;
+                return IsPassable;
             }
             set
             {
-                isPassable = false;
+                IsPassable = false;
             }
         }
     }
@@ -361,87 +361,87 @@ namespace Framework.Map.Tiles
     public class RoadPassable : Tile, ITile
     {
 
-        public int currentHealthPointsModifier
+        public int CurrentHealthPointsModifier
         {
             get
             {
-                return currentHealthPointsModifier;
+                return CurrentHealthPointsModifier;
             }
             set
             {
-                currentHealthPointsModifier = value;
+                CurrentHealthPointsModifier = value;
             }
         }
 
-        public int maxHealthPointsModifier
+        public int MaxHealthPointsModifier
         {
             get
             {
-                return maxHealthPointsModifier;
+                return MaxHealthPointsModifier;
             }
             set
             {
-                maxHealthPointsModifier = value;
+                MaxHealthPointsModifier = value;
             }
         }
 
-        public int initiativeModifier
+        public int InitiativeModifier
         {
             get
             {
-                return initiativeModifier;
+                return InitiativeModifier;
             }
             set
             {
-                initiativeModifier = value;
+                InitiativeModifier = value;
             }
         }
 
-        public int skillModifier
+        public int SkillModifier
         {
             get
             {
-                return skillModifier;
+                return SkillModifier;
             }
             set
             {
-                skillModifier = value;
+                SkillModifier = value;
             }
         }
 
-        public int rangeModifier
+        public int RangeModifier
         {
             get
             {
-                return rangeModifier;
+                return RangeModifier;
             }
             set
             {
-                rangeModifier = value;
+                RangeModifier = value;
             }
         }
 
-        public int movementModifier
+        public int MovementModifier
         {
             get
             {
-                return movementModifier;
+                return MovementModifier;
             }
             set
             {
-                movementModifier = value;
+                MovementModifier = value;
             }
         }
 
-        public bool isPassable
+        public bool IsPassable
         {
             get
             {
-                return isPassable;
+                return IsPassable;
             }
             set
             {
-                isPassable = true;
+                IsPassable = true;
             }
         }
     }
@@ -449,87 +449,87 @@ namespace Framework.Map.Tiles
     public class RoadImpassable : Tile, ITile
     {
 
-        public int currentHealthPointsModifier
+        public int CurrentHealthPointsModifier
         {
             get
             {
-                return currentHealthPointsModifier;
+                return CurrentHealthPointsModifier;
             }
             set
             {
-                currentHealthPointsModifier = value;
+                CurrentHealthPointsModifier = value;
             }
         }
 
-        public int maxHealthPointsModifier
+        public int MaxHealthPointsModifier
         {
             get
             {
-                return maxHealthPointsModifier;
+                return MaxHealthPointsModifier;
             }
             set
             {
-                maxHealthPointsModifier = value;
+                MaxHealthPointsModifier = value;
             }
         }
 
-        public int initiativeModifier
+        public int InitiativeModifier
         {
             get
             {
-                return initiativeModifier;
+                return InitiativeModifier;
             }
             set
             {
-                initiativeModifier = value;
+                InitiativeModifier = value;
             }
         }
 
-        public int skillModifier
+        public int SkillModifier
         {
             get
             {
-                return skillModifier;
+                return SkillModifier;
             }
             set
             {
-                skillModifier = value;
+                SkillModifier = value;
             }
         }
 
-        public int rangeModifier
+        public int RangeModifier
         {
             get
             {
-                return rangeModifier;
+                return RangeModifier;
             }
             set
             {
-                rangeModifier = value;
+                RangeModifier = value;
             }
         }
 
-        public int movementModifier
+        public int MovementModifier
         {
             get
             {
-                return movementModifier;
+                return MovementModifier;
             }
             set
             {
-                movementModifier = value;
+                MovementModifier = value;
             }
         }
 
-        public bool isPassable
+        public bool IsPassable
         {
             get
             {
-                return isPassable;
+                return IsPassable;
             }
             set
             {
-                isPassable = false;
+                IsPassable = false;
             }
         }
     }
@@ -537,87 +537,87 @@ namespace Framework.Map.Tiles
     public class BridgePassable : Tile, ITile
     {
 
-        public int currentHealthPointsModifier
+        public int CurrentHealthPointsModifier
         {
             get
             {
-                return currentHealthPointsModifier;
+                return CurrentHealthPointsModifier;
             }
             set
             {
-                currentHealthPointsModifier = value;
+                CurrentHealthPointsModifier = value;
             }
         }
 
-        public int maxHealthPointsModifier
+        public int MaxHealthPointsModifier
         {
             get
             {
-                return maxHealthPointsModifier;
+                return MaxHealthPointsModifier;
             }
             set
             {
-                maxHealthPointsModifier = value;
+                MaxHealthPointsModifier = value;
             }
         }
 
-        public int initiativeModifier
+        public int InitiativeModifier
         {
             get
             {
-                return initiativeModifier;
+                return InitiativeModifier;
             }
             set
             {
-                initiativeModifier = value;
+                InitiativeModifier = value;
             }
         }
 
-        public int skillModifier
+        public int SkillModifier
         {
             get
             {
-                return skillModifier;
+                return SkillModifier;
             }
             set
             {
-                skillModifier = value;
+                SkillModifier = value;
             }
         }
 
-        public int rangeModifier
+        public int RangeModifier
         {
             get
             {
-                return rangeModifier;
+                return RangeModifier;
             }
             set
             {
-                rangeModifier = value;
+                RangeModifier = value;
             }
         }
 
-        public int movementModifier
+        public int MovementModifier
         {
             get
             {
-                return movementModifier;
+                return MovementModifier;
             }
             set
             {
-                movementModifier = value;
+                MovementModifier = value;
             }
         }
 
-        public bool isPassable
+        public bool IsPassable
         {
             get
             {
-                return isPassable;
+                return IsPassable;
             }
             set
             {
-                isPassable = true;
+                IsPassable = true;
             }
         }
     }
@@ -625,87 +625,87 @@ namespace Framework.Map.Tiles
     public class BridgeImpassable : Tile, ITile
     {
 
-        public int currentHealthPointsModifier
+        public int CurrentHealthPointsModifier
         {
             get
             {
-                return currentHealthPointsModifier;
+                return CurrentHealthPointsModifier;
             }
             set
             {
-                currentHealthPointsModifier = value;
+                CurrentHealthPointsModifier = value;
             }
         }
 
-        public int maxHealthPointsModifier
+        public int MaxHealthPointsModifier
         {
             get
             {
-                return maxHealthPointsModifier;
+                return MaxHealthPointsModifier;
             }
             set
             {
-                maxHealthPointsModifier = value;
+                MaxHealthPointsModifier = value;
             }
         }
 
-        public int initiativeModifier
+        public int InitiativeModifier
         {
             get
             {
-                return initiativeModifier;
+                return InitiativeModifier;
             }
             set
             {
-                initiativeModifier = value;
+                InitiativeModifier = value;
             }
         }
 
-        public int skillModifier
+        public int SkillModifier
         {
             get
             {
-                return skillModifier;
+                return SkillModifier;
             }
             set
             {
-                skillModifier = value;
+                SkillModifier = value;
             }
         }
 
-        public int rangeModifier
+        public int RangeModifier
         {
             get
             {
-                return rangeModifier;
+                return RangeModifier;
             }
             set
             {
-                rangeModifier = value;
+                RangeModifier = value;
             }
         }
 
-        public int movementModifier
+        public int MovementModifier
         {
             get
             {
-                return movementModifier;
+                return MovementModifier;
             }
             set
             {
-                movementModifier = value;
+                MovementModifier = value;
             }
         }
 
-        public bool isPassable
+        public bool IsPassable
         {
             get
             {
-                return isPassable;
+                return IsPassable;
             }
             set
             {
-                isPassable = false;
+                IsPassable = false;
             }
         }
     }

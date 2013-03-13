@@ -8,12 +8,12 @@ namespace Framework.Map.Tiles
 {
     interface ITile
     {
-        public int currentHealthPointsModifier { get; set; }
-        public int maxHealthPointsModifier { get; set; }
-        public int initiativeModifier { get; set; }
-        public int skillModifier { get; set; }
-        public int rangeModifier { get; set; }
-        public int movementModifier { get; set; }
-        public bool isPassable { get; set; }
+        public int CurrentHealthPointsModifier { get; set; }
+        public int MaxHealthPointsModifier { get; set; }
+        public int InitiativeModifier { get; set; }
+        public int SkillModifier { get; set; }
+        public int RangeModifier { get; set; }
+        public int MovementModifier { get; set; }
+        public bool IsPassable { get; set; }
     }
 }
