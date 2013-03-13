@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Framework.Sprite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Framework.Map.Tiles
 {
-    public class GrassPassable : Tile, ITile
+    public class GrassPassable : DrawableObject, ITile
     {
 
         public int CurrentHealthPointsModifier
@@ -94,7 +95,7 @@ namespace Framework.Map.Tiles
         }
     }
 
-    public class GrassImpassable : Tile, ITile
+    public class GrassImpassable : DrawableObject, ITile
     {
 
         public int CurrentHealthPointsModifier
@@ -182,7 +183,7 @@ namespace Framework.Map.Tiles
         }
     }
 
-    public class ForestPassable : Tile, ITile
+    public class ForestPassable : DrawableObject, ITile
     {
 
         public int CurrentHealthPointsModifier
@@ -270,7 +271,7 @@ namespace Framework.Map.Tiles
         }
     }
 
-    public class ForestImpassable : Tile, ITile
+    public class ForestImpassable : DrawableObject, ITile
     {
 
         public int CurrentHealthPointsModifier

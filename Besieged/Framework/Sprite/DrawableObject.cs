@@ -4,20 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Framework.Unit
+namespace Framework.Sprite
 {
-    public static class SpriteFactory
+    class DrawableObject
     {
-        public static object GetSprite(object unit)
+        public virtual object GetSprite()
         {
+            object sprite = null;
             try
             {
-                return string.Empty;
+                //sprite = SpriteFactory.GetSprite(this);
             }
             catch (Exception ex)
             {
-                return string.Empty;
+
             }
+            return sprite;
         }
+
+
     }
 }

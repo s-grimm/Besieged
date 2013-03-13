@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Framework.Sprite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace Framework.Unit
 {
-    public class Dwarf : Unit, IUnit
+    public class Dwarf : DrawableObject, IUnit
     {
         public int CurrentHealthPoints
         {
@@ -56,7 +57,7 @@ namespace Framework.Unit
         }
     }
 
-    public class DwarfChampion : Unit, IUnit
+    public class DwarfChampion : DrawableObject, IUnit
     {
         public int CurrentHealthPoints
         {
@@ -107,7 +108,7 @@ namespace Framework.Unit
         }
     }
 
-    public class Archer : Unit, IUnit
+    public class Archer : DrawableObject, IUnit
     {
         public int CurrentHealthPoints
         {
@@ -158,7 +159,7 @@ namespace Framework.Unit
         }
     }
 
-    public class ElvenRanger : Unit, IUnit
+    public class ElvenRanger : DrawableObject, IUnit
     {
         public int CurrentHealthPoints
         {
@@ -209,7 +210,7 @@ namespace Framework.Unit
         }
     }
 
-    public class Centaur : Unit, IUnit
+    public class Centaur : DrawableObject, IUnit
     {
         public int CurrentHealthPoints
         {
@@ -260,7 +261,7 @@ namespace Framework.Unit
         }
     }
 
-    public class CentaurOutrider : Unit, IUnit
+    public class CentaurOutrider : DrawableObject, IUnit
     {
         public int CurrentHealthPoints
         {
@@ -311,7 +312,7 @@ namespace Framework.Unit
         }
     }
 
-    public class Wizard : Unit, IUnit
+    public class Wizard : DrawableObject, IUnit
     {
         public int CurrentHealthPoints
         {
@@ -362,7 +363,7 @@ namespace Framework.Unit
         }
     }
 
-    public class AscendantWizard : Unit, IUnit
+    public class AscendantWizard : DrawableObject, IUnit
     {
         public int CurrentHealthPoints
         {

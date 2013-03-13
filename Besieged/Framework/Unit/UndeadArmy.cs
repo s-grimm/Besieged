@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Framework.Sprite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Framework.Unit
 {
-    public class Skeleton : Unit, IUnit
+    public class Skeleton : DrawableObject, IUnit
     {
         public int CurrentHealthPoints
         {
@@ -57,7 +58,7 @@ namespace Framework.Unit
         }
     }
 
-    public class SkeletonCaptain : Unit, IUnit
+    public class SkeletonCaptain : DrawableObject, IUnit
     {
         public int CurrentHealthPoints
         {
@@ -108,7 +109,7 @@ namespace Framework.Unit
         }
     }
 
-    public class Orc : Unit, IUnit
+    public class Orc : DrawableObject, IUnit
     {
         public int CurrentHealthPoints
         {
@@ -159,7 +160,7 @@ namespace Framework.Unit
         }
     }
 
-    public class OrcChief : Unit, IUnit
+    public class OrcChief : DrawableObject, IUnit
     {
         public int CurrentHealthPoints
         {
@@ -210,7 +211,7 @@ namespace Framework.Unit
         }
     }
 
-    public class WolfRider : Unit, IUnit
+    public class WolfRider : DrawableObject, IUnit
     {
         public int CurrentHealthPoints
         {
@@ -261,7 +262,7 @@ namespace Framework.Unit
         }
     }
 
-    public class WolfLord : Unit, IUnit
+    public class WolfLord : DrawableObject, IUnit
     {
         public int CurrentHealthPoints
         {
@@ -312,7 +313,7 @@ namespace Framework.Unit
         }
     }
 
-    public class Vampire : Unit, IUnit
+    public class Vampire : DrawableObject, IUnit
     {
         public int CurrentHealthPoints
         {
@@ -363,7 +364,7 @@ namespace Framework.Unit
         }
     }
 
-    public class VampireCount : Unit, IUnit
+    public class VampireCount : DrawableObject, IUnit
     {
         public int CurrentHealthPoints
         {

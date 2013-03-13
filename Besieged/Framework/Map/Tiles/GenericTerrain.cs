@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Framework.Sprite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Framework.Map.Tiles
 {
-    public class RiverPassable : Tile, ITile
+    public class RiverPassable : DrawableObject, ITile
     {
 
         public int CurrentHealthPointsModifier
@@ -94,7 +95,7 @@ namespace Framework.Map.Tiles
         }
     }
 
-    public class RiverImpassable : Tile, ITile
+    public class RiverImpassable : DrawableObject, ITile
     {
 
         public int CurrentHealthPointsModifier
@@ -182,7 +183,7 @@ namespace Framework.Map.Tiles
         }
     }
 
-    public class RockPassable : Tile, ITile
+    public class RockPassable : DrawableObject, ITile
     {
 
         public int CurrentHealthPointsModifier
@@ -270,7 +271,7 @@ namespace Framework.Map.Tiles
         }
     }
 
-    public class RockImpassable : Tile, ITile
+    public class RockImpassable : DrawableObject, ITile
     {
 
         public int CurrentHealthPointsModifier
@@ -358,7 +359,7 @@ namespace Framework.Map.Tiles
         }
     }
 
-    public class RoadPassable : Tile, ITile
+    public class RoadPassable : DrawableObject, ITile
     {
 
         public int CurrentHealthPointsModifier
@@ -446,7 +447,7 @@ namespace Framework.Map.Tiles
         }
     }
 
-    public class RoadImpassable : Tile, ITile
+    public class RoadImpassable : DrawableObject, ITile
     {
 
         public int CurrentHealthPointsModifier
@@ -534,7 +535,7 @@ namespace Framework.Map.Tiles
         }
     }
 
-    public class BridgePassable : Tile, ITile
+    public class BridgePassable : DrawableObject, ITile
     {
 
         public int CurrentHealthPointsModifier
@@ -622,7 +623,7 @@ namespace Framework.Map.Tiles
         }
     }
 
-    public class BridgeImpassable : Tile, ITile
+    public class BridgeImpassable : DrawableObject, ITile
     {
 
         public int CurrentHealthPointsModifier
