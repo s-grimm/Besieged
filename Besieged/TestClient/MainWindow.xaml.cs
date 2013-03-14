@@ -79,6 +79,10 @@ namespace TestClient
                     {
                         CommandChatMessage chatMessageCommand = command as CommandChatMessage;
                     }, CancellationToken.None, TaskCreationOptions.None, m_TaskScheduler);
+
+                    CommandChatMessage commandChatMessage = command as CommandChatMessage;
+                    MessageBox.Show(commandChatMessage.Contents);
+                    
                 }
                 else if (command is CommandNotifyGame)
                 {
