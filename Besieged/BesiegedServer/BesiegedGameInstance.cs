@@ -5,12 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Collections.Concurrent;
 
 namespace BesiegedServer
 {
     public class BesiegedGameInstance
     {
-        public List<ConnectedClient> ConnectedClients { get; set; }
+        public ConcurrentBag<ConnectedClient> ConnectedClients { get; set; }
         public string UniqueIdentifier { get; set; }
         public string Name { get; set; }
         public GameState GameState { get; set; }
@@ -19,7 +20,7 @@ namespace BesiegedServer
 
         public BesiegedGameInstance()
         {
-            ConnectedClients = new List<ConnectedClient>();
+            ConnectedClients = new ConcurrentBag<ConnectedClient>();
             IsGameInstanceFull = false;
         }
 
@@ -27,7 +28,7 @@ namespace BesiegedServer
         {
             UniqueIdentifier = uniqueIdentifier;
             Name = name;
-            ConnectedClients = new List<ConnectedClient>();
+            ConnectedClients = new ConcurrentBag<ConnectedClient>();
             IsGameInstanceFull = false;
         }
     }

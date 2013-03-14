@@ -16,14 +16,14 @@ namespace BesiegedServer
     {
 
         private BlockingCollection<Command> m_MessageQueue = new BlockingCollection<Command>();
-        private Dictionary<string, IClient> m_ConnectedClients = new Dictionary<string,IClient>();  // global hook for all clients
-        private Dictionary<string, BesiegedGameInstance> m_Games = new Dictionary<string, BesiegedGameInstance>();
+        private ConcurrentDictionary<string, IClient> m_ConnectedClients = new ConcurrentDictionary<string, IClient>();  // global hook for all clients
+        private ConcurrentDictionary<string, BesiegedGameInstance> m_Games = new ConcurrentDictionary<string, BesiegedGameInstance>();
 
         public BesiegedServer()
         {
             // Hardcode a game instance as a test
             string uniqueGameIdentifier = Guid.NewGuid().ToString();
-            m_Games.Add(uniqueGameIdentifier, new BesiegedGameInstance(uniqueGameIdentifier, "Test Game"));
+            m_Games.GetOrAdd(uniqueGameIdentifier, new BesiegedGameInstance(uniqueGameIdentifier, "Test Game"));
             
             // Start spinning the process message loop
             Task.Factory.StartNew(() =>
@@ -67,7 +67,7 @@ namespace BesiegedServer
                         string test = commandAggregate.ToXml();
                         clientCallBack.Notify(commandAggregate.ToXml());
 
-                        m_ConnectedClients.Add(newClientIdentifier, clientCallBack);     // Add an entry to the global client hook
+                        m_ConnectedClients.GetOrAdd(newClientIdentifier, clientCallBack);     // Add an entry to the global client hook
                     }
                     else
                     {
