@@ -7,6 +7,7 @@ using Framework.Utilities.Xml;
 using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Utilities;
 
 namespace BesiegedServer
 {
@@ -76,6 +77,7 @@ namespace BesiegedServer
             }
             catch (Exception ex)
             {
+                ErrorLogger.Push(ex);
                 // error handling
             }
         }
@@ -149,6 +151,7 @@ namespace BesiegedServer
             }
             catch (Exception ex)
             {
+                ErrorLogger.Push(ex);
                 // error handling
             }
         }
@@ -175,6 +178,7 @@ namespace BesiegedServer
             }
             catch (Exception ex)
             {
+                ErrorLogger.Push(ex);
                 // error handling
             }
         }

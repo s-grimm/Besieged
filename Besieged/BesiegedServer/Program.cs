@@ -1,7 +1,8 @@
 ﻿using System;
 using System.ServiceModel;
 using System.ServiceModel.Description;
-
+using System.Threading.Tasks;
+using Utilities;
 namespace BesiegedServer
 {
     internal class Program
@@ -15,11 +16,11 @@ namespace BesiegedServer
                 svcHost.AddServiceEndpoint(typeof(Framework.ServiceContracts.IBesiegedServer), new WSDualHttpBinding(), "BesiegedMessage");
                 svcHost.Description.Behaviors.Add(new ServiceMetadataBehavior() { HttpGetEnabled = true });
                 svcHost.Open();
-                Console.Write("Service Started.\n> ");
+                ConsoleLogger.Push("Service Started.");
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                ConsoleLogger.Push(ex.Message);
             }
             finally
             {
@@ -29,8 +30,7 @@ namespace BesiegedServer
                     if (serverMessage == "exit") break;
                     else if (serverMessage == "?" || serverMessage == "help" || serverMessage == "\\help")
                     {
-                        Console.WriteLine("Besieged Server Commands\nexit: Stops the server.");
-                        Console.Write("> ");
+                        ConsoleLogger.Push("Besieged Server Commands\nexit: Stops the server.");
                     }
                     else if (serverMessage == "list")
                     {
@@ -46,6 +46,10 @@ namespace BesiegedServer
                         //    Console.WriteLine(client.Alias);
                         //}
                         //Convert this to use Jesse's Code
+                    }
+                    else
+                    {
+                        ConsoleLogger.Push("Command " + serverMessage + " is not recognized");
                     }
                 }
                 if (svcHost != null)
