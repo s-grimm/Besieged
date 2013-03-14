@@ -26,11 +26,11 @@ namespace TestClient
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Client _client = new Client();
-        private string _clientIdentifier;
-        private bool _isServerConnectionEstablished = false;
-        private TaskScheduler _taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
-        private IBesiegedServer _besiegedServer;
+        private Client m_Client = new Client();
+        private string m_ClientId;
+        private bool m_IsServerConnectionEstablished = false;
+        private TaskScheduler m_TaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
+        private IBesiegedServer m_BesiegedServer;
 
         public ObservableCollection<CommandNotifyGame> GameLobbyCollection { get; set; }
         
@@ -39,21 +39,21 @@ namespace TestClient
             InitializeComponent();
 
             EndpointAddress endpointAddress = new EndpointAddress("http://localhost:31337/BesiegedServer/BesiegedMessage");
-            DuplexChannelFactory<IBesiegedServer> duplexChannelFactory = new DuplexChannelFactory<IBesiegedServer>(_client, new WSDualHttpBinding(), endpointAddress);
-            _besiegedServer = duplexChannelFactory.CreateChannel();
+            DuplexChannelFactory<IBesiegedServer> duplexChannelFactory = new DuplexChannelFactory<IBesiegedServer>(m_Client, new WSDualHttpBinding(), endpointAddress);
+            m_BesiegedServer = duplexChannelFactory.CreateChannel();
 
             // Subscribe in a separate thread to preserve the UI thread
             Task.Factory.StartNew(() =>
             {
                 CommandConnect commandConnect = new CommandConnect();
-                _besiegedServer.SendCommand(commandConnect.ToXml());
+                m_BesiegedServer.SendCommand(commandConnect.ToXml());
             });
 
             Task.Factory.StartNew(() =>
             {
                 while (true)
                 {
-                    Command command = _client.MessageQueue.Take();
+                    Command command = m_Client.MessageQueue.Take();
                     ProcessMessage(command);
                 }
             }, TaskCreationOptions.LongRunning);
@@ -64,42 +64,46 @@ namespace TestClient
 
         public void ProcessMessage(Command command)
         {
-            if (command is CommandConnectionSuccessful)
+            try
             {
-                CommandConnectionSuccessful commandConnectionSuccessful = command as CommandConnectionSuccessful;
-                _clientIdentifier = commandConnectionSuccessful.UniqueIdentifier;
-                _isServerConnectionEstablished = true;
-                //Task.Factory.StartNew(() =>
-                //{
-                //    MessageBox.Show("Connection successful!");
-                //}, CancellationToken.None, TaskCreationOptions.None, _taskScheduler);
-            }
-            else if (command is CommandChatMessage)
-            {
-                Task.Factory.StartNew(() =>
+                if (command is CommandConnectionSuccessful)
                 {
-                    CommandChatMessage chatMessageCommand = command as CommandChatMessage;
-                }, CancellationToken.None, TaskCreationOptions.None, _taskScheduler);
-            }
-            else if (command is CommandNotifyGame)
-            {
-                Task.Factory.StartNew(() =>
+                    CommandConnectionSuccessful commandConnectionSuccessful = command as CommandConnectionSuccessful;
+                    m_ClientId = commandConnectionSuccessful.ClientId;
+                    m_IsServerConnectionEstablished = true;
+                }
+                else if (command is CommandChatMessage)
                 {
-                    CommandNotifyGame commandNotifyGame = command as CommandNotifyGame;
-                    CommandNotifyGame game = GameLobbyCollection.Where(x => x.UniqueIdentifier == commandNotifyGame.UniqueIdentifier).FirstOrDefault(); 
-                    if (game != null)
+                    Task.Factory.StartNew(() =>
                     {
-                        GameLobbyCollection.Remove(game);
+                        CommandChatMessage chatMessageCommand = command as CommandChatMessage;
+                    }, CancellationToken.None, TaskCreationOptions.None, m_TaskScheduler);
+                }
+                else if (command is CommandNotifyGame)
+                {
+                    Task.Factory.StartNew(() =>
+                    {
+                        CommandNotifyGame commandNotifyGame = command as CommandNotifyGame;
+                        CommandNotifyGame game = GameLobbyCollection.Where(x => x.GameId == commandNotifyGame.GameId).FirstOrDefault();
+                        if (game != null)
+                        {
+                            GameLobbyCollection.Remove(game);
 
-                    }
-                    GameLobbyCollection.Add(commandNotifyGame);
-                }, CancellationToken.None, TaskCreationOptions.None, _taskScheduler);
+                        }
+                        GameLobbyCollection.Add(commandNotifyGame);
+                    }, CancellationToken.None, TaskCreationOptions.None, m_TaskScheduler);
+                }
+            }
+            catch (Exception ex)
+            {
+                // error handling
             }
         }
 
-        private void SendMessageToServer(string command)
+        private void SendMessageToServer(Command command)
         {
-            Task.Factory.StartNew(() => _besiegedServer.SendCommand(command));
+            command.ClientId = m_ClientId;
+            Task.Factory.StartNew(() => m_BesiegedServer.SendCommand(command.ToXml()));
         }
 
         private void btnJoin_Click(object sender, RoutedEventArgs e)
@@ -109,8 +113,28 @@ namespace TestClient
                 if (lsvGameLobby.SelectedItem != null)
                 {
                     CommandNotifyGame commandNotifyGame = lsvGameLobby.SelectedItem as CommandNotifyGame;
-                    CommandJoinGame commandJoinGame = new CommandJoinGame(_clientIdentifier, commandNotifyGame.UniqueIdentifier);
-                    SendMessageToServer(commandJoinGame.ToXml());
+                    CommandJoinGame commandJoinGame = new CommandJoinGame(commandNotifyGame.GameId);
+                    SendMessageToServer(commandJoinGame);
+                }
+            }
+            catch (Exception ex)
+            {
+                // error handling
+            }
+        }
+
+        private void btnCreate_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(txtGameName.Text))
+                {
+                    MessageBox.Show("Specify a game name");
+                }
+                else
+                {
+                    CommandCreateGame commandCreateGame = new CommandCreateGame(txtGameName.Text, (int)sldMaxPlayers.Value);
+                    SendMessageToServer(commandCreateGame);
                 }
             }
             catch (Exception ex)

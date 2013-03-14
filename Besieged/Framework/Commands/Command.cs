@@ -3,6 +3,8 @@ namespace Framework.Commands
 {
     public class Command
     {
+        public string GameId { get; set; }
+        public string ClientId { get; set; }
     }
 
     public class CommandAggregate : Command
@@ -49,15 +51,15 @@ namespace Framework.Commands
 
     public class CommandConnectionSuccessful : Command
     {
-        public string UniqueIdentifier { get; set; }
+        public string ClientId { get; set; }
 
         public CommandConnectionSuccessful()
         { 
         }
 
-        public CommandConnectionSuccessful(string uniqueIdentifier)
+        public CommandConnectionSuccessful(string clientId)
         {
-            UniqueIdentifier = uniqueIdentifier;
+            ClientId = clientId;
         }
     }
 
@@ -65,9 +67,25 @@ namespace Framework.Commands
     {
     }
 
+    public class CommandCreateGame : Command
+    {
+        public string GameName { get; set; }
+        public int MaxPlayers { get; set; }
+
+        public CommandCreateGame()
+        {
+        }
+
+        public CommandCreateGame(string gameName, int maxPlayers)
+        {
+            GameName = gameName;
+            MaxPlayers = maxPlayers;
+        }
+    }
+
     public class CommandNotifyGame : Command
     {
-        public string UniqueIdentifier { get; set; }
+        public string GameId { get; set; }
         public string Name { get; set; }
         public string Capacity { get; set; }
         public bool IsGameFull { get; set; }
@@ -77,9 +95,9 @@ namespace Framework.Commands
             IsGameFull = false;
         }
 
-        public CommandNotifyGame(string uniqueIdentifier, string name,  string capacity, bool isGameFull)
+        public CommandNotifyGame(string gameId, string name,  string capacity, bool isGameFull)
         {
-            UniqueIdentifier = uniqueIdentifier;
+            GameId = gameId;
             Name = name;
             Capacity = capacity;
             IsGameFull = isGameFull;
@@ -88,17 +106,15 @@ namespace Framework.Commands
 
     public class CommandJoinGame : Command
     {
-        public string ClientIdentifier { get; set; }
-        public string GameIdentifier { get; set; }
+        public string ClientId { get; set; }
 
         public CommandJoinGame()
         {
         }
 
-        public CommandJoinGame(string clientIdentifier, string gameIdentifier)
+        public CommandJoinGame(string gameId)
         {
-            ClientIdentifier = clientIdentifier;
-            GameIdentifier = gameIdentifier;
+            GameId = gameId;
         }
     }
 

@@ -66,7 +66,7 @@ namespace BesiegedClient
             if (command is CommandConnectionSuccessful)
             {
                 CommandConnectionSuccessful commandConnectionSuccessful = command as CommandConnectionSuccessful;
-                _clientIdentifier = commandConnectionSuccessful.UniqueIdentifier;
+                _clientIdentifier = commandConnectionSuccessful.ClientId;
                 _isServerConnectionEstablished = true;
                 Task.Factory.StartNew(() =>
                 {
