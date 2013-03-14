@@ -9,11 +9,11 @@ namespace Framework.Map
 {
     public class GameMap
     {
-        public ITile[,] Tiles { get;set;}
+        public ITile[,] Tiles { get; set; }
 
-        public string Name { get;set;}
+        public string Name { get; set; }
 
-        public string Author {get;set;}
+        public string Author { get; set; }
 
         public string MD5Hash { get; set; }
 
@@ -25,6 +25,8 @@ namespace Framework.Map
         {
             MapLength = 50;
             MapHeight = 50;
+            Tiles = new ITile[MapLength, MapHeight];
+
             for(int x= 0; x < MapLength; ++x)
             {
                 for (int y = 0; y < MapHeight; ++y)
