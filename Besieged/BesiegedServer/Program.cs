@@ -12,8 +12,8 @@ namespace BesiegedServer
             ServiceHost svcHost = null;
             try
             {
-                svcHost = new ServiceHost(typeof(MessageService), new Uri("http://localhost:31337/BesiegedServer/"));
-                svcHost.AddServiceEndpoint(typeof(Framework.ServiceContracts.IMessageService), new WSDualHttpBinding(), "BesiegedMessage");
+                svcHost = new ServiceHost(typeof(BesiegedServer), new Uri("http://localhost:31337/BesiegedServer/"));
+                svcHost.AddServiceEndpoint(typeof(Framework.ServiceContracts.IBesiegedServer), new WSDualHttpBinding(), "BesiegedMessage");
                 svcHost.Description.Behaviors.Add(new ServiceMetadataBehavior() { HttpGetEnabled = true });
                 svcHost.Open();
                 Console.Write("Service Started.\n> ");

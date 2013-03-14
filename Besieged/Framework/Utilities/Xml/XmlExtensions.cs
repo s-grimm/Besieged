@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Framework.Commands;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -20,10 +22,19 @@ namespace Framework.Utilities.Xml
         {
             if (obj == null) throw new ArgumentNullException("obj");
 
-            var serializer = new XmlSerializer(typeof(T));
+            XmlSerializer xmlSerializer;
+            if (obj is CommandAggregate)
+            {
+                xmlSerializer = XmlCore.SerializationDictionary["CommandAggregate"].Value;
+            }
+            else
+            {
+                xmlSerializer = new XmlSerializer(typeof(T));
+            }
+
             using (var writer = new StringWriter())
             {
-                serializer.Serialize(writer, obj);
+                xmlSerializer.Serialize(writer, obj);
                 return writer.ToString();
             }
         }
