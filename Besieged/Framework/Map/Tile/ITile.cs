@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Framework.Map.Tiles
 {
-    interface ITile
+    public interface ITile
     {
         public int CurrentHealthPointsModifier { get; set; }
         public int MaxHealthPointsModifier { get; set; }
