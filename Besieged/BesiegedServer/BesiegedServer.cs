@@ -144,10 +144,8 @@ namespace BesiegedServer
                 {
                     CommandChatMessage commandChatMessage = command as CommandChatMessage;
                     BesiegedGameInstance gameInstance = m_Games[commandChatMessage.GameId];
-                    foreach (ConnectedClient client in gameInstance.ConnectedClients)
-                    {
-                        client.ClientCallBack.Notify(commandChatMessage.ToXml());
-                    }
+                    gameInstance.MessageQueue.Add(commandChatMessage);
+                    
                 }
             }
             catch (Exception ex)
