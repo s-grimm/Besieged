@@ -45,17 +45,41 @@
     <Compile Include="Command\ChatMessage.cs" />
     <Compile Include="Command\ICommand.cs" />
     <Compile Include="Command\Server\Connect.cs" />
-    <Compile Include="Map\Tile\ArcticTileset.cs" />
-    <Compile Include="Map\Tile\DesertTileFactory.cs" />
-    <Compile Include="Map\Tile\DesertTileset.cs" />
-    <Compile Include="Map\Tile\DesolateTileFactory.cs" />
-    <Compile Include="Map\Tile\DesolateTileset.cs" />
-    <Compile Include="Map\Tile\DungeonTileFactory.cs" />
-    <Compile Include="Map\Tile\GrasslandTileFactory.cs" />
-    <Compile Include="Map\Tile\ITile.cs" />
-    <Compile Include="Map\Tile\ITileFactory.cs" />
-    <Compile Include="Map\Tile\ArcticTileFactory.cs" />
-    <Compile Include="Map\Tile\WetlandTileFactory.cs" />
+    <Compile Include="Map\Tile\ArcticTileFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Map\Tile\ArcticTileset.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Map\Tile\DesertTileFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Map\Tile\DesertTileset.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Map\Tile\DesolateTileFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Map\Tile\DesolateTileset.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Map\Tile\DungeonTileFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Map\Tile\DungeonTileset.cs" />
+    <Compile Include="Map\Tile\GrasslandTileFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Map\Tile\GrasslandTileset.cs" />
+    <Compile Include="Map\Tile\IImpassable.cs" />
+    <Compile Include="Map\Tile\IPassable.cs" />
+    <Compile Include="Map\Tile\ITileFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Map\Tile\WetlandTileFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Map\Tile\WetlandTileset.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sprite\DrawableObject.cs" />
     <Compile Include="Unit\BeastArmy.cs" />

@@ -6,7 +6,37 @@ using System.Threading.Tasks;
 
 namespace Framework.Map.Tile
 {
-    interface DungeonTileFactory
+    public class DungeonTileFactory : ITileFactory
     {
+
+        public Tiles.IPassable GetBasicGround()
+        {
+            return new StoneFloor();
+        }
+
+        public Tiles.IPassable GetBasicRoad()
+        {
+            return new DungeonRoad();
+        }
+
+        public Tiles.IPassable GetBasicBridge()
+        {
+            return new DungeonBridge();
+        }
+
+        public Tiles.IPassable GetHardTerrain()
+        {
+            return new Spikes();
+        }
+
+        public Tiles.IPassable GetFluidTerrain()
+        {
+            return new DungeonRiver();
+        }
+
+        public Tiles.IPassable GetSpecialTerrain()
+        {
+            return new Door();
+        }
     }
 }
