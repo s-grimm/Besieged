@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F8DF10CE-0E2D-4C70-942F-C15644D2605D}</ProjectGuid>
+    <ProjectGuid>{8FD895F5-7375-4C56-BE5E-603C8C1550FC}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BesiegedClient</RootNamespace>
-    <AssemblyName>BesiegedClient</AssemblyName>
+    <RootNamespace>TestClient</RootNamespace>
+    <AssemblyName>TestClient</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -24,7 +23,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,12 +32,10 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -66,7 +62,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="app_code\Client.cs" />
+    <Compile Include="Client.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -90,7 +86,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -98,44 +93,13 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BesiegedClientLogic\BesiegedClientLogic.csproj">
-      <Project>{1715ca01-f329-4907-b73e-eb23c2084d71}</Project>
-      <Name>BesiegedClientLogic</Name>
-    </ProjectReference>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Framework\Framework.csproj">
       <Project>{2a865366-3f9c-4274-8890-6bb49ee99a54}</Project>
       <Name>Framework</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="resources\sprites\alliance\Archer.png" />
-    <Resource Include="resources\sprites\alliance\AscendantWizard.png" />
-    <Resource Include="resources\sprites\alliance\Centaur.png" />
-    <Resource Include="resources\sprites\alliance\CentaurOutrider.png" />
-    <Resource Include="resources\sprites\alliance\Dwarf.png" />
-    <Resource Include="resources\sprites\alliance\DwarfChampion.png" />
-    <Resource Include="resources\sprites\alliance\ElvenRanger.png" />
-    <Resource Include="resources\sprites\alliance\Wizard.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="resources\sprites\beasts\Genie.png" />
-    <Resource Include="resources\sprites\beasts\Gnoll.png" />
-    <Resource Include="resources\sprites\beasts\GnollMarauder.png" />
-    <Resource Include="resources\sprites\beasts\Lizardman.png" />
-    <Resource Include="resources\sprites\beasts\LizardmanCaptain.png" />
-    <Resource Include="resources\sprites\beasts\MasterGenie.png" />
-    <Resource Include="resources\sprites\beasts\Taurus.png" />
-    <Resource Include="resources\sprites\beasts\TaurusLord.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="resources\sprites\undead\Orc.png" />
-    <Resource Include="resources\sprites\undead\OrcChief.png" />
-    <Resource Include="resources\sprites\undead\Skeleton.png" />
-    <Resource Include="resources\sprites\undead\SkeletonCaptain.png" />
-    <Resource Include="resources\sprites\undead\Vampire.png" />
-    <Resource Include="resources\sprites\undead\VampireCount.png" />
-    <Resource Include="resources\sprites\undead\WolfLord.png" />
-    <Resource Include="resources\sprites\undead\WolfRider.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

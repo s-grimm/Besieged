@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Framework.Command
+namespace Framework
 {
-    public abstract class ICommand
+    public class GameState
     {
-        public abstract Object Value { get; set; }
     }
 }

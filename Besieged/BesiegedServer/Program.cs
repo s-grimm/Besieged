@@ -1,7 +1,8 @@
-﻿using BesiegedLogic;
-using System;
+﻿using System;
 using System.ServiceModel;
-
+using System.ServiceModel.Description;
+using System.Threading.Tasks;
+using Utilities;
 namespace BesiegedServer
 {
     internal class Program
@@ -11,14 +12,15 @@ namespace BesiegedServer
             ServiceHost svcHost = null;
             try
             {
-                svcHost = new ServiceHost(typeof(MessageService), new Uri("net.tcp://localhost:31337/BesiegedServer/"));
-                svcHost.AddServiceEndpoint(typeof(Framework.Server.Services.IMessageService), new NetTcpBinding(), "BesiegedMessage");
+                svcHost = new ServiceHost(typeof(BesiegedServer), new Uri("http://localhost:31337/BesiegedServer/"));
+                svcHost.AddServiceEndpoint(typeof(Framework.ServiceContracts.IBesiegedServer), new WSDualHttpBinding(), "BesiegedMessage");
+                svcHost.Description.Behaviors.Add(new ServiceMetadataBehavior() { HttpGetEnabled = true });
                 svcHost.Open();
-                Console.Write("Service Started.\n> ");
+                ConsoleLogger.Push("Service Started.");
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                ConsoleLogger.Push(ex.Message);
             }
             finally
             {
@@ -28,22 +30,26 @@ namespace BesiegedServer
                     if (serverMessage == "exit") break;
                     else if (serverMessage == "?" || serverMessage == "help" || serverMessage == "\\help")
                     {
-                        Console.WriteLine("Besieged Server Commands\nexit: Stops the server.");
-                        Console.Write("> ");
+                        ConsoleLogger.Push("Besieged Server Commands\nexit: Stops the server.");
                     }
                     else if (serverMessage == "list")
                     {
-                        var clients = GameObject.GetClients();
-                        if (clients.Count <= 0)
-                        {
-                            Console.Write("> ");
-                            continue;
-                        }
-                        Console.WriteLine("Connected Clients");
-                        foreach (Framework.Server.Client client in clients)
-                        {
-                            Console.WriteLine(client.Alias);
-                        }
+                        //var clients = GameObject.GetClients();
+                        //if (clients.Count <= 0)
+                        //{
+                        //    Console.Write("> ");
+                        //    continue;
+                        //}
+                        //Console.WriteLine("Connected Clients");
+                        //foreach (BesiegedLogic.Objects.Client client in clients)
+                        //{
+                        //    Console.WriteLine(client.Alias);
+                        //}
+                        //Convert this to use Jesse's Code
+                    }
+                    else
+                    {
+                        ConsoleLogger.Push("Command " + serverMessage + " is not recognized");
                     }
                 }
                 if (svcHost != null)

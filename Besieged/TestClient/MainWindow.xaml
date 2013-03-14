@@ -1,0 +1,24 @@
+﻿<Window x:Class="TestClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="401" Width="526">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10*" />
+        </Grid.ColumnDefinitions>
+        <ListView x:Name="lsvGameLobby" HorizontalAlignment="Left" Height="264" VerticalAlignment="Top" Width="517" Grid.Column="5" ItemsSource="{Binding Path=GameLobbyCollection}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Game Name" Width="263" DisplayMemberBinding="{Binding Path=Name}"/>
+                    <GridViewColumn Header="Capacity" Width="263" DisplayMemberBinding="{Binding Path=Capacity}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="btnJoin" Content="Join" HorizontalAlignment="Left" Margin="10,340,0,0" VerticalAlignment="Top" Width="75" Click="btnJoin_Click"/>
+        <Button x:Name="btnCreate" Content="Create" HorizontalAlignment="Left" Margin="421,340,0,0" VerticalAlignment="Top" Width="75" Click="btnCreate_Click"/>
+        <TextBox x:Name="txtGameName" HorizontalAlignment="Left" Height="23" Margin="293,269,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="203"/>
+        <Label x:Name="lblGameName" Content="Game Name" HorizontalAlignment="Left" Margin="212,269,0,0" VerticalAlignment="Top" Height="23"/>
+        <Slider x:Name="sldMaxPlayers" HorizontalAlignment="Left" Margin="293,297,0,0" VerticalAlignment="Top" Width="203" Maximum="8" Minimum="2" TickPlacement="BottomRight" AutoToolTipPlacement="BottomRight"/>
+        <Label x:Name="lblMaxPlayers" Content="Max Players" HorizontalAlignment="Left" Margin="212,297,0,0" VerticalAlignment="Top" Width="76"/>
+    </Grid>
+</Window>
