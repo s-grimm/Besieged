@@ -1,6 +1,35 @@
-﻿namespace Framework.Commands
+﻿using System.Collections.Generic;
+namespace Framework.Commands
 {
     public class Command
+    {
+    }
+
+    public class CommandAggregate : Command
+    {
+        public List<Command> Commands { get; set; }
+
+        public CommandAggregate()
+        {
+            Commands = new List<Command>();
+        }
+    }
+
+    public class CommandChatMessage : Command
+    {
+        public string Contents { get; set; }
+
+        public CommandChatMessage()
+        {
+        }
+
+        public CommandChatMessage(string contents)
+        {
+            Contents = contents;
+        }
+    }
+
+    public class CommandClientJoined : Command
     {
     }
 
@@ -16,10 +45,6 @@
         {
             Alias = alias;
         }
-    }
-
-    public class CommandClientJoined : Command
-    {
     }
 
     public class CommandConnectionSuccessful : Command
@@ -40,17 +65,22 @@
     {
     }
 
-    public class CommandChatMessage : Command
+    public class CommandNotifyGame : Command
     {
-        public string Contents { get; set; }
+        public string UniqueIdentifier { get; set; }
+        public string Capacity { get; set; }
+        public bool IsGameFull { get; set; }
 
-        public CommandChatMessage()
+        public CommandNotifyGame()
         {
+            IsGameFull = false;
         }
 
-        public CommandChatMessage(string contents)
+        public CommandNotifyGame(string uniqueIdentifier, string capacity, bool isGameFull)
         {
-            Contents = contents;
+            UniqueIdentifier = uniqueIdentifier;
+            Capacity = capacity;
+            IsGameFull = isGameFull;
         }
     }
 }

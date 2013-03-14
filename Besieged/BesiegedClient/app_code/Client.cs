@@ -19,7 +19,15 @@ namespace BesiegedClient.app_code
             try
             {
                 Command command = serializedMessage.FromXml<Command>();
-                MessageQueue.Add(command);
+                if (command is CommandAggregate)
+                {
+                    CommandAggregate commandAggregate = command as CommandAggregate;
+                    commandAggregate.Commands.ForEach(x => MessageQueue.Add(x));
+                }
+                else
+                {
+                    MessageQueue.Add(command);
+                }
             }
             catch (Exception ex)
             {

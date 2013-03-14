@@ -58,6 +58,7 @@
     <Compile Include="Unit\SpriteFactory.cs" />
     <Compile Include="Unit\Unit.cs" />
     <Compile Include="Utilities\BesiegedException.cs" />
+    <Compile Include="Utilities\FixedSizeList.cs" />
     <Compile Include="Utilities\Xml\XmlCore.cs" />
     <Compile Include="Utilities\Xml\XmlExtensions.cs" />
   </ItemGroup>

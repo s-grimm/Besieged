@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Framework.Commands;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -11,33 +12,25 @@ namespace Framework.Utilities.Xml
 {
     public static class XmlCore
     {
-        private static bool IsInstantiated = false;
+        public static Dictionary<string, KeyValuePair<Type, XmlSerializer>> SerializationDictionary { get; set; }
+        private static Type[] CommandTypes;
 
-        private static Dictionary<string, KeyValuePair<Type, XmlSerializer>> _serializationDictionary;
-
-        public static Dictionary<string, KeyValuePair<Type, XmlSerializer>> SerializationDictionary 
-        { 
-            get
-            {
-                if (!IsInstantiated)
-                {
-                    _serializationDictionary = new Dictionary<string, KeyValuePair<Type, XmlSerializer>>();
-                    PopulateDictionary();
-                }
-                return _serializationDictionary;
-            }  
-        }
-
-        private static void PopulateDictionary()
+        static XmlCore()
         {
-            if (!IsInstantiated)
+            SerializationDictionary = new Dictionary<string, KeyValuePair<Type, XmlSerializer>>();
+            CommandTypes = Assembly.GetExecutingAssembly().GetTypes().ToList().Where(x => x.IsClass && x.Namespace == "Framework.Commands").ToArray();
+            
+            CommandTypes.ToList().ForEach(type =>
             {
-                Assembly.GetExecutingAssembly().GetTypes().ToList().Where(x => x.IsClass && x.Namespace == "Framework.Commands").ToList().ForEach(type =>
+                if (type == typeof(CommandAggregate))
                 {
-                    _serializationDictionary.Add(type.Name.ToString(), new KeyValuePair<Type, XmlSerializer>(type, new XmlSerializer(type)));
-                });
-                IsInstantiated = true;
-            }
+                    SerializationDictionary.Add(type.Name.ToString(), new KeyValuePair<Type, XmlSerializer>(type, new XmlSerializer(type, CommandTypes)));
+                }
+                else
+                {
+                    SerializationDictionary.Add(type.Name.ToString(), new KeyValuePair<Type, XmlSerializer>(type, new XmlSerializer(type)));
+                }
+            });
         }
     }
 }
