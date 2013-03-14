@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace BesiegedServer
 {
@@ -14,6 +15,7 @@ namespace BesiegedServer
         public string Name { get; set; }
         public GameState GameState { get; set; }
         public bool IsGameInstanceFull { get; set; }
+        private const List<Color> _colors = new List<Color>() { Color.Red, Color.Blue, Color.Green, Color.Yellow, Color.Orange, Color.Violet, Color.Cyan, Color.HotPink };
 
         public BesiegedGameInstance()
         {
