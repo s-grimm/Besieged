@@ -1,5 +1,4 @@
-﻿using BesiegedLogic;
-using System;
+﻿using System;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 
@@ -35,17 +34,18 @@ namespace BesiegedServer
                     }
                     else if (serverMessage == "list")
                     {
-                        var clients = GameObject.GetClients();
-                        if (clients.Count <= 0)
-                        {
-                            Console.Write("> ");
-                            continue;
-                        }
-                        Console.WriteLine("Connected Clients");
-                        foreach (BesiegedLogic.Objects.Client client in clients)
-                        {
-                            Console.WriteLine(client.Alias);
-                        }
+                        //var clients = GameObject.GetClients();
+                        //if (clients.Count <= 0)
+                        //{
+                        //    Console.Write("> ");
+                        //    continue;
+                        //}
+                        //Console.WriteLine("Connected Clients");
+                        //foreach (BesiegedLogic.Objects.Client client in clients)
+                        //{
+                        //    Console.WriteLine(client.Alias);
+                        //}
+                        //Convert this to use Jesse's Code
                     }
                 }
                 if (svcHost != null)

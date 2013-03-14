@@ -1,5 +1,4 @@
 ﻿using System.Collections.Concurrent;
-using BesiegedLogic;
 using System.ServiceModel;
 using System.Runtime.Serialization;
 using Framework.ServiceContracts;
