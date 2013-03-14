@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Framework.Map;
+using System;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.Threading.Tasks;
 using Utilities;
+using Framework.Utilities.Xml;
 namespace BesiegedServer
 {
     internal class Program
@@ -17,6 +19,7 @@ namespace BesiegedServer
                 svcHost.Description.Behaviors.Add(new ServiceMetadataBehavior() { HttpGetEnabled = true });
                 svcHost.Open();
                 ConsoleLogger.Push("Service Started.");
+                ErrorLogger.Push(new Exception(new GameMap().ToXml()));
             }
             catch (Exception ex)
             {

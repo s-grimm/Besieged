@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Framework.Sprite
 {
-    class DrawableObject
+    public class DrawableObject
     {
         public virtual object GetSprite()
         {
@@ -17,7 +17,7 @@ namespace Framework.Sprite
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
             return sprite;
         }

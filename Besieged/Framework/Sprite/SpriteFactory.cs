@@ -109,7 +109,10 @@ namespace Framework.Unit
                 {
                     return "VampireCount.png";
                 }
-                
+                else
+                {
+                    return string.Empty;
+                }
 
             }
             catch (Exception ex)

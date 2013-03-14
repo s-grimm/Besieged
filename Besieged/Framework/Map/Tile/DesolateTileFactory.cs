@@ -8,32 +8,32 @@ namespace Framework.Map.Tile
 {
     public class DesolateTileFactory : ITileFactory
     {
-        public Tiles.IPassable GetBasicGround()
+        public Tile.ITile GetBasicGround()
         {
             return new Ash();
         }
 
-        public Tiles.IPassable GetBasicRoad()
+        public Tile.ITile GetBasicRoad()
         {
             return new DesolateRoad();
         }
 
-        public Tiles.IPassable GetBasicBridge()
+        public Tile.ITile GetBasicBridge()
         {
             return new DesolateBridge();
         }
 
-        public Tiles.IPassable GetHardTerrain()
+        public Tile.ITile GetHardTerrain()
         {
             return new Onyx();
         }
 
-        public Tiles.IPassable GetFluidTerrain()
+        public Tile.ITile GetFluidTerrain()
         {
             return new DesolateRiver();
         }
 
-        public Tiles.IPassable GetSpecialTerrain()
+        public Tile.ITile GetSpecialTerrain()
         {
             return new Lava();
         }

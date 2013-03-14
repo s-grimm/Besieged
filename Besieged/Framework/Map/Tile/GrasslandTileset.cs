@@ -1,4 +1,4 @@
-﻿using Framework.Map.Tiles;
+﻿using Framework.Map.Tile;
 using Framework.Sprite;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Framework.Map.Tile
 {
-    public class Grass : DrawableObject, IPassable
+    public class Grass : DrawableObject, ITile
     {
         public int CurrentHealthPointsModifier
         {
@@ -83,7 +83,7 @@ namespace Framework.Map.Tile
         }
     }
 
-    public class GrasslandRoad : DrawableObject, IPassable
+    public class GrasslandRoad : DrawableObject, ITile
     {
         public int CurrentHealthPointsModifier
         {
@@ -158,7 +158,7 @@ namespace Framework.Map.Tile
         }
     }
 
-    public class GrasslandBridge : DrawableObject, IPassable
+    public class GrasslandBridge : DrawableObject, ITile
     {
         public int CurrentHealthPointsModifier
         {
@@ -233,7 +233,7 @@ namespace Framework.Map.Tile
         }
     }
 
-    public class Tallgrass : DrawableObject, IPassable
+    public class Tallgrass : DrawableObject, ITile
     {
         public int CurrentHealthPointsModifier
         {
@@ -308,7 +308,7 @@ namespace Framework.Map.Tile
         }
     }
 
-    public class GrasslandRiver : DrawableObject, IPassable
+    public class GrasslandRiver : DrawableObject, ITile
     {
         public int CurrentHealthPointsModifier
         {
@@ -383,7 +383,7 @@ namespace Framework.Map.Tile
         }
     }
 
-    public class Tree : DrawableObject, IPassable
+    public class Tree : DrawableObject, ITile
     {
         public int CurrentHealthPointsModifier
         {

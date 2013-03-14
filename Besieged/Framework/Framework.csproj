@@ -42,9 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Command\ChatMessage.cs" />
-    <Compile Include="Command\ICommand.cs" />
-    <Compile Include="Command\Server\Connect.cs" />
+    <Compile Include="Map\GameMap.cs" />
     <Compile Include="Map\Tile\ArcticTileFactory.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -71,8 +69,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Map\Tile\GrasslandTileset.cs" />
-    <Compile Include="Map\Tile\IImpassable.cs" />
-    <Compile Include="Map\Tile\IPassable.cs" />
+    <Compile Include="Map\Tile\ITile.cs" />
     <Compile Include="Map\Tile\ITileFactory.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -101,9 +98,7 @@
     <Compile Include="Utilities\Xml\XmlExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Command\Client\" />
     <Folder Include="Commands\ClientCommands\" />
-    <Folder Include="Map\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

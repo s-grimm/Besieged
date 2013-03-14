@@ -1,4 +1,4 @@
-﻿using Framework.Map.Tiles;
+﻿using Framework.Map.Tile;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +9,12 @@ namespace Framework.Map.Tile
 {
     public interface ITileFactory
     {
-        IPassable GetBasicGround();
-        IPassable GetBasicRoad();
-        IPassable GetBasicBridge();
-        IPassable GetHardTerrain();
-        IPassable GetFluidTerrain();
-        IPassable GetSpecialTerrain();
+        ITile GetBasicGround();
+        ITile GetBasicRoad();
+        ITile GetBasicBridge();
+        ITile GetHardTerrain();
+        ITile GetFluidTerrain();
+        ITile GetSpecialTerrain();
         
     }
 }

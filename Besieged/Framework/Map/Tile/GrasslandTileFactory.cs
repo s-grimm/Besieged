@@ -8,32 +8,32 @@ namespace Framework.Map.Tile
 {
     public class GrasslandTileFactory : ITileFactory
     {
-        public Tiles.IPassable GetBasicGround()
+        public Tile.ITile GetBasicGround()
         {
             return new Grass();
         }
 
-        public Tiles.IPassable GetBasicRoad()
+        public Tile.ITile GetBasicRoad()
         {
             return new GrasslandRoad();
         }
 
-        public Tiles.IPassable GetBasicBridge()
+        public Tile.ITile GetBasicBridge()
         {
             return new GrasslandBridge();
         }
 
-        public Tiles.IPassable GetHardTerrain()
+        public Tile.ITile GetHardTerrain()
         {
             return new Tallgrass();
         }
 
-        public Tiles.IPassable GetFluidTerrain()
+        public Tile.ITile GetFluidTerrain()
         {
             return new GrasslandRiver();
         }
 
-        public Tiles.IPassable GetSpecialTerrain()
+        public Tile.ITile GetSpecialTerrain()
         {
             return new Tree();
         }

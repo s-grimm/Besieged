@@ -8,32 +8,32 @@ namespace Framework.Map.Tile
 {
     public class ArcticTileFactory : ITileFactory
     {
-        public Tiles.IPassable GetBasicGround()
+        public Tile.ITile GetBasicGround()
         {
             return new Snow();
         }
 
-        public Tiles.IPassable GetBasicRoad()
+        public Tile.ITile GetBasicRoad()
         {
             return new ArcticRoad();
         }
 
-        public Tiles.IPassable GetBasicBridge()
+        public Tile.ITile GetBasicBridge()
         {
             return new ArcticBridge();
         }
 
-        public Tiles.IPassable GetHardTerrain()
+        public Tile.ITile GetHardTerrain()
         {
             return new Ice();
         }
 
-        public Tiles.IPassable GetFluidTerrain()
+        public Tile.ITile GetFluidTerrain()
         {
             return new ArcticRiver();
         }
 
-        public Tiles.IPassable GetSpecialTerrain()
+        public Tile.ITile GetSpecialTerrain()
         {
             return new DeepSnow();
         }

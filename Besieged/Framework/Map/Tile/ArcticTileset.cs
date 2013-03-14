@@ -1,4 +1,4 @@
-﻿using Framework.Map.Tiles;
+﻿using Framework.Map.Tile;
 using Framework.Sprite;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Framework.Map.Tile
 {
-    public class Snow : DrawableObject, IPassable
+    public class Snow : DrawableObject, ITile
     {
 
         public int CurrentHealthPointsModifier
@@ -96,7 +96,7 @@ namespace Framework.Map.Tile
         }
     }
 
-    public class ArcticRoad : DrawableObject, IPassable
+    public class ArcticRoad : DrawableObject, ITile
     {
 
         public int CurrentHealthPointsModifier
@@ -184,7 +184,7 @@ namespace Framework.Map.Tile
         }
     }
 
-    public class ArcticBridge : DrawableObject, IPassable
+    public class ArcticBridge : DrawableObject, ITile
     {
 
         public int CurrentHealthPointsModifier
@@ -272,7 +272,7 @@ namespace Framework.Map.Tile
         }
     }
 
-    public class Ice : DrawableObject, IPassable
+    public class Ice : DrawableObject, ITile
     {
 
         public int CurrentHealthPointsModifier
@@ -360,7 +360,7 @@ namespace Framework.Map.Tile
         }
     }
 
-    public class ArcticRiver : DrawableObject, IPassable
+    public class ArcticRiver : DrawableObject, ITile
     {
 
         public int CurrentHealthPointsModifier
@@ -448,7 +448,7 @@ namespace Framework.Map.Tile
         }
     }
 
-    public class DeepSnow : DrawableObject, IPassable
+    public class DeepSnow : DrawableObject, ITile
     {
 
         public int CurrentHealthPointsModifier
