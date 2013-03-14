@@ -93,6 +93,16 @@ namespace TestClient
                         GameLobbyCollection.Add(commandNotifyGame);
                     }, CancellationToken.None, TaskCreationOptions.None, m_TaskScheduler);
                 }
+
+				else if (command is CommandServerError) 
+				{
+					Task.Factory.StartNew(() =>
+                    {
+						CommandServerError commandServerError = command as CommandServerError;
+						MessageBox.Show(commandServerError.ErrorMessage);
+                       
+                    }, CancellationToken.None, TaskCreationOptions.None, m_TaskScheduler);
+				}
             }
             catch (Exception ex)
             {
@@ -100,10 +110,9 @@ namespace TestClient
             }
         }
 
-        private void SendMessageToServer(Command command)
+        private void SendMessageToServer(string command)
         {
-            command.ClientId = m_ClientId;
-            Task.Factory.StartNew(() => m_BesiegedServer.SendCommand(command.ToXml()));
+            Task.Factory.StartNew(() => m_BesiegedServer.SendCommand(command));
         }
 
         private void btnJoin_Click(object sender, RoutedEventArgs e)
@@ -114,7 +123,8 @@ namespace TestClient
                 {
                     CommandNotifyGame commandNotifyGame = lsvGameLobby.SelectedItem as CommandNotifyGame;
                     CommandJoinGame commandJoinGame = new CommandJoinGame(commandNotifyGame.GameId);
-                    SendMessageToServer(commandJoinGame);
+					commandJoinGame.ClientId = m_ClientId;
+                    SendMessageToServer(commandJoinGame.ToXml());
                 }
             }
             catch (Exception ex)
@@ -134,7 +144,8 @@ namespace TestClient
                 else
                 {
                     CommandCreateGame commandCreateGame = new CommandCreateGame(txtGameName.Text, (int)sldMaxPlayers.Value);
-                    SendMessageToServer(commandCreateGame);
+					commandCreateGame.ClientId = m_ClientId;
+					SendMessageToServer(commandCreateGame.ToXml());
                 }
             }
             catch (Exception ex)

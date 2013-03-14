@@ -51,8 +51,6 @@ namespace Framework.Commands
 
     public class CommandConnectionSuccessful : Command
     {
-        public string ClientId { get; set; }
-
         public CommandConnectionSuccessful()
         { 
         }
@@ -85,7 +83,6 @@ namespace Framework.Commands
 
     public class CommandNotifyGame : Command
     {
-        public string GameId { get; set; }
         public string Name { get; set; }
         public string Capacity { get; set; }
         public bool IsGameFull { get; set; }
@@ -106,8 +103,6 @@ namespace Framework.Commands
 
     public class CommandJoinGame : Command
     {
-        public string ClientId { get; set; }
-
         public CommandJoinGame()
         {
         }
