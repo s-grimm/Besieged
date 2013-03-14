@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Data.SqlClient;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Utilities
 {
@@ -12,6 +13,13 @@ namespace Utilities
         static ErrorLogger()
         {
             Exceptions = new BlockingCollection<Exception>();
+            Task.Factory.StartNew(() =>
+            {
+                while (true)
+                {
+                    ErrorLogger.Write();
+                }
+            }, TaskCreationOptions.LongRunning);
         }
 
         public static bool Push(Exception ex)
@@ -27,7 +35,7 @@ namespace Utilities
             }
         }
 
-        public static void Write()
+        private static void Write()
         {
             Exception ex = Exceptions.Take();
 

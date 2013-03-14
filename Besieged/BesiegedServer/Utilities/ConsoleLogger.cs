@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BesiegedServer.Utilities
+namespace Utilities
 {
     public static class ConsoleLogger
     {
@@ -14,6 +14,13 @@ namespace BesiegedServer.Utilities
         static ConsoleLogger()
         {
             Messages = new BlockingCollection<string>();
+            Task.Factory.StartNew(() =>
+            {
+                while (true)
+                {
+                    ConsoleLogger.Write();
+                }
+            }, TaskCreationOptions.LongRunning);
         }
 
         public static bool Push(string ex)
@@ -29,7 +36,7 @@ namespace BesiegedServer.Utilities
             }
         }
 
-        public static void Write()
+        private static void Write()
         {
             Console.WriteLine(Messages.Take());
         }
