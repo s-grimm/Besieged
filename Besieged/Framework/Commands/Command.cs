@@ -140,4 +140,8 @@ namespace Framework.Commands
             ErrorMessage = errorMessage;
         }
     }
+
+    public class CommandStartServer : Command
+    {
+    }
 }
