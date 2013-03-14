@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Framework.Map.Tiles
 {
-    public interface ITile
+    public interface IPassable
     {
         public int CurrentHealthPointsModifier { get; set; }
         public int MaxHealthPointsModifier { get; set; }
@@ -14,6 +14,5 @@ namespace Framework.Map.Tiles
         public int SkillModifier { get; set; }
         public int RangeModifier { get; set; }
         public int MovementModifier { get; set; }
-        public bool IsPassable { get; set; }
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Framework.Map.Tile
 {
-    public class Sand : DrawableObject, IPassable
+    public class StoneFloor : DrawableObject, IPassable
     {
 
         public int CurrentHealthPointsModifier
@@ -82,21 +82,9 @@ namespace Framework.Map.Tile
                 MovementModifier = value;
             }
         }
-
-        public bool IsPassable
-        {
-            get
-            {
-                return IsPassable;
-            }
-            set
-            {
-                IsPassable = value;
-            }
-        }
     }
 
-    public class DesertRoad : DrawableObject, IPassable
+    public class DungeonRoad : DrawableObject, IPassable
     {
 
         public int CurrentHealthPointsModifier
@@ -170,21 +158,9 @@ namespace Framework.Map.Tile
                 MovementModifier = value;
             }
         }
-
-        public bool IsPassable
-        {
-            get
-            {
-                return IsPassable;
-            }
-            set
-            {
-                IsPassable = value;
-            }
-        }
     }
 
-    public class DesertBridge : DrawableObject, IPassable
+    public class DungeonBridge : DrawableObject, IPassable
     {
 
         public int CurrentHealthPointsModifier
@@ -258,21 +234,9 @@ namespace Framework.Map.Tile
                 MovementModifier = value;
             }
         }
-
-        public bool IsPassable
-        {
-            get
-            {
-                return IsPassable;
-            }
-            set
-            {
-                IsPassable = value;
-            }
-        }
     }
 
-    public class Quicksand : DrawableObject, IPassable
+    public class Spikes : DrawableObject, IPassable
     {
 
         public int CurrentHealthPointsModifier
@@ -346,21 +310,9 @@ namespace Framework.Map.Tile
                 MovementModifier = value;
             }
         }
-
-        public bool IsPassable
-        {
-            get
-            {
-                return IsPassable;
-            }
-            set
-            {
-                IsPassable = value;
-            }
-        }
     }
 
-    public class DesertRiver : DrawableObject, IPassable
+    public class DungeonRiver : DrawableObject, IPassable
     {
 
         public int CurrentHealthPointsModifier
@@ -434,21 +386,9 @@ namespace Framework.Map.Tile
                 MovementModifier = value;
             }
         }
-
-        public bool IsPassable
-        {
-            get
-            {
-                return IsPassable;
-            }
-            set
-            {
-                IsPassable = value;
-            }
-        }
     }
 
-    public class Oasis : DrawableObject, IPassable
+    public class Door : DrawableObject, IPassable
     {
 
         public int CurrentHealthPointsModifier
@@ -522,17 +462,6 @@ namespace Framework.Map.Tile
                 MovementModifier = value;
             }
         }
-
-        public bool IsPassable
-        {
-            get
-            {
-                return IsPassable;
-            }
-            set
-            {
-                IsPassable = value;
-            }
-        }
     }
+
 }

@@ -8,32 +8,32 @@ namespace Framework.Map.Tile
 {
     public class DesertTileFactory : ITileFactory
     {
-        public Tiles.ITile GetBasicGround()
+        public Tiles.IPassable GetBasicGround()
         {
             return new Sand();
         }
 
-        public Tiles.ITile GetBasicRoad()
+        public Tiles.IPassable GetBasicRoad()
         {
             return new DesertRoad();
         }
 
-        public Tiles.ITile GetBasicBridge()
+        public Tiles.IPassable GetBasicBridge()
         {
             return new DesertBridge();
         }
 
-        public Tiles.ITile GetHardTerrain()
+        public Tiles.IPassable GetHardTerrain()
         {
             return new Quicksand();
         }
 
-        public Tiles.ITile GetFluidTerrain()
+        public Tiles.IPassable GetFluidTerrain()
         {
             return new DesertRiver();
         }
 
-        public Tiles.ITile GetSpecialTerrain()
+        public Tiles.IPassable GetSpecialTerrain()
         {
             return new Oasis();
         }

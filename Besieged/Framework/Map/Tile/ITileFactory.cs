@@ -9,12 +9,12 @@ namespace Framework.Map.Tile
 {
     public interface ITileFactory
     {
-        ITile GetBasicGround();
-        ITile GetBasicRoad();
-        ITile GetBasicBridge();
-        ITile GetHardTerrain();
-        ITile GetFluidTerrain();
-        ITile GetSpecialTerrain();
+        IPassable GetBasicGround();
+        IPassable GetBasicRoad();
+        IPassable GetBasicBridge();
+        IPassable GetHardTerrain();
+        IPassable GetFluidTerrain();
+        IPassable GetSpecialTerrain();
         
     }
 }
