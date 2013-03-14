@@ -23,7 +23,7 @@ namespace BesiegedServer
         {
             // Hardcode a game instance as a test
             string uniqueGameIdentifier = Guid.NewGuid().ToString();
-            m_Games.Add(uniqueGameIdentifier, new BesiegedGameInstance(uniqueGameIdentifier));
+            m_Games.Add(uniqueGameIdentifier, new BesiegedGameInstance(uniqueGameIdentifier, "Test Game"));
             
             // Start spinning the process message loop
             Task.Factory.StartNew(() =>
@@ -59,7 +59,7 @@ namespace BesiegedServer
                                 if (!game.Value.IsGameInstanceFull)
                                 {
                                     string capacity = string.Format("{0}/4 players", game.Value.ConnectedClients.Count);
-                                    CommandNotifyGame commandNotifyGame = new CommandNotifyGame(game.Value.UniqueIdentifier, capacity, false);
+                                    CommandNotifyGame commandNotifyGame = new CommandNotifyGame(game.Value.UniqueIdentifier, game.Value.Name, capacity, false);
                                     commandAggregate.Commands.Add(commandNotifyGame);
                                 }
                             }
@@ -85,7 +85,34 @@ namespace BesiegedServer
         {
             try
             {
-                
+                if (command is CommandJoinGame)
+                {
+                    CommandJoinGame commandJoinGame = command as CommandJoinGame;
+                    if (m_Games.ContainsKey(commandJoinGame.GameIdentifier))
+                    {
+                        if (!m_Games[commandJoinGame.GameIdentifier].IsGameInstanceFull)
+                        {
+                            BesiegedGameInstance gameInstance = m_Games[commandJoinGame.GameIdentifier];
+                            IClient client = m_ConnectedClients[commandJoinGame.ClientIdentifier];
+                            ConnectedClient connectedClient = new ConnectedClient("Alias", commandJoinGame.ClientIdentifier, client);
+                            gameInstance.ConnectedClients.Add(connectedClient);
+
+                            string capacity = string.Format("{0}/4 players", gameInstance.ConnectedClients.Count); // notify all connect clients of the updated game instance
+                            CommandNotifyGame commandNotifyGame = new CommandNotifyGame(gameInstance.UniqueIdentifier, gameInstance.Name, capacity, gameInstance.IsGameInstanceFull);
+                            NotifyAllConnectedClients(commandNotifyGame.ToXml());
+                        }
+                        else
+                        {
+                            CommandServerError commandServerError = new CommandServerError("Game is full");
+                            NotifyClient(commandJoinGame.ClientIdentifier, commandServerError.ToXml());
+                        }
+                    }
+                    else
+                    {
+                        CommandServerError commandServerError = new CommandServerError("Game cannot be found");
+                        NotifyClient(commandJoinGame.ClientIdentifier, commandServerError.ToXml());
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -93,11 +120,25 @@ namespace BesiegedServer
             }
         }
 
-        public void NotifyAllConnectedClients(Command command)
+        public void NotifyClient(string clientId, string command)
+        {
+            if (m_ConnectedClients.ContainsKey(clientId))
+            {
+                m_ConnectedClients[clientId].Notify(command);   
+            }
+        }
+
+        public void NotifyAllConnectedClients(string command)
         {
             try
             {
-                
+                foreach (KeyValuePair<string, IClient> client in m_ConnectedClients)
+                {
+                    if (((ICommunicationObject)client.Value).State == CommunicationState.Opened)
+                    {
+                        client.Value.Notify(command);
+                    }
+                }
             }
             catch (Exception ex)
             {

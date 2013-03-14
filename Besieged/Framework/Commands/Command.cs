@@ -68,6 +68,7 @@ namespace Framework.Commands
     public class CommandNotifyGame : Command
     {
         public string UniqueIdentifier { get; set; }
+        public string Name { get; set; }
         public string Capacity { get; set; }
         public bool IsGameFull { get; set; }
 
@@ -76,11 +77,42 @@ namespace Framework.Commands
             IsGameFull = false;
         }
 
-        public CommandNotifyGame(string uniqueIdentifier, string capacity, bool isGameFull)
+        public CommandNotifyGame(string uniqueIdentifier, string name,  string capacity, bool isGameFull)
         {
             UniqueIdentifier = uniqueIdentifier;
+            Name = name;
             Capacity = capacity;
             IsGameFull = isGameFull;
+        }
+    }
+
+    public class CommandJoinGame : Command
+    {
+        public string ClientIdentifier { get; set; }
+        public string GameIdentifier { get; set; }
+
+        public CommandJoinGame()
+        {
+        }
+
+        public CommandJoinGame(string clientIdentifier, string gameIdentifier)
+        {
+            ClientIdentifier = clientIdentifier;
+            GameIdentifier = gameIdentifier;
+        }
+    }
+
+    public class CommandServerError : Command
+    {
+        public string ErrorMessage { get; set; }
+
+        public CommandServerError()
+        {
+        }
+
+        public CommandServerError(string errorMessage)
+        {
+            ErrorMessage = errorMessage;
         }
     }
 }

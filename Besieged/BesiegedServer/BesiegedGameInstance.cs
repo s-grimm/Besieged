@@ -11,6 +11,7 @@ namespace BesiegedServer
     {
         public List<ConnectedClient> ConnectedClients { get; set; }
         public string UniqueIdentifier { get; set; }
+        public string Name { get; set; }
         public GameState GameState { get; set; }
         public bool IsGameInstanceFull { get; set; }
 
@@ -20,9 +21,10 @@ namespace BesiegedServer
             IsGameInstanceFull = false;
         }
 
-        public BesiegedGameInstance(string uniqueIdentifier)
+        public BesiegedGameInstance(string uniqueIdentifier, string name)
         {
             UniqueIdentifier = uniqueIdentifier;
+            Name = name;
             ConnectedClients = new List<ConnectedClient>();
             IsGameInstanceFull = false;
         }
