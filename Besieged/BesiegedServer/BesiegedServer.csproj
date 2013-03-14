@@ -51,6 +51,8 @@
     <Compile Include="BesiegedGameInstance.cs" />
     <Compile Include="BesiegedServer.cs" />
     <Compile Include="ConnectedClient.cs" />
+    <Compile Include="Utilities\ConsoleLogger.cs" />
+    <Compile Include="Utilities\ErrorLogger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

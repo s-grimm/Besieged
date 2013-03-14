@@ -1,7 +1,9 @@
-﻿using System;
+﻿using BesiegedServer.Utilities;
+using System;
 using System.ServiceModel;
 using System.ServiceModel.Description;
-
+using System.Threading.Tasks;
+using Utilities;
 namespace BesiegedServer
 {
     internal class Program
@@ -15,6 +17,21 @@ namespace BesiegedServer
                 svcHost.AddServiceEndpoint(typeof(Framework.ServiceContracts.IBesiegedServer), new WSDualHttpBinding(), "BesiegedMessage");
                 svcHost.Description.Behaviors.Add(new ServiceMetadataBehavior() { HttpGetEnabled = true });
                 svcHost.Open();
+
+                Task.Factory.StartNew(() =>
+                {
+                    while (true)
+                    {
+                        ErrorLogger.Write();
+                    }
+                }, TaskCreationOptions.LongRunning);
+                Task.Factory.StartNew(() =>
+                {
+                    while (true)
+                    {
+                        ConsoleLogger.Write();
+                    }
+                }, TaskCreationOptions.LongRunning);
                 Console.Write("Service Started.\n> ");
             }
             catch (Exception ex)
@@ -46,6 +63,7 @@ namespace BesiegedServer
                         //    Console.WriteLine(client.Alias);
                         //}
                         //Convert this to use Jesse's Code
+                        Console.Write("> ");
                     }
                 }
                 if (svcHost != null)
