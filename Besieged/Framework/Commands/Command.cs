@@ -81,6 +81,30 @@ namespace Framework.Commands
         }
     }
 
+    public class CommandJoinGame : Command
+    {
+        public CommandJoinGame()
+        {
+        }
+
+        public CommandJoinGame(string gameId)
+        {
+            GameId = gameId;
+        }
+    }
+
+    public class CommandJoinGameSuccessful : Command
+    {
+        public CommandJoinGameSuccessful()
+        {
+        }
+
+        public CommandJoinGameSuccessful(string gameId)
+        {
+            GameId = gameId;
+        }
+    }
+
     public class CommandNotifyGame : Command
     {
         public string Name { get; set; }
@@ -101,17 +125,7 @@ namespace Framework.Commands
         }
     }
 
-    public class CommandJoinGame : Command
-    {
-        public CommandJoinGame()
-        {
-        }
 
-        public CommandJoinGame(string gameId)
-        {
-            GameId = gameId;
-        }
-    }
 
     public class CommandServerError : Command
     {

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Collections.Concurrent;
+using Framework.Utilities.Xml;
 
 namespace BesiegedServer
 {
@@ -62,7 +63,14 @@ namespace BesiegedServer
 
         public void ProcessMessage(Command command)
         {
-            
+            if (command is CommandChatMessage)
+            {
+                CommandChatMessage commandChatMessage = command as CommandChatMessage;
+                foreach (ConnectedClient client in ConnectedClients)
+                {
+                    client.ClientCallBack.Notify(commandChatMessage.ToXml());
+                }
+            }
         }
     }
 }

@@ -104,7 +104,8 @@ namespace BesiegedServer
                             CommandNotifyGame commandNotifyGame = new CommandNotifyGame(gameInstance.GameId, gameInstance.Name, capacity, gameInstance.IsGameInstanceFull);
                             NotifyAllConnectedClients(commandNotifyGame.ToXml());
 
-                            // ---- TO DO Notify the client that requested the new game so that it can connect to the game lobby
+                            CommandJoinGameSuccessful commandJoinGameSuccessful = new CommandJoinGameSuccessful(gameInstance.GameId);
+                            NotifyClient(commandJoinGame.ClientId, commandJoinGameSuccessful.ToXml());
                         }
                         else
                         {
@@ -129,11 +130,21 @@ namespace BesiegedServer
 					IClient client = m_ConnectedClients[commandCreateGame.ClientId];    // add the client that requested the new game to the game instance
 					ConnectedClient connectedClient = new ConnectedClient("Alias", commandCreateGame.ClientId, client);
 					gameInstance.ConnectedClients.Add(connectedClient);
-					// ---- TO DO Notify the client that requested the new game so that it can connect to the game lobby
+
+                    CommandJoinGameSuccessful commandJoinGameSuccessful = new CommandJoinGameSuccessful(gameInstance.GameId);
+                    NotifyClient(commandCreateGame.ClientId, commandJoinGameSuccessful.ToXml());
 
                     string capacity = string.Format("{0}/{1} players", gameInstance.ConnectedClients.Count, gameInstance.MaxPlayers);   // notify all connect clients of the updated game instance
                     CommandNotifyGame commandNotifyGame = new CommandNotifyGame(gameInstance.GameId, gameInstance.Name, capacity, gameInstance.IsGameInstanceFull);
                     NotifyAllConnectedClients(commandNotifyGame.ToXml()); 
+                }
+
+                else if (command is CommandChatMessage)
+                {
+                    CommandChatMessage commandChatMessage = command as CommandChatMessage;
+                    BesiegedGameInstance gameInstance = m_Games[commandChatMessage.GameId];
+                    gameInstance.MessageQueue.Add(commandChatMessage);
+                    
                 }
             }
             catch (Exception ex)
