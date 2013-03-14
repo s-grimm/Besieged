@@ -28,6 +28,7 @@ namespace TestClient
     {
         private Client m_Client = new Client();
         private string m_ClientId;
+        private string m_GameId;
         private bool m_IsServerConnectionEstablished = false;
         private TaskScheduler m_TaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
         private IBesiegedServer m_BesiegedServer;
@@ -103,6 +104,16 @@ namespace TestClient
                        
                     }, CancellationToken.None, TaskCreationOptions.None, m_TaskScheduler);
 				}
+
+                else if (command is CommandJoinGameSuccessful)
+                {
+                    CommandJoinGameSuccessful commandJoinGameSuccessful = command as CommandJoinGameSuccessful;
+                    m_GameId = commandJoinGameSuccessful.GameId;
+                    CommandChatMessage commandChatMessage = new CommandChatMessage(m_ClientId + " has joined the game.");
+                    commandChatMessage.GameId = m_GameId;
+                    SendMessageToServer(commandChatMessage.ToXml());
+                }
+
             }
             catch (Exception ex)
             {
