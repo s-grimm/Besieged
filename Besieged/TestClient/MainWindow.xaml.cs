@@ -78,10 +78,11 @@ namespace TestClient
                     Task.Factory.StartNew(() =>
                     {
                         CommandChatMessage chatMessageCommand = command as CommandChatMessage;
+                        MessageBox.Show(chatMessageCommand.Contents);
                     }, CancellationToken.None, TaskCreationOptions.None, m_TaskScheduler);
 
-                    CommandChatMessage commandChatMessage = command as CommandChatMessage;
-                    MessageBox.Show(commandChatMessage.Contents);
+                    
+                    
                     
                 }
                 else if (command is CommandNotifyGame)
