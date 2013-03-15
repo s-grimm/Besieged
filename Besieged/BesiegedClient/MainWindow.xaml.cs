@@ -1,6 +1,7 @@
 ﻿using Framework.Commands;
 using Framework.ServiceContracts;
 using Framework.Utilities.Xml;
+using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.Threading;
@@ -39,7 +40,7 @@ namespace BesiegedClient
         {
             InitializeComponent();
             DrawGrid(10, 10); //Needs to be switched to state
-
+            
             EndpointAddress endpointAddress = new EndpointAddress("http://localhost:31337/BesiegedServer/BesiegedMessage");
             DuplexChannelFactory<IBesiegedServer> duplexChannelFactory = new DuplexChannelFactory<IBesiegedServer>(_client, new WSDualHttpBinding(), endpointAddress);
             _besiegedServer = duplexChannelFactory.CreateChannel();
@@ -82,6 +83,33 @@ namespace BesiegedClient
                     // listboxChatWindow.Items.Add(chatMessage.Contents);
                 }, CancellationToken.None, TaskCreationOptions.None, _taskScheduler);
             }
+        }
+
+        public void GoToMultiplayerLobby(object sender, EventArgs e)
+        {
+            int counter = 0;
+            MessageBoxResult hr;
+            while (!_isServerConnectionEstablished)
+            {
+                Thread.Sleep(10000); //sleep for 10 seconds before checking again.
+                counter++;
+
+                if (counter > 6) //spinning for 60 seconds, prompt user
+                {
+                    hr = MessageBox.Show("Timeout while attempting to connect to the server. Retry?", "Connection Timeout", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+                    if (hr == MessageBoxResult.Yes)
+                    {
+                        counter = 0;
+                        hr = MessageBoxResult.None;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+
+            //render the lobby and attach the event handlers
         }
 
         public void DrawGrid(int rows, int columns)
