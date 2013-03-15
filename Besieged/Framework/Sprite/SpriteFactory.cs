@@ -115,7 +115,7 @@ namespace Framework.Unit
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return string.Empty;
             }

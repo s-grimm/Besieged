@@ -10,453 +10,91 @@ namespace Framework.Map.Tile
 {
     public class Dirt :  BaseTile
     {
-        public override int CurrentHealthPointsModifier
-        {
-            get
-            {
-                return CurrentHealthPointsModifier;
-            }
-            set
-            {
-                CurrentHealthPointsModifier = value;
-            }
-        }
+        public override int CurrentHealthPointsModifier { get; set; }
 
-        public override int MaxHealthPointsModifier
-        {
-            get
-            {
-                return MaxHealthPointsModifier;
-            }
-            set
-            {
-                MaxHealthPointsModifier = value;
-            }
-        }
+        public override int MaxHealthPointsModifier { get; set; }
 
-        public override int InitiativeModifier
-        {
-            get
-            {
-                return InitiativeModifier;
-            }
-            set
-            {
-                InitiativeModifier = value;
-            }
-        }
+        public override int InitiativeModifier { get; set; }
 
-        public override int SkillModifier
-        {
-            get
-            {
-                return SkillModifier;
-            }
-            set
-            {
-                SkillModifier = value;
-            }
-        }
+        public override int SkillModifier { get; set; }
 
-        public override int RangeModifier
-        {
-            get
-            {
-                return RangeModifier;
-            }
-            set
-            {
-                RangeModifier = value;
-            }
-        }
+        public override int RangeModifier { get; set; }
 
-        public override int MovementModifier
-        {
-            get
-            {
-                return MovementModifier;
-            }
-            set
-            {
-                MovementModifier = value;
-            }
-        }
-
-        public bool IsPassable { get; set; }
+        public override int MovementModifier { get; set; }
     }
 
     public class WetlandRoad :  BaseTile
     {
-        public override int CurrentHealthPointsModifier
-        {
-            get
-            {
-                return CurrentHealthPointsModifier;
-            }
-            set
-            {
-                CurrentHealthPointsModifier = value;
-            }
-        }
+        public override int CurrentHealthPointsModifier { get; set; }
 
-        public override int MaxHealthPointsModifier
-        {
-            get
-            {
-                return MaxHealthPointsModifier;
-            }
-            set
-            {
-                MaxHealthPointsModifier = value;
-            }
-        }
+        public override int MaxHealthPointsModifier { get; set; }
 
-        public override int InitiativeModifier
-        {
-            get
-            {
-                return InitiativeModifier;
-            }
-            set
-            {
-                InitiativeModifier = value;
-            }
-        }
+        public override int InitiativeModifier { get; set; }
 
-        public override int SkillModifier
-        {
-            get
-            {
-                return SkillModifier;
-            }
-            set
-            {
-                SkillModifier = value;
-            }
-        }
+        public override int SkillModifier { get; set; }
 
-        public override int RangeModifier
-        {
-            get
-            {
-                return RangeModifier;
-            }
-            set
-            {
-                RangeModifier = value;
-            }
-        }
+        public override int RangeModifier { get; set; }
 
-        public override int MovementModifier
-        {
-            get
-            {
-                return MovementModifier;
-            }
-            set
-            {
-                MovementModifier = value;
-            }
-        }
+        public override int MovementModifier { get; set; }
     }
 
     public class WetlandBridge :  BaseTile
     {
-        public override int CurrentHealthPointsModifier
-        {
-            get
-            {
-                return CurrentHealthPointsModifier;
-            }
-            set
-            {
-                CurrentHealthPointsModifier = value;
-            }
-        }
+        public override int CurrentHealthPointsModifier { get; set; }
 
-        public override int MaxHealthPointsModifier
-        {
-            get
-            {
-                return MaxHealthPointsModifier;
-            }
-            set
-            {
-                MaxHealthPointsModifier = value;
-            }
-        }
+        public override int MaxHealthPointsModifier { get; set; }
 
-        public override int InitiativeModifier
-        {
-            get
-            {
-                return InitiativeModifier;
-            }
-            set
-            {
-                InitiativeModifier = value;
-            }
-        }
+        public override int InitiativeModifier { get; set; }
 
-        public override int SkillModifier
-        {
-            get
-            {
-                return SkillModifier;
-            }
-            set
-            {
-                SkillModifier = value;
-            }
-        }
+        public override int SkillModifier { get; set; }
 
-        public override int RangeModifier
-        {
-            get
-            {
-                return RangeModifier;
-            }
-            set
-            {
-                RangeModifier = value;
-            }
-        }
+        public override int RangeModifier { get; set; }
 
-        public override int MovementModifier
-        {
-            get
-            {
-                return MovementModifier;
-            }
-            set
-            {
-                MovementModifier = value;
-            }
-        }
+        public override int MovementModifier { get; set; }
     }
 
     public class Mud :  BaseTile
     {
-        public override int CurrentHealthPointsModifier
-        {
-            get
-            {
-                return CurrentHealthPointsModifier;
-            }
-            set
-            {
-                CurrentHealthPointsModifier = value;
-            }
-        }
+        public override int CurrentHealthPointsModifier { get; set; }
 
-        public override int MaxHealthPointsModifier
-        {
-            get
-            {
-                return MaxHealthPointsModifier;
-            }
-            set
-            {
-                MaxHealthPointsModifier = value;
-            }
-        }
+        public override int MaxHealthPointsModifier { get; set; }
 
-        public override int InitiativeModifier
-        {
-            get
-            {
-                return InitiativeModifier;
-            }
-            set
-            {
-                InitiativeModifier = value;
-            }
-        }
+        public override int InitiativeModifier { get; set; }
 
-        public override int SkillModifier
-        {
-            get
-            {
-                return SkillModifier;
-            }
-            set
-            {
-                SkillModifier = value;
-            }
-        }
+        public override int SkillModifier { get; set; }
 
-        public override int RangeModifier
-        {
-            get
-            {
-                return RangeModifier;
-            }
-            set
-            {
-                RangeModifier = value;
-            }
-        }
+        public override int RangeModifier { get; set; }
 
-        public override int MovementModifier
-        {
-            get
-            {
-                return MovementModifier;
-            }
-            set
-            {
-                MovementModifier = value;
-            }
-        }
+        public override int MovementModifier { get; set; }
     }
 
     public class WetlandRiver :  BaseTile
     {
-        public override int CurrentHealthPointsModifier
-        {
-            get
-            {
-                return CurrentHealthPointsModifier;
-            }
-            set
-            {
-                CurrentHealthPointsModifier = value;
-            }
-        }
+        public override int CurrentHealthPointsModifier { get; set; }
 
-        public override int MaxHealthPointsModifier
-        {
-            get
-            {
-                return MaxHealthPointsModifier;
-            }
-            set
-            {
-                MaxHealthPointsModifier = value;
-            }
-        }
+        public override int MaxHealthPointsModifier { get; set; }
 
-        public override int InitiativeModifier
-        {
-            get
-            {
-                return InitiativeModifier;
-            }
-            set
-            {
-                InitiativeModifier = value;
-            }
-        }
+        public override int InitiativeModifier { get; set; }
 
-        public override int SkillModifier
-        {
-            get
-            {
-                return SkillModifier;
-            }
-            set
-            {
-                SkillModifier = value;
-            }
-        }
+        public override int SkillModifier { get; set; }
 
-        public override int RangeModifier
-        {
-            get
-            {
-                return RangeModifier;
-            }
-            set
-            {
-                RangeModifier = value;
-            }
-        }
+        public override int RangeModifier { get; set; }
 
-        public override int MovementModifier
-        {
-            get
-            {
-                return MovementModifier;
-            }
-            set
-            {
-                MovementModifier = value;
-            }
-        }
+        public override int MovementModifier { get; set; }
     }
 
     public class Bush :  BaseTile
     {
-        public override int CurrentHealthPointsModifier
-        {
-            get
-            {
-                return CurrentHealthPointsModifier;
-            }
-            set
-            {
-                CurrentHealthPointsModifier = value;
-            }
-        }
+        public override int CurrentHealthPointsModifier { get; set; }
 
-        public override int MaxHealthPointsModifier
-        {
-            get
-            {
-                return MaxHealthPointsModifier;
-            }
-            set
-            {
-                MaxHealthPointsModifier = value;
-            }
-        }
+        public override int MaxHealthPointsModifier { get; set; }
 
-        public override int InitiativeModifier
-        {
-            get
-            {
-                return InitiativeModifier;
-            }
-            set
-            {
-                InitiativeModifier = value;
-            }
-        }
+        public override int InitiativeModifier { get; set; }
 
-        public override int SkillModifier
-        {
-            get
-            {
-                return SkillModifier;
-            }
-            set
-            {
-                SkillModifier = value;
-            }
-        }
+        public override int SkillModifier { get; set; }
 
-        public override int RangeModifier
-        {
-            get
-            {
-                return RangeModifier;
-            }
-            set
-            {
-                RangeModifier = value;
-            }
-        }
+        public override int RangeModifier { get; set; }
 
-        public override int MovementModifier
-        {
-            get
-            {
-                return MovementModifier;
-            }
-            set
-            {
-                MovementModifier = value;
-            }
-        }
+        public override int MovementModifier { get; set; }
     }
 }
