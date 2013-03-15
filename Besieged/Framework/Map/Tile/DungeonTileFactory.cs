@@ -9,32 +9,32 @@ namespace Framework.Map.Tile
     public class DungeonTileFactory : ITileFactory
     {
 
-        public Tile.ITile GetBasicGround()
+        public Tile.BaseTile GetBasicGround()
         {
             return new StoneFloor();
         }
 
-        public Tile.ITile GetBasicRoad()
+        public Tile.BaseTile GetBasicRoad()
         {
             return new DungeonRoad();
         }
 
-        public Tile.ITile GetBasicBridge()
+        public Tile.BaseTile GetBasicBridge()
         {
             return new DungeonBridge();
         }
 
-        public Tile.ITile GetHardTerrain()
+        public Tile.BaseTile GetHardTerrain()
         {
             return new Spikes();
         }
 
-        public Tile.ITile GetFluidTerrain()
+        public Tile.BaseTile GetFluidTerrain()
         {
             return new DungeonRiver();
         }
 
-        public Tile.ITile GetSpecialTerrain()
+        public Tile.BaseTile GetSpecialTerrain()
         {
             return new Door();
         }

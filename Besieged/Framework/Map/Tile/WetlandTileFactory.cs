@@ -8,32 +8,32 @@ namespace Framework.Map.Tile
 {
     public class WetlandTileFactory : ITileFactory
     {
-        public Tile.ITile GetBasicGround()
+        public Tile.BaseTile GetBasicGround()
         {
             return new Dirt();
         }
 
-        public Tile.ITile GetBasicRoad()
+        public Tile.BaseTile GetBasicRoad()
         {
             return new WetlandRoad();
         }
 
-        public Tile.ITile GetBasicBridge()
+        public Tile.BaseTile GetBasicBridge()
         {
             return new WetlandBridge();
         }
 
-        public Tile.ITile GetHardTerrain()
+        public Tile.BaseTile GetHardTerrain()
         {
             return new Mud();
         }
 
-        public Tile.ITile GetFluidTerrain()
+        public Tile.BaseTile GetFluidTerrain()
         {
             return new WetlandRiver();
         }
 
-        public Tile.ITile GetSpecialTerrain()
+        public Tile.BaseTile GetSpecialTerrain()
         {
             return new Bush();
         }

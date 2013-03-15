@@ -21,12 +21,15 @@ namespace Framework.Utilities.Xml
             FrameworkTypes = new List<Type>();
             AllKnownTypes = new List<Type>();
             SerializerDictionary = new Dictionary<string, XmlSerializer>();
-            FrameworkTypes = Assembly.GetExecutingAssembly().GetTypes().ToList().Where(x => x.IsClass && x.Namespace.Contains("Framework")).ToList();
-            AllKnownTypes = Assembly.GetExecutingAssembly().GetTypes().ToList();
+            FrameworkTypes = Assembly.GetExecutingAssembly().GetTypes().ToList().Where(x => x.IsClass && x.Namespace.Contains("Framework") && !x.Name.Contains("Factory") && !x.Name.Contains("Exception") && !x.Name.Contains("FixedSize") && !x.Namespace.Contains("Xml")).ToList();
             
             FrameworkTypes.ToList().ForEach(type =>
             {
-                SerializerDictionary.Add(type.Name.ToString(), new XmlSerializer(type));
+                try
+                {
+                    SerializerDictionary.Add(type.Name.ToString(), new XmlSerializer(type));
+                }
+                catch { }
             });
 
             AppDomain.CurrentDomain.AssemblyLoad += (sender, args) =>   // Add any newly loaded types into the List of all known types
@@ -35,11 +38,12 @@ namespace Framework.Utilities.Xml
             };
 
             //hard coded in here for Map Overrides
-            if (!SerializerDictionary.ContainsKey(typeof(Framework.Map.Tile.ITile).Name.ToString()))
+            if (!SerializerDictionary.ContainsKey(typeof(Framework.Map.Tile.BaseTile).Name.ToString()))
             {
-                SerializerDictionary.Add(typeof(Framework.Map.Tile.ITile).Name.ToString(), null);
+                SerializerDictionary.Add(typeof(Framework.Map.Tile.BaseTile).Name.ToString(), null);
             }
-            SerializerDictionary[typeof(Framework.Map.Tile.ITile).Name.ToString()] = new XmlSerializer(typeof(Framework.Map.Tile.ITile), Assembly.GetExecutingAssembly().GetTypes().ToList().Where(x => x.IsClass && x.Namespace == "Framework.Map.Tile").ToArray());
+            var knownTypes = Assembly.GetExecutingAssembly().GetTypes().ToList().Where(x => x.IsClass && typeof(Framework.Map.Tile.BaseTile).IsAssignableFrom(x)).ToArray();
+            SerializerDictionary[typeof(Framework.Map.Tile.BaseTile).Name.ToString()] = new XmlSerializer(typeof(Framework.Map.Tile.BaseTile), knownTypes);
         }
 
         public static XmlSerializer GetFrameworkFallbackSerializer(Type type)

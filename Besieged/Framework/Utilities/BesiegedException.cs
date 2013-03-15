@@ -6,10 +6,14 @@ using System.Threading.Tasks;
 
 namespace Framework.Utilities
 {
-    class BesiegedException : Exception
+    public class BesiegedException : Exception
     {
         public enum ErrorCode { ResourceNotFound };
-        
+
+        public BesiegedException()
+        {
+        }
+
         public BesiegedException(ErrorCode errorCode) 
         { 
             

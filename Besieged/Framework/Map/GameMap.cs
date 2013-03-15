@@ -9,7 +9,7 @@ namespace Framework.Map
 {
     public class GameMap
     {
-        public ITile[][] Tiles { get; set; }
+        public BaseTile[][] Tiles { get; set; }
 
         public string Name { get; set; }
 
@@ -25,10 +25,10 @@ namespace Framework.Map
         {
             MapLength = 50;
             MapHeight = 50;
-            Tiles = new ITile[MapHeight][];
+            Tiles = new BaseTile[MapHeight][];
             for (int i = 0; i < MapHeight; ++i)
             {
-                Tiles[i] = new ITile[MapLength]; 
+                Tiles[i] = new BaseTile[MapLength]; 
             }
 
             for (int x = 0; x < MapHeight; ++x)

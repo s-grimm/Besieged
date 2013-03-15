@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Framework.Map.Tile
 {
-    public class StoneFloor : DrawableObject, ITile
+    public class StoneFloor :  BaseTile
     {
 
-        public int CurrentHealthPointsModifier
+        public override int CurrentHealthPointsModifier
         {
             get
             {
@@ -23,7 +23,7 @@ namespace Framework.Map.Tile
             }
         }
 
-        public int MaxHealthPointsModifier
+        public override int MaxHealthPointsModifier
         {
             get
             {
@@ -35,7 +35,7 @@ namespace Framework.Map.Tile
             }
         }
 
-        public int InitiativeModifier
+        public override int InitiativeModifier
         {
             get
             {
@@ -47,7 +47,7 @@ namespace Framework.Map.Tile
             }
         }
 
-        public int SkillModifier
+        public override int SkillModifier
         {
             get
             {
@@ -59,7 +59,7 @@ namespace Framework.Map.Tile
             }
         }
 
-        public int RangeModifier
+        public override int RangeModifier
         {
             get
             {
@@ -71,7 +71,7 @@ namespace Framework.Map.Tile
             }
         }
 
-        public int MovementModifier
+        public override int MovementModifier
         {
             get
             {
@@ -84,10 +84,10 @@ namespace Framework.Map.Tile
         }
     }
 
-    public class DungeonRoad : DrawableObject, ITile
+    public class DungeonRoad :  BaseTile
     {
 
-        public int CurrentHealthPointsModifier
+        public override int CurrentHealthPointsModifier
         {
             get
             {
@@ -99,7 +99,7 @@ namespace Framework.Map.Tile
             }
         }
 
-        public int MaxHealthPointsModifier
+        public override int MaxHealthPointsModifier
         {
             get
             {
@@ -111,7 +111,7 @@ namespace Framework.Map.Tile
             }
         }
 
-        public int InitiativeModifier
+        public override int InitiativeModifier
         {
             get
             {
@@ -123,7 +123,7 @@ namespace Framework.Map.Tile
             }
         }
 
-        public int SkillModifier
+        public override int SkillModifier
         {
             get
             {
@@ -135,7 +135,7 @@ namespace Framework.Map.Tile
             }
         }
 
-        public int RangeModifier
+        public override int RangeModifier
         {
             get
             {
@@ -147,7 +147,7 @@ namespace Framework.Map.Tile
             }
         }
 
-        public int MovementModifier
+        public override int MovementModifier
         {
             get
             {
@@ -160,10 +160,10 @@ namespace Framework.Map.Tile
         }
     }
 
-    public class DungeonBridge : DrawableObject, ITile
+    public class DungeonBridge :  BaseTile
     {
 
-        public int CurrentHealthPointsModifier
+        public override int CurrentHealthPointsModifier
         {
             get
             {
@@ -175,7 +175,7 @@ namespace Framework.Map.Tile
             }
         }
 
-        public int MaxHealthPointsModifier
+        public override int MaxHealthPointsModifier
         {
             get
             {
@@ -187,7 +187,7 @@ namespace Framework.Map.Tile
             }
         }
 
-        public int InitiativeModifier
+        public override int InitiativeModifier
         {
             get
             {
@@ -199,7 +199,7 @@ namespace Framework.Map.Tile
             }
         }
 
-        public int SkillModifier
+        public override int SkillModifier
         {
             get
             {
@@ -211,7 +211,7 @@ namespace Framework.Map.Tile
             }
         }
 
-        public int RangeModifier
+        public override int RangeModifier
         {
             get
             {
@@ -223,7 +223,7 @@ namespace Framework.Map.Tile
             }
         }
 
-        public int MovementModifier
+        public override int MovementModifier
         {
             get
             {
@@ -236,10 +236,10 @@ namespace Framework.Map.Tile
         }
     }
 
-    public class Spikes : DrawableObject, ITile
+    public class Spikes :  BaseTile
     {
 
-        public int CurrentHealthPointsModifier
+        public override int CurrentHealthPointsModifier
         {
             get
             {
@@ -251,7 +251,7 @@ namespace Framework.Map.Tile
             }
         }
 
-        public int MaxHealthPointsModifier
+        public override int MaxHealthPointsModifier
         {
             get
             {
@@ -263,7 +263,7 @@ namespace Framework.Map.Tile
             }
         }
 
-        public int InitiativeModifier
+        public override int InitiativeModifier
         {
             get
             {
@@ -275,7 +275,7 @@ namespace Framework.Map.Tile
             }
         }
 
-        public int SkillModifier
+        public override int SkillModifier
         {
             get
             {
@@ -287,7 +287,7 @@ namespace Framework.Map.Tile
             }
         }
 
-        public int RangeModifier
+        public override int RangeModifier
         {
             get
             {
@@ -299,7 +299,7 @@ namespace Framework.Map.Tile
             }
         }
 
-        public int MovementModifier
+        public override int MovementModifier
         {
             get
             {
@@ -312,10 +312,10 @@ namespace Framework.Map.Tile
         }
     }
 
-    public class DungeonRiver : DrawableObject, ITile
+    public class DungeonRiver :  BaseTile
     {
 
-        public int CurrentHealthPointsModifier
+        public override int CurrentHealthPointsModifier
         {
             get
             {
@@ -327,7 +327,7 @@ namespace Framework.Map.Tile
             }
         }
 
-        public int MaxHealthPointsModifier
+        public override int MaxHealthPointsModifier
         {
             get
             {
@@ -339,7 +339,7 @@ namespace Framework.Map.Tile
             }
         }
 
-        public int InitiativeModifier
+        public override int InitiativeModifier
         {
             get
             {
@@ -351,7 +351,7 @@ namespace Framework.Map.Tile
             }
         }
 
-        public int SkillModifier
+        public override int SkillModifier
         {
             get
             {
@@ -363,7 +363,7 @@ namespace Framework.Map.Tile
             }
         }
 
-        public int RangeModifier
+        public override int RangeModifier
         {
             get
             {
@@ -375,7 +375,7 @@ namespace Framework.Map.Tile
             }
         }
 
-        public int MovementModifier
+        public override int MovementModifier
         {
             get
             {
@@ -388,10 +388,10 @@ namespace Framework.Map.Tile
         }
     }
 
-    public class Door : DrawableObject, ITile
+    public class Door :  BaseTile
     {
 
-        public int CurrentHealthPointsModifier
+        public override int CurrentHealthPointsModifier
         {
             get
             {
@@ -403,7 +403,7 @@ namespace Framework.Map.Tile
             }
         }
 
-        public int MaxHealthPointsModifier
+        public override int MaxHealthPointsModifier
         {
             get
             {
@@ -415,7 +415,7 @@ namespace Framework.Map.Tile
             }
         }
 
-        public int InitiativeModifier
+        public override int InitiativeModifier
         {
             get
             {
@@ -427,7 +427,7 @@ namespace Framework.Map.Tile
             }
         }
 
-        public int SkillModifier
+        public override int SkillModifier
         {
             get
             {
@@ -439,7 +439,7 @@ namespace Framework.Map.Tile
             }
         }
 
-        public int RangeModifier
+        public override int RangeModifier
         {
             get
             {
@@ -451,7 +451,7 @@ namespace Framework.Map.Tile
             }
         }
 
-        public int MovementModifier
+        public override int MovementModifier
         {
             get
             {

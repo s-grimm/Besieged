@@ -69,7 +69,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Map\Tile\GrasslandTileset.cs" />
-    <Compile Include="Map\Tile\ITile.cs" />
+    <Compile Include="Map\Tile\BaseTile.cs" />
     <Compile Include="Map\Tile\ITileFactory.cs">
       <SubType>Code</SubType>
     </Compile>
