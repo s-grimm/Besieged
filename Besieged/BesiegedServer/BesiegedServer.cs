@@ -8,6 +8,7 @@ using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Utilities;
+using BesiegedServer.Maps;
 
 namespace BesiegedServer
 {
@@ -147,6 +148,12 @@ namespace BesiegedServer
                     BesiegedGameInstance gameInstance = m_Games[commandChatMessage.GameId];
                     gameInstance.MessageQueue.Add(commandChatMessage);
                     
+                }
+
+                else if (command is CommandSendGameMap)
+                {
+                    CommandSendGameMap commandSendGameMap = command as CommandSendGameMap;
+                    MapUtilities.SaveToFile(commandSendGameMap.SerializedMap);
                 }
             }
             catch (Exception ex)

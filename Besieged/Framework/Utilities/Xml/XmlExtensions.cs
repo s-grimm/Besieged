@@ -84,14 +84,14 @@ namespace Framework.Utilities.Xml
                         {
                             return (T)XmlCore.SerializerDictionary[actualRootType].Deserialize(stringReader); 
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         { 
                             return null; 
                         }
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
             }

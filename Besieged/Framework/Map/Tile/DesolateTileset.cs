@@ -8,531 +8,93 @@ using System.Threading.Tasks;
 
 namespace Framework.Map.Tile
 {
-    public class Ash : DrawableObject, ITile
+    public class Ash :  BaseTile
     {
+        public override int CurrentHealthPointsModifier { get; set; }
 
-        public int CurrentHealthPointsModifier
-        {
-            get
-            {
-                return CurrentHealthPointsModifier;
-            }
-            set
-            {
-                CurrentHealthPointsModifier = value;
-            }
-        }
+        public override int MaxHealthPointsModifier { get; set; }
 
-        public int MaxHealthPointsModifier
-        {
-            get
-            {
-                return MaxHealthPointsModifier;
-            }
-            set
-            {
-                MaxHealthPointsModifier = value;
-            }
-        }
+        public override int InitiativeModifier { get; set; }
 
-        public int InitiativeModifier
-        {
-            get
-            {
-                return InitiativeModifier;
-            }
-            set
-            {
-                InitiativeModifier = value;
-            }
-        }
+        public override int SkillModifier { get; set; }
 
-        public int SkillModifier
-        {
-            get
-            {
-                return SkillModifier;
-            }
-            set
-            {
-                SkillModifier = value;
-            }
-        }
+        public override int RangeModifier { get; set; }
 
-        public int RangeModifier
-        {
-            get
-            {
-                return RangeModifier;
-            }
-            set
-            {
-                RangeModifier = value;
-            }
-        }
-
-        public int MovementModifier
-        {
-            get
-            {
-                return MovementModifier;
-            }
-            set
-            {
-                MovementModifier = value;
-            }
-        }
-
-        public bool IsPassable
-        {
-            get
-            {
-                return IsPassable;
-            }
-            set
-            {
-                IsPassable = value;
-            }
-        }
+        public override int MovementModifier { get; set; }
     }
 
-    public class DesolateRoad : DrawableObject, ITile
+    public class DesolateRoad :  BaseTile
     {
+        public override int CurrentHealthPointsModifier { get; set; }
 
-        public int CurrentHealthPointsModifier
-        {
-            get
-            {
-                return CurrentHealthPointsModifier;
-            }
-            set
-            {
-                CurrentHealthPointsModifier = value;
-            }
-        }
+        public override int MaxHealthPointsModifier { get; set; }
 
-        public int MaxHealthPointsModifier
-        {
-            get
-            {
-                return MaxHealthPointsModifier;
-            }
-            set
-            {
-                MaxHealthPointsModifier = value;
-            }
-        }
+        public override int InitiativeModifier { get; set; }
 
-        public int InitiativeModifier
-        {
-            get
-            {
-                return InitiativeModifier;
-            }
-            set
-            {
-                InitiativeModifier = value;
-            }
-        }
+        public override int SkillModifier { get; set; }
 
-        public int SkillModifier
-        {
-            get
-            {
-                return SkillModifier;
-            }
-            set
-            {
-                SkillModifier = value;
-            }
-        }
+        public override int RangeModifier { get; set; }
 
-        public int RangeModifier
-        {
-            get
-            {
-                return RangeModifier;
-            }
-            set
-            {
-                RangeModifier = value;
-            }
-        }
-
-        public int MovementModifier
-        {
-            get
-            {
-                return MovementModifier;
-            }
-            set
-            {
-                MovementModifier = value;
-            }
-        }
-
-        public bool IsPassable
-        {
-            get
-            {
-                return IsPassable;
-            }
-            set
-            {
-                IsPassable = value;
-            }
-        }
+        public override int MovementModifier { get; set; }
     }
 
-    public class DesolateBridge : DrawableObject, ITile
+    public class DesolateBridge :  BaseTile
     {
+        public override int CurrentHealthPointsModifier { get; set; }
 
-        public int CurrentHealthPointsModifier
-        {
-            get
-            {
-                return CurrentHealthPointsModifier;
-            }
-            set
-            {
-                CurrentHealthPointsModifier = value;
-            }
-        }
+        public override int MaxHealthPointsModifier { get; set; }
 
-        public int MaxHealthPointsModifier
-        {
-            get
-            {
-                return MaxHealthPointsModifier;
-            }
-            set
-            {
-                MaxHealthPointsModifier = value;
-            }
-        }
+        public override int InitiativeModifier { get; set; }
 
-        public int InitiativeModifier
-        {
-            get
-            {
-                return InitiativeModifier;
-            }
-            set
-            {
-                InitiativeModifier = value;
-            }
-        }
+        public override int SkillModifier { get; set; }
 
-        public int SkillModifier
-        {
-            get
-            {
-                return SkillModifier;
-            }
-            set
-            {
-                SkillModifier = value;
-            }
-        }
+        public override int RangeModifier { get; set; }
 
-        public int RangeModifier
-        {
-            get
-            {
-                return RangeModifier;
-            }
-            set
-            {
-                RangeModifier = value;
-            }
-        }
-
-        public int MovementModifier
-        {
-            get
-            {
-                return MovementModifier;
-            }
-            set
-            {
-                MovementModifier = value;
-            }
-        }
-
-        public bool IsPassable
-        {
-            get
-            {
-                return IsPassable;
-            }
-            set
-            {
-                IsPassable = value;
-            }
-        }
+        public override int MovementModifier { get; set; }
     }
 
-    public class Onyx : DrawableObject, ITile
+    public class Onyx :  BaseTile
     {
+        public override int CurrentHealthPointsModifier { get; set; }
 
-        public int CurrentHealthPointsModifier
-        {
-            get
-            {
-                return CurrentHealthPointsModifier;
-            }
-            set
-            {
-                CurrentHealthPointsModifier = value;
-            }
-        }
+        public override int MaxHealthPointsModifier { get; set; }
 
-        public int MaxHealthPointsModifier
-        {
-            get
-            {
-                return MaxHealthPointsModifier;
-            }
-            set
-            {
-                MaxHealthPointsModifier = value;
-            }
-        }
+        public override int InitiativeModifier { get; set; }
 
-        public int InitiativeModifier
-        {
-            get
-            {
-                return InitiativeModifier;
-            }
-            set
-            {
-                InitiativeModifier = value;
-            }
-        }
+        public override int SkillModifier { get; set; }
 
-        public int SkillModifier
-        {
-            get
-            {
-                return SkillModifier;
-            }
-            set
-            {
-                SkillModifier = value;
-            }
-        }
+        public override int RangeModifier { get; set; }
 
-        public int RangeModifier
-        {
-            get
-            {
-                return RangeModifier;
-            }
-            set
-            {
-                RangeModifier = value;
-            }
-        }
-
-        public int MovementModifier
-        {
-            get
-            {
-                return MovementModifier;
-            }
-            set
-            {
-                MovementModifier = value;
-            }
-        }
-
-        public bool IsPassable
-        {
-            get
-            {
-                return IsPassable;
-            }
-            set
-            {
-                IsPassable = value;
-            }
-        }
+        public override int MovementModifier { get; set; }
     }
 
-    public class DesolateRiver : DrawableObject, ITile
+    public class DesolateRiver :  BaseTile
     {
+        public override int CurrentHealthPointsModifier { get; set; }
 
-        public int CurrentHealthPointsModifier
-        {
-            get
-            {
-                return CurrentHealthPointsModifier;
-            }
-            set
-            {
-                CurrentHealthPointsModifier = value;
-            }
-        }
+        public override int MaxHealthPointsModifier { get; set; }
 
-        public int MaxHealthPointsModifier
-        {
-            get
-            {
-                return MaxHealthPointsModifier;
-            }
-            set
-            {
-                MaxHealthPointsModifier = value;
-            }
-        }
+        public override int InitiativeModifier { get; set; }
 
-        public int InitiativeModifier
-        {
-            get
-            {
-                return InitiativeModifier;
-            }
-            set
-            {
-                InitiativeModifier = value;
-            }
-        }
+        public override int SkillModifier { get; set; }
 
-        public int SkillModifier
-        {
-            get
-            {
-                return SkillModifier;
-            }
-            set
-            {
-                SkillModifier = value;
-            }
-        }
+        public override int RangeModifier { get; set; }
 
-        public int RangeModifier
-        {
-            get
-            {
-                return RangeModifier;
-            }
-            set
-            {
-                RangeModifier = value;
-            }
-        }
-
-        public int MovementModifier
-        {
-            get
-            {
-                return MovementModifier;
-            }
-            set
-            {
-                MovementModifier = value;
-            }
-        }
-
-        public bool IsPassable
-        {
-            get
-            {
-                return IsPassable;
-            }
-            set
-            {
-                IsPassable = value;
-            }
-        }
+        public override int MovementModifier { get; set; }
     }
 
-    public class Lava : DrawableObject, ITile
+    public class Lava :  BaseTile
     {
+        public override int CurrentHealthPointsModifier { get; set; }
 
-        public int CurrentHealthPointsModifier
-        {
-            get
-            {
-                return CurrentHealthPointsModifier;
-            }
-            set
-            {
-                CurrentHealthPointsModifier = value;
-            }
-        }
+        public override int MaxHealthPointsModifier { get; set; }
 
-        public int MaxHealthPointsModifier
-        {
-            get
-            {
-                return MaxHealthPointsModifier;
-            }
-            set
-            {
-                MaxHealthPointsModifier = value;
-            }
-        }
+        public override int InitiativeModifier { get; set; }
 
-        public int InitiativeModifier
-        {
-            get
-            {
-                return InitiativeModifier;
-            }
-            set
-            {
-                InitiativeModifier = value;
-            }
-        }
+        public override int SkillModifier { get; set; }
 
-        public int SkillModifier
-        {
-            get
-            {
-                return SkillModifier;
-            }
-            set
-            {
-                SkillModifier = value;
-            }
-        }
+        public override int RangeModifier { get; set; }
 
-        public int RangeModifier
-        {
-            get
-            {
-                return RangeModifier;
-            }
-            set
-            {
-                RangeModifier = value;
-            }
-        }
-
-        public int MovementModifier
-        {
-            get
-            {
-                return MovementModifier;
-            }
-            set
-            {
-                MovementModifier = value;
-            }
-        }
-
-        public bool IsPassable
-        {
-            get
-            {
-                return IsPassable;
-            }
-            set
-            {
-                IsPassable = value;
-            }
-        }
+        public override int MovementModifier { get; set; }
     }
 }

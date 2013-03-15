@@ -51,6 +51,7 @@
     <Compile Include="BesiegedGameInstance.cs" />
     <Compile Include="BesiegedServer.cs" />
     <Compile Include="ConnectedClient.cs" />
+    <Compile Include="Maps\MapUtilities.cs" />
     <Compile Include="Utilities\ConsoleLogger.cs" />
     <Compile Include="Utilities\ErrorLogger.cs" />
     <Compile Include="Program.cs" />
@@ -71,6 +72,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -9,13 +9,11 @@ namespace Framework.Map
 {
     public class GameMap
     {
-        public ITile[,] Tiles { get; set; }
+        public BaseTile[][] Tiles { get; set; }
 
         public string Name { get; set; }
 
         public string Author { get; set; }
-
-        public string MD5Hash { get; set; }
 
         public int MapLength { get; set; }
 
@@ -23,15 +21,21 @@ namespace Framework.Map
 
         public GameMap()
         {
+            Name = "Default Map";
+            Author = "Shane";
             MapLength = 50;
             MapHeight = 50;
-            Tiles = new ITile[MapLength, MapHeight];
-
-            for(int x= 0; x < MapLength; ++x)
+            Tiles = new BaseTile[MapHeight][];
+            for (int i = 0; i < MapHeight; ++i)
             {
-                for (int y = 0; y < MapHeight; ++y)
+                Tiles[i] = new BaseTile[MapLength]; 
+            }
+
+            for (int x = 0; x < MapHeight; ++x)
+            {
+                for (int y = 0; y < MapLength; ++y)
                 {
-                    Tiles[x, y] = new Grass();
+                    Tiles[x][y] = new Grass();
                 }
             }
         }

@@ -21,12 +21,15 @@ namespace Framework.Utilities.Xml
             FrameworkTypes = new List<Type>();
             AllKnownTypes = new List<Type>();
             SerializerDictionary = new Dictionary<string, XmlSerializer>();
-            FrameworkTypes = Assembly.GetExecutingAssembly().GetTypes().ToList().Where(x => x.IsClass && x.Namespace.Contains("Framework")).ToList();
-            AllKnownTypes = Assembly.GetExecutingAssembly().GetTypes().ToList();
+            FrameworkTypes = Assembly.GetExecutingAssembly().GetTypes().ToList().Where(x => x.IsClass && x.Namespace.Contains("Framework") && !x.Name.Contains("Factory") && !x.Name.Contains("Exception") && !x.Name.Contains("FixedSize") && !x.Namespace.Contains("Xml")).ToList();
             
             FrameworkTypes.ToList().ForEach(type =>
             {
-                SerializerDictionary.Add(type.Name.ToString(), new XmlSerializer(type));
+                try
+                {
+                    SerializerDictionary.Add(type.Name.ToString(), new XmlSerializer(type));
+                }
+                catch { }
             });
 
             AppDomain.CurrentDomain.AssemblyLoad += (sender, args) =>   // Add any newly loaded types into the List of all known types

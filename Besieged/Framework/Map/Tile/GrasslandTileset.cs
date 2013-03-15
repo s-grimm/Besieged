@@ -8,454 +8,93 @@ using System.Threading.Tasks;
 
 namespace Framework.Map.Tile
 {
-    public class Grass : DrawableObject, ITile
+    public class Grass : BaseTile
     {
-        public int CurrentHealthPointsModifier
-        {
-            get
-            {
-                return CurrentHealthPointsModifier;
-            }
-            set
-            {
-                CurrentHealthPointsModifier = value;
-            }
-        }
+        public override int CurrentHealthPointsModifier { get; set; }
 
-        public int MaxHealthPointsModifier
-        {
-            get
-            {
-                return MaxHealthPointsModifier;
-            }
-            set
-            {
-                MaxHealthPointsModifier = value;
-            }
-        }
+        public override int MaxHealthPointsModifier { get; set; }
 
-        public int InitiativeModifier
-        {
-            get
-            {
-                return InitiativeModifier;
-            }
-            set
-            {
-                InitiativeModifier = value;
-            }
-        }
+        public override int InitiativeModifier { get; set; }
 
-        public int SkillModifier
-        {
-            get
-            {
-                return SkillModifier;
-            }
-            set
-            {
-                SkillModifier = value;
-            }
-        }
+        public override int SkillModifier { get; set; }
 
-        public int RangeModifier
-        {
-            get
-            {
-                return RangeModifier;
-            }
-            set
-            {
-                RangeModifier = value;
-            }
-        }
+        public override int RangeModifier { get; set; }
 
-        public int MovementModifier
-        {
-            get
-            {
-                return MovementModifier;
-            }
-            set
-            {
-                MovementModifier = value;
-            }
-        }
+        public override int MovementModifier { get; set; }
     }
 
-    public class GrasslandRoad : DrawableObject, ITile
+    public class GrasslandRoad :  BaseTile
     {
-        public int CurrentHealthPointsModifier
-        {
-            get
-            {
-                return CurrentHealthPointsModifier;
-            }
-            set
-            {
-                CurrentHealthPointsModifier = value;
-            }
-        }
+        public override int CurrentHealthPointsModifier { get; set; }
 
-        public int MaxHealthPointsModifier
-        {
-            get
-            {
-                return MaxHealthPointsModifier;
-            }
-            set
-            {
-                MaxHealthPointsModifier = value;
-            }
-        }
+        public override int MaxHealthPointsModifier { get; set; }
 
-        public int InitiativeModifier
-        {
-            get
-            {
-                return InitiativeModifier;
-            }
-            set
-            {
-                InitiativeModifier = value;
-            }
-        }
+        public override int InitiativeModifier { get; set; }
 
-        public int SkillModifier
-        {
-            get
-            {
-                return SkillModifier;
-            }
-            set
-            {
-                SkillModifier = value;
-            }
-        }
+        public override int SkillModifier { get; set; }
 
-        public int RangeModifier
-        {
-            get
-            {
-                return RangeModifier;
-            }
-            set
-            {
-                RangeModifier = value;
-            }
-        }
+        public override int RangeModifier { get; set; }
 
-        public int MovementModifier
-        {
-            get
-            {
-                return MovementModifier;
-            }
-            set
-            {
-                MovementModifier = value;
-            }
-        }
+        public override int MovementModifier { get; set; }
     }
 
-    public class GrasslandBridge : DrawableObject, ITile
+    public class GrasslandBridge :  BaseTile
     {
-        public int CurrentHealthPointsModifier
-        {
-            get
-            {
-                return CurrentHealthPointsModifier;
-            }
-            set
-            {
-                CurrentHealthPointsModifier = value;
-            }
-        }
+        public override int CurrentHealthPointsModifier { get; set; }
 
-        public int MaxHealthPointsModifier
-        {
-            get
-            {
-                return MaxHealthPointsModifier;
-            }
-            set
-            {
-                MaxHealthPointsModifier = value;
-            }
-        }
+        public override int MaxHealthPointsModifier { get; set; }
 
-        public int InitiativeModifier
-        {
-            get
-            {
-                return InitiativeModifier;
-            }
-            set
-            {
-                InitiativeModifier = value;
-            }
-        }
+        public override int InitiativeModifier { get; set; }
 
-        public int SkillModifier
-        {
-            get
-            {
-                return SkillModifier;
-            }
-            set
-            {
-                SkillModifier = value;
-            }
-        }
+        public override int SkillModifier { get; set; }
 
-        public int RangeModifier
-        {
-            get
-            {
-                return RangeModifier;
-            }
-            set
-            {
-                RangeModifier = value;
-            }
-        }
+        public override int RangeModifier { get; set; }
 
-        public int MovementModifier
-        {
-            get
-            {
-                return MovementModifier;
-            }
-            set
-            {
-                MovementModifier = value;
-            }
-        }
+        public override int MovementModifier { get; set; }
     }
 
-    public class Tallgrass : DrawableObject, ITile
+    public class Tallgrass :  BaseTile
     {
-        public int CurrentHealthPointsModifier
-        {
-            get
-            {
-                return CurrentHealthPointsModifier;
-            }
-            set
-            {
-                CurrentHealthPointsModifier = value;
-            }
-        }
+        public override int CurrentHealthPointsModifier { get; set; }
 
-        public int MaxHealthPointsModifier
-        {
-            get
-            {
-                return MaxHealthPointsModifier;
-            }
-            set
-            {
-                MaxHealthPointsModifier = value;
-            }
-        }
+        public override int MaxHealthPointsModifier { get; set; }
 
-        public int InitiativeModifier
-        {
-            get
-            {
-                return InitiativeModifier;
-            }
-            set
-            {
-                InitiativeModifier = value;
-            }
-        }
+        public override int InitiativeModifier { get; set; }
 
-        public int SkillModifier
-        {
-            get
-            {
-                return SkillModifier;
-            }
-            set
-            {
-                SkillModifier = value;
-            }
-        }
+        public override int SkillModifier { get; set; }
 
-        public int RangeModifier
-        {
-            get
-            {
-                return RangeModifier;
-            }
-            set
-            {
-                RangeModifier = value;
-            }
-        }
+        public override int RangeModifier { get; set; }
 
-        public int MovementModifier
-        {
-            get
-            {
-                return MovementModifier;
-            }
-            set
-            {
-                MovementModifier = value;
-            }
-        }
+        public override int MovementModifier { get; set; }
     }
 
-    public class GrasslandRiver : DrawableObject, ITile
+    public class GrasslandRiver :  BaseTile
     {
-        public int CurrentHealthPointsModifier
-        {
-            get
-            {
-                return CurrentHealthPointsModifier;
-            }
-            set
-            {
-                CurrentHealthPointsModifier = value;
-            }
-        }
+        public override int CurrentHealthPointsModifier { get; set; }
 
-        public int MaxHealthPointsModifier
-        {
-            get
-            {
-                return MaxHealthPointsModifier;
-            }
-            set
-            {
-                MaxHealthPointsModifier = value;
-            }
-        }
+        public override int MaxHealthPointsModifier { get; set; }
 
-        public int InitiativeModifier
-        {
-            get
-            {
-                return InitiativeModifier;
-            }
-            set
-            {
-                InitiativeModifier = value;
-            }
-        }
+        public override int InitiativeModifier { get; set; }
 
-        public int SkillModifier
-        {
-            get
-            {
-                return SkillModifier;
-            }
-            set
-            {
-                SkillModifier = value;
-            }
-        }
+        public override int SkillModifier { get; set; }
 
-        public int RangeModifier
-        {
-            get
-            {
-                return RangeModifier;
-            }
-            set
-            {
-                RangeModifier = value;
-            }
-        }
+        public override int RangeModifier { get; set; }
 
-        public int MovementModifier
-        {
-            get
-            {
-                return MovementModifier;
-            }
-            set
-            {
-                MovementModifier = value;
-            }
-        }
+        public override int MovementModifier { get; set; }
     }
 
-    public class Tree : DrawableObject, ITile
+    public class Tree :  BaseTile
     {
-        public int CurrentHealthPointsModifier
-        {
-            get
-            {
-                return CurrentHealthPointsModifier;
-            }
-            set
-            {
-                CurrentHealthPointsModifier = value;
-            }
-        }
+        public override int CurrentHealthPointsModifier { get; set; }
 
-        public int MaxHealthPointsModifier
-        {
-            get
-            {
-                return MaxHealthPointsModifier;
-            }
-            set
-            {
-                MaxHealthPointsModifier = value;
-            }
-        }
+        public override int MaxHealthPointsModifier { get; set; }
 
-        public int InitiativeModifier
-        {
-            get
-            {
-                return InitiativeModifier;
-            }
-            set
-            {
-                InitiativeModifier = value;
-            }
-        }
+        public override int InitiativeModifier { get; set; }
 
-        public int SkillModifier
-        {
-            get
-            {
-                return SkillModifier;
-            }
-            set
-            {
-                SkillModifier = value;
-            }
-        }
+        public override int SkillModifier { get; set; }
 
-        public int RangeModifier
-        {
-            get
-            {
-                return RangeModifier;
-            }
-            set
-            {
-                RangeModifier = value;
-            }
-        }
+        public override int RangeModifier { get; set; }
 
-        public int MovementModifier
-        {
-            get
-            {
-                return MovementModifier;
-            }
-            set
-            {
-                MovementModifier = value;
-            }
-        }
+        public override int MovementModifier { get; set; }
     }
-
 }

@@ -39,7 +39,9 @@ namespace Utilities
         {
             Exception ex = Exceptions.Take();
 
-            using(FileStream log = File.Open(DateTime.Today.ToShortDateString().ToString() + "-errors.log", FileMode.OpenOrCreate))
+            string path = DateTime.Today.ToShortDateString().ToString().Replace('/', '-');
+
+            using (FileStream log = File.Open(path + "-errors.log", FileMode.OpenOrCreate))
             {
                 using(StreamWriter sw = new StreamWriter(log))
                 {
