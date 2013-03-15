@@ -36,14 +36,6 @@ namespace Framework.Utilities.Xml
             {
                 args.LoadedAssembly.GetTypes().ToList().ForEach(x => AllKnownTypes.Add(x));
             };
-
-            //hard coded in here for Map Overrides
-            if (!SerializerDictionary.ContainsKey(typeof(Framework.Map.Tile.BaseTile).Name.ToString()))
-            {
-                SerializerDictionary.Add(typeof(Framework.Map.Tile.BaseTile).Name.ToString(), null);
-            }
-            var knownTypes = Assembly.GetExecutingAssembly().GetTypes().ToList().Where(x => x.IsClass && typeof(Framework.Map.Tile.BaseTile).IsAssignableFrom(x)).ToArray();
-            SerializerDictionary[typeof(Framework.Map.Tile.BaseTile).Name.ToString()] = new XmlSerializer(typeof(Framework.Map.Tile.BaseTile), knownTypes);
         }
 
         public static XmlSerializer GetFrameworkFallbackSerializer(Type type)

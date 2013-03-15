@@ -19,7 +19,6 @@ namespace BesiegedServer
                 svcHost.Description.Behaviors.Add(new ServiceMetadataBehavior() { HttpGetEnabled = true });
                 svcHost.Open();
                 ConsoleLogger.Push("Service Started.");
-                ErrorLogger.Push(new Exception(new GameMap().ToXml()));
             }
             catch (Exception ex)
             {
