@@ -32,6 +32,13 @@ namespace Framework.Utilities.Xml
             {
                 args.LoadedAssembly.GetTypes().ToList().ForEach(x => AllKnownTypes.Add(x));
             };
+
+            //hard coded in here for Map Overrides
+            if (!SerializerDictionary.ContainsKey(typeof(Framework.Map.Tile.ITile).Name.ToString()))
+            {
+                SerializerDictionary.Add(typeof(Framework.Map.Tile.ITile).Name.ToString(), null);
+            }
+            SerializerDictionary[typeof(Framework.Map.Tile.ITile).Name.ToString()] = new XmlSerializer(typeof(Framework.Map.Tile.ITile), Assembly.GetExecutingAssembly().GetTypes().ToList().Where(x => x.IsClass && x.Namespace == "Framework.Map.Tile").ToArray());
         }
 
         public static XmlSerializer GetFrameworkFallbackSerializer(Type type)
