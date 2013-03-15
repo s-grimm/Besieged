@@ -15,14 +15,14 @@ namespace Framework.Map
 
         public string Author { get; set; }
 
-        public string MD5Hash { get; set; }
-
         public int MapLength { get; set; }
 
         public int MapHeight { get; set; }
 
         public GameMap()
         {
+            Name = "Default Map";
+            Author = "Shane";
             MapLength = 50;
             MapHeight = 50;
             Tiles = new BaseTile[MapHeight][];

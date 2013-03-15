@@ -140,4 +140,18 @@ namespace Framework.Commands
             ErrorMessage = errorMessage;
         }
     }
+
+    public class CommandSendGameMap : Command
+    {
+        public string SerializedMap { get; set; }
+
+        public CommandSendGameMap()
+        {
+            
+        }
+        public CommandSendGameMap(string serializedMap)
+        {
+            SerializedMap = serializedMap;
+        }
+    }
 }
