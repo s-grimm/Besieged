@@ -21,7 +21,8 @@ namespace Framework.Utilities.Xml
             FrameworkTypes = new List<Type>();
             AllKnownTypes = new List<Type>();
             SerializerDictionary = new Dictionary<string, XmlSerializer>();
-            FrameworkTypes = Assembly.GetExecutingAssembly().GetTypes().ToList().Where(x => x.IsClass && x.Namespace == "Framework").ToList();
+            FrameworkTypes = Assembly.GetExecutingAssembly().GetTypes().ToList().Where(x => x.IsClass && x.Namespace.Contains("Framework")).ToList();
+            AllKnownTypes = Assembly.GetExecutingAssembly().GetTypes().ToList();
             
             FrameworkTypes.ToList().ForEach(type =>
             {
