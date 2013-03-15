@@ -29,6 +29,8 @@ namespace BesiegedClient
         private SolidColorBrush _blueBrush = new SolidColorBrush(Colors.Blue);
         private List<Rectangle> _rectangles = new List<Rectangle>();
 
+
+
         private app_code.Client _client = new app_code.Client();
         private string _clientIdentifier;
         private bool _isServerConnectionEstablished = false;
@@ -90,48 +92,49 @@ namespace BesiegedClient
 
         public void DrawGrid(int rows, int columns)
         {
-            Dimensions windowDimensions = new Dimensions()
-            {
-                Width = (int)cvsGameWindow.Width,
-                Height = (int)cvsGameWindow.Height
-            };
+            cvsGameWindow.Width = ClientWindowOptions.WindowDimensions.Width;
+            cvsGameWindow.Height = ClientWindowOptions.WindowDimensions.Height;
+            Application.Current.MainWindow.Width = ClientWindowOptions.WindowDimensions.Width;
+            Application.Current.MainWindow.Height = ClientWindowOptions.WindowDimensions.Height;
 
-            //init rectangles
-            for (int i = 0; i < windowDimensions.Width; i += 50)
-            {
-                for (int y = 0; y < windowDimensions.Height; y += 50)
-                {
-                    Rectangle rect = new Rectangle(); //create the rectangle
-                    rect.StrokeThickness = 1;  //border to 1 stroke thick
-                    rect.Stroke = _blackBrush; //border color to black
-                    rect.Width = 50;
-                    rect.Height = 50;
-                    rect.Name = "box" + i.ToString();
-                    Canvas.SetLeft(rect, i);
-                    Canvas.SetTop(rect, y);
-                    _rectangles.Add(rect);
-                }
-            }
-            foreach (var rect in _rectangles)
-            {
-                cvsGameWindow.Children.Add(rect);
-            }
+            Rendering.RenderGameWindow.RenderUI(cvsGameWindow);
+
+            ////init rectangles
+            //for (int i = 0; i < windowDimensions.Width; i += 50)
+            //{
+            //    for (int y = 0; y < windowDimensions.Height; y += 50)
+            //    {
+            //        Rectangle rect = new Rectangle(); //create the rectangle
+            //        rect.StrokeThickness = 1;  //border to 1 stroke thick
+            //        rect.Stroke = _blackBrush; //border color to black
+            //        rect.Width = 50;
+            //        rect.Height = 50;
+            //        rect.Name = "box" + i.ToString();
+            //        Canvas.SetLeft(rect, i);
+            //        Canvas.SetTop(rect, y);
+            //        _rectangles.Add(rect);
+            //    }
+            //}
+            //foreach (var rect in _rectangles)
+            //{
+            //    cvsGameWindow.Children.Add(rect);
+            //}
         }
 
-        private void txtMessage_GotFocus(object sender, RoutedEventArgs e)
-        {
-            if (txtMessage.Text == "Send a Message")
-            {
-                txtMessage.Clear();
-            }
-        }
+        //private void txtMessage_GotFocus(object sender, RoutedEventArgs e)
+        //{
+        //    if (txtMessage.Text == "Send a Message")
+        //    {
+        //        txtMessage.Clear();
+        //    }
+        //}
 
-        private void txtMessage_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (txtMessage.Text.Trim() == "")
-            {
-                txtMessage.Text = "Send a Message";
-            }
-        }
+        //private void txtMessage_LostFocus(object sender, RoutedEventArgs e)
+        //{
+        //    if (txtMessage.Text.Trim() == "")
+        //    {
+        //        txtMessage.Text = "Send a Message";
+        //    }
+        //}
     }
 }
