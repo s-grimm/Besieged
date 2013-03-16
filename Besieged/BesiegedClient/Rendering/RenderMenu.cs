@@ -47,7 +47,6 @@ namespace BesiegedClient.Rendering
             {
                 MessageBox.Show("Error Loading UI Component : MainMenuBackground.png", "UI Load Failure", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
         }
         public static void RenderOptionsMenu(Canvas canvas)
         {
