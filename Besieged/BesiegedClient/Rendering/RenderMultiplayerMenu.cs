@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Framework.Commands;
+using Framework.Utilities.Xml;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +19,7 @@ namespace BesiegedClient.Rendering
         private static double menuYOffset;
         private static double menuXOffset;
         private static object mousedownRef;
+        private static CommandNotifyGame m_SelectedGame = null;
 
         #region Handlers
 
@@ -63,6 +66,10 @@ namespace BesiegedClient.Rendering
                 {
                     RenderMenu.RenderMainMenu();
                 }
+                else if (selected == "JoinGame" && m_SelectedGame != null)
+                {
+                    JoinGame();
+                }
                 else
                 {
                     MessageBox.Show(selected);
@@ -75,13 +82,19 @@ namespace BesiegedClient.Rendering
 
         #endregion Handlers
 
-
+        public static void JoinGame()
+        {
+            CommandJoinGame commandJoinGame = new CommandJoinGame(m_SelectedGame.GameId);
+            commandJoinGame.ClientId = GlobalResources.ClientId;
+            GlobalResources.SendMessageToServer(commandJoinGame.ToXml());
+        }
+   
         public static void RenderGameLobby()
         {
-            dimensions = new Dimensions() { Width = (int)GlobalVariables.GameWindow.Width, Height = (int)GlobalVariables.GameWindow.Height };
+            dimensions = new Dimensions() { Width = (int)GlobalResources.GameWindow.Width, Height = (int)GlobalResources.GameWindow.Height };
             menuYOffset = dimensions.Height / 2;
             menuXOffset = dimensions.Width * 0.65;
-            GlobalVariables.GameWindow.Children.Clear();
+            GlobalResources.GameWindow.Children.Clear();
 
             double aspectRatio = Math.Round((double)dimensions.Width / (double)dimensions.Height, 2, MidpointRounding.AwayFromZero);
 
@@ -106,7 +119,7 @@ namespace BesiegedClient.Rendering
                 img.Source = bimg;
                 img.Width = bimg.PixelWidth;
                 img.Height = bimg.PixelHeight;
-                GlobalVariables.GameWindow.Background = new ImageBrush(bimg);
+                GlobalResources.GameWindow.Background = new ImageBrush(bimg);
             }
             catch (Exception ex)
             {
@@ -123,7 +136,7 @@ namespace BesiegedClient.Rendering
                 Canvas.SetLeft(lbCurrentGames,dimensions.Width / 8);
                 Canvas.SetBottom(lbCurrentGames, dimensions.Height / 4);
                 //add to canvas
-                GlobalVariables.GameWindow.Children.Add(lbCurrentGames);
+                GlobalResources.GameWindow.Children.Add(lbCurrentGames);
 
                 // bind the listbox to the Game lobby collection
                 GridView gameGridView = new GridView();
@@ -131,18 +144,24 @@ namespace BesiegedClient.Rendering
 
                 GridViewColumn nameColumn = new GridViewColumn();
                 nameColumn.DisplayMemberBinding = new Binding("Name");
-                nameColumn.Width = lbCurrentGames.Width * 0.66;
+                nameColumn.Width = lbCurrentGames.Width * 0.65;
                 nameColumn.Header = "Game Name";
                 gameGridView.Columns.Add(nameColumn);
 
                 GridViewColumn capacityColumn = new GridViewColumn();
                 capacityColumn.DisplayMemberBinding = new Binding("Capacity");
                 capacityColumn.Header = "Players";
-                capacityColumn.Width = lbCurrentGames.Width * 0.34;
+                capacityColumn.Width = lbCurrentGames.Width * 0.33;
                 gameGridView.Columns.Add(capacityColumn);
 
                 lbCurrentGames.View = gameGridView;
-                lbCurrentGames.ItemsSource = GlobalVariables.GameLobbyCollection;
+                lbCurrentGames.ItemsSource = GlobalResources.GameLobbyCollection;
+
+                // event handlers
+                lbCurrentGames.SelectionChanged += (s, e) =>
+                {
+                    m_SelectedGame = ((ListView)s).SelectedItem as CommandNotifyGame;
+                };
             }
             catch(Exception ex)
             {
@@ -164,7 +183,7 @@ namespace BesiegedClient.Rendering
                 img.MouseDown += MenuOptionMouseDown;
                 img.MouseUp += MenuOptionMouseUp;
                 img.Name = "JoinGame";
-                GlobalVariables.GameWindow.Children.Add(img);
+                GlobalResources.GameWindow.Children.Add(img);
                 menuYOffset -= img.Height * 1.5;
             }
             catch(Exception ex)
@@ -186,7 +205,7 @@ namespace BesiegedClient.Rendering
                 img.MouseDown += MenuOptionMouseDown;
                 img.MouseUp += MenuOptionMouseUp;
                 img.Name = "CreateGame";
-                GlobalVariables.GameWindow.Children.Add(img);
+                GlobalResources.GameWindow.Children.Add(img);
                 menuYOffset -= img.Height * 1.5;
             }
             catch (Exception ex)
@@ -208,7 +227,7 @@ namespace BesiegedClient.Rendering
                 img.MouseDown += MenuOptionMouseDown;
                 img.MouseUp += MenuOptionMouseUp;
                 img.Name = "MainMenu";
-                GlobalVariables.GameWindow.Children.Add(img);
+                GlobalResources.GameWindow.Children.Add(img);
                 menuYOffset -= img.Height * 1.5;
             }
             catch (Exception ex)

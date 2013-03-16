@@ -39,6 +39,7 @@ namespace Utilities
         private static void Write()
         {
             Console.WriteLine(Messages.Take());
+            Console.WriteLine();
         }
     }
 }

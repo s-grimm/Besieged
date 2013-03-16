@@ -33,26 +33,25 @@ namespace BesiegedClient
         private List<Rectangle> _rectangles = new List<Rectangle>();
 
         private app_code.Client m_Client = new app_code.Client();
-        private string m_ClientId;
         private bool m_IsServerConnectionEstablished = false;
         private TaskScheduler m_TaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
-        private IBesiegedServer m_BesiegedServer;
+
 
         public MainWindow()
         {
             InitializeComponent();
-            GlobalVariables.GameWindow = cvsGameWindow;
+            GlobalResources.GameWindow = cvsGameWindow;
             DrawGrid(10, 10); //Needs to be switched to state
             
             EndpointAddress endpointAddress = new EndpointAddress("http://localhost:31337/BesiegedServer/BesiegedMessage");
             DuplexChannelFactory<IBesiegedServer> duplexChannelFactory = new DuplexChannelFactory<IBesiegedServer>(m_Client, new WSDualHttpBinding(), endpointAddress);
-            m_BesiegedServer = duplexChannelFactory.CreateChannel();
+            GlobalResources.BesiegedServer = duplexChannelFactory.CreateChannel();
 
             // Subscribe in a separate thread to preserve the UI thread
             Task.Factory.StartNew(() =>
             {
                 CommandConnect commandConnect = new CommandConnect();
-                m_BesiegedServer.SendCommand(commandConnect.ToXml());
+                GlobalResources.BesiegedServer.SendCommand(commandConnect.ToXml());
             });
 
             Task.Factory.StartNew(() =>
@@ -70,7 +69,7 @@ namespace BesiegedClient
             if (command is CommandConnectionSuccessful)
             {
                 CommandConnectionSuccessful commandConnectionSuccessful = command as CommandConnectionSuccessful;
-                m_ClientId = commandConnectionSuccessful.ClientId;
+                GlobalResources.ClientId = commandConnectionSuccessful.ClientId;
                 m_IsServerConnectionEstablished = true;
                 Task.Factory.StartNew(() =>
                 {
@@ -88,13 +87,16 @@ namespace BesiegedClient
 
             else if (command is CommandNotifyGame)
             {
-                CommandNotifyGame commandNotifyGame = command as CommandNotifyGame;
-                CommandNotifyGame game = GlobalVariables.GameLobbyCollection.Where(x => x.GameId == commandNotifyGame.GameId).FirstOrDefault();
-                if (game != null)
+                Task.Factory.StartNew(() =>
                 {
-                    GlobalVariables.GameLobbyCollection.Remove(game);
-                }
-                GlobalVariables.GameLobbyCollection.Add(commandNotifyGame);
+                    CommandNotifyGame commandNotifyGame = command as CommandNotifyGame;
+                    CommandNotifyGame game = GlobalResources.GameLobbyCollection.Where(x => x.GameId == commandNotifyGame.GameId).FirstOrDefault();
+                    if (game != null)
+                    {
+                        GlobalResources.GameLobbyCollection.Remove(game);
+                    }
+                    GlobalResources.GameLobbyCollection.Add(commandNotifyGame);
+                }, CancellationToken.None, TaskCreationOptions.None, m_TaskScheduler);
             }
         }
 

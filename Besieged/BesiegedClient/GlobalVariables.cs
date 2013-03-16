@@ -1,4 +1,5 @@
 ﻿using Framework.Commands;
+using Framework.ServiceContracts;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,16 +10,21 @@ using System.Windows.Controls;
 
 namespace BesiegedClient
 {
-    public static class GlobalVariables
+    public static class GlobalResources
     {
         public static ObservableCollection<CommandNotifyGame> GameLobbyCollection { get; set; }
         public static Canvas GameWindow { get; set; }
+        public static IBesiegedServer BesiegedServer { get; set; }
+        public static string ClientId { get; set; }
         
-        
-        static GlobalVariables()
+        static GlobalResources()
         {
             GameLobbyCollection = new ObservableCollection<CommandNotifyGame>();
         }
 
+        public static void SendMessageToServer(string command)
+        {
+            Task.Factory.StartNew(() => BesiegedServer.SendCommand(command));
+        }
     }
 }

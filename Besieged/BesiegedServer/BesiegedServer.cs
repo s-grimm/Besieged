@@ -125,6 +125,7 @@ namespace BesiegedServer
 
                             CommandJoinGameSuccessful commandJoinGameSuccessful = new CommandJoinGameSuccessful(gameInstance.GameId);
                             NotifyClient(commandJoinGame.ClientId, commandJoinGameSuccessful.ToXml());
+                            ConsoleLogger.Push(string.Format("Client Id {0} has joined Game {1}", commandJoinGame.ClientId, gameInstance.GameId));
                         }
                         else
                         {
