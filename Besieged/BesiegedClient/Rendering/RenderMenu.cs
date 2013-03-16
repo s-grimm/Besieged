@@ -196,10 +196,5 @@ namespace BesiegedClient.Rendering
                 MessageBox.Show("Error Loading UI Component : Quit.png", "UI Load Failure", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-        public static void RenderOptionsMenu(Canvas canvas)
-        {
-            dimensions = new Dimensions() { Width = (int)canvas.Width, Height = (int)canvas.Height };
-        }
     }
 }
