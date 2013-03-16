@@ -19,6 +19,8 @@ namespace BesiegedServer
         private BlockingCollection<Command> m_MessageQueue = new BlockingCollection<Command>();
         private ConcurrentDictionary<string, IClient> m_ConnectedClients = new ConcurrentDictionary<string, IClient>();  // global hook for all clients
         private ConcurrentDictionary<string, BesiegedGameInstance> m_Games = new ConcurrentDictionary<string, BesiegedGameInstance>();
+        private bool m_IsServerInitialized = false;
+        private IClient m_ServerCallback;
 
         public BesiegedServer()
         {
@@ -87,6 +89,14 @@ namespace BesiegedServer
         {
             try
             {
+                if (command is CommandStartServer)
+                {
+                    if (!m_IsServerInitialized)
+                    {
+                        m_ServerCallback = OperationContext.Current.GetCallbackChannel<IClient>();
+                    }
+                }
+                
                 if (command is CommandJoinGame)
                 {
                     CommandJoinGame commandJoinGame = command as CommandJoinGame;

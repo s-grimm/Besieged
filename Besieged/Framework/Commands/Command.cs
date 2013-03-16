@@ -154,4 +154,10 @@ namespace Framework.Commands
             SerializedMap = serializedMap;
         }
     }
+	
+	public class CommandStartServer : Command
+    {
+    }
+	
+	
 }
