@@ -12,6 +12,28 @@ namespace BesiegedClient.Rendering
 {
     public static class RenderMenu
     {
+        public static void MenuOptionHover(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            try
+            {
+                Image img = (Image)sender;
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        public static void MenuOptionHoverLost(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            try
+            {
+                Image img = (Image)sender;
+            }
+            catch (Exception)
+            {
+            }
+        }
+        
         private static Dimensions dimensions;
         public static void RenderMainMenu(Canvas canvas)
         {
@@ -47,7 +69,91 @@ namespace BesiegedClient.Rendering
             {
                 MessageBox.Show("Error Loading UI Component : MainMenuBackground.png", "UI Load Failure", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            /**********************************************Draw and Link menu options******************************************************/
+            //Single Player
+            double menuYOffset = dimensions.Height / 2;
+            double menuXOffset = dimensions.Width * 0.65;
+            try
+            {
+                img = new Image();
+                bimg = new BitmapImage(new Uri(UIComponentPath + "SinglePlayer.png", UriKind.RelativeOrAbsolute));
+                img.Source = bimg;
+                img.Width = bimg.PixelWidth;
+                img.Height = bimg.PixelHeight;
+                Canvas.SetLeft(img, menuXOffset);
+                Canvas.SetBottom(img, menuYOffset);
+                Canvas.SetZIndex(img, 100);
+                img.MouseEnter += MenuOptionHover;
+                img.MouseLeave += MenuOptionHoverLost;
+                canvas.Children.Add(img);
+                menuYOffset -= img.Height * 1.5;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error Loading UI Component : SinglePlayer.png", "UI Load Failure", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            //multi player
+            try
+            {
+                img = new Image();
+                bimg = new BitmapImage(new Uri(UIComponentPath + "MultiPlayer.png", UriKind.RelativeOrAbsolute));
+                img.Source = bimg;
+                img.Width = bimg.PixelWidth;
+                img.Height = bimg.PixelHeight;
+                Canvas.SetLeft(img, menuXOffset);
+                Canvas.SetBottom(img, menuYOffset);
+                Canvas.SetZIndex(img, 100);
+                img.MouseEnter += MenuOptionHover;
+                img.MouseLeave += MenuOptionHoverLost;
+                canvas.Children.Add(img);
+                menuYOffset -= img.Height * 1.5;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error Loading UI Component : MultiPlayer.png", "UI Load Failure", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            //options
+            try
+            {
+                img = new Image();
+                bimg = new BitmapImage(new Uri(UIComponentPath + "Options.png", UriKind.RelativeOrAbsolute));
+                img.Source = bimg;
+                img.Width = bimg.PixelWidth;
+                img.Height = bimg.PixelHeight;
+                Canvas.SetLeft(img, menuXOffset);
+                Canvas.SetBottom(img, menuYOffset);
+                Canvas.SetZIndex(img, 100);
+                img.MouseEnter += MenuOptionHover;
+                img.MouseLeave += MenuOptionHoverLost;
+                canvas.Children.Add(img);
+                menuYOffset -= img.Height * 1.5;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error Loading UI Component : Options.png", "UI Load Failure", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            //Quit
+            try
+            {
+                img = new Image();
+                bimg = new BitmapImage(new Uri(UIComponentPath + "Quit.png", UriKind.RelativeOrAbsolute));
+                img.Source = bimg;
+                img.Width = bimg.PixelWidth;
+                img.Height = bimg.PixelHeight;
+                Canvas.SetLeft(img, menuXOffset);
+                Canvas.SetBottom(img, menuYOffset);
+                Canvas.SetZIndex(img, 100);
+                img.MouseEnter += MenuOptionHover;
+                img.MouseLeave += MenuOptionHoverLost;
+                canvas.Children.Add(img);
+                menuYOffset -= img.Height * 1.5;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error Loading UI Component : Quit.png", "UI Load Failure", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
+
         public static void RenderOptionsMenu(Canvas canvas)
         {
             dimensions = new Dimensions() { Width = (int)canvas.Width, Height = (int)canvas.Height };
