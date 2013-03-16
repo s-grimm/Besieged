@@ -1,20 +1,22 @@
 ﻿using Framework.Commands;
 using Framework.ServiceContracts;
 using Framework.Utilities.Xml;
+using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using BesiegedClient.Rendering;
 
 namespace BesiegedClient
 {
     public class Dimensions
     {
         public int Width { get; set; }
+
         public int Height { get; set; }
     }
 
@@ -29,8 +31,6 @@ namespace BesiegedClient
         private SolidColorBrush _blueBrush = new SolidColorBrush(Colors.Blue);
         private List<Rectangle> _rectangles = new List<Rectangle>();
 
-
-
         private app_code.Client _client = new app_code.Client();
         private string _clientIdentifier;
         private bool _isServerConnectionEstablished = false;
@@ -40,8 +40,8 @@ namespace BesiegedClient
         public MainWindow()
         {
             InitializeComponent();
-            DrawGrid(10, 10);
-
+            DrawGrid(10, 10); //Needs to be switched to state
+            
             EndpointAddress endpointAddress = new EndpointAddress("http://localhost:31337/BesiegedServer/BesiegedMessage");
             DuplexChannelFactory<IBesiegedServer> duplexChannelFactory = new DuplexChannelFactory<IBesiegedServer>(_client, new WSDualHttpBinding(), endpointAddress);
             _besiegedServer = duplexChannelFactory.CreateChannel();
@@ -80,24 +80,76 @@ namespace BesiegedClient
                 Task.Factory.StartNew(() =>
                 {
                     CommandChatMessage chatMessageCommand = command as CommandChatMessage;
-                   // listboxChatWindow.Items.Add(chatMessage.Contents);
+
+                    // listboxChatWindow.Items.Add(chatMessage.Contents);
                 }, CancellationToken.None, TaskCreationOptions.None, _taskScheduler);
             }
         }
 
-        private void SendMessageToServer(string message)
+        public void GoToMultiplayerLobby(object sender, EventArgs e)
         {
-            //Task.Factory.StartNew(() => _messageService.SendCommand(message));
+            int counter = 0;
+            MessageBoxResult hr;
+            while (!_isServerConnectionEstablished)
+            {
+                Thread.Sleep(10000); //sleep for 10 seconds before checking again.
+                counter++;
+
+                if (counter > 6) //spinning for 60 seconds, prompt user
+                {
+                    hr = MessageBox.Show("Timeout while attempting to connect to the server. Retry?", "Connection Timeout", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+                    if (hr == MessageBoxResult.Yes)
+                    {
+                        counter = 0;
+                        hr = MessageBoxResult.None;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+
+            //render the lobby and attach the event handlers
         }
 
         public void DrawGrid(int rows, int columns)
         {
             cvsGameWindow.Width = ClientWindowOptions.WindowDimensions.Width;
             cvsGameWindow.Height = ClientWindowOptions.WindowDimensions.Height;
-            Application.Current.MainWindow.Width = ClientWindowOptions.WindowDimensions.Width;
-            Application.Current.MainWindow.Height = ClientWindowOptions.WindowDimensions.Height;
+            if (!ClientWindowOptions.FullscreenMode)
+            {
+                Application.Current.MainWindow.Width = ClientWindowOptions.WindowDimensions.Width + 15;
+                Application.Current.MainWindow.Height = ClientWindowOptions.WindowDimensions.Height + 38;
+            }
+            RenderMenu.RenderMainMenu(cvsGameWindow);
+            //RenderGameWindow.RenderUI(cvsGameWindow);
+        }
 
-            Rendering.RenderGameWindow.RenderUI(cvsGameWindow);
+        private void Window_SizeChanged_1(object sender, SizeChangedEventArgs e)
+        {
+            Application.Current.MainWindow.Title = Application.Current.MainWindow.Width.ToString() + " : " + Application.Current.MainWindow.Height.ToString();
+        }
+    }
+}
+
+/*Code Snippets for shane to deal with maximizing window to fullscreen mode
+
+1. Hook WinProc to catch WM_SYSCOMMAND
+
+2. Check wParam == SC_MAXIMIZE and then
+
+3. Set my windiw's attributes
+
+this.ResizeMode = ResizeMode.NoResize;
+
+this.WindowStyle = WindowStyle.None;
+
+this.WindowState = WindowState.Maximized;
+
+*/
+
+/*Code snippit for drawing grid
 
             ////init rectangles
             //for (int i = 0; i < windowDimensions.Width; i += 50)
@@ -119,22 +171,5 @@ namespace BesiegedClient
             //{
             //    cvsGameWindow.Children.Add(rect);
             //}
-        }
 
-        //private void txtMessage_GotFocus(object sender, RoutedEventArgs e)
-        //{
-        //    if (txtMessage.Text == "Send a Message")
-        //    {
-        //        txtMessage.Clear();
-        //    }
-        //}
-
-        //private void txtMessage_LostFocus(object sender, RoutedEventArgs e)
-        //{
-        //    if (txtMessage.Text.Trim() == "")
-        //    {
-        //        txtMessage.Text = "Send a Message";
-        //    }
-        //}
-    }
-}
+*/

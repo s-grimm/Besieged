@@ -9,9 +9,11 @@ namespace BesiegedClient
     public static class ClientWindowOptions
     {
         public static Dimensions WindowDimensions;
+        public static bool FullscreenMode { get; set; }
 
         static ClientWindowOptions()
         {
+            FullscreenMode = false;
             WindowDimensions = new Dimensions() { Width = 800, Height = 600 };
         }
     }
