@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utilities;
 
 namespace BesiegedServer
 {
@@ -31,7 +32,7 @@ namespace BesiegedServer
             }
             catch (Exception ex)
             {
-                // custom error handling	
+                ErrorLogger.Push(ex);
             }
         }
     }
