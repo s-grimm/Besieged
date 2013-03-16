@@ -100,10 +100,13 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="resources\UI\PSDLayout\Background.psd" />
     <None Include="resources\UI\PSDLayout\BesiegedUI-16.9.Ratio-Merged.psd" />
     <None Include="resources\UI\PSDLayout\BesiegedUI-16.9.Ratio.psd" />
     <None Include="resources\UI\PSDLayout\BesiegedUI-4.3.Ratio-Merged.psd" />
     <None Include="resources\UI\PSDLayout\BesiegedUI-4.3.Ratio.psd" />
+    <None Include="resources\UI\PSDLayout\LayeredMenuButtons.psd" />
+    <None Include="resources\UI\PSDLayout\MainMenu-4.3.Ratio.psd" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BesiegedClientLogic\BesiegedClientLogic.csproj">
@@ -213,8 +216,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="resources\UI\Menu\" />
+    <Resource Include="resources\UI\Menu\MainMenu\16x9\MainMenuBackground.png" />
+    <Resource Include="resources\UI\Menu\MainMenu\4x3\MainMenuBackground.png" />
+    <Resource Include="resources\UI\Menu\MainMenu\Logo.png" />
+    <Resource Include="resources\UI\Menu\MainMenu\MultiPlayer.png" />
+    <Resource Include="resources\UI\Menu\MainMenu\Options.png" />
+    <Resource Include="resources\UI\Menu\MainMenu\Quit.png" />
+    <Resource Include="resources\UI\Menu\MainMenu\SinglePlayer.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
