@@ -15,30 +15,56 @@ namespace BesiegedClient.Rendering
         private static Dimensions dimensions;
         private static double menuYOffset;
         private static double menuXOffset;
+        private static object mousedownRef;
+
+        #region Handlers
+        
         public static void MenuOptionHover(object sender, System.Windows.Input.MouseEventArgs e)
         {
             try
             {
-                Image img = (Image)sender;
+                Image img = sender as Image;
                 Canvas.SetLeft(img, menuXOffset + 50);
             }
             catch (Exception)
             {
             }
         }
-
         public static void MenuOptionHoverLost(object sender, System.Windows.Input.MouseEventArgs e)
         {
             try
             {
-                Image img = (Image)sender;
+                Image img = sender as Image;
                 Canvas.SetLeft(img, menuXOffset);
             }
             catch (Exception)
             {
             }
         }
+        public static void MenuOptionMouseDown(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            try
+            {
+                mousedownRef = sender;
+            }
+            catch (Exception)
+            {
+            }
+        }
+        public static void MenuOptionMouseUp(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            try
+            {
+                if (mousedownRef != sender) return;
+                Image img = sender as Image;
+                MessageBox.Show(img.Name);
+            }
+            catch (Exception)
+            {
+            }
+        }
         
+        #endregion Handlers
 
         public static void RenderMainMenu(Canvas canvas)
         {
@@ -90,6 +116,9 @@ namespace BesiegedClient.Rendering
                 Canvas.SetZIndex(img, 100);
                 img.MouseEnter += MenuOptionHover;
                 img.MouseLeave += MenuOptionHoverLost;
+                img.MouseDown += MenuOptionMouseDown;
+                img.MouseUp += MenuOptionMouseUp;
+                img.Name = "SinglePlayer";
                 canvas.Children.Add(img);
                 menuYOffset -= img.Height * 1.5;
             }
@@ -110,6 +139,9 @@ namespace BesiegedClient.Rendering
                 Canvas.SetZIndex(img, 100);
                 img.MouseEnter += MenuOptionHover;
                 img.MouseLeave += MenuOptionHoverLost;
+                img.MouseDown += MenuOptionMouseDown;
+                img.MouseUp += MenuOptionMouseUp;
+                img.Name = "MultiPlayer";
                 canvas.Children.Add(img);
                 menuYOffset -= img.Height * 1.5;
             }
@@ -130,6 +162,9 @@ namespace BesiegedClient.Rendering
                 Canvas.SetZIndex(img, 100);
                 img.MouseEnter += MenuOptionHover;
                 img.MouseLeave += MenuOptionHoverLost;
+                img.MouseDown += MenuOptionMouseDown;
+                img.MouseUp += MenuOptionMouseUp;
+                img.Name = "Options";
                 canvas.Children.Add(img);
                 menuYOffset -= img.Height * 1.5;
             }
@@ -150,6 +185,9 @@ namespace BesiegedClient.Rendering
                 Canvas.SetZIndex(img, 100);
                 img.MouseEnter += MenuOptionHover;
                 img.MouseLeave += MenuOptionHoverLost;
+                img.MouseDown += MenuOptionMouseDown;
+                img.MouseUp += MenuOptionMouseUp;
+                img.Name = "Quit";
                 canvas.Children.Add(img);
                 menuYOffset -= img.Height * 1.5;
             }
