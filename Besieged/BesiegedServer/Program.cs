@@ -37,7 +37,7 @@ namespace BesiegedServer
                     m_BesiegedServer.SendCommand(commandConnect.ToXml());
                 });
 
-                Console.Write("Service Started.\n> ");
+                ConsoleLogger.Push("Service Started.");
             }
             catch (Exception ex)
             {
