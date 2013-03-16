@@ -63,6 +63,15 @@ namespace Framework.Commands
 
     public class CommandConnectionTerminated : Command
     {
+        public CommandConnectionTerminated()
+        {
+        }
+
+        public CommandConnectionTerminated(string clientId, string gameId)
+        {
+            ClientId = clientId;
+            GameId = gameId;
+        }
     }
 
     public class CommandCreateGame : Command

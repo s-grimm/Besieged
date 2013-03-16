@@ -165,6 +165,16 @@ namespace BesiegedServer
                     CommandSendGameMap commandSendGameMap = command as CommandSendGameMap;
                     MapUtilities.SaveToFile(commandSendGameMap.SerializedMap);
                 }
+
+                else if (command is CommandConnectionTerminated)
+                {
+                    CommandConnectionTerminated commandConnectionTerminated = command as CommandConnectionTerminated;
+                    BesiegedGameInstance gameInstance = m_Games[commandConnectionTerminated.GameId];
+                    IClient client = m_ConnectedClients[commandConnectionTerminated.ClientId];
+                    ConnectedClient connectedClient = new ConnectedClient("Alias", commandConnectionTerminated.ClientId, client);
+                    gameInstance.ConnectedClients.TryTake(out connectedClient);
+                    m_ConnectedClients.TryRemove(commandConnectionTerminated.ClientId, out client);
+                }
             }
             catch (Exception ex)
             {
