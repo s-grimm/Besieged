@@ -104,21 +104,29 @@ namespace BesiegedServer
                     {
                         if (!m_Games[commandJoinGame.GameId].IsGameInstanceFull)
                         {
-                            BesiegedGameInstance gameInstance = m_Games[commandJoinGame.GameId];
-                            IClient client = m_ConnectedClients[commandJoinGame.ClientId];
-                            ConnectedClient connectedClient = new ConnectedClient("Alias", commandJoinGame.ClientId, client);
-                            gameInstance.ConnectedClients.Add(connectedClient);
-                            if (gameInstance.ConnectedClients.Count == gameInstance.MaxPlayers)
+                            if (m_Games[commandJoinGame.GameId].Password == commandJoinGame.Password)
                             {
-                                gameInstance.IsGameInstanceFull = true;
+                                BesiegedGameInstance gameInstance = m_Games[commandJoinGame.GameId];
+                                IClient client = m_ConnectedClients[commandJoinGame.ClientId];
+                                ConnectedClient connectedClient = new ConnectedClient("Alias", commandJoinGame.ClientId, client);
+                                gameInstance.ConnectedClients.Add(connectedClient);
+                                if (gameInstance.ConnectedClients.Count == gameInstance.MaxPlayers)
+                                {
+                                    gameInstance.IsGameInstanceFull = true;
+                                }
+
+                                string capacity = string.Format("{0}/{1} players", gameInstance.ConnectedClients.Count, gameInstance.MaxPlayers); // notify all connect clients of the updated game instance
+                                CommandNotifyGame commandNotifyGame = new CommandNotifyGame(gameInstance.GameId, gameInstance.Name, capacity, gameInstance.IsGameInstanceFull);
+                                NotifyAllConnectedClients(commandNotifyGame.ToXml());
+
+                                CommandJoinGameSuccessful commandJoinGameSuccessful = new CommandJoinGameSuccessful(gameInstance.GameId);
+                                NotifyClient(commandJoinGame.ClientId, commandJoinGameSuccessful.ToXml());
                             }
-
-                            string capacity = string.Format("{0}/{1} players", gameInstance.ConnectedClients.Count, gameInstance.MaxPlayers); // notify all connect clients of the updated game instance
-                            CommandNotifyGame commandNotifyGame = new CommandNotifyGame(gameInstance.GameId, gameInstance.Name, capacity, gameInstance.IsGameInstanceFull);
-                            NotifyAllConnectedClients(commandNotifyGame.ToXml());
-
-                            CommandJoinGameSuccessful commandJoinGameSuccessful = new CommandJoinGameSuccessful(gameInstance.GameId);
-                            NotifyClient(commandJoinGame.ClientId, commandJoinGameSuccessful.ToXml());
+                            else
+                            {
+                                CommandServerError commandServerError = new CommandServerError("Incorrect Password");
+                                NotifyClient(commandJoinGame.ClientId, commandServerError.ToXml());
+                            }
                         }
                         else
                         {
@@ -137,7 +145,7 @@ namespace BesiegedServer
                 {
                     CommandCreateGame commandCreateGame = command as CommandCreateGame; // create the new game instance
                     string newGameId = Guid.NewGuid().ToString();
-                    BesiegedGameInstance gameInstance = new BesiegedGameInstance(newGameId, commandCreateGame.GameName, commandCreateGame.MaxPlayers);
+                    BesiegedGameInstance gameInstance = new BesiegedGameInstance(newGameId, commandCreateGame.GameName, commandCreateGame.MaxPlayers, commandCreateGame.Password);
                     m_Games.GetOrAdd(newGameId, gameInstance);
 
 					IClient client = m_ConnectedClients[commandCreateGame.ClientId];    // add the client that requested the new game to the game instance

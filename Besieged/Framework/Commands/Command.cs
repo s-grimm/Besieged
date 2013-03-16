@@ -5,6 +5,7 @@ namespace Framework.Commands
     {
         public string GameId { get; set; }
         public string ClientId { get; set; }
+        public string Password { get; set; }
     }
 
     public class CommandAggregate : Command
@@ -88,6 +89,13 @@ namespace Framework.Commands
             GameName = gameName;
             MaxPlayers = maxPlayers;
         }
+
+        public CommandCreateGame(string gameName, int maxPlayers, string password)
+        {
+            GameName = gameName;
+            MaxPlayers = maxPlayers;
+            Password = password;
+        }
     }
 
     public class CommandJoinGame : Command
@@ -99,6 +107,12 @@ namespace Framework.Commands
         public CommandJoinGame(string gameId)
         {
             GameId = gameId;
+        }
+
+        public CommandJoinGame(string gameId, string password)
+        {
+            GameId = gameId;
+            Password = password;
         }
     }
 
