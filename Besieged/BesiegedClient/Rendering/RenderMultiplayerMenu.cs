@@ -238,10 +238,10 @@ namespace BesiegedClient.Rendering
 
         public static void RenderNewGameMenu()
         {
-            dimensions = new Dimensions() { Width = (int)GlobalVariables.GameWindow.Width, Height = (int)GlobalVariables.GameWindow.Height };
+            dimensions = new Dimensions() { Width = (int)GlobalResources.GameWindow.Width, Height = (int)GlobalResources.GameWindow.Height };
             menuYOffset = dimensions.Height / 2;
             menuXOffset = dimensions.Width * 0.65;
-            GlobalVariables.GameWindow.Children.Clear();
+            GlobalResources.GameWindow.Children.Clear();
 
             double aspectRatio = Math.Round((double)dimensions.Width / (double)dimensions.Height, 2, MidpointRounding.AwayFromZero);
 
@@ -266,7 +266,7 @@ namespace BesiegedClient.Rendering
                 img.Source = bimg;
                 img.Width = bimg.PixelWidth;
                 img.Height = bimg.PixelHeight;
-                GlobalVariables.GameWindow.Background = new ImageBrush(bimg);
+                GlobalResources.GameWindow.Background = new ImageBrush(bimg);
             }
             catch (Exception ex)
             {
