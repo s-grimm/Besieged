@@ -18,14 +18,14 @@ namespace BesiegedServer
             ServiceHost svcHost = null;
             try
             {
-                svcHost = new ServiceHost(typeof(BesiegedServer), new Uri("http://10.244.6.52:31337/BesiegedServer/"));
+                svcHost = new ServiceHost(typeof(BesiegedServer), new Uri("http://localhost:31337/BesiegedServer/"));
                 svcHost.AddServiceEndpoint(typeof(Framework.ServiceContracts.IBesiegedServer), new WSDualHttpBinding(), "BesiegedMessage");
                 svcHost.Description.Behaviors.Add(new ServiceMetadataBehavior() { HttpGetEnabled = true });
                 svcHost.Credentials.WindowsAuthentication.AllowAnonymousLogons = true;
                 svcHost.Open();
 
                 // Configure a client callback for the server itself to force start the process
-                EndpointAddress endpointAddress = new EndpointAddress("http://10.244.6.52:31337/BesiegedServer/BesiegedMessage");
+                EndpointAddress endpointAddress = new EndpointAddress("http://localhost:31337/BesiegedServer/BesiegedMessage");
                 DuplexChannelFactory<IBesiegedServer> duplexChannelFactory = new DuplexChannelFactory<IBesiegedServer>(m_Client, new WSDualHttpBinding(), endpointAddress);
                 m_BesiegedServer = duplexChannelFactory.CreateChannel();
 
