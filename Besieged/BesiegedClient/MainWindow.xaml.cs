@@ -134,7 +134,7 @@ namespace BesiegedClient
                 Application.Current.MainWindow.Width = ClientWindowOptions.WindowDimensions.Width + 15;
                 Application.Current.MainWindow.Height = ClientWindowOptions.WindowDimensions.Height + 38;
             }
-            RenderMenu.RenderMainMenu(cvsGameWindow);
+            RenderMenu.RenderMainMenu();
             //RenderGameWindow.RenderUI(cvsGameWindow);
         }
 

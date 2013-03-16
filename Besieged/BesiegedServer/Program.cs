@@ -53,6 +53,10 @@ namespace BesiegedServer
                         ProcessMessage(message);
                     }
                 }, TaskCreationOptions.LongRunning);
+                for (int i = 0; i < 10; ++i)
+                {
+                    ErrorLogger.Push(new Exception("Error " + i));
+                }
             }
             catch (Exception ex)
             {
