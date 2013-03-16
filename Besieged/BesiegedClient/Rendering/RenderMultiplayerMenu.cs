@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -56,7 +57,7 @@ namespace BesiegedClient.Rendering
             /***************************List Box of Games************************************/
             try
             {
-                ListBox lbCurrentGames = new ListBox();
+                ListView lbCurrentGames = new ListView();
                 lbCurrentGames.Width = dimensions.Width / 2;
                 lbCurrentGames.Height = dimensions.Height / 2;
                 lbCurrentGames.Opacity = 0.75;
@@ -65,6 +66,25 @@ namespace BesiegedClient.Rendering
                 Canvas.SetBottom(lbCurrentGames, dimensions.Height / 4);
                 //add to canvas
                 GlobalVariables.GameWindow.Children.Add(lbCurrentGames);
+
+                // bind the listbox to the Game lobby collection
+                GridView gameGridView = new GridView();
+                gameGridView.AllowsColumnReorder = true;
+
+                GridViewColumn nameColumn = new GridViewColumn();
+                nameColumn.DisplayMemberBinding = new Binding("Name");
+                nameColumn.Width = lbCurrentGames.Width * 0.66;
+                nameColumn.Header = "Game Name";
+                gameGridView.Columns.Add(nameColumn);
+
+                GridViewColumn capacityColumn = new GridViewColumn();
+                capacityColumn.DisplayMemberBinding = new Binding("Capacity");
+                capacityColumn.Header = "Players";
+                capacityColumn.Width = lbCurrentGames.Width * 0.34;
+                gameGridView.Columns.Add(capacityColumn);
+
+                lbCurrentGames.View = gameGridView;
+                lbCurrentGames.ItemsSource = GlobalVariables.GameLobbyCollection;
             }
             catch(Exception ex)
             {

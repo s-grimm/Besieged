@@ -3,6 +3,7 @@ using Framework.ServiceContracts;
 using Framework.Utilities.Xml;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -76,14 +77,24 @@ namespace BesiegedClient
                     MessageBox.Show("Connection successful!");
                 }, CancellationToken.None, TaskCreationOptions.None, m_TaskScheduler);
             }
+
             else if (command is CommandChatMessage)
             {
                 Task.Factory.StartNew(() =>
                 {
                     CommandChatMessage chatMessageCommand = command as CommandChatMessage;
-
-                    // listboxChatWindow.Items.Add(chatMessage.Contents);
                 }, CancellationToken.None, TaskCreationOptions.None, m_TaskScheduler);
+            }
+
+            else if (command is CommandNotifyGame)
+            {
+                CommandNotifyGame commandNotifyGame = command as CommandNotifyGame;
+                CommandNotifyGame game = GlobalVariables.GameLobbyCollection.Where(x => x.GameId == commandNotifyGame.GameId).FirstOrDefault();
+                if (game != null)
+                {
+                    GlobalVariables.GameLobbyCollection.Remove(game);
+                }
+                GlobalVariables.GameLobbyCollection.Add(commandNotifyGame);
             }
         }
 
