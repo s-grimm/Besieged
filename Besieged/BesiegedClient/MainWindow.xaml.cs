@@ -42,8 +42,8 @@ namespace BesiegedClient
             InitializeComponent();
             GlobalResources.GameWindow = cvsGameWindow;
             
-            EndpointAddress endpointAddress = new EndpointAddress("http://localhost:31337/BesiegedServer/BesiegedMessage");
-            DuplexChannelFactory<IBesiegedServer> duplexChannelFactory = new DuplexChannelFactory<IBesiegedServer>(m_Client, new WSDualHttpBinding(), endpointAddress);
+            EndpointAddress endpointAddress = new EndpointAddress("net.tcp://192.168.1.117:31337/BesiegedServer/BesiegedMessage");
+            DuplexChannelFactory<IBesiegedServer> duplexChannelFactory = new DuplexChannelFactory<IBesiegedServer>(m_Client, new NetTcpBinding(SecurityMode.None), endpointAddress);
             GlobalResources.BesiegedServer = duplexChannelFactory.CreateChannel();
 
             // Subscribe in a separate thread to preserve the UI thread
