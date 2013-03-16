@@ -45,6 +45,14 @@ namespace Framework.Utilities.Xml
             return xmlSerializer;
         }
 
+        public static XmlSerializer GetFrameworkFallbackSerializer(string typeName)
+        {
+            Type type = FrameworkTypes.Where(x => x.Name == typeName).FirstOrDefault();
+            XmlSerializer xmlSerializer = new XmlSerializer(type, FrameworkTypes.ToArray());
+            SerializerDictionary[type.Name] = xmlSerializer;
+            return xmlSerializer;
+        }
+
         public static XmlSerializer GetUberFallbackSerializer(Type type)
         {
             XmlSerializer xmlSerializer = new XmlSerializer(type, AllKnownTypes.ToArray());

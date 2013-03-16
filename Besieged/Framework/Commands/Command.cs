@@ -164,6 +164,10 @@ namespace Framework.Commands
         }
     }
 
+    public class CommandServerStarted : Command
+    {
+    }
+
     public class CommandSendGameMap : Command
     {
         public string SerializedMap { get; set; }

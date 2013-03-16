@@ -57,7 +57,19 @@ namespace BesiegedClient.Rendering
             {
                 if (mousedownRef != sender) return;
                 Image img = sender as Image;
-                MessageBox.Show(img.Name);
+                string selected = img.Name;
+                if(selected == "Quit")
+                {
+                    Application.Current.MainWindow.Close();
+                }
+                else if(selected == "MultiPlayer")
+                {
+                    RenderMultiplayerMenu.RenderGameLobby();
+                }
+                else
+                {
+                    MessageBox.Show(selected);
+                }
             }
             catch (Exception)
             {
@@ -66,12 +78,12 @@ namespace BesiegedClient.Rendering
         
         #endregion Handlers
 
-        public static void RenderMainMenu(Canvas canvas)
+        public static void RenderMainMenu()
         {
-            dimensions = new Dimensions() { Width = (int)canvas.Width, Height = (int)canvas.Height };
+            dimensions = new Dimensions() { Width = (int)GlobalResources.GameWindow.Width, Height = (int)GlobalResources.GameWindow.Height };
             menuYOffset = dimensions.Height / 2;
             menuXOffset = dimensions.Width * 0.65;
-            canvas.Children.Clear();
+            GlobalResources.GameWindow.Children.Clear();
 
             double aspectRatio = Math.Round((double)dimensions.Width / (double)dimensions.Height, 2, MidpointRounding.AwayFromZero);
 
@@ -96,11 +108,27 @@ namespace BesiegedClient.Rendering
                 img.Source = bimg;
                 img.Width = bimg.PixelWidth;
                 img.Height = bimg.PixelHeight;
-                canvas.Background = new ImageBrush(bimg);              
+                GlobalResources.GameWindow.Background = new ImageBrush(bimg);              
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error Loading UI Component : MainMenuBackground.png", "UI Load Failure", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            //Title
+            try
+            {
+                bimg = new BitmapImage(new Uri(UIComponentPath + "Logo.png", UriKind.RelativeOrAbsolute));
+                img = new Image();
+                img.Source = bimg;
+                img.Width = bimg.PixelWidth;
+                img.Height = bimg.PixelHeight;
+                Canvas.SetLeft(img, dimensions.Width * 0.05);
+                Canvas.SetTop(img, dimensions.Height * 0.05);
+                GlobalResources.GameWindow.Children.Add(img);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error Loading UI Component : Logo.png", "UI Load Failure", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             /**********************************************Draw and Link menu options******************************************************/
             //Single Player
@@ -119,7 +147,7 @@ namespace BesiegedClient.Rendering
                 img.MouseDown += MenuOptionMouseDown;
                 img.MouseUp += MenuOptionMouseUp;
                 img.Name = "SinglePlayer";
-                canvas.Children.Add(img);
+                GlobalResources.GameWindow.Children.Add(img);
                 menuYOffset -= img.Height * 1.5;
             }
             catch (Exception ex)
@@ -142,7 +170,7 @@ namespace BesiegedClient.Rendering
                 img.MouseDown += MenuOptionMouseDown;
                 img.MouseUp += MenuOptionMouseUp;
                 img.Name = "MultiPlayer";
-                canvas.Children.Add(img);
+                GlobalResources.GameWindow.Children.Add(img);
                 menuYOffset -= img.Height * 1.5;
             }
             catch (Exception ex)
@@ -165,7 +193,7 @@ namespace BesiegedClient.Rendering
                 img.MouseDown += MenuOptionMouseDown;
                 img.MouseUp += MenuOptionMouseUp;
                 img.Name = "Options";
-                canvas.Children.Add(img);
+                GlobalResources.GameWindow.Children.Add(img);
                 menuYOffset -= img.Height * 1.5;
             }
             catch (Exception ex)
@@ -188,18 +216,13 @@ namespace BesiegedClient.Rendering
                 img.MouseDown += MenuOptionMouseDown;
                 img.MouseUp += MenuOptionMouseUp;
                 img.Name = "Quit";
-                canvas.Children.Add(img);
+                GlobalResources.GameWindow.Children.Add(img);
                 menuYOffset -= img.Height * 1.5;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error Loading UI Component : Quit.png", "UI Load Failure", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
-
-        public static void RenderOptionsMenu(Canvas canvas)
-        {
-            dimensions = new Dimensions() { Width = (int)canvas.Width, Height = (int)canvas.Height };
         }
     }
 }
