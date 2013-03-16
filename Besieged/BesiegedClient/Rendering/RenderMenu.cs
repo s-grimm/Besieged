@@ -12,11 +12,15 @@ namespace BesiegedClient.Rendering
 {
     public static class RenderMenu
     {
+        private static Dimensions dimensions;
+        private static double menuYOffset;
+        private static double menuXOffset;
         public static void MenuOptionHover(object sender, System.Windows.Input.MouseEventArgs e)
         {
             try
             {
                 Image img = (Image)sender;
+                Canvas.SetLeft(img, menuXOffset + 50);
             }
             catch (Exception)
             {
@@ -28,16 +32,19 @@ namespace BesiegedClient.Rendering
             try
             {
                 Image img = (Image)sender;
+                Canvas.SetLeft(img, menuXOffset);
             }
             catch (Exception)
             {
             }
         }
         
-        private static Dimensions dimensions;
+
         public static void RenderMainMenu(Canvas canvas)
         {
             dimensions = new Dimensions() { Width = (int)canvas.Width, Height = (int)canvas.Height };
+            menuYOffset = dimensions.Height / 2;
+            menuXOffset = dimensions.Width * 0.65;
             canvas.Children.Clear();
 
             double aspectRatio = Math.Round((double)dimensions.Width / (double)dimensions.Height, 2, MidpointRounding.AwayFromZero);
@@ -71,8 +78,6 @@ namespace BesiegedClient.Rendering
             }
             /**********************************************Draw and Link menu options******************************************************/
             //Single Player
-            double menuYOffset = dimensions.Height / 2;
-            double menuXOffset = dimensions.Width * 0.65;
             try
             {
                 img = new Image();
