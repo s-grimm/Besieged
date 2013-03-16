@@ -58,12 +58,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ClientWindowOptions.cs" />
-    <Compile Include="game.Designer.cs">
+    <Compile Include="ClientSettings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>game.settings</DependentUpon>
+      <DependentUpon>ClientSettings.settings</DependentUpon>
     </Compile>
+    <Compile Include="ClientWindowOptions.cs" />
     <Compile Include="GlobalVariables.cs" />
     <Compile Include="Rendering\RenderGameWindow.cs" />
     <Compile Include="Rendering\RenderingUtilities.cs" />
@@ -102,9 +102,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="game.settings">
+    <None Include="ClientSettings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>game.Designer.cs</LastGenOutput>
+      <LastGenOutput>ClientSettings.Designer.cs</LastGenOutput>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -9,7 +9,7 @@
       <Value Profile="(Default)">600</Value>
     </Setting>
     <Setting Name="Alias" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">Player</Value>
     </Setting>
     <Setting Name="Fullscreen" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
