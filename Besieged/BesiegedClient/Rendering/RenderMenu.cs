@@ -57,7 +57,19 @@ namespace BesiegedClient.Rendering
             {
                 if (mousedownRef != sender) return;
                 Image img = sender as Image;
-                MessageBox.Show(img.Name);
+                string selected = img.Name;
+                if(selected == "Quit")
+                {
+                    
+                }
+                else if(selected == "MultiPlayer")
+                {
+                    RenderMultiplayerMenu.RenderGameLobby();
+                }
+                else
+                {
+                    MessageBox.Show(selected);
+                }
             }
             catch (Exception)
             {

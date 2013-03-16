@@ -40,6 +40,7 @@ namespace BesiegedClient
         public MainWindow()
         {
             InitializeComponent();
+            GlobalVariables.GameWindow = cvsGameWindow;
             DrawGrid(10, 10); //Needs to be switched to state
             
             EndpointAddress endpointAddress = new EndpointAddress("http://localhost:31337/BesiegedServer/BesiegedMessage");
