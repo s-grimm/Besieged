@@ -78,15 +78,31 @@ namespace Framework.Utilities.Xml
                 string actualRootType = xDocument.Root.Name.ToString();
                 if (XmlCore.SerializerDictionary.ContainsKey(actualRootType))
                 {
-                    using (StringReader stringReader = new StringReader(xml))
+                    XmlSerializer xmlSerializer = XmlCore.SerializerDictionary[actualRootType];
+                    try
                     {
-                        try 
+                        using (StringReader stringReader = new StringReader(xml))
                         {
-                            return (T)XmlCore.SerializerDictionary[actualRootType].Deserialize(stringReader); 
+                            return (T)xmlSerializer.Deserialize(stringReader);
+                        }
+                    }
+                    catch (Exception)   // try using a serializer that also knows about all other framework types
+                    {
+                        try
+                        {
+                            xmlSerializer = XmlCore.GetFrameworkFallbackSerializer(actualRootType);
+                            using (StringReader stringReader = new StringReader(xml))
+                            {
+                                return (T)xmlSerializer.Deserialize(stringReader);
+                            }
                         }
                         catch (Exception)
-                        { 
-                            return null; 
+                        {
+                            xmlSerializer = XmlCore.GetUberFallbackSerializer(typeof(T));   // try using a serializer that know about ALL types - this better freaking work
+                            using (StringReader stringReader = new StringReader(xml))
+                            {
+                                return (T)xmlSerializer.Deserialize(stringReader);
+                            }
                         }
                     }
                 }

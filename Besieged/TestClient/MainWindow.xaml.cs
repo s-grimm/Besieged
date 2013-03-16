@@ -34,7 +34,7 @@ namespace TestClient
         private TaskScheduler m_TaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
         private IBesiegedServer m_BesiegedServer;
 
-        public ObservableCollection<CommandNotifyGame> GameLobbyCollection { get; set; }
+        public static ObservableCollection<CommandNotifyGame> GameLobbyCollection { get; set; }
         
         public MainWindow()
         {

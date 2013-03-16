@@ -6,29 +6,36 @@ using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.Threading.Tasks;
 using Utilities;
-using Framework.Utilities.Xml;
 using BesiegedServer.Maps;
 namespace BesiegedServer
 {
     internal class Program
     {
-        private static ServerClient m_Client = new ServerClient();
+        private static ServerClient m_ServerClient;
         private static IBesiegedServer m_BesiegedServer;
+
+        private static void ProcessMessage(Command command)
+        {
+            if (command is CommandServerStarted)
+            {
+                ConsoleLogger.Push("Server started - Two way connection established");
+            }
+        }
 
         private static void Main(string[] args)
         {
             ServiceHost svcHost = null;
             try
             {
-                svcHost = new ServiceHost(typeof(BesiegedServer), new Uri("http://localhost:31337/BesiegedServer/"));
-                svcHost.AddServiceEndpoint(typeof(Framework.ServiceContracts.IBesiegedServer), new WSDualHttpBinding(), "BesiegedMessage");
-                svcHost.Description.Behaviors.Add(new ServiceMetadataBehavior() { HttpGetEnabled = true });
-                svcHost.Credentials.WindowsAuthentication.AllowAnonymousLogons = true;
+                svcHost = new ServiceHost(typeof(BesiegedServer), new Uri("net.tcp://localhost:31337/BesiegedServer/"));
+                svcHost.AddServiceEndpoint(typeof(Framework.ServiceContracts.IBesiegedServer), new NetTcpBinding(SecurityMode.None), "BesiegedMessage");
+                svcHost.Description.Behaviors.Add(new ServiceMetadataBehavior() { HttpGetEnabled = false });
                 svcHost.Open();
 
                 // Configure a client callback for the server itself to force start the process
-                EndpointAddress endpointAddress = new EndpointAddress("http://localhost:31337/BesiegedServer/BesiegedMessage");
-                DuplexChannelFactory<IBesiegedServer> duplexChannelFactory = new DuplexChannelFactory<IBesiegedServer>(m_Client, new WSDualHttpBinding(), endpointAddress);
+                m_ServerClient = new ServerClient();
+                EndpointAddress endpointAddress = new EndpointAddress("net.tcp://localhost:31337/BesiegedServer/BesiegedMessage");
+                DuplexChannelFactory<IBesiegedServer> duplexChannelFactory = new DuplexChannelFactory<IBesiegedServer>(m_ServerClient, new NetTcpBinding(SecurityMode.None), endpointAddress);
                 m_BesiegedServer = duplexChannelFactory.CreateChannel();
 
                 Task.Factory.StartNew(() =>
@@ -37,7 +44,18 @@ namespace BesiegedServer
                     m_BesiegedServer.SendCommand(commandConnect.ToXml());
                 });
 
-                ConsoleLogger.Push("Service Started.");
+                Task.Factory.StartNew(() =>
+                {
+                    while (true)
+                    {
+                        Command message = m_ServerClient.MessageQueue.Take();
+                        ProcessMessage(message);
+                    }
+                }, TaskCreationOptions.LongRunning);
+                for (int i = 0; i < 10; ++i)
+                {
+                    ErrorLogger.Push(new Exception("Error " + i));
+                }
             }
             catch (Exception ex)
             {
