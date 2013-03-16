@@ -80,10 +80,10 @@ namespace BesiegedClient.Rendering
 
         public static void RenderMainMenu()
         {
-            dimensions = new Dimensions() { Width = (int)GlobalVariables.GameWindow.Width, Height = (int)GlobalVariables.GameWindow.Height };
+            dimensions = new Dimensions() { Width = (int)GlobalResources.GameWindow.Width, Height = (int)GlobalResources.GameWindow.Height };
             menuYOffset = dimensions.Height / 2;
             menuXOffset = dimensions.Width * 0.65;
-            GlobalVariables.GameWindow.Children.Clear();
+            GlobalResources.GameWindow.Children.Clear();
 
             double aspectRatio = Math.Round((double)dimensions.Width / (double)dimensions.Height, 2, MidpointRounding.AwayFromZero);
 
@@ -108,7 +108,7 @@ namespace BesiegedClient.Rendering
                 img.Source = bimg;
                 img.Width = bimg.PixelWidth;
                 img.Height = bimg.PixelHeight;
-                GlobalVariables.GameWindow.Background = new ImageBrush(bimg);              
+                GlobalResources.GameWindow.Background = new ImageBrush(bimg);              
             }
             catch (Exception ex)
             {
@@ -124,7 +124,7 @@ namespace BesiegedClient.Rendering
                 img.Height = bimg.PixelHeight;
                 Canvas.SetLeft(img, dimensions.Width * 0.05);
                 Canvas.SetTop(img, dimensions.Height * 0.05);
-                GlobalVariables.GameWindow.Children.Add(img);
+                GlobalResources.GameWindow.Children.Add(img);
             }
             catch (Exception ex)
             {
@@ -147,7 +147,7 @@ namespace BesiegedClient.Rendering
                 img.MouseDown += MenuOptionMouseDown;
                 img.MouseUp += MenuOptionMouseUp;
                 img.Name = "SinglePlayer";
-                GlobalVariables.GameWindow.Children.Add(img);
+                GlobalResources.GameWindow.Children.Add(img);
                 menuYOffset -= img.Height * 1.5;
             }
             catch (Exception ex)
@@ -170,7 +170,7 @@ namespace BesiegedClient.Rendering
                 img.MouseDown += MenuOptionMouseDown;
                 img.MouseUp += MenuOptionMouseUp;
                 img.Name = "MultiPlayer";
-                GlobalVariables.GameWindow.Children.Add(img);
+                GlobalResources.GameWindow.Children.Add(img);
                 menuYOffset -= img.Height * 1.5;
             }
             catch (Exception ex)
@@ -193,7 +193,7 @@ namespace BesiegedClient.Rendering
                 img.MouseDown += MenuOptionMouseDown;
                 img.MouseUp += MenuOptionMouseUp;
                 img.Name = "Options";
-                GlobalVariables.GameWindow.Children.Add(img);
+                GlobalResources.GameWindow.Children.Add(img);
                 menuYOffset -= img.Height * 1.5;
             }
             catch (Exception ex)
@@ -216,7 +216,7 @@ namespace BesiegedClient.Rendering
                 img.MouseDown += MenuOptionMouseDown;
                 img.MouseUp += MenuOptionMouseUp;
                 img.Name = "Quit";
-                GlobalVariables.GameWindow.Children.Add(img);
+                GlobalResources.GameWindow.Children.Add(img);
                 menuYOffset -= img.Height * 1.5;
             }
             catch (Exception ex)
