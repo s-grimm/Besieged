@@ -22,6 +22,7 @@ namespace BesiegedServer
         public GameState GameState { get; set; }
         public string GameCreatorClientId { get; set; }
         public bool IsGameInstanceFull { get; set; }
+        public string Password { get; set; }
         
         private List<Color> _colors = new List<Color>() { Color.Red, Color.Blue, Color.Green, Color.Yellow, Color.Orange, Color.Violet, Color.Cyan, Color.HotPink };
 
@@ -31,6 +32,7 @@ namespace BesiegedServer
             MessageQueue = new BlockingCollection<Command>();
             IsGameInstanceFull = false;
             MaxPlayers = 2;
+            Password = "";
 
             // Start spinning the process message loop
             Task.Factory.StartNew(() =>
@@ -51,6 +53,27 @@ namespace BesiegedServer
             ConnectedClients = new ConcurrentBag<ConnectedClient>();
             MessageQueue = new BlockingCollection<Command>();
             IsGameInstanceFull = false;
+            
+            // Start spinning the process message loop
+            Task.Factory.StartNew(() =>
+            {
+                while (true)
+                {
+                    Command command = MessageQueue.Take();
+                    ProcessMessage(command);
+                }
+            }, TaskCreationOptions.LongRunning);
+        }
+
+        public BesiegedGameInstance(string gameId, string name, int maxPlayers, string password)
+        {
+            GameId = gameId;
+            Name = name;
+            MaxPlayers = maxPlayers;
+            ConnectedClients = new ConcurrentBag<ConnectedClient>();
+            MessageQueue = new BlockingCollection<Command>();
+            IsGameInstanceFull = false;
+            Password = password;
 
             // Start spinning the process message loop
             Task.Factory.StartNew(() =>
