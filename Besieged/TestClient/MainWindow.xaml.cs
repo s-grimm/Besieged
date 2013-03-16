@@ -19,6 +19,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace TestClient
 {
     /// <summary>
@@ -106,7 +107,6 @@ namespace TestClient
                     {
 						CommandServerError commandServerError = command as CommandServerError;
 						MessageBox.Show(commandServerError.ErrorMessage);
-                       
                     }, CancellationToken.None, TaskCreationOptions.None, m_TaskScheduler);
 				}
 
@@ -117,6 +117,12 @@ namespace TestClient
                     CommandChatMessage commandChatMessage = new CommandChatMessage(m_ClientId + " has joined the game.");
                     commandChatMessage.GameId = m_GameId;
                     SendMessageToServer(commandChatMessage.ToXml());
+
+                    Task.Factory.StartNew(() =>
+                    {
+                        btnJoin.Visibility = Visibility.Hidden;
+                        btnCreate.Visibility = Visibility.Hidden;
+                    }, CancellationToken.None, TaskCreationOptions.None, m_TaskScheduler);
                 }
 
             }
@@ -141,6 +147,7 @@ namespace TestClient
                     CommandJoinGame commandJoinGame = new CommandJoinGame(commandNotifyGame.GameId);
 					commandJoinGame.ClientId = m_ClientId;
                     SendMessageToServer(commandJoinGame.ToXml());
+                    btnJoin.IsEnabled = false;
                 }
             }
             catch (Exception ex)
