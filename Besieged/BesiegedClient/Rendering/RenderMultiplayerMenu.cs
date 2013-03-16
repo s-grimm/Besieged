@@ -17,6 +17,64 @@ namespace BesiegedClient.Rendering
         private static double menuXOffset;
         private static object mousedownRef;
 
+        #region Handlers
+
+        public static void MenuOptionHover(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            try
+            {
+                Image img = sender as Image;
+                Canvas.SetLeft(img, menuXOffset + 50);
+            }
+            catch (Exception)
+            {
+            }
+        }
+        public static void MenuOptionHoverLost(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            try
+            {
+                Image img = sender as Image;
+                Canvas.SetLeft(img, menuXOffset);
+            }
+            catch (Exception)
+            {
+            }
+        }
+        public static void MenuOptionMouseDown(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            try
+            {
+                mousedownRef = sender;
+            }
+            catch (Exception)
+            {
+            }
+        }
+        public static void MenuOptionMouseUp(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            try
+            {
+                if (mousedownRef != sender) return;
+                Image img = sender as Image;
+                string selected = img.Name;
+                if (selected == "MainMenu")
+                {
+                    RenderMenu.RenderMainMenu();
+                }
+                else
+                {
+                    MessageBox.Show(selected);
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        #endregion Handlers
+
+
         public static void RenderGameLobby()
         {
             dimensions = new Dimensions() { Width = (int)GlobalVariables.GameWindow.Width, Height = (int)GlobalVariables.GameWindow.Height };
@@ -69,6 +127,73 @@ namespace BesiegedClient.Rendering
             catch(Exception ex)
             {
                 
+            }
+            //Draw Menu Options
+            try
+            {
+                img = new Image();
+                bimg = new BitmapImage(new Uri(UIComponentPath + "JoinGame.png", UriKind.RelativeOrAbsolute));
+                img.Source = bimg;
+                img.Width = bimg.PixelWidth;
+                img.Height = bimg.PixelHeight;
+                Canvas.SetLeft(img, menuXOffset);
+                Canvas.SetBottom(img, menuYOffset);
+                Canvas.SetZIndex(img, 100);
+                img.MouseEnter += MenuOptionHover;
+                img.MouseLeave += MenuOptionHoverLost;
+                img.MouseDown += MenuOptionMouseDown;
+                img.MouseUp += MenuOptionMouseUp;
+                img.Name = "JoinGame";
+                GlobalVariables.GameWindow.Children.Add(img);
+                menuYOffset -= img.Height * 1.5;
+            }
+            catch(Exception ex)
+            {
+                
+            }
+            try
+            {
+                img = new Image();
+                bimg = new BitmapImage(new Uri(UIComponentPath + "CreateGame.png", UriKind.RelativeOrAbsolute));
+                img.Source = bimg;
+                img.Width = bimg.PixelWidth;
+                img.Height = bimg.PixelHeight;
+                Canvas.SetLeft(img, menuXOffset);
+                Canvas.SetBottom(img, menuYOffset);
+                Canvas.SetZIndex(img, 100);
+                img.MouseEnter += MenuOptionHover;
+                img.MouseLeave += MenuOptionHoverLost;
+                img.MouseDown += MenuOptionMouseDown;
+                img.MouseUp += MenuOptionMouseUp;
+                img.Name = "CreateGame";
+                GlobalVariables.GameWindow.Children.Add(img);
+                menuYOffset -= img.Height * 1.5;
+            }
+            catch (Exception ex)
+            {
+
+            }
+            try
+            {
+                img = new Image();
+                bimg = new BitmapImage(new Uri(UIComponentPath + "MainMenu.png", UriKind.RelativeOrAbsolute));
+                img.Source = bimg;
+                img.Width = bimg.PixelWidth;
+                img.Height = bimg.PixelHeight;
+                Canvas.SetLeft(img, menuXOffset);
+                Canvas.SetBottom(img, menuYOffset);
+                Canvas.SetZIndex(img, 100);
+                img.MouseEnter += MenuOptionHover;
+                img.MouseLeave += MenuOptionHoverLost;
+                img.MouseDown += MenuOptionMouseDown;
+                img.MouseUp += MenuOptionMouseUp;
+                img.Name = "MainMenu";
+                GlobalVariables.GameWindow.Children.Add(img);
+                menuYOffset -= img.Height * 1.5;
+            }
+            catch (Exception ex)
+            {
+
             }
         }
     }

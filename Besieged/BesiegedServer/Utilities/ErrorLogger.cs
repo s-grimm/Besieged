@@ -41,7 +41,7 @@ namespace Utilities
 
             string path = DateTime.Today.ToShortDateString().ToString().Replace('/', '-');
 
-            using (FileStream log = File.Open(path + "-errors.log", FileMode.OpenOrCreate))
+            using (FileStream log = File.Open(path + "-errors.log", FileMode.Append, FileAccess.Write))
             {
                 using(StreamWriter sw = new StreamWriter(log))
                 {
