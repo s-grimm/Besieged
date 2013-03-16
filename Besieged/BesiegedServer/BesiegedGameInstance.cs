@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Collections.Concurrent;
 using Framework.Utilities.Xml;
+using Framework.ServiceContracts;
 
 namespace BesiegedServer
 {
@@ -19,6 +20,7 @@ namespace BesiegedServer
         public string Name { get; set; }
         public int MaxPlayers { get; set; }
         public GameState GameState { get; set; }
+        public string GameCreatorClientId { get; set; }
         public bool IsGameInstanceFull { get; set; }
         
         private List<Color> _colors = new List<Color>() { Color.Red, Color.Blue, Color.Green, Color.Yellow, Color.Orange, Color.Violet, Color.Cyan, Color.HotPink };
