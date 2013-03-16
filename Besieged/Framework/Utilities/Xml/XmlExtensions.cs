@@ -23,19 +23,45 @@ namespace Framework.Utilities.Xml
             if (obj == null) throw new ArgumentNullException("obj");
 
             XmlSerializer xmlSerializer;
-            if (obj is CommandAggregate)
+            string typeName = typeof(T).Name;
+            if (XmlCore.SerializerDictionary.ContainsKey(typeName))
             {
-                xmlSerializer = XmlCore.SerializationDictionary["CommandAggregate"].Value;
+                xmlSerializer = XmlCore.SerializerDictionary[typeName];
             }
             else
             {
                 xmlSerializer = new XmlSerializer(typeof(T));
+                XmlCore.SerializerDictionary.Add(typeName, xmlSerializer);
             }
 
-            using (var writer = new StringWriter())
+            try
             {
-                xmlSerializer.Serialize(writer, obj);
-                return writer.ToString();
+                using (StringWriter writer = new StringWriter())
+                {
+                    xmlSerializer.Serialize(writer, obj);
+                    return writer.ToString();
+                }
+            }
+            catch (Exception)   // try using a serializer that also knows about all other framework types
+            {
+                try
+                {
+                    xmlSerializer = XmlCore.GetFrameworkFallbackSerializer(typeof(T));
+                    using (StringWriter writer = new StringWriter())
+                    {
+                        xmlSerializer.Serialize(writer, obj);
+                        return writer.ToString();
+                    }
+                }
+                catch (Exception)
+                {
+                    xmlSerializer = XmlCore.GetUberFallbackSerializer(typeof(T));   // try using a serializer that know about ALL types - this better freaking work
+                    using (StringWriter writer = new StringWriter())
+                    {
+                        xmlSerializer.Serialize(writer, obj);
+                        return writer.ToString();
+                    }
+                }
             }
         }
 
@@ -50,22 +76,22 @@ namespace Framework.Utilities.Xml
             {
                 XDocument xDocument = XDocument.Parse(xml);
                 string actualRootType = xDocument.Root.Name.ToString();
-                if (XmlCore.SerializationDictionary.ContainsKey(actualRootType))
+                if (XmlCore.SerializerDictionary.ContainsKey(actualRootType))
                 {
                     using (StringReader stringReader = new StringReader(xml))
                     {
                         try 
-                        { 
-                            return (T)XmlCore.SerializationDictionary[actualRootType].Value.Deserialize(stringReader); 
+                        {
+                            return (T)XmlCore.SerializerDictionary[actualRootType].Deserialize(stringReader); 
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         { 
                             return null; 
                         }
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
             }

@@ -58,6 +58,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ClientWindowOptions.cs" />
+    <Compile Include="Rendering\RenderGameWindow.cs" />
+    <Compile Include="Rendering\RenderingUtilities.cs" />
+    <Compile Include="Rendering\RenderMenu.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -96,6 +100,13 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="resources\UI\PSDLayout\Background.psd" />
+    <None Include="resources\UI\PSDLayout\BesiegedUI-16.9.Ratio-Merged.psd" />
+    <None Include="resources\UI\PSDLayout\BesiegedUI-16.9.Ratio.psd" />
+    <None Include="resources\UI\PSDLayout\BesiegedUI-4.3.Ratio-Merged.psd" />
+    <None Include="resources\UI\PSDLayout\BesiegedUI-4.3.Ratio.psd" />
+    <None Include="resources\UI\PSDLayout\LayeredMenuButtons.psd" />
+    <None Include="resources\UI\PSDLayout\MainMenu-4.3.Ratio.psd" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BesiegedClientLogic\BesiegedClientLogic.csproj">
@@ -108,34 +119,126 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="resources\sprites\alliance\Archer.png" />
-    <Resource Include="resources\sprites\alliance\AscendantWizard.png" />
-    <Resource Include="resources\sprites\alliance\Centaur.png" />
-    <Resource Include="resources\sprites\alliance\CentaurOutrider.png" />
-    <Resource Include="resources\sprites\alliance\Dwarf.png" />
-    <Resource Include="resources\sprites\alliance\DwarfChampion.png" />
-    <Resource Include="resources\sprites\alliance\ElvenRanger.png" />
-    <Resource Include="resources\sprites\alliance\Wizard.png" />
+    <Content Include="resources\sprites\alliance\Archer.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\sprites\alliance\AscendantWizard.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\sprites\alliance\Centaur.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\sprites\alliance\CentaurOutrider.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\sprites\alliance\Dwarf.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\sprites\alliance\DwarfChampion.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\sprites\alliance\ElvenRanger.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\sprites\alliance\Wizard.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="resources\sprites\beasts\Genie.png" />
-    <Resource Include="resources\sprites\beasts\Gnoll.png" />
-    <Resource Include="resources\sprites\beasts\GnollMarauder.png" />
-    <Resource Include="resources\sprites\beasts\Lizardman.png" />
-    <Resource Include="resources\sprites\beasts\LizardmanCaptain.png" />
-    <Resource Include="resources\sprites\beasts\MasterGenie.png" />
-    <Resource Include="resources\sprites\beasts\Taurus.png" />
-    <Resource Include="resources\sprites\beasts\TaurusLord.png" />
+    <Content Include="resources\sprites\beasts\Genie.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\sprites\beasts\Gnoll.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\sprites\beasts\GnollMarauder.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\sprites\beasts\Lizardman.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\sprites\beasts\LizardmanCaptain.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\sprites\beasts\MasterGenie.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\sprites\beasts\Taurus.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\sprites\beasts\TaurusLord.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="resources\sprites\undead\Orc.png" />
-    <Resource Include="resources\sprites\undead\OrcChief.png" />
-    <Resource Include="resources\sprites\undead\Skeleton.png" />
-    <Resource Include="resources\sprites\undead\SkeletonCaptain.png" />
-    <Resource Include="resources\sprites\undead\Vampire.png" />
-    <Resource Include="resources\sprites\undead\VampireCount.png" />
-    <Resource Include="resources\sprites\undead\WolfLord.png" />
-    <Resource Include="resources\sprites\undead\WolfRider.png" />
+    <Content Include="resources\sprites\undead\Orc.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\sprites\undead\OrcChief.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\sprites\undead\Skeleton.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\sprites\undead\SkeletonCaptain.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\sprites\undead\Vampire.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\sprites\undead\VampireCount.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\sprites\undead\WolfLord.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\sprites\undead\WolfRider.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="resources\UI\Game\16x9\BottomLeftCorner.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\UI\Game\16x9\BottomRightCorner.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\UI\Game\16x9\TopBar.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\UI\Game\4x3\BottomLeftCorner.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\UI\Game\4x3\BottomRightCorner.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\UI\Game\4x3\TopBar.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="resources\UI\Menu\MainMenu\16x9\MainMenuBackground.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\UI\Menu\MainMenu\4x3\MainMenuBackground.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\UI\Menu\MainMenu\Logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\UI\Menu\MainMenu\MultiPlayer.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\UI\Menu\MainMenu\Options.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\UI\Menu\MainMenu\Quit.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\UI\Menu\MainMenu\SinglePlayer.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

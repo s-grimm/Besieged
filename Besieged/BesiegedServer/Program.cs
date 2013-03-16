@@ -5,7 +5,9 @@ using System;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.Threading.Tasks;
-
+using Utilities;
+using Framework.Utilities.Xml;
+using BesiegedServer.Maps;
 namespace BesiegedServer
 {
     internal class Program
@@ -39,7 +41,7 @@ namespace BesiegedServer
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                ConsoleLogger.Push(ex.Message);
             }
             finally
             {
@@ -49,8 +51,7 @@ namespace BesiegedServer
                     if (serverMessage == "exit") break;
                     else if (serverMessage == "?" || serverMessage == "help" || serverMessage == "\\help")
                     {
-                        Console.WriteLine("Besieged Server Commands\nexit: Stops the server.");
-                        Console.Write("> ");
+                        ConsoleLogger.Push("Besieged Server Commands\nexit: Stops the server.");
                     }
                     else if (serverMessage == "list")
                     {
@@ -66,6 +67,10 @@ namespace BesiegedServer
                         //    Console.WriteLine(client.Alias);
                         //}
                         //Convert this to use Jesse's Code
+                    }
+                    else
+                    {
+                        ConsoleLogger.Push("Command " + serverMessage + " is not recognized");
                     }
                 }
                 if (svcHost != null)
