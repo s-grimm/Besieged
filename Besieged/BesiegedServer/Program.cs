@@ -27,16 +27,15 @@ namespace BesiegedServer
             ServiceHost svcHost = null;
             try
             {
-                svcHost = new ServiceHost(typeof(BesiegedServer), new Uri("http://localhost:31337/BesiegedServer/"));
-                svcHost.AddServiceEndpoint(typeof(Framework.ServiceContracts.IBesiegedServer), new WSDualHttpBinding(), "BesiegedMessage");
-                svcHost.Description.Behaviors.Add(new ServiceMetadataBehavior() { HttpGetEnabled = true });
-                svcHost.Credentials.WindowsAuthentication.AllowAnonymousLogons = true;
+                svcHost = new ServiceHost(typeof(BesiegedServer), new Uri("net.tcp://192.168.1.117:31337/BesiegedServer/"));
+                svcHost.AddServiceEndpoint(typeof(Framework.ServiceContracts.IBesiegedServer), new NetTcpBinding(SecurityMode.None), "BesiegedMessage");
+                svcHost.Description.Behaviors.Add(new ServiceMetadataBehavior() { HttpGetEnabled = false });
                 svcHost.Open();
 
                 // Configure a client callback for the server itself to force start the process
                 m_ServerClient = new ServerClient();
-                EndpointAddress endpointAddress = new EndpointAddress("http://localhost:31337/BesiegedServer/BesiegedMessage");
-                DuplexChannelFactory<IBesiegedServer> duplexChannelFactory = new DuplexChannelFactory<IBesiegedServer>(m_ServerClient, new WSDualHttpBinding(), endpointAddress);
+                EndpointAddress endpointAddress = new EndpointAddress("net.tcp://192.168.1.117:31337/BesiegedServer/BesiegedMessage");
+                DuplexChannelFactory<IBesiegedServer> duplexChannelFactory = new DuplexChannelFactory<IBesiegedServer>(m_ServerClient, new NetTcpBinding(SecurityMode.None), endpointAddress);
                 m_BesiegedServer = duplexChannelFactory.CreateChannel();
 
                 Task.Factory.StartNew(() =>
