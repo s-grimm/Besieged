@@ -20,23 +20,24 @@ namespace BesiegedClient.Rendering
 
             double aspectRatio = Math.Round((double)dimensions.Width / (double)dimensions.Height, 2, MidpointRounding.AwayFromZero);
 
-            string UIComponentPath = string.Empty;
+            string UIComponentPath = "resources\\UI\\Menu\\";
+            string ratioPath = string.Empty;
 
             if (aspectRatio == 1.33)
             {
                 //4:3
-                UIComponentPath = "resources\\UI\\Game\\4x3\\";
+                ratioPath = "4x3\\";
             }
             else
             {
                 //16:9
-                UIComponentPath = "resources\\UI\\Game\\16x9\\";
+                ratioPath = "16x9\\";
             }
             Image img = new Image();
             BitmapImage bimg;
             try
             {
-                bimg = new BitmapImage(new Uri(UIComponentPath + "BottomLeftCorner.png", UriKind.RelativeOrAbsolute));
+                bimg = new BitmapImage(new Uri(UIComponentPath + ratioPath + "MainMenuBackground.png", UriKind.RelativeOrAbsolute));
                 img.Source = bimg;
                 img.Width = bimg.PixelWidth;
                 img.Height = bimg.PixelHeight;
@@ -44,7 +45,7 @@ namespace BesiegedClient.Rendering
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error Loading UI Component : BottomLeftCorner.png", "UI Load Failure", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Error Loading UI Component : MainMenuBackground.png", "UI Load Failure", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
         }

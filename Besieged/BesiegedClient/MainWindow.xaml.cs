@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using BesiegedClient.Rendering;
 
 namespace BesiegedClient
 {
@@ -121,8 +122,8 @@ namespace BesiegedClient
                 Application.Current.MainWindow.Width = ClientWindowOptions.WindowDimensions.Width + 15;
                 Application.Current.MainWindow.Height = ClientWindowOptions.WindowDimensions.Height + 38;
             }
-
-            Rendering.RenderGameWindow.RenderUI(cvsGameWindow);
+            RenderMenu.RenderMainMenu(cvsGameWindow);
+            //RenderGameWindow.RenderUI(cvsGameWindow);
         }
 
         private void Window_SizeChanged_1(object sender, SizeChangedEventArgs e)
