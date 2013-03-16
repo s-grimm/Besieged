@@ -20,7 +20,7 @@ namespace BesiegedClient.Rendering
 
             double aspectRatio = Math.Round((double)dimensions.Width / (double)dimensions.Height, 2, MidpointRounding.AwayFromZero);
 
-            string UIComponentPath = "resources\\UI\\Menu\\";
+            string UIComponentPath = "resources\\UI\\Menu\\MainMenu\\";
             string ratioPath = string.Empty;
 
             if (aspectRatio == 1.33)
