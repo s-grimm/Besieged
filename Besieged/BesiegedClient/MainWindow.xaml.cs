@@ -31,11 +31,11 @@ namespace BesiegedClient
         private SolidColorBrush _blueBrush = new SolidColorBrush(Colors.Blue);
         private List<Rectangle> _rectangles = new List<Rectangle>();
 
-        private app_code.Client _client = new app_code.Client();
-        private string _clientIdentifier;
-        private bool _isServerConnectionEstablished = false;
-        private TaskScheduler _taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
-        private IBesiegedServer _besiegedServer;
+        private app_code.Client m_Client = new app_code.Client();
+        private string m_ClientId;
+        private bool m_IsServerConnectionEstablished = false;
+        private TaskScheduler m_TaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
+        private IBesiegedServer m_BesiegedServer;
 
         public MainWindow()
         {
@@ -43,21 +43,21 @@ namespace BesiegedClient
             DrawGrid(10, 10); //Needs to be switched to state
             
             EndpointAddress endpointAddress = new EndpointAddress("http://localhost:31337/BesiegedServer/BesiegedMessage");
-            DuplexChannelFactory<IBesiegedServer> duplexChannelFactory = new DuplexChannelFactory<IBesiegedServer>(_client, new WSDualHttpBinding(), endpointAddress);
-            _besiegedServer = duplexChannelFactory.CreateChannel();
+            DuplexChannelFactory<IBesiegedServer> duplexChannelFactory = new DuplexChannelFactory<IBesiegedServer>(m_Client, new WSDualHttpBinding(), endpointAddress);
+            m_BesiegedServer = duplexChannelFactory.CreateChannel();
 
             // Subscribe in a separate thread to preserve the UI thread
             Task.Factory.StartNew(() =>
             {
                 CommandConnect commandConnect = new CommandConnect();
-                _besiegedServer.SendCommand(commandConnect.ToXml());
+                m_BesiegedServer.SendCommand(commandConnect.ToXml());
             });
 
             Task.Factory.StartNew(() =>
             {
                 while (true)
                 {
-                    Command message = _client.MessageQueue.Take();
+                    Command message = m_Client.MessageQueue.Take();
                     ProcessMessage(message);
                 }
             }, TaskCreationOptions.LongRunning);
@@ -68,12 +68,12 @@ namespace BesiegedClient
             if (command is CommandConnectionSuccessful)
             {
                 CommandConnectionSuccessful commandConnectionSuccessful = command as CommandConnectionSuccessful;
-                _clientIdentifier = commandConnectionSuccessful.ClientId;
-                _isServerConnectionEstablished = true;
+                m_ClientId = commandConnectionSuccessful.ClientId;
+                m_IsServerConnectionEstablished = true;
                 Task.Factory.StartNew(() =>
                 {
                     MessageBox.Show("Connection successful!");
-                }, CancellationToken.None, TaskCreationOptions.None, _taskScheduler);
+                }, CancellationToken.None, TaskCreationOptions.None, m_TaskScheduler);
             }
             else if (command is CommandChatMessage)
             {
@@ -82,7 +82,7 @@ namespace BesiegedClient
                     CommandChatMessage chatMessageCommand = command as CommandChatMessage;
 
                     // listboxChatWindow.Items.Add(chatMessage.Contents);
-                }, CancellationToken.None, TaskCreationOptions.None, _taskScheduler);
+                }, CancellationToken.None, TaskCreationOptions.None, m_TaskScheduler);
             }
         }
 
@@ -90,7 +90,7 @@ namespace BesiegedClient
         {
             int counter = 0;
             MessageBoxResult hr;
-            while (!_isServerConnectionEstablished)
+            while (!m_IsServerConnectionEstablished)
             {
                 Thread.Sleep(10000); //sleep for 10 seconds before checking again.
                 counter++;

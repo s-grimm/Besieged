@@ -27,7 +27,10 @@ namespace BesiegedServer
             // Hardcode a game instance as a test
             string newGameId = Guid.NewGuid().ToString();
             m_Games.GetOrAdd(newGameId, new BesiegedGameInstance(newGameId, "Test Game", 4));
-            
+        }
+
+        private void StartProcessingMessages()
+        {
             // Start spinning the process message loop
             Task.Factory.StartNew(() =>
             {
@@ -46,7 +49,19 @@ namespace BesiegedServer
                 Command command = serializedCommand.FromXml<Command>();
                 if (command != null)
                 {
-                    if (command is CommandConnect)
+                    if (command is CommandStartServer)
+                    {
+                        if (!m_IsServerInitialized)
+                        {
+                            m_ServerCallback = OperationContext.Current.GetCallbackChannel<IClient>();
+                            CommandServerStarted commandServerStarted = new CommandServerStarted();
+                            m_ServerCallback.Notify(commandServerStarted.ToXml());
+                            m_IsServerInitialized = true;
+                            StartProcessingMessages();
+                        }
+                    }
+                    
+                    else if (command is CommandConnect)
                     {
                         CommandConnect connectCommand = command as CommandConnect;
                         IClient clientCallBack = OperationContext.Current.GetCallbackChannel<IClient>();
@@ -67,9 +82,9 @@ namespace BesiegedServer
                                 }
                             }
                         }
-                        string test = commandAggregate.ToXml();
                         clientCallBack.Notify(commandAggregate.ToXml());
 
+                        ConsoleLogger.Push(string.Format("Client Id {0} has joined the server", newClientId));
                         m_ConnectedClients.GetOrAdd(newClientId, clientCallBack);     // Add an entry to the global client hook
                     }
                     else
@@ -81,7 +96,6 @@ namespace BesiegedServer
             catch (Exception ex)
             {
                 ErrorLogger.Push(ex);
-                // error handling
             }
         }
 
@@ -89,14 +103,6 @@ namespace BesiegedServer
         {
             try
             {
-                if (command is CommandStartServer)
-                {
-                    if (!m_IsServerInitialized)
-                    {
-                        m_ServerCallback = OperationContext.Current.GetCallbackChannel<IClient>();
-                    }
-                }
-                
                 if (command is CommandJoinGame)
                 {
                     CommandJoinGame commandJoinGame = command as CommandJoinGame;
@@ -169,7 +175,6 @@ namespace BesiegedServer
             catch (Exception ex)
             {
                 ErrorLogger.Push(ex);
-                // error handling
             }
         }
 
