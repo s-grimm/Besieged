@@ -235,5 +235,43 @@ namespace BesiegedClient.Rendering
 
             }
         }
+
+        public static void RenderNewGameMenu()
+        {
+            dimensions = new Dimensions() { Width = (int)GlobalVariables.GameWindow.Width, Height = (int)GlobalVariables.GameWindow.Height };
+            menuYOffset = dimensions.Height / 2;
+            menuXOffset = dimensions.Width * 0.65;
+            GlobalVariables.GameWindow.Children.Clear();
+
+            double aspectRatio = Math.Round((double)dimensions.Width / (double)dimensions.Height, 2, MidpointRounding.AwayFromZero);
+
+            string UIComponentPath = "resources\\UI\\Menu\\MultiplayerMenu\\";
+            string ratioPath = string.Empty;
+
+            if (aspectRatio == 1.33)
+            {
+                //4:3
+                ratioPath = "4x3\\";
+            }
+            else
+            {
+                //16:9
+                ratioPath = "16x9\\";
+            }
+            Image img = new Image();
+            BitmapImage bimg;
+            try
+            {
+                bimg = new BitmapImage(new Uri(UIComponentPath + ratioPath + "Background.png", UriKind.RelativeOrAbsolute));
+                img.Source = bimg;
+                img.Width = bimg.PixelWidth;
+                img.Height = bimg.PixelHeight;
+                GlobalVariables.GameWindow.Background = new ImageBrush(bimg);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error Loading UI Component : Background.png", "UI Load Failure", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 }
