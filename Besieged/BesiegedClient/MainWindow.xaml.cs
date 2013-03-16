@@ -41,7 +41,6 @@ namespace BesiegedClient
         {
             InitializeComponent();
             GlobalResources.GameWindow = cvsGameWindow;
-            DrawGrid(10, 10); //Needs to be switched to state
             
             EndpointAddress endpointAddress = new EndpointAddress("http://localhost:31337/BesiegedServer/BesiegedMessage");
             DuplexChannelFactory<IBesiegedServer> duplexChannelFactory = new DuplexChannelFactory<IBesiegedServer>(m_Client, new WSDualHttpBinding(), endpointAddress);
@@ -50,7 +49,7 @@ namespace BesiegedClient
             // Subscribe in a separate thread to preserve the UI thread
             Task.Factory.StartNew(() =>
             {
-                CommandConnect commandConnect = new CommandConnect();
+                CommandConnect commandConnect = new CommandConnect(ClientSettings.Default.Alias);
                 GlobalResources.BesiegedServer.SendCommand(commandConnect.ToXml());
             });
 
@@ -62,6 +61,15 @@ namespace BesiegedClient
                     ProcessMessage(message);
                 }
             }, TaskCreationOptions.LongRunning);
+
+            cvsGameWindow.Width = ClientWindowOptions.WindowDimensions.Width;
+            cvsGameWindow.Height = ClientWindowOptions.WindowDimensions.Height;
+            if (!ClientSettings.Default.Fullscreen)
+            {
+                Application.Current.MainWindow.Width = ClientSettings.Default.Width + 15;
+                Application.Current.MainWindow.Height = ClientSettings.Default.Height + 38;
+            }
+            RenderMenu.RenderMainMenu();
         }
 
         public void ProcessMessage(Command command)
@@ -98,46 +106,6 @@ namespace BesiegedClient
                     GlobalResources.GameLobbyCollection.Add(commandNotifyGame);
                 }, CancellationToken.None, TaskCreationOptions.None, m_TaskScheduler);
             }
-        }
-
-        public void GoToMultiplayerLobby(object sender, EventArgs e)
-        {
-            int counter = 0;
-            MessageBoxResult hr;
-            while (!m_IsServerConnectionEstablished)
-            {
-                Thread.Sleep(10000); //sleep for 10 seconds before checking again.
-                counter++;
-
-                if (counter > 6) //spinning for 60 seconds, prompt user
-                {
-                    hr = MessageBox.Show("Timeout while attempting to connect to the server. Retry?", "Connection Timeout", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
-                    if (hr == MessageBoxResult.Yes)
-                    {
-                        counter = 0;
-                        hr = MessageBoxResult.None;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-
-            //render the lobby and attach the event handlers
-        }
-
-        public void DrawGrid(int rows, int columns)
-        {
-            cvsGameWindow.Width = ClientWindowOptions.WindowDimensions.Width;
-            cvsGameWindow.Height = ClientWindowOptions.WindowDimensions.Height;
-            if (!ClientWindowOptions.FullscreenMode)
-            {
-                Application.Current.MainWindow.Width = ClientWindowOptions.WindowDimensions.Width + 15;
-                Application.Current.MainWindow.Height = ClientWindowOptions.WindowDimensions.Height + 38;
-            }
-            RenderMenu.RenderMainMenu();
-            //RenderGameWindow.RenderUI(cvsGameWindow);
         }
 
         private void Window_SizeChanged_1(object sender, SizeChangedEventArgs e)
