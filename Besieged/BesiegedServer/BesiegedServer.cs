@@ -77,7 +77,7 @@ namespace BesiegedServer
                                 if (!game.Value.IsGameInstanceFull)
                                 {
                                     string capacity = string.Format("{0}/{1} players", game.Value.ConnectedClients.Count, game.Value.MaxPlayers);
-                                    CommandNotifyGame commandNotifyGame = new CommandNotifyGame(game.Value.GameId, game.Value.Name, capacity, false);
+                                    CommandNotifyGame commandNotifyGame = new CommandNotifyGame(game.Value.GameId, game.Value.Name, capacity, false, game.Value.Password != string.Empty ? true: false);
                                     commandAggregate.Commands.Add(commandNotifyGame);
                                 }
                             }
@@ -164,7 +164,7 @@ namespace BesiegedServer
                     NotifyClient(commandCreateGame.ClientId, commandJoinGameSuccessful.ToXml());
 
                     string capacity = string.Format("{0}/{1} players", gameInstance.ConnectedClients.Count, gameInstance.MaxPlayers);   // notify all connect clients of the updated game instance
-                    CommandNotifyGame commandNotifyGame = new CommandNotifyGame(gameInstance.GameId, gameInstance.Name, capacity, gameInstance.IsGameInstanceFull);
+                    CommandNotifyGame commandNotifyGame = new CommandNotifyGame(gameInstance.GameId, gameInstance.Name, capacity, gameInstance.IsGameInstanceFull, gameInstance.Password != string.Empty ? true:false);
                     ConsoleLogger.Push(string.Format("Client Id {0} has created a new Game Id {1}", commandCreateGame.ClientId, newGameId));
                     NotifyAllConnectedClients(commandNotifyGame.ToXml()); 
                 }

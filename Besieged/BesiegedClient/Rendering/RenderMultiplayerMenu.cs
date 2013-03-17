@@ -1,10 +1,6 @@
 ﻿using Framework.Commands;
 using Framework.Utilities.Xml;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -36,6 +32,7 @@ namespace BesiegedClient.Rendering
             {
             }
         }
+
         public static void MenuOptionHoverLost(object sender, System.Windows.Input.MouseEventArgs e)
         {
             try
@@ -47,6 +44,7 @@ namespace BesiegedClient.Rendering
             {
             }
         }
+
         public static void MenuOptionMouseDown(object sender, System.Windows.Input.MouseEventArgs e)
         {
             try
@@ -57,6 +55,7 @@ namespace BesiegedClient.Rendering
             {
             }
         }
+
         public static void MenuOptionMouseUp(object sender, System.Windows.Input.MouseEventArgs e)
         {
             try
@@ -80,7 +79,7 @@ namespace BesiegedClient.Rendering
                 {
                     RenderNewGameMenu();
                 }
-                else if(selected == "Cancel")
+                else if (selected == "Cancel")
                 {
                     RenderGameLobby();
                 }
@@ -122,9 +121,29 @@ namespace BesiegedClient.Rendering
         {
             CommandJoinGame commandJoinGame = new CommandJoinGame(m_SelectedGame.GameId);
             commandJoinGame.ClientId = GlobalResources.ClientId;
+
+            string password = string.Empty;
+
+            bool waitForPassword = false;
+
+            if (m_SelectedGame.HasPassword)
+            {
+                waitForPassword = true;
+
+                RenderMessageDialog.RenderInput("Please Enter the Game's Password", (s, e) =>
+                {
+                    if (s != null)
+                    {
+                        password = s as string;
+                        waitForPassword = false;
+                    }
+                });
+            }
+            commandJoinGame.Password = password;
+
             GlobalResources.SendMessageToServer(commandJoinGame.ToXml());
         }
-   
+
         public static void RenderGameLobby()
         {
             dimensions = new Dimensions() { Width = (int)GlobalResources.GameWindow.Width, Height = (int)GlobalResources.GameWindow.Height };
@@ -168,9 +187,11 @@ namespace BesiegedClient.Rendering
                 lbCurrentGames.Width = dimensions.Width / 2;
                 lbCurrentGames.Height = dimensions.Height / 2;
                 lbCurrentGames.Opacity = 0.75;
+
                 //positioning
-                Canvas.SetLeft(lbCurrentGames,dimensions.Width / 8);
+                Canvas.SetLeft(lbCurrentGames, dimensions.Width / 8);
                 Canvas.SetBottom(lbCurrentGames, dimensions.Height / 4);
+
                 //add to canvas
                 GlobalResources.GameWindow.Children.Add(lbCurrentGames);
 
@@ -199,10 +220,10 @@ namespace BesiegedClient.Rendering
                     m_SelectedGame = ((ListView)s).SelectedItem as CommandNotifyGame;
                 };
             }
-            catch(Exception)
+            catch (Exception)
             {
-                
             }
+
             //Draw Menu Options
             try
             {
@@ -222,9 +243,8 @@ namespace BesiegedClient.Rendering
                 GlobalResources.GameWindow.Children.Add(img);
                 menuYOffset -= img.Height * 1.5;
             }
-            catch(Exception)
+            catch (Exception)
             {
-                
             }
             try
             {
@@ -246,7 +266,6 @@ namespace BesiegedClient.Rendering
             }
             catch (Exception)
             {
-
             }
             try
             {
@@ -268,7 +287,6 @@ namespace BesiegedClient.Rendering
             }
             catch (Exception)
             {
-
             }
         }
 
@@ -319,12 +337,13 @@ namespace BesiegedClient.Rendering
                 Canvas.SetBottom(img, menuYOffset);
                 Canvas.SetZIndex(img, 100);
                 GlobalResources.GameWindow.Children.Add(img);
+
                 //menuYOffset -= img.Height * 1.5;
             }
             catch (Exception)
             {
-
             }
+
             //render text box
             try
             {
@@ -334,7 +353,7 @@ namespace BesiegedClient.Rendering
                 txtGameName.FontFamily = new FontFamily("Papyrus");
                 txtGameName.FontSize = 24;
                 txtGameName.Opacity = 0.75;
-                Canvas.SetLeft(txtGameName,img.Width * 1.10 + dimensions.Width * 0.10);
+                Canvas.SetLeft(txtGameName, img.Width * 1.10 + dimensions.Width * 0.10);
                 Canvas.SetBottom(txtGameName, menuYOffset);
                 Canvas.SetZIndex(txtGameName, 100);
                 GlobalResources.GameWindow.Children.Add(txtGameName);
@@ -347,8 +366,8 @@ namespace BesiegedClient.Rendering
             }
             catch (Exception)
             {
-
             }
+
             //render password
             try
             {
@@ -357,16 +376,17 @@ namespace BesiegedClient.Rendering
                 img.Source = bimg;
                 img.Width = bimg.PixelWidth;
                 img.Height = bimg.PixelHeight;
-                Canvas.SetLeft(img, dimensions.Width*0.10);
+                Canvas.SetLeft(img, dimensions.Width * 0.10);
                 Canvas.SetBottom(img, menuYOffset);
                 Canvas.SetZIndex(img, 100);
                 GlobalResources.GameWindow.Children.Add(img);
+
                 //menuYOffset -= img.Height * 1.5;
             }
             catch (Exception)
             {
-
             }
+
             //render text box
             try
             {
@@ -406,8 +426,8 @@ namespace BesiegedClient.Rendering
             }
             catch (Exception)
             {
-
             }
+
             //bottom buttons
             try
             {
@@ -426,11 +446,9 @@ namespace BesiegedClient.Rendering
                 img.Name = "OK";
                 GlobalResources.GameWindow.Children.Add(img);
                 menuYOffset -= img.Height * 1.5;
-                
             }
             catch (Exception)
             {
-
             }
             try
             {
@@ -452,7 +470,6 @@ namespace BesiegedClient.Rendering
             }
             catch (Exception)
             {
-
             }
         }
 
