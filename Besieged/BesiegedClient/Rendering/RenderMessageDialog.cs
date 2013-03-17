@@ -68,7 +68,7 @@ namespace BesiegedClient.Rendering
                 textLabel.Height = bimg.PixelHeight*2 * 0.70;
                 textLabel.TextWrapping = TextWrapping.Wrap;
                 textLabel.FontFamily = new FontFamily("Papyrus");
-                textLabel.FontSize = 18.0;
+                textLabel.FontSize = 16.0;
                 Canvas.SetLeft(textLabel, dimensions.Width / 2 - textLabel.Width / 2);
                 Canvas.SetBottom(textLabel, dimensions.Height / 2 - textLabel.Height / 2); //this should center this on the screen... I hope...
                 Canvas.SetZIndex(textLabel, 1110); //range 1100 - 1200 for error dialogs
