@@ -42,8 +42,8 @@ namespace BesiegedClient
         {
             InitializeComponent();
             GlobalResources.GameWindow = cvsGameWindow;
-            
-            EndpointAddress endpointAddress = new EndpointAddress("net.tcp://192.168.1.117:31337/BesiegedServer/BesiegedMessage");
+
+            EndpointAddress endpointAddress = new EndpointAddress(String.Format("net.tcp://{0}:{1}/BesiegedServer/BesiegedMessage", ClientSettings.Default.ServerIP, ClientSettings.Default.ServerPort));
             DuplexChannelFactory<IBesiegedServer> duplexChannelFactory = new DuplexChannelFactory<IBesiegedServer>(m_Client, new NetTcpBinding(SecurityMode.None), endpointAddress);
             GlobalResources.BesiegedServer = duplexChannelFactory.CreateChannel();
 
@@ -71,6 +71,7 @@ namespace BesiegedClient
                 Application.Current.MainWindow.Height = ClientSettings.Default.Height + 38;
             }
             RenderMenu.RenderMainMenu();
+            Rendering.RenderMessageDialog.RenderMessage("An error occured while attempting to communicate with the server.");
         }
 
         public void ProcessMessage(Command command)
