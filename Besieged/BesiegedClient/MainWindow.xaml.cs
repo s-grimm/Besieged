@@ -80,10 +80,10 @@ namespace BesiegedClient
                 CommandConnectionSuccessful commandConnectionSuccessful = command as CommandConnectionSuccessful;
                 GlobalResources.ClientId = commandConnectionSuccessful.ClientId;
                 m_IsServerConnectionEstablished = true;
-                Task.Factory.StartNew(() =>
-                {
-                    MessageBox.Show("Connection successful!");
-                }, CancellationToken.None, TaskCreationOptions.None, m_TaskScheduler);
+                //Task.Factory.StartNew(() =>
+                //{
+                //    MessageBox.Show("Connection successful!");
+                //}, CancellationToken.None, TaskCreationOptions.None, m_TaskScheduler);
             }
 
             else if (command is CommandChatMessage)

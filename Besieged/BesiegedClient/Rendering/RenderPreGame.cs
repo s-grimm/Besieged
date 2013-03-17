@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -76,6 +77,20 @@ namespace BesiegedClient.Rendering
             Canvas.SetLeft(chatMessage, dimensions.Width * 0.15);
             Canvas.SetBottom(chatMessage, dimensions.Height * 0.025);
             GlobalResources.GameWindow.Children.Add(chatMessage);
+
+            chatMessage.KeyDown += (s, ev) =>
+            {
+                if (ev.Key == Key.Enter)
+                {
+                    if (chatMessage.Text.Trim() != string.Empty)
+                    {
+                        CommandChatMessage commandChatMessage = new CommandChatMessage(chatMessage.Text.Trim());
+                        commandChatMessage.GameId = GlobalResources.GameId;
+                        chatMessage.Text = "";
+                        GlobalResources.SendMessageToServer(commandChatMessage.ToXml());
+                    }
+                }
+            };
 
             Button sendButton = new Button();
             sendButton.FontFamily = new FontFamily("Papyrus");
