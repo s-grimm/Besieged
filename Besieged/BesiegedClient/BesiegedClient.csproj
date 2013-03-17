@@ -69,6 +69,7 @@
     <Compile Include="Rendering\RenderingUtilities.cs" />
     <Compile Include="Rendering\RenderMenu.cs" />
     <Compile Include="Rendering\RenderMultiplayerMenu.cs" />
+    <Compile Include="Rendering\RenderPreGame.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
