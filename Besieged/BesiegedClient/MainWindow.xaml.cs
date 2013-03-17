@@ -27,12 +27,6 @@ namespace BesiegedClient
     /// </summary>
     public partial class MainWindow : Window
     {
-        private SolidColorBrush _blackBrush = new SolidColorBrush(Colors.Black);
-        private SolidColorBrush _redBrush = new SolidColorBrush(Colors.Red);
-        private SolidColorBrush _greenBrush = new SolidColorBrush(Colors.Green);
-        private SolidColorBrush _blueBrush = new SolidColorBrush(Colors.Blue);
-        private List<Rectangle> _rectangles = new List<Rectangle>();
-
         private app_code.Client m_Client = new app_code.Client();
 
         public MainWindow()
@@ -48,7 +42,6 @@ namespace BesiegedClient
                         GlobalResources.BesiegedServer.SendCommand(cmdConTerm.ToXml());
                     }
                 };
-            
 
             EndpointAddress endpointAddress = new EndpointAddress(String.Format("net.tcp://{0}:{1}/BesiegedServer/BesiegedMessage", ClientSettings.Default.ServerIP, ClientSettings.Default.ServerPort));
             DuplexChannelFactory<IBesiegedServer> duplexChannelFactory = new DuplexChannelFactory<IBesiegedServer>(m_Client, new NetTcpBinding(SecurityMode.None), endpointAddress);
@@ -71,7 +64,6 @@ namespace BesiegedClient
                 Application.Current.MainWindow.Height = ClientSettings.Default.Height + 38;
             }
             RenderMenu.RenderMainMenu();
-            //RenderMultiplayerMenu.RenderLoadingScreen();
         }
 
         public void ProcessMessage(Command command)
@@ -82,10 +74,6 @@ namespace BesiegedClient
                 GlobalResources.ClientId = commandConnectionSuccessful.ClientId;
                 GlobalResources.m_IsServerConnectionEstablished = true;
                 GlobalResources.currentMenuState = GlobalResources.MenuState.Menu;
-                //Task.Factory.StartNew(() =>
-                //{
-                //    MessageBox.Show("Connection successful!");
-                //}, CancellationToken.None, TaskCreationOptions.None, m_TaskScheduler);
             }
 
             else if (command is CommandChatMessage)
