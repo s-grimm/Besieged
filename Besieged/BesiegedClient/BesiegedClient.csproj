@@ -119,6 +119,9 @@
     <None Include="resources\UI\PSDLayout\BesiegedUI-4.3.Ratio.psd" />
     <None Include="resources\UI\PSDLayout\LayeredMenuButtons.psd" />
     <None Include="resources\UI\PSDLayout\MainMenu-4.3.Ratio.psd" />
+    <None Include="resources\UI\PSDLayout\MultiplayerMenu-4.3.Ratio.psd" />
+    <None Include="resources\UI\PSDLayout\MultiplayerMenuButtons.psd" />
+    <None Include="resources\UI\PSDLayout\WoodenSign.psd" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BesiegedClientLogic\BesiegedClientLogic.csproj">
@@ -180,6 +183,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="resources\UI\Menu\MultiplayerMenu\Password.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\UI\WoodenSign.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
