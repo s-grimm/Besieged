@@ -1,12 +1,15 @@
-﻿using System;
+﻿using Framework.Commands;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Framework.Utilities.Xml;
 
 namespace BesiegedClient.Rendering
 {
@@ -64,7 +67,39 @@ namespace BesiegedClient.Rendering
                 }
                 else if(selected == "MultiPlayer")
                 {
-                    RenderMultiplayerMenu.RenderGameLobby();
+                    // Subscribe in a separate thread to preserve the UI thread
+                    Task.Factory.StartNew(() =>
+                    {
+                        CommandConnect commandConnect = new CommandConnect(ClientSettings.Default.Alias);
+                        try
+                        {
+                            GlobalResources.BesiegedServer.SendCommand(commandConnect.ToXml());
+                        }
+                        catch (Exception)
+                        {
+                            Task.Factory.StartNew(() =>
+                            {
+                                RenderMenu.RenderMainMenu();
+                                RenderMessageDialog.RenderMessage("There was an error connecting to the server!");
+                                GlobalResources.MenuStateChanged = null; //remove this
+                            }, CancellationToken.None, TaskCreationOptions.None, GlobalResources.m_TaskScheduler);
+                        }
+                    });
+                    if (GlobalResources.m_IsServerConnectionEstablished)
+                    {
+                        RenderMultiplayerMenu.RenderGameLobby();
+                    }
+                    else
+                    {
+                        GlobalResources.MenuStateChanged += (leSender, leArgs) => {
+                            //make sure the UI thread calls this!
+                            Task.Factory.StartNew(() => {
+                                RenderMultiplayerMenu.RenderGameLobby();
+                                GlobalResources.MenuStateChanged = null; //remove this
+                            }, CancellationToken.None, TaskCreationOptions.None, GlobalResources.m_TaskScheduler);
+                        };
+                        RenderMultiplayerMenu.RenderLoadingScreen();
+                    }
                 }
                 else
                 {
@@ -75,7 +110,7 @@ namespace BesiegedClient.Rendering
             {
             }
         }
-        
+
         #endregion Handlers
 
         public static void RenderMainMenu()

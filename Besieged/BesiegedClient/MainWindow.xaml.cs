@@ -34,9 +34,6 @@ namespace BesiegedClient
         private List<Rectangle> _rectangles = new List<Rectangle>();
 
         private app_code.Client m_Client = new app_code.Client();
-        private bool m_IsServerConnectionEstablished = false;
-        private TaskScheduler m_TaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
-
 
         public MainWindow()
         {
@@ -46,13 +43,6 @@ namespace BesiegedClient
             EndpointAddress endpointAddress = new EndpointAddress(String.Format("net.tcp://{0}:{1}/BesiegedServer/BesiegedMessage", ClientSettings.Default.ServerIP, ClientSettings.Default.ServerPort));
             DuplexChannelFactory<IBesiegedServer> duplexChannelFactory = new DuplexChannelFactory<IBesiegedServer>(m_Client, new NetTcpBinding(SecurityMode.None), endpointAddress);
             GlobalResources.BesiegedServer = duplexChannelFactory.CreateChannel();
-
-            // Subscribe in a separate thread to preserve the UI thread
-            Task.Factory.StartNew(() =>
-            {
-                CommandConnect commandConnect = new CommandConnect(ClientSettings.Default.Alias);
-                GlobalResources.BesiegedServer.SendCommand(commandConnect.ToXml());
-            });
 
             Task.Factory.StartNew(() =>
             {
@@ -71,7 +61,7 @@ namespace BesiegedClient
                 Application.Current.MainWindow.Height = ClientSettings.Default.Height + 38;
             }
             RenderMenu.RenderMainMenu();
-            Rendering.RenderMessageDialog.RenderMessage("An error occured while attempting to communicate with the server.");
+            //RenderMultiplayerMenu.RenderLoadingScreen();
         }
 
         public void ProcessMessage(Command command)
@@ -80,7 +70,8 @@ namespace BesiegedClient
             {
                 CommandConnectionSuccessful commandConnectionSuccessful = command as CommandConnectionSuccessful;
                 GlobalResources.ClientId = commandConnectionSuccessful.ClientId;
-                m_IsServerConnectionEstablished = true;
+                GlobalResources.m_IsServerConnectionEstablished = true;
+                GlobalResources.currentMenuState = GlobalResources.MenuState.Menu;
                 //Task.Factory.StartNew(() =>
                 //{
                 //    MessageBox.Show("Connection successful!");
@@ -93,7 +84,7 @@ namespace BesiegedClient
                 {
                     CommandChatMessage chatMessageCommand = command as CommandChatMessage;
                     GlobalResources.GameSpecificChatMessages.Add(chatMessageCommand.Contents);
-                }, CancellationToken.None, TaskCreationOptions.None, m_TaskScheduler);
+                }, CancellationToken.None, TaskCreationOptions.None, GlobalResources.m_TaskScheduler);
             }
 
             else if (command is CommandNotifyGame)
@@ -107,7 +98,7 @@ namespace BesiegedClient
                         GlobalResources.GameLobbyCollection.Remove(game);
                     }
                     GlobalResources.GameLobbyCollection.Add(commandNotifyGame);
-                }, CancellationToken.None, TaskCreationOptions.None, m_TaskScheduler);
+                }, CancellationToken.None, TaskCreationOptions.None, GlobalResources.m_TaskScheduler);
             }
             
             else if (command is CommandJoinGameSuccessful)
@@ -117,7 +108,7 @@ namespace BesiegedClient
                     GlobalResources.GameSpecificChatMessages = new ObservableCollection<string>();
                     GlobalResources.GameId = command.GameId;
                     RenderPreGame.RenderPreGameLobby();
-                }, CancellationToken.None, TaskCreationOptions.None, m_TaskScheduler);
+                }, CancellationToken.None, TaskCreationOptions.None, GlobalResources.m_TaskScheduler);
             }
 
             else if (command is CommandServerError)
@@ -126,7 +117,7 @@ namespace BesiegedClient
                 Task.Factory.StartNew(() =>
                 {
                     MessageBox.Show(commandServerError.ErrorMessage);
-                }, CancellationToken.None, TaskCreationOptions.None, m_TaskScheduler);
+                }, CancellationToken.None, TaskCreationOptions.None, GlobalResources.m_TaskScheduler);
             }
         }
 
