@@ -62,8 +62,8 @@ namespace BesiegedClient
                 }
             }, TaskCreationOptions.LongRunning);
 
-            cvsGameWindow.Width = ClientWindowOptions.WindowDimensions.Width;
-            cvsGameWindow.Height = ClientWindowOptions.WindowDimensions.Height;
+            cvsGameWindow.Width = ClientSettings.Default.Width;
+            cvsGameWindow.Height = ClientSettings.Default.Height;
             if (!ClientSettings.Default.Fullscreen)
             {
                 Application.Current.MainWindow.Width = ClientSettings.Default.Width + 15;
