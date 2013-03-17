@@ -136,7 +136,9 @@
     <None Include="resources\UI\PSDLayout\MainMenu-4.3.Ratio.psd" />
     <None Include="resources\UI\PSDLayout\MultiplayerMenu-4.3.Ratio.psd" />
     <None Include="resources\UI\PSDLayout\MultiplayerMenuButtons.psd" />
+    <None Include="resources\UI\PSDLayout\NewGameBackground-16.9.Ratio.psd" />
     <None Include="resources\UI\PSDLayout\WoodenSign.psd" />
+    <None Include="resources\UI\PSDLayout\XloseDialog.psd" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BesiegedClientLogic\BesiegedClientLogic.csproj">
@@ -182,7 +184,13 @@
     <Content Include="resources\UI\Menu\MultiplayerMenu\16x9\Background.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="resources\UI\Menu\MultiplayerMenu\16x9\NewGameBackground.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="resources\UI\Menu\MultiplayerMenu\4x3\Background.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\UI\Menu\MultiplayerMenu\4x3\NewGameBackground.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="resources\UI\Menu\MultiplayerMenu\Cancel.png">

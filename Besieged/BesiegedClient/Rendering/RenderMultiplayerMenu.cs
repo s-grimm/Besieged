@@ -294,7 +294,7 @@ namespace BesiegedClient.Rendering
             BitmapImage bimg;
             try
             {
-                bimg = new BitmapImage(new Uri(UIComponentPath + ratioPath + "Background.png", UriKind.RelativeOrAbsolute));
+                bimg = new BitmapImage(new Uri(UIComponentPath + ratioPath + "NewGameBackground.png", UriKind.RelativeOrAbsolute));
                 img.Source = bimg;
                 img.Width = bimg.PixelWidth;
                 img.Height = bimg.PixelHeight;
