@@ -132,6 +132,7 @@ namespace BesiegedServer
                             else
                             {
                                 CommandServerError commandServerError = new CommandServerError("Incorrect Password");
+                                ConsoleLogger.Push(string.Format("Client Id {0} has attempted to join Game Id {1} with an incorrect password", commandJoinGame.ClientId, commandJoinGame.GameId));
                                 NotifyClient(commandJoinGame.ClientId, commandServerError.ToXml());
                             }
                         }
@@ -164,6 +165,7 @@ namespace BesiegedServer
 
                     string capacity = string.Format("{0}/{1} players", gameInstance.ConnectedClients.Count, gameInstance.MaxPlayers);   // notify all connect clients of the updated game instance
                     CommandNotifyGame commandNotifyGame = new CommandNotifyGame(gameInstance.GameId, gameInstance.Name, capacity, gameInstance.IsGameInstanceFull);
+                    ConsoleLogger.Push(string.Format("Client Id {0} has created a new Game Id {1}", commandCreateGame.ClientId, newGameId));
                     NotifyAllConnectedClients(commandNotifyGame.ToXml()); 
                 }
 
@@ -172,7 +174,6 @@ namespace BesiegedServer
                     CommandChatMessage commandChatMessage = command as CommandChatMessage;
                     BesiegedGameInstance gameInstance = m_Games[commandChatMessage.GameId];
                     gameInstance.MessageQueue.Add(commandChatMessage);
-                    
                 }
 
                 else if (command is CommandSendGameMap)

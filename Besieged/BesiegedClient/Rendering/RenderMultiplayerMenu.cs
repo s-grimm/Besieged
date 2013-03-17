@@ -20,6 +20,8 @@ namespace BesiegedClient.Rendering
         private static double menuXOffset;
         private static object mousedownRef;
         private static CommandNotifyGame m_SelectedGame = null;
+        private static string m_GameName;
+        private static string m_Password;
 
         #region Handlers
 
@@ -80,7 +82,25 @@ namespace BesiegedClient.Rendering
                 }
                 else if (selected == "OK")
                 {
-                    //Jesse's Code Here
+                    if (m_GameName.Trim() == string.Empty)
+                    {
+                        MessageBox.Show("Game name cannot be empty");
+                    }
+                    else
+                    {
+                        if (m_Password == string.Empty || m_Password == "Optional")
+                        {
+                            CommandCreateGame commandCreateGame = new CommandCreateGame(m_GameName, 4);
+                            commandCreateGame.ClientId = GlobalResources.ClientId;
+                            GlobalResources.SendMessageToServer(commandCreateGame.ToXml());
+                        }
+                        else
+                        {
+                            CommandCreateGame commandCreateGame = new CommandCreateGame(m_GameName, 4, m_Password);
+                            commandCreateGame.ClientId = GlobalResources.ClientId;
+                            GlobalResources.SendMessageToServer(commandCreateGame.ToXml());
+                        }
+                    }
                 }
                 else
                 {
@@ -315,6 +335,11 @@ namespace BesiegedClient.Rendering
                 Canvas.SetZIndex(txtGameName, 100);
                 GlobalResources.GameWindow.Children.Add(txtGameName);
                 menuYOffset -= img.Height * 1.5;
+
+                txtGameName.TextChanged += (s, ev) =>
+                {
+                    m_GameName = ((TextBox)s).Text;
+                };
             }
             catch (Exception ex)
             {
@@ -347,11 +372,33 @@ namespace BesiegedClient.Rendering
                 txtPassword.FontFamily = new FontFamily("Papyrus");
                 txtPassword.FontSize = 24;
                 txtPassword.Opacity = 0.75;
+                txtPassword.Text = "Optional";
                 Canvas.SetLeft(txtPassword, img.Width * 1.10 + dimensions.Width * 0.10);
                 Canvas.SetBottom(txtPassword, menuYOffset);
                 Canvas.SetZIndex(txtPassword, 100);
                 GlobalResources.GameWindow.Children.Add(txtPassword);
                 menuYOffset -= img.Height * 1.5;
+
+                txtPassword.TextChanged += (s, ev) =>
+                {
+                    m_Password = ((TextBox)s).Text;
+                };
+
+                txtPassword.GotFocus += (s, ev) =>
+                {
+                    if (txtPassword.Text == "Optional")
+                    {
+                        txtPassword.Text = string.Empty;
+                    }
+                };
+
+                txtPassword.LostFocus += (s, ev) =>
+                {
+                    if (txtPassword.Text.Trim() == "")
+                    {
+                        txtPassword.Text = "Optional";
+                    }
+                };
             }
             catch (Exception ex)
             {
