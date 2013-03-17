@@ -68,6 +68,7 @@
     <Compile Include="Rendering\RenderGameWindow.cs" />
     <Compile Include="Rendering\RenderingUtilities.cs" />
     <Compile Include="Rendering\RenderMenu.cs" />
+    <Compile Include="Rendering\RenderMessageDialog.cs" />
     <Compile Include="Rendering\RenderMultiplayerMenu.cs" />
     <Compile Include="Rendering\RenderPreGame.cs" />
     <Page Include="MainWindow.xaml">
