@@ -106,6 +106,14 @@ namespace BesiegedClient
                     GlobalResources.GameLobbyCollection.Add(commandNotifyGame);
                 }, CancellationToken.None, TaskCreationOptions.None, m_TaskScheduler);
             }
+            else if (command is CommandJoinGameSuccessful)
+            {
+                Task.Factory.StartNew(() =>
+                {
+                    RenderPreGame.RenderPreGameLobby();
+                }, CancellationToken.None, TaskCreationOptions.None, m_TaskScheduler);
+                
+            }
         }
 
         private void Window_SizeChanged_1(object sender, SizeChangedEventArgs e)
