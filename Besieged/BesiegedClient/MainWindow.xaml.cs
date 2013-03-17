@@ -70,7 +70,6 @@ namespace BesiegedClient
                 Application.Current.MainWindow.Height = ClientSettings.Default.Height + 38;
             }
             RenderMenu.RenderMainMenu();
-            RenderMessageDialog.RenderMessage("Shane is way too cool for school. Infact, he should be working instead of in school. This is even more text, as I need to check line breaking and make sure it looks proper....... This better not overflow from the frakking image. I will be unhappy.");
         }
 
         public void ProcessMessage(Command command)
