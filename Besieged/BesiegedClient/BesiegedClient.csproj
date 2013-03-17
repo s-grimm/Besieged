@@ -64,7 +64,7 @@
       <DependentUpon>ClientSettings.settings</DependentUpon>
     </Compile>
     <Compile Include="ClientWindowOptions.cs" />
-    <Compile Include="GlobalVariables.cs" />
+    <Compile Include="GlobalResources.cs" />
     <Compile Include="Rendering\RenderGameWindow.cs" />
     <Compile Include="Rendering\RenderingUtilities.cs" />
     <Compile Include="Rendering\RenderMenu.cs" />
