@@ -53,16 +53,9 @@ namespace BesiegedServer
             ConnectedClients = new ConcurrentBag<ConnectedClient>();
             MessageQueue = new BlockingCollection<Command>();
             IsGameInstanceFull = false;
-            
-            // Start spinning the process message loop
-            Task.Factory.StartNew(() =>
-            {
-                while (true)
-                {
-                    Command command = MessageQueue.Take();
-                    ProcessMessage(command);
-                }
-            }, TaskCreationOptions.LongRunning);
+            Password = string.Empty;
+
+            StartProcessingMessages();
         }
 
         public BesiegedGameInstance(string gameId, string name, int maxPlayers, string password)
@@ -75,6 +68,11 @@ namespace BesiegedServer
             IsGameInstanceFull = false;
             Password = password;
 
+            StartProcessingMessages();
+        }
+
+        public void StartProcessingMessages()
+        {
             // Start spinning the process message loop
             Task.Factory.StartNew(() =>
             {
