@@ -18,7 +18,7 @@ namespace BesiegedClient.Rendering
         private static Dimensions dimensions;
         private static double menuYOffset;
         private static double menuXOffset;
-        private static object mousedownRef;
+        //private static object mousedownRef;
 
         public static void RenderPreGameLobby()
         {
@@ -52,7 +52,7 @@ namespace BesiegedClient.Rendering
                 img.Height = bimg.PixelHeight;
                 GlobalResources.GameWindow.Background = new ImageBrush(bimg);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Error Loading UI Component : Background.png", "UI Load Failure", MessageBoxButton.OK, MessageBoxImage.Error);
             }
