@@ -39,6 +39,16 @@ namespace BesiegedClient
         {
             InitializeComponent();
             GlobalResources.GameWindow = cvsGameWindow;
+            //register close handlers
+            this.Closing += (s, e) =>
+                {
+                    if (GlobalResources.m_IsServerConnectionEstablished)
+                    {
+                        CommandConnectionTerminated cmdConTerm = new CommandConnectionTerminated(GlobalResources.ClientId, GlobalResources.GameId);
+                        GlobalResources.BesiegedServer.SendCommand(cmdConTerm.ToXml());
+                    }
+                };
+            
 
             EndpointAddress endpointAddress = new EndpointAddress(String.Format("net.tcp://{0}:{1}/BesiegedServer/BesiegedMessage", ClientSettings.Default.ServerIP, ClientSettings.Default.ServerPort));
             DuplexChannelFactory<IBesiegedServer> duplexChannelFactory = new DuplexChannelFactory<IBesiegedServer>(m_Client, new NetTcpBinding(SecurityMode.None), endpointAddress);

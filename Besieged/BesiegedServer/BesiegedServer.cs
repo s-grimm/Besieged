@@ -185,11 +185,25 @@ namespace BesiegedServer
                 else if (command is CommandConnectionTerminated)
                 {
                     CommandConnectionTerminated commandConnectionTerminated = command as CommandConnectionTerminated;
-                    BesiegedGameInstance gameInstance = m_Games[commandConnectionTerminated.GameId];
+
                     IClient client = m_ConnectedClients[commandConnectionTerminated.ClientId];
                     ConnectedClient connectedClient = new ConnectedClient("Alias", commandConnectionTerminated.ClientId, client);
-                    gameInstance.ConnectedClients.TryTake(out connectedClient);
-                    m_ConnectedClients.TryRemove(commandConnectionTerminated.ClientId, out client);
+
+                    if (commandConnectionTerminated.GameId != null)
+                    {
+                        BesiegedGameInstance gameInstance = m_Games[commandConnectionTerminated.GameId];
+                        var gameRemoved = gameInstance.ConnectedClients.TryTake(out connectedClient);
+                        if (gameRemoved)
+                        {
+                            ConsoleLogger.Push(string.Format("Client Id {0} has left Game Id {1}", connectedClient.UniqueIdentifier, gameInstance.GameId));
+                        }
+                    }
+                    
+                    var removed = m_ConnectedClients.TryRemove(commandConnectionTerminated.ClientId, out client);
+                    if (removed)
+                    {
+                        ConsoleLogger.Push(string.Format("Client Id {0} has disconnected", commandConnectionTerminated.ClientId));
+                    }
                 }
             }
             catch (Exception ex)
