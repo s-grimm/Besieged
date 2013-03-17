@@ -5,7 +5,6 @@ namespace Framework.Commands
     {
         public string GameId { get; set; }
         public string ClientId { get; set; }
-        public string Password { get; set; }
     }
 
     public class CommandAggregate : Command
@@ -79,6 +78,8 @@ namespace Framework.Commands
     {
         public string GameName { get; set; }
         public int MaxPlayers { get; set; }
+        public bool IsGamePassworded { get; set; }
+        public string Password { get; set; }
 
         public CommandCreateGame()
         {
@@ -88,6 +89,7 @@ namespace Framework.Commands
         {
             GameName = gameName;
             MaxPlayers = maxPlayers;
+            IsGamePassworded = false;
         }
 
         public CommandCreateGame(string gameName, int maxPlayers, string password)
@@ -95,11 +97,14 @@ namespace Framework.Commands
             GameName = gameName;
             MaxPlayers = maxPlayers;
             Password = password;
+            IsGamePassworded = true;
         }
     }
 
     public class CommandJoinGame : Command
     {
+        public string Password { get; set; }
+        
         public CommandJoinGame()
         {
         }
@@ -107,6 +112,7 @@ namespace Framework.Commands
         public CommandJoinGame(string gameId)
         {
             GameId = gameId;
+            Password = string.Empty;
         }
 
         public CommandJoinGame(string gameId, string password)

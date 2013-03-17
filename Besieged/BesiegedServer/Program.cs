@@ -27,14 +27,14 @@ namespace BesiegedServer
             ServiceHost svcHost = null;
             try
             {
-                svcHost = new ServiceHost(typeof(BesiegedServer), new Uri("net.tcp://localhost:31337/BesiegedServer/"));
+                svcHost = new ServiceHost(typeof(BesiegedServer), new Uri("net.tcp://192.168.1.117:31337/BesiegedServer/"));
                 svcHost.AddServiceEndpoint(typeof(Framework.ServiceContracts.IBesiegedServer), new NetTcpBinding(SecurityMode.None), "BesiegedMessage");
                 svcHost.Description.Behaviors.Add(new ServiceMetadataBehavior() { HttpGetEnabled = false });
                 svcHost.Open();
 
                 // Configure a client callback for the server itself to force start the process
                 m_ServerClient = new ServerClient();
-                EndpointAddress endpointAddress = new EndpointAddress("net.tcp://localhost:31337/BesiegedServer/BesiegedMessage");
+                EndpointAddress endpointAddress = new EndpointAddress("net.tcp://192.168.1.117:31337/BesiegedServer/BesiegedMessage");
                 DuplexChannelFactory<IBesiegedServer> duplexChannelFactory = new DuplexChannelFactory<IBesiegedServer>(m_ServerClient, new NetTcpBinding(SecurityMode.None), endpointAddress);
                 m_BesiegedServer = duplexChannelFactory.CreateChannel();
 
@@ -52,10 +52,6 @@ namespace BesiegedServer
                         ProcessMessage(message);
                     }
                 }, TaskCreationOptions.LongRunning);
-                for (int i = 0; i < 10; ++i)
-                {
-                    ErrorLogger.Push(new Exception("Error " + i));
-                }
             }
             catch (Exception ex)
             {

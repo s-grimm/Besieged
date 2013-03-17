@@ -20,6 +20,8 @@ namespace BesiegedClient.Rendering
         private static double menuXOffset;
         private static object mousedownRef;
         private static CommandNotifyGame m_SelectedGame = null;
+        private static string m_GameName;
+        private static string m_Password;
 
         #region Handlers
 
@@ -69,6 +71,36 @@ namespace BesiegedClient.Rendering
                 else if (selected == "JoinGame" && m_SelectedGame != null)
                 {
                     JoinGame();
+                }
+                else if (selected == "CreateGame")
+                {
+                    RenderNewGameMenu();
+                }
+                else if(selected == "Cancel")
+                {
+                    RenderGameLobby();
+                }
+                else if (selected == "OK")
+                {
+                    if (m_GameName.Trim() == string.Empty)
+                    {
+                        MessageBox.Show("Game name cannot be empty");
+                    }
+                    else
+                    {
+                        if (m_Password == string.Empty || m_Password == "Optional")
+                        {
+                            CommandCreateGame commandCreateGame = new CommandCreateGame(m_GameName, 4);
+                            commandCreateGame.ClientId = GlobalResources.ClientId;
+                            GlobalResources.SendMessageToServer(commandCreateGame.ToXml());
+                        }
+                        else
+                        {
+                            CommandCreateGame commandCreateGame = new CommandCreateGame(m_GameName, 4, m_Password);
+                            commandCreateGame.ClientId = GlobalResources.ClientId;
+                            GlobalResources.SendMessageToServer(commandCreateGame.ToXml());
+                        }
+                    }
                 }
                 else
                 {
@@ -239,7 +271,7 @@ namespace BesiegedClient.Rendering
         public static void RenderNewGameMenu()
         {
             dimensions = new Dimensions() { Width = (int)GlobalResources.GameWindow.Width, Height = (int)GlobalResources.GameWindow.Height };
-            menuYOffset = dimensions.Height / 2;
+            menuYOffset = dimensions.Height * 0.75;
             menuXOffset = dimensions.Width * 0.65;
             GlobalResources.GameWindow.Children.Clear();
 
@@ -271,6 +303,152 @@ namespace BesiegedClient.Rendering
             catch (Exception ex)
             {
                 MessageBox.Show("Error Loading UI Component : Background.png", "UI Load Failure", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            try
+            {
+                img = new Image();
+                bimg = new BitmapImage(new Uri(UIComponentPath + "GameName.png", UriKind.RelativeOrAbsolute));
+                img.Source = bimg;
+                img.Width = bimg.PixelWidth;
+                img.Height = bimg.PixelHeight;
+                Canvas.SetLeft(img, dimensions.Width * 0.10);
+                Canvas.SetBottom(img, menuYOffset);
+                Canvas.SetZIndex(img, 100);
+                GlobalResources.GameWindow.Children.Add(img);
+                //menuYOffset -= img.Height * 1.5;
+            }
+            catch (Exception ex)
+            {
+
+            }
+            //render text box
+            try
+            {
+                TextBox txtGameName = new TextBox();
+                txtGameName.Width = dimensions.Width * 0.5;
+                txtGameName.Height = img.Height;
+                txtGameName.FontFamily = new FontFamily("Papyrus");
+                txtGameName.FontSize = 24;
+                txtGameName.Opacity = 0.75;
+                Canvas.SetLeft(txtGameName,img.Width * 1.10 + dimensions.Width * 0.10);
+                Canvas.SetBottom(txtGameName, menuYOffset);
+                Canvas.SetZIndex(txtGameName, 100);
+                GlobalResources.GameWindow.Children.Add(txtGameName);
+                menuYOffset -= img.Height * 1.5;
+
+                txtGameName.TextChanged += (s, ev) =>
+                {
+                    m_GameName = ((TextBox)s).Text;
+                };
+            }
+            catch (Exception ex)
+            {
+
+            }
+            //render password
+            try
+            {
+                img = new Image();
+                bimg = new BitmapImage(new Uri(UIComponentPath + "Password.png", UriKind.RelativeOrAbsolute));
+                img.Source = bimg;
+                img.Width = bimg.PixelWidth;
+                img.Height = bimg.PixelHeight;
+                Canvas.SetLeft(img, dimensions.Width*0.10);
+                Canvas.SetBottom(img, menuYOffset);
+                Canvas.SetZIndex(img, 100);
+                GlobalResources.GameWindow.Children.Add(img);
+                //menuYOffset -= img.Height * 1.5;
+            }
+            catch (Exception ex)
+            {
+
+            }
+            //render text box
+            try
+            {
+                TextBox txtPassword = new TextBox();
+                txtPassword.Width = dimensions.Width * 0.5;
+                txtPassword.Height = img.Height;
+                txtPassword.FontFamily = new FontFamily("Papyrus");
+                txtPassword.FontSize = 24;
+                txtPassword.Opacity = 0.75;
+                txtPassword.Text = "Optional";
+                Canvas.SetLeft(txtPassword, img.Width * 1.10 + dimensions.Width * 0.10);
+                Canvas.SetBottom(txtPassword, menuYOffset);
+                Canvas.SetZIndex(txtPassword, 100);
+                GlobalResources.GameWindow.Children.Add(txtPassword);
+                menuYOffset -= img.Height * 1.5;
+
+                txtPassword.TextChanged += (s, ev) =>
+                {
+                    m_Password = ((TextBox)s).Text;
+                };
+
+                txtPassword.GotFocus += (s, ev) =>
+                {
+                    if (txtPassword.Text == "Optional")
+                    {
+                        txtPassword.Text = string.Empty;
+                    }
+                };
+
+                txtPassword.LostFocus += (s, ev) =>
+                {
+                    if (txtPassword.Text.Trim() == "")
+                    {
+                        txtPassword.Text = "Optional";
+                    }
+                };
+            }
+            catch (Exception ex)
+            {
+
+            }
+            //bottom buttons
+            try
+            {
+                img = new Image();
+                bimg = new BitmapImage(new Uri(UIComponentPath + "OK.png", UriKind.RelativeOrAbsolute));
+                img.Source = bimg;
+                img.Width = bimg.PixelWidth;
+                img.Height = bimg.PixelHeight;
+                Canvas.SetLeft(img, menuXOffset);
+                Canvas.SetBottom(img, menuYOffset);
+                Canvas.SetZIndex(img, 100);
+                img.MouseEnter += MenuOptionHover;
+                img.MouseLeave += MenuOptionHoverLost;
+                img.MouseDown += MenuOptionMouseDown;
+                img.MouseUp += MenuOptionMouseUp;
+                img.Name = "OK";
+                GlobalResources.GameWindow.Children.Add(img);
+                menuYOffset -= img.Height * 1.5;
+                
+            }
+            catch (Exception ex)
+            {
+
+            }
+            try
+            {
+                img = new Image();
+                bimg = new BitmapImage(new Uri(UIComponentPath + "Cancel.png", UriKind.RelativeOrAbsolute));
+                img.Source = bimg;
+                img.Width = bimg.PixelWidth;
+                img.Height = bimg.PixelHeight;
+                Canvas.SetLeft(img, menuXOffset);
+                Canvas.SetBottom(img, menuYOffset);
+                Canvas.SetZIndex(img, 100);
+                img.MouseEnter += MenuOptionHover;
+                img.MouseLeave += MenuOptionHoverLost;
+                img.MouseDown += MenuOptionMouseDown;
+                img.MouseUp += MenuOptionMouseUp;
+                img.Name = "Cancel";
+                GlobalResources.GameWindow.Children.Add(img);
+                menuYOffset -= img.Height * 1.5;
+            }
+            catch (Exception ex)
+            {
+
             }
         }
     }

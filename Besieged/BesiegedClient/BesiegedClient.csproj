@@ -64,11 +64,13 @@
       <DependentUpon>ClientSettings.settings</DependentUpon>
     </Compile>
     <Compile Include="ClientWindowOptions.cs" />
-    <Compile Include="GlobalVariables.cs" />
+    <Compile Include="GlobalResources.cs" />
     <Compile Include="Rendering\RenderGameWindow.cs" />
     <Compile Include="Rendering\RenderingUtilities.cs" />
     <Compile Include="Rendering\RenderMenu.cs" />
+    <Compile Include="Rendering\RenderMessageDialog.cs" />
     <Compile Include="Rendering\RenderMultiplayerMenu.cs" />
+    <Compile Include="Rendering\RenderPreGame.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -118,6 +120,9 @@
     <None Include="resources\UI\PSDLayout\BesiegedUI-4.3.Ratio.psd" />
     <None Include="resources\UI\PSDLayout\LayeredMenuButtons.psd" />
     <None Include="resources\UI\PSDLayout\MainMenu-4.3.Ratio.psd" />
+    <None Include="resources\UI\PSDLayout\MultiplayerMenu-4.3.Ratio.psd" />
+    <None Include="resources\UI\PSDLayout\MultiplayerMenuButtons.psd" />
+    <None Include="resources\UI\PSDLayout\WoodenSign.psd" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BesiegedClientLogic\BesiegedClientLogic.csproj">
@@ -179,6 +184,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="resources\UI\Menu\MultiplayerMenu\Password.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\UI\WoodenSign.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
