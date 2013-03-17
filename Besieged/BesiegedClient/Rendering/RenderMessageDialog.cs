@@ -17,6 +17,7 @@ namespace BesiegedClient.Rendering
         private static Dimensions dimensions;
         private static BitmapImage XImg = new BitmapImage(new Uri("resources\\UI\\CloseDialog.png", UriKind.RelativeOrAbsolute));
         private static BitmapImage clickedXImg = new BitmapImage(new Uri("resources\\UI\\ClickedCloseDialog.png", UriKind.RelativeOrAbsolute));
+
         public static void RenderMessage(string message)
         {
             ClearDialog();

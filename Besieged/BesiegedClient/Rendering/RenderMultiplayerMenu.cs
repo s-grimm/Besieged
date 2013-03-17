@@ -451,5 +451,27 @@ namespace BesiegedClient.Rendering
 
             }
         }
+
+        public static void RenderLoadingScreen()
+        {
+            dimensions = new Dimensions() { Width = (int)GlobalResources.GameWindow.Width, Height = (int)GlobalResources.GameWindow.Height };
+
+            GlobalResources.GameWindow.Children.Clear();
+
+            try
+            {
+                GlobalResources.GameWindow.Background = RenderingUtilities.BlackBrush;
+                Control.LoadingAnimation la = new Control.LoadingAnimation();
+                la.Width = 100;
+                la.Height = 100;
+                Canvas.SetLeft(la, dimensions.Width / 2 - la.Width / 2);
+                Canvas.SetBottom(la, dimensions.Height / 2 - la.Height / 2);
+                GlobalResources.GameWindow.Children.Add(la);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error Loading UI Component : Background.png", "UI Load Failure", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 }
