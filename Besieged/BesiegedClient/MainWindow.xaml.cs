@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using BesiegedClient.Rendering;
+using System.Collections.ObjectModel;
 
 namespace BesiegedClient
 {
@@ -42,7 +43,7 @@ namespace BesiegedClient
             InitializeComponent();
             GlobalResources.GameWindow = cvsGameWindow;
             
-            EndpointAddress endpointAddress = new EndpointAddress("net.tcp://localhost:31337/BesiegedServer/BesiegedMessage");
+            EndpointAddress endpointAddress = new EndpointAddress("net.tcp://192.168.1.117:31337/BesiegedServer/BesiegedMessage");
             DuplexChannelFactory<IBesiegedServer> duplexChannelFactory = new DuplexChannelFactory<IBesiegedServer>(m_Client, new NetTcpBinding(SecurityMode.None), endpointAddress);
             GlobalResources.BesiegedServer = duplexChannelFactory.CreateChannel();
 
@@ -90,6 +91,7 @@ namespace BesiegedClient
                 Task.Factory.StartNew(() =>
                 {
                     CommandChatMessage chatMessageCommand = command as CommandChatMessage;
+                    GlobalResources.GameSpecificChatMessages.Add(chatMessageCommand.Contents);
                 }, CancellationToken.None, TaskCreationOptions.None, m_TaskScheduler);
             }
 
@@ -106,13 +108,24 @@ namespace BesiegedClient
                     GlobalResources.GameLobbyCollection.Add(commandNotifyGame);
                 }, CancellationToken.None, TaskCreationOptions.None, m_TaskScheduler);
             }
+            
             else if (command is CommandJoinGameSuccessful)
             {
                 Task.Factory.StartNew(() =>
                 {
+                    GlobalResources.GameSpecificChatMessages = new ObservableCollection<string>();
+                    GlobalResources.GameId = command.GameId;
                     RenderPreGame.RenderPreGameLobby();
                 }, CancellationToken.None, TaskCreationOptions.None, m_TaskScheduler);
-                
+            }
+
+            else if (command is CommandServerError)
+            {
+                CommandServerError commandServerError = command as CommandServerError;
+                Task.Factory.StartNew(() =>
+                {
+                    MessageBox.Show(commandServerError.ErrorMessage);
+                }, CancellationToken.None, TaskCreationOptions.None, m_TaskScheduler);
             }
         }
 

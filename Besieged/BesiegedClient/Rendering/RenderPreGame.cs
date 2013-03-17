@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Framework.Commands;
+using Framework.Utilities.Xml;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -53,11 +55,47 @@ namespace BesiegedClient.Rendering
             {
                 MessageBox.Show("Error Loading UI Component : Background.png", "UI Load Failure", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            Label tempLabel = new Label();
-            tempLabel.Content = "Pre Game Lobby";
-            Canvas.SetLeft(tempLabel, dimensions.Width / 2);
-            Canvas.SetTop(tempLabel, dimensions.Height / 2);
-            GlobalResources.GameWindow.Children.Add(tempLabel);
+
+            ListBox listBoxChatMessages = new ListBox();
+            listBoxChatMessages.ItemsSource = GlobalResources.GameSpecificChatMessages;
+            listBoxChatMessages.Opacity = 0.75;
+            listBoxChatMessages.Height = dimensions.Height * 0.25;
+            listBoxChatMessages.Width = dimensions.Width * 0.7;
+            listBoxChatMessages.FontFamily = new FontFamily("Papyrus");
+            listBoxChatMessages.FontSize = 14;
+            Canvas.SetLeft(listBoxChatMessages, dimensions.Width * 0.15);
+            Canvas.SetBottom(listBoxChatMessages, dimensions.Height * 0.10);
+            GlobalResources.GameWindow.Children.Add(listBoxChatMessages);
+
+            TextBox chatMessage = new TextBox();
+            chatMessage.Opacity = 0.75;
+            chatMessage.FontFamily = new FontFamily("Papyrus");
+            chatMessage.FontSize = 18;
+            chatMessage.Width = dimensions.Width * 0.60;
+            chatMessage.Height = dimensions.Height * 0.05;
+            Canvas.SetLeft(chatMessage, dimensions.Width * 0.15);
+            Canvas.SetBottom(chatMessage, dimensions.Height * 0.025);
+            GlobalResources.GameWindow.Children.Add(chatMessage);
+
+            Button sendButton = new Button();
+            sendButton.FontFamily = new FontFamily("Papyrus");
+            sendButton.FontSize = 18;
+            sendButton.Content = "Send";
+            sendButton.Height = dimensions.Height * 0.05;
+            sendButton.Width = dimensions.Width * 0.08;
+            Canvas.SetBottom(sendButton, dimensions.Height * 0.025);
+            Canvas.SetLeft(sendButton, dimensions.Width * 0.77);
+            GlobalResources.GameWindow.Children.Add(sendButton);
+
+            sendButton.Click += (s, ev) =>
+            {
+                if (chatMessage.Text.Trim() != string.Empty)
+                {
+                    CommandChatMessage commandChatMessage = new CommandChatMessage(chatMessage.Text.Trim());
+                    commandChatMessage.GameId = GlobalResources.GameId;
+                    GlobalResources.SendMessageToServer(commandChatMessage.ToXml());
+                }
+            };
         }
     }
 }
