@@ -93,6 +93,7 @@ namespace BesiegedClient.Rendering
                 {
                     CommandChatMessage commandChatMessage = new CommandChatMessage(chatMessage.Text.Trim());
                     commandChatMessage.GameId = GlobalResources.GameId;
+                    chatMessage.Text = "";
                     GlobalResources.SendMessageToServer(commandChatMessage.ToXml());
                 }
             };
