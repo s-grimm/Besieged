@@ -74,6 +74,14 @@ namespace BesiegedClient.Rendering
                 {
                     RenderNewGameMenu();
                 }
+                else if(selected == "Cancel")
+                {
+                    RenderGameLobby();
+                }
+                else if (selected == "OK")
+                {
+                    //Jesse's Code Here
+                }
                 else
                 {
                     MessageBox.Show(selected);
@@ -287,12 +295,32 @@ namespace BesiegedClient.Rendering
                 Canvas.SetBottom(img, menuYOffset);
                 Canvas.SetZIndex(img, 100);
                 GlobalResources.GameWindow.Children.Add(img);
+                //menuYOffset -= img.Height * 1.5;
+            }
+            catch (Exception ex)
+            {
+
+            }
+            //render text box
+            try
+            {
+                TextBox txtGameName = new TextBox();
+                txtGameName.Width = dimensions.Width * 0.5;
+                txtGameName.Height = img.Height;
+                txtGameName.FontFamily = new FontFamily("Papyrus");
+                txtGameName.FontSize = 24;
+                txtGameName.Opacity = 0.75;
+                Canvas.SetLeft(txtGameName,img.Width * 1.10 + dimensions.Width * 0.10);
+                Canvas.SetBottom(txtGameName, menuYOffset);
+                Canvas.SetZIndex(txtGameName, 100);
+                GlobalResources.GameWindow.Children.Add(txtGameName);
                 menuYOffset -= img.Height * 1.5;
             }
             catch (Exception ex)
             {
 
             }
+            //render password
             try
             {
                 img = new Image();
@@ -304,6 +332,25 @@ namespace BesiegedClient.Rendering
                 Canvas.SetBottom(img, menuYOffset);
                 Canvas.SetZIndex(img, 100);
                 GlobalResources.GameWindow.Children.Add(img);
+                //menuYOffset -= img.Height * 1.5;
+            }
+            catch (Exception ex)
+            {
+
+            }
+            //render text box
+            try
+            {
+                TextBox txtPassword = new TextBox();
+                txtPassword.Width = dimensions.Width * 0.5;
+                txtPassword.Height = img.Height;
+                txtPassword.FontFamily = new FontFamily("Papyrus");
+                txtPassword.FontSize = 24;
+                txtPassword.Opacity = 0.75;
+                Canvas.SetLeft(txtPassword, img.Width * 1.10 + dimensions.Width * 0.10);
+                Canvas.SetBottom(txtPassword, menuYOffset);
+                Canvas.SetZIndex(txtPassword, 100);
+                GlobalResources.GameWindow.Children.Add(txtPassword);
                 menuYOffset -= img.Height * 1.5;
             }
             catch (Exception ex)
@@ -318,7 +365,7 @@ namespace BesiegedClient.Rendering
                 img.Source = bimg;
                 img.Width = bimg.PixelWidth;
                 img.Height = bimg.PixelHeight;
-                Canvas.SetLeft(img, menuXOffset - img.Width * 1.5);
+                Canvas.SetLeft(img, menuXOffset);
                 Canvas.SetBottom(img, menuYOffset);
                 Canvas.SetZIndex(img, 100);
                 img.MouseEnter += MenuOptionHover;
@@ -327,6 +374,7 @@ namespace BesiegedClient.Rendering
                 img.MouseUp += MenuOptionMouseUp;
                 img.Name = "OK";
                 GlobalResources.GameWindow.Children.Add(img);
+                menuYOffset -= img.Height * 1.5;
                 
             }
             catch (Exception ex)
