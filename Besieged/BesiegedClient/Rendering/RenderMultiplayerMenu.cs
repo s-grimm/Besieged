@@ -72,6 +72,10 @@ namespace BesiegedClient.Rendering
                 {
                     JoinGame();
                 }
+                else if (selected == "JoinGame")
+                {
+                    RenderMessageDialog.RenderMessage("You need to select a game to join!");
+                }
                 else if (selected == "CreateGame")
                 {
                     RenderNewGameMenu();
@@ -153,7 +157,7 @@ namespace BesiegedClient.Rendering
                 img.Height = bimg.PixelHeight;
                 GlobalResources.GameWindow.Background = new ImageBrush(bimg);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Error Loading UI Component : Background.png", "UI Load Failure", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -195,7 +199,7 @@ namespace BesiegedClient.Rendering
                     m_SelectedGame = ((ListView)s).SelectedItem as CommandNotifyGame;
                 };
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 
             }
@@ -218,7 +222,7 @@ namespace BesiegedClient.Rendering
                 GlobalResources.GameWindow.Children.Add(img);
                 menuYOffset -= img.Height * 1.5;
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 
             }
@@ -240,7 +244,7 @@ namespace BesiegedClient.Rendering
                 GlobalResources.GameWindow.Children.Add(img);
                 menuYOffset -= img.Height * 1.5;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }
@@ -262,7 +266,7 @@ namespace BesiegedClient.Rendering
                 GlobalResources.GameWindow.Children.Add(img);
                 menuYOffset -= img.Height * 1.5;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }
@@ -294,13 +298,13 @@ namespace BesiegedClient.Rendering
             BitmapImage bimg;
             try
             {
-                bimg = new BitmapImage(new Uri(UIComponentPath + ratioPath + "Background.png", UriKind.RelativeOrAbsolute));
+                bimg = new BitmapImage(new Uri(UIComponentPath + ratioPath + "NewGameBackground.png", UriKind.RelativeOrAbsolute));
                 img.Source = bimg;
                 img.Width = bimg.PixelWidth;
                 img.Height = bimg.PixelHeight;
                 GlobalResources.GameWindow.Background = new ImageBrush(bimg);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Error Loading UI Component : Background.png", "UI Load Failure", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -317,7 +321,7 @@ namespace BesiegedClient.Rendering
                 GlobalResources.GameWindow.Children.Add(img);
                 //menuYOffset -= img.Height * 1.5;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }
@@ -341,7 +345,7 @@ namespace BesiegedClient.Rendering
                     m_GameName = ((TextBox)s).Text;
                 };
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }
@@ -359,7 +363,7 @@ namespace BesiegedClient.Rendering
                 GlobalResources.GameWindow.Children.Add(img);
                 //menuYOffset -= img.Height * 1.5;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }
@@ -400,7 +404,7 @@ namespace BesiegedClient.Rendering
                     }
                 };
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }
@@ -424,7 +428,7 @@ namespace BesiegedClient.Rendering
                 menuYOffset -= img.Height * 1.5;
                 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }
@@ -446,7 +450,7 @@ namespace BesiegedClient.Rendering
                 GlobalResources.GameWindow.Children.Add(img);
                 menuYOffset -= img.Height * 1.5;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }

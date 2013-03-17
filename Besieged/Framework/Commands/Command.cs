@@ -90,6 +90,7 @@ namespace Framework.Commands
             GameName = gameName;
             MaxPlayers = maxPlayers;
             IsGamePassworded = false;
+            Password = string.Empty;
         }
 
         public CommandCreateGame(string gameName, int maxPlayers, string password)

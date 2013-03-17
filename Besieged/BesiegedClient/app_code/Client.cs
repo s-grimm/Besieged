@@ -29,7 +29,7 @@ namespace BesiegedClient.app_code
                     MessageQueue.Add(command);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // custom error handling	
             }

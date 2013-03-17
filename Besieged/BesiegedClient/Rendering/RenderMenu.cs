@@ -65,7 +65,11 @@ namespace BesiegedClient.Rendering
                 {
                     Application.Current.MainWindow.Close();
                 }
-                else if(selected == "MultiPlayer")
+                else if (selected == "SinglePlayer") 
+                {
+                    RenderMessageDialog.RenderMessage("Single Player Comming Soon!");
+                }
+                else if (selected == "MultiPlayer")
                 {
                     // Subscribe in a separate thread to preserve the UI thread
                     Task.Factory.StartNew(() =>
@@ -91,9 +95,11 @@ namespace BesiegedClient.Rendering
                     }
                     else
                     {
-                        GlobalResources.MenuStateChanged += (leSender, leArgs) => {
+                        GlobalResources.MenuStateChanged += (leSender, leArgs) =>
+                        {
                             //make sure the UI thread calls this!
-                            Task.Factory.StartNew(() => {
+                            Task.Factory.StartNew(() =>
+                            {
                                 RenderMultiplayerMenu.RenderGameLobby();
                                 GlobalResources.MenuStateChanged = null; //remove this
                             }, CancellationToken.None, TaskCreationOptions.None, GlobalResources.m_TaskScheduler);
@@ -145,7 +151,7 @@ namespace BesiegedClient.Rendering
                 img.Height = bimg.PixelHeight;
                 GlobalResources.GameWindow.Background = new ImageBrush(bimg);              
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Error Loading UI Component : MainMenuBackground.png", "UI Load Failure", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -161,7 +167,7 @@ namespace BesiegedClient.Rendering
                 Canvas.SetTop(img, dimensions.Height * 0.05);
                 GlobalResources.GameWindow.Children.Add(img);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Error Loading UI Component : Logo.png", "UI Load Failure", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -185,7 +191,7 @@ namespace BesiegedClient.Rendering
                 GlobalResources.GameWindow.Children.Add(img);
                 menuYOffset -= img.Height * 1.5;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Error Loading UI Component : SinglePlayer.png", "UI Load Failure", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -208,7 +214,7 @@ namespace BesiegedClient.Rendering
                 GlobalResources.GameWindow.Children.Add(img);
                 menuYOffset -= img.Height * 1.5;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Error Loading UI Component : MultiPlayer.png", "UI Load Failure", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -231,7 +237,7 @@ namespace BesiegedClient.Rendering
                 GlobalResources.GameWindow.Children.Add(img);
                 menuYOffset -= img.Height * 1.5;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Error Loading UI Component : Options.png", "UI Load Failure", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -254,7 +260,7 @@ namespace BesiegedClient.Rendering
                 GlobalResources.GameWindow.Children.Add(img);
                 menuYOffset -= img.Height * 1.5;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Error Loading UI Component : Quit.png", "UI Load Failure", MessageBoxButton.OK, MessageBoxImage.Error);
             }
