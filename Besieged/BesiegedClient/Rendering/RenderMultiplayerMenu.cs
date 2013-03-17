@@ -72,6 +72,10 @@ namespace BesiegedClient.Rendering
                 {
                     JoinGame();
                 }
+                else if (selected == "JoinGame")
+                {
+                    RenderMessageDialog.RenderMessage("You need to select a game to join!");
+                }
                 else if (selected == "CreateGame")
                 {
                     RenderNewGameMenu();

@@ -65,7 +65,11 @@ namespace BesiegedClient.Rendering
                 {
                     Application.Current.MainWindow.Close();
                 }
-                else if(selected == "MultiPlayer")
+                else if (selected == "SinglePlayer") 
+                {
+                    RenderMessageDialog.RenderMessage("Single Player Comming Soon!");
+                }
+                else if (selected == "MultiPlayer")
                 {
                     // Subscribe in a separate thread to preserve the UI thread
                     Task.Factory.StartNew(() =>
@@ -91,9 +95,11 @@ namespace BesiegedClient.Rendering
                     }
                     else
                     {
-                        GlobalResources.MenuStateChanged += (leSender, leArgs) => {
+                        GlobalResources.MenuStateChanged += (leSender, leArgs) =>
+                        {
                             //make sure the UI thread calls this!
-                            Task.Factory.StartNew(() => {
+                            Task.Factory.StartNew(() =>
+                            {
                                 RenderMultiplayerMenu.RenderGameLobby();
                                 GlobalResources.MenuStateChanged = null; //remove this
                             }, CancellationToken.None, TaskCreationOptions.None, GlobalResources.m_TaskScheduler);
