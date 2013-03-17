@@ -159,6 +159,12 @@
     <Content Include="resources\sprites\alliance\Wizard.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="resources\UI\ClickedCloseDialog.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\UI\CloseDialog.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="resources\UI\Menu\MultiplayerMenu\16x9\Background.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
