@@ -38,8 +38,12 @@ namespace BesiegedClient
                 {
                     if (GlobalResources.m_IsServerConnectionEstablished)
                     {
-                        CommandConnectionTerminated cmdConTerm = new CommandConnectionTerminated(GlobalResources.ClientId, GlobalResources.GameId);
-                        GlobalResources.BesiegedServer.SendCommand(cmdConTerm.ToXml());
+                        try
+                        {
+                            CommandConnectionTerminated cmdConTerm = new CommandConnectionTerminated(GlobalResources.ClientId, GlobalResources.GameId);
+                            GlobalResources.BesiegedServer.SendCommand(cmdConTerm.ToXml());
+                        }
+                        catch (Exception) { }
                     }
                 };
 
@@ -114,7 +118,7 @@ namespace BesiegedClient
                 CommandServerError commandServerError = command as CommandServerError;
                 Task.Factory.StartNew(() =>
                 {
-                    MessageBox.Show(commandServerError.ErrorMessage);
+                    RenderMessageDialog.RenderMessage(commandServerError.ErrorMessage);
                 }, CancellationToken.None, TaskCreationOptions.None, GlobalResources.m_TaskScheduler);
             }
         }
