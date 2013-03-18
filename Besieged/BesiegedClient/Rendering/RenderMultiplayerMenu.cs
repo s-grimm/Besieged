@@ -124,8 +124,6 @@ namespace BesiegedClient.Rendering
 
             string password = string.Empty;
 
-
-
             if (m_SelectedGame.HasPassword)
             {
                 RenderMessageDialog.RenderInput("Please Enter the Game's Password", (s, e) =>
@@ -133,9 +131,9 @@ namespace BesiegedClient.Rendering
                     if (s != null)
                     {
                         password = s as string;
+                        commandJoinGame.Password = password;
+                        GlobalResources.SendMessageToServer(commandJoinGame.ToXml());
                     }
-                    commandJoinGame.Password = password;
-                    GlobalResources.SendMessageToServer(commandJoinGame.ToXml());
                 });
             }
             else
