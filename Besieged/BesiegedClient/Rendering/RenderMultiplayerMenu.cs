@@ -124,7 +124,7 @@ namespace BesiegedClient.Rendering
 
             string password = string.Empty;
 
-           
+
 
             if (m_SelectedGame.HasPassword)
             {
@@ -133,11 +133,15 @@ namespace BesiegedClient.Rendering
                     if (s != null)
                     {
                         password = s as string;
-                        
                     }
                     commandJoinGame.Password = password;
                     GlobalResources.SendMessageToServer(commandJoinGame.ToXml());
                 });
+            }
+            else
+            {
+                commandJoinGame.Password = password;
+                GlobalResources.SendMessageToServer(commandJoinGame.ToXml());
             }
             
         }
