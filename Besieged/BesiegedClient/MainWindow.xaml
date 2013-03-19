@@ -1,7 +1,7 @@
 ﻿<Window x:Class="BesiegedClient.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Besieged!" Height="Auto" Width="Auto" SizeChanged="Window_SizeChanged_1">
+        Title="Besieged!" Height="Auto" Width="Auto">
     <Canvas x:Name="cvsGameWindow" >
 
     </Canvas>

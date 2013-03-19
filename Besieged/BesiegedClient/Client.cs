@@ -8,7 +8,8 @@ using System.Collections.Concurrent;
 using Framework.Commands;
 using Framework.Utilities.Xml;
 using Framework.ServiceContracts;
-namespace BesiegedClient.app_code
+
+namespace BesiegedClient
 {
     public class Client : IClient
     {

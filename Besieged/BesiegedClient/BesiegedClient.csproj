@@ -58,6 +58,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Engine\ClientGameEngine.cs" />
     <Compile Include="ClientSettings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -70,6 +71,9 @@
     <Compile Include="Control\LoadingAnimation.xaml.cs">
       <DependentUpon>LoadingAnimation.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Engine\State\IGameState.cs" />
+    <Compile Include="Engine\State\LoadingState.cs" />
+    <Compile Include="Engine\State\MainMenuState.cs" />
     <Compile Include="GlobalResources.cs" />
     <Compile Include="Rendering\RenderGameWindow.cs" />
     <Compile Include="Rendering\RenderingUtilities.cs" />
@@ -93,7 +97,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="app_code\Client.cs" />
+    <Compile Include="Client.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

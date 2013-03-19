@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BesiegedClient.Engine;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,11 +23,11 @@ namespace BesiegedClient.Rendering
         {
             ClearDialog();
             DialogComponents = new List<UIElement>();
-            foreach (UIElement el in GlobalResources.GameWindow.Children)
+            foreach (UIElement el in ClientGameEngine.Get().Canvas.Children)
             {
                 el.IsEnabled = false;
             }
-            dimensions = new Dimensions() { Width = (int)GlobalResources.GameWindow.Width, Height = (int)GlobalResources.GameWindow.Height };
+            dimensions = ClientGameEngine.Get().ClientDimensions;
             string UIComponentPath = "resources\\UI\\";
             Image img;
             BitmapImage bimg = new BitmapImage();
@@ -120,7 +121,7 @@ namespace BesiegedClient.Rendering
 
             foreach (UIElement obj in DialogComponents)
             {
-                GlobalResources.GameWindow.Children.Add(obj);
+                ClientGameEngine.Get().Canvas.Children.Add(obj);
             }
         }
 
@@ -128,11 +129,11 @@ namespace BesiegedClient.Rendering
         {
             ClearDialog();
             DialogComponents = new List<UIElement>();
-            foreach (UIElement el in GlobalResources.GameWindow.Children)
+            foreach (UIElement el in ClientGameEngine.Get().Canvas.Children)
             {
                 el.IsEnabled = false;
             }
-            dimensions = new Dimensions() { Width = (int)GlobalResources.GameWindow.Width, Height = (int)GlobalResources.GameWindow.Height };
+            dimensions = ClientGameEngine.Get().ClientDimensions;
             string UIComponentPath = "resources\\UI\\";
             Image img;
             BitmapImage bimg = new BitmapImage();
@@ -275,7 +276,7 @@ namespace BesiegedClient.Rendering
 
             foreach (UIElement obj in DialogComponents)
             {
-                GlobalResources.GameWindow.Children.Add(obj);
+                ClientGameEngine.Get().Canvas.Children.Add(obj);
             }
         }
 
@@ -284,12 +285,12 @@ namespace BesiegedClient.Rendering
             if (DialogComponents == null) return;
             foreach (UIElement obj in DialogComponents)
             {
-                if (GlobalResources.GameWindow.Children.Contains(obj))
+                if (ClientGameEngine.Get().Canvas.Children.Contains(obj))
                 {
-                    GlobalResources.GameWindow.Children.Remove(obj);
+                    ClientGameEngine.Get().Canvas.Children.Remove(obj);
                 }
             }
-            foreach (UIElement el in GlobalResources.GameWindow.Children)
+            foreach (UIElement el in ClientGameEngine.Get().Canvas.Children)
             {
                 el.IsEnabled = true;
             }
