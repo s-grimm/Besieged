@@ -251,7 +251,7 @@ namespace BesiegedClient.Engine.State
             try                 // quit menu item image
             {
                 m_QuitImage = new Image();
-                bimg = new BitmapImage(new Uri(UIComponentPath + "Options.png", UriKind.RelativeOrAbsolute));
+                bimg = new BitmapImage(new Uri(UIComponentPath + "Quit.png", UriKind.RelativeOrAbsolute));
                 m_QuitImage.Source = bimg;
                 m_QuitImage.Width = bimg.PixelWidth;
                 m_QuitImage.Height = bimg.PixelHeight;
