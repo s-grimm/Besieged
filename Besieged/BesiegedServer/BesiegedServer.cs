@@ -55,6 +55,7 @@ namespace BesiegedServer
                         {
                             m_ServerCallback = OperationContext.Current.GetCallbackChannel<IClient>();
                             CommandServerStarted commandServerStarted = new CommandServerStarted();
+                            string test = commandServerStarted.ToXml();
                             m_ServerCallback.Notify(commandServerStarted.ToXml());
                             m_IsServerInitialized = true;
                             StartProcessingMessages();
@@ -82,6 +83,7 @@ namespace BesiegedServer
                                 }
                             }
                         }
+                        string test = commandAggregate.ToXml();
                         clientCallBack.Notify(commandAggregate.ToXml());
 
                         ConsoleLogger.Push(string.Format("Client Id {0} has joined the server", newClientId));

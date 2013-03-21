@@ -56,7 +56,10 @@ namespace BesiegedClient.Engine
                 }
                 else
                 {
-                    ChangeState(MultiplayerMenuState.Get());
+                    Task.Factory.StartNew(() =>
+                    {
+                        ChangeState(MultiplayerMenuState.Get());
+                    }, CancellationToken.None, TaskCreationOptions.None, GlobalResources.m_TaskScheduler);
                 }
             };
 

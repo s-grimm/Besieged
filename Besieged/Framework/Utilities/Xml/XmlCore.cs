@@ -21,22 +21,52 @@ namespace Framework.Utilities.Xml
             FrameworkTypes = new List<Type>();
             AllKnownTypes = new List<Type>();
             SerializerDictionary = new Dictionary<string, XmlSerializer>();
-            FrameworkTypes = Assembly.GetExecutingAssembly().GetTypes().ToList().Where(x => x.IsClass && x.Namespace.Contains("Framework") && !x.Name.Contains("Factory") && !x.Name.Contains("Exception") && !x.Name.Contains("FixedSize") && !x.Namespace.Contains("Xml")).ToList();
-            
-            FrameworkTypes.ToList().ForEach(type =>
+
+            Assembly.GetExecutingAssembly().GetTypes().ToList().Where(x => x.IsClass && x.Namespace.Contains("Framework")).ToList().ForEach(type =>
             {
                 try
                 {
+                    XmlSerializer xmlSerializer = new XmlSerializer(type);
+                    FrameworkTypes.Add(type);
                     SerializerDictionary.Add(type.Name.ToString(), new XmlSerializer(type));
                 }
-                catch { }
+                catch (Exception)
+                {
+                    // type couldn't be serialized
+                }
             });
 
-            AppDomain.CurrentDomain.AssemblyLoad += (sender, args) =>   // Add any newly loaded types into the List of all known types
+            Assembly.GetExecutingAssembly().GetTypes().ToList().Where(x => x.IsClass).ToList().ForEach(type =>
             {
-                args.LoadedAssembly.GetTypes().ToList().ForEach(x => AllKnownTypes.Add(x));
-            };
+                try
+                {
+                    XmlSerializer xmlSerializer = new XmlSerializer(type);
+                    AllKnownTypes.Add(type);
+                }
+                catch (Exception)
+                {
+                    // type couldn't be serialized
+                }
+            });
+            
+            //AppDomain.CurrentDomain.AssemblyLoad += (sender, args) =>   // Add any newly loaded types into the List of all known types
+            //{
+            //    args.LoadedAssembly.GetTypes().ToList().Where(x => x.IsClass && x.IsSerializable).ToList().ForEach(type =>
+            //    {
+            //        try
+            //        {
+            //            XmlSerializer xmlSerializer = new XmlSerializer(type);
+            //            AllKnownTypes.Add(type);
+            //        }
+            //        catch (Exception)
+            //        {
+            //            // type couldn't be serialized
+            //        }
+            //    });
+            //};
         }
+
+
 
         public static XmlSerializer GetFrameworkFallbackSerializer(Type type)
         {

@@ -194,6 +194,7 @@ namespace BesiegedClient.Engine.State
                 m_BackgroundBrush = new ImageBrush(bitmapImage);
 
                 bitmapImage = new BitmapImage(new Uri(UIComponentPath + "JoinGame.png", UriKind.RelativeOrAbsolute));
+                m_JoinGameImage = new Image();
                 m_JoinGameImage.Source = bitmapImage;
                 m_JoinGameImage.Width = bitmapImage.PixelWidth;
                 m_JoinGameImage.Height = bitmapImage.PixelHeight;
@@ -204,6 +205,7 @@ namespace BesiegedClient.Engine.State
                 m_JoinGameImage.MouseUp += MenuOptionMouseUp;
 
                 bitmapImage = new BitmapImage(new Uri(UIComponentPath + "CreateGame.png", UriKind.RelativeOrAbsolute));
+                m_CreateGameImage = new Image();
                 m_CreateGameImage.Source = bitmapImage;
                 m_CreateGameImage.Width = bitmapImage.PixelWidth;
                 m_CreateGameImage.Height = bitmapImage.PixelHeight;
@@ -214,6 +216,7 @@ namespace BesiegedClient.Engine.State
                 m_CreateGameImage.MouseUp += MenuOptionMouseUp;
 
                 bitmapImage = new BitmapImage(new Uri(UIComponentPath + "MainMenu.png", UriKind.RelativeOrAbsolute));
+                m_MainMenuImage = new Image();
                 m_MainMenuImage.Source = bitmapImage;
                 m_MainMenuImage.Width = bitmapImage.PixelWidth;
                 m_MainMenuImage.Height = bitmapImage.PixelHeight;
@@ -236,6 +239,14 @@ namespace BesiegedClient.Engine.State
             m_MenuXOffset = dimensions.Width * 0.65;
 
             ClientGameEngine.Get().Canvas.Background = m_BackgroundBrush;   // set the background brush
+
+            m_CurrentGameListView.Width = dimensions.Width / 2;             // resize and add the game listbox to the canvas
+            m_CurrentGameListView.Height = dimensions.Height / 2;
+            Canvas.SetLeft(m_CurrentGameListView, dimensions.Width / 8);
+            Canvas.SetBottom(m_CurrentGameListView, dimensions.Height / 4);
+            m_NameColumn.Width = m_CurrentGameListView.Width * 0.65;
+            m_CapacityColumn.Width = m_CurrentGameListView.Width * 0.33;
+            ClientGameEngine.Get().Canvas.Children.Add(m_CurrentGameListView);
 
             Canvas.SetLeft(m_JoinGameImage, m_MenuXOffset);                 // resize and add the join game menu item to the canvas
             Canvas.SetBottom(m_JoinGameImage, m_MenuYOffset);
