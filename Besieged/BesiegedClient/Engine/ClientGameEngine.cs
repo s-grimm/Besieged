@@ -90,6 +90,20 @@ namespace BesiegedClient.Engine
                 m_ClientId = commandConnectionSuccessful.ClientId;
                 IsServerConnected.Value = true;
             }
+
+            else if (command is CommandNotifyGame)
+            {
+                Task.Factory.StartNew(() =>
+                {
+                    CommandNotifyGame commandNotifyGame = command as CommandNotifyGame;
+                    CommandNotifyGame game = GlobalResources.GameLobbyCollection.Where(x => x.GameId == commandNotifyGame.GameId).FirstOrDefault();
+                    if (game != null)
+                    {
+                        CurrentGameCollection.Remove(game);
+                    }
+                    CurrentGameCollection.Add(commandNotifyGame);
+                }, CancellationToken.None, TaskCreationOptions.None, GlobalResources.m_TaskScheduler);
+            }
         }
         
         public static ClientGameEngine Get()
