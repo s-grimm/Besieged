@@ -106,41 +106,6 @@ namespace BesiegedClient.Engine.State
                         CommandConnect commandConnect = new CommandConnect(ClientSettings.Default.Alias);
                         ClientGameEngine.Get().SendMessageToServer(commandConnect.ToXml());
                     });
-                    
-                    //Task.Factory.StartNew(() =>     // Subscribe in a separate thread to preserve the UI thread
-                    //{
-                    //   
-                    //    try
-                    //    {
-                    //        ClientGameEngine.Get().SendMessageToServer(commandConnect.ToXml());
-                    //    }
-                    //    catch (Exception)
-                    //    {
-                    //        Task.Factory.StartNew(() =>
-                    //        {
-                    //            RenderMenu.RenderMainMenu();
-                    //            RenderMessageDialog.RenderMessage("There was an error connecting to the server!");
-                    //            GlobalResources.MenuStateChanged = null; //remove this
-                    //        }, CancellationToken.None, TaskCreationOptions.None, GlobalResources.m_TaskScheduler);
-                    //    }
-                    //});
-                    //if (GlobalResources.m_IsServerConnectionEstablished)
-                    //{
-                    //    RenderMultiplayerMenu.RenderGameLobby();
-                    //}
-                    //else
-                    //{
-                    //    GlobalResources.MenuStateChanged += (leSender, leArgs) =>
-                    //    {
-                    //        //make sure the UI thread calls this!
-                    //        Task.Factory.StartNew(() =>
-                    //        {
-                    //            RenderMultiplayerMenu.RenderGameLobby();
-                    //            GlobalResources.MenuStateChanged = null; //remove this
-                    //        }, CancellationToken.None, TaskCreationOptions.None, GlobalResources.m_TaskScheduler);
-                    //    };
-                    //    RenderMultiplayerMenu.RenderLoadingScreen();
-                    //}
                 }
                 else
                 {
@@ -275,33 +240,33 @@ namespace BesiegedClient.Engine.State
                 m_MenuYOffset = dimensions.Height / 2;
                 m_MenuXOffset = dimensions.Width * 0.65;
 
-                ClientGameEngine.Get().Canvas.Background = m_BackgroundBrush; // set the background brush
+                ClientGameEngine.Get().Canvas.Background = m_BackgroundBrush;   // set the background brush
 
-                Canvas.SetLeft(m_LogoImage, dimensions.Width * 0.05);       // resize and add the logo to the canvas
+                Canvas.SetLeft(m_LogoImage, dimensions.Width * 0.05);           // resize and add the logo to the canvas
                 Canvas.SetTop(m_LogoImage, dimensions.Height * 0.05);
                 ClientGameEngine.Get().Canvas.Children.Add(m_LogoImage);
 
-                Canvas.SetLeft(m_SinglePlayerImage, m_MenuXOffset);           // resize and add the single player menu item to the canvas
+                Canvas.SetLeft(m_SinglePlayerImage, m_MenuXOffset);             // resize and add the single player menu item to the canvas
                 Canvas.SetBottom(m_SinglePlayerImage, m_MenuYOffset);
                 Canvas.SetZIndex(m_SinglePlayerImage, 100);
                 ClientGameEngine.Get().Canvas.Children.Add(m_SinglePlayerImage);
                 m_MenuYOffset -= m_SinglePlayerImage.Height * 1.5;
 
 
-                Canvas.SetLeft(m_MultiPlayerImage, m_MenuXOffset);            // resize and add the multiplayer menu item to the canvas
+                Canvas.SetLeft(m_MultiPlayerImage, m_MenuXOffset);              // resize and add the multiplayer menu item to the canvas
                 Canvas.SetBottom(m_MultiPlayerImage, m_MenuYOffset);
                 Canvas.SetZIndex(m_MultiPlayerImage, 100);
                 ClientGameEngine.Get().Canvas.Children.Add(m_MultiPlayerImage);
                 m_MenuYOffset -= m_MultiPlayerImage.Height * 1.5;
 
-                Canvas.SetLeft(m_OptionsImage, m_MenuXOffset);                // resize and add the options menu item to the canvas
+                Canvas.SetLeft(m_OptionsImage, m_MenuXOffset);                  // resize and add the options menu item to the canvas
                 Canvas.SetBottom(m_OptionsImage, m_MenuYOffset);
                 Canvas.SetZIndex(m_OptionsImage, 100);
                 ClientGameEngine.Get().Canvas.Children.Add(m_OptionsImage);
                 m_MenuYOffset -= m_OptionsImage.Height * 1.5;
 
 
-                Canvas.SetLeft(m_QuitImage, m_MenuXOffset);                // resize and add the quit menu item to the canvas
+                Canvas.SetLeft(m_QuitImage, m_MenuXOffset);                     // resize and add the quit menu item to the canvas
                 Canvas.SetBottom(m_QuitImage, m_MenuYOffset);
                 Canvas.SetZIndex(m_QuitImage, 100);
                 ClientGameEngine.Get().Canvas.Children.Add(m_QuitImage);

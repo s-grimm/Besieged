@@ -74,6 +74,7 @@
     <Compile Include="Engine\State\IGameState.cs" />
     <Compile Include="Engine\State\LoadingState.cs" />
     <Compile Include="Engine\State\MainMenuState.cs" />
+    <Compile Include="Engine\State\MultiplayerMenuState.cs" />
     <Compile Include="GlobalResources.cs" />
     <Compile Include="Rendering\RenderGameWindow.cs" />
     <Compile Include="Rendering\RenderingUtilities.cs" />

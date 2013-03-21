@@ -5,6 +5,7 @@ using Framework.ServiceContracts;
 using Framework.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
@@ -25,10 +26,12 @@ namespace BesiegedClient.Engine
         private IBesiegedServer m_BesiegedServer;
         private NetTcpBinding m_TcpBinding;
         private DuplexChannelFactory<IBesiegedServer> m_DuplexChannelFactory;
+        private string m_ClientId;
 
         public Dimensions ClientDimensions { get; set; }
         public Canvas Canvas { get; set; }
-        public MonitoredValue<bool> m_IsServerConnected { get; set; }
+        public MonitoredValue<bool> IsServerConnected { get; set; }
+        public ObservableCollection<CommandNotifyGame> CurrentGameCollection { get; set; }
 
         private ClientGameEngine() 
         {
@@ -37,9 +40,11 @@ namespace BesiegedClient.Engine
             m_TcpBinding.CloseTimeout = new TimeSpan(0, 0, 10);
             m_TcpBinding.SendTimeout = new TimeSpan(0, 0, 10);
             m_TcpBinding.ReceiveTimeout = new TimeSpan(0, 0, 10);
+
+            CurrentGameCollection = new ObservableCollection<CommandNotifyGame>();
             
-            m_IsServerConnected = new MonitoredValue<bool>(true);
-            m_IsServerConnected.ValueChanged += (from, to) =>
+            IsServerConnected = new MonitoredValue<bool>(true);
+            IsServerConnected.ValueChanged += (from, to) =>
             {
                 if (!to)
                 {
@@ -48,6 +53,10 @@ namespace BesiegedClient.Engine
                         RenderMessageDialog.RenderMessage("Unable to establish connection to server");
                     };
                     ChangeState(m_PreviousGameState, postRender);
+                }
+                else
+                {
+                    ChangeState(MultiplayerMenuState.Get());
                 }
             };
 
@@ -72,7 +81,12 @@ namespace BesiegedClient.Engine
 
         private void ProcessMessage(Command command)
         {
-            
+            if (command is CommandConnectionSuccessful)
+            {
+                CommandConnectionSuccessful commandConnectionSuccessful = command as CommandConnectionSuccessful;
+                m_ClientId = commandConnectionSuccessful.ClientId;
+                IsServerConnected.Value = true;
+            }
         }
         
         public static ClientGameEngine Get()
@@ -127,7 +141,7 @@ namespace BesiegedClient.Engine
                 }
                 catch (Exception)
                 {
-                    m_IsServerConnected.Value = false;
+                    IsServerConnected.Value = false;
                 }
             //});
         }
