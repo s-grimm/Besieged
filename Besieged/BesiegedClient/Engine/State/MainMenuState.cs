@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -47,7 +48,7 @@ namespace BesiegedClient.Engine.State
             }
         }
 
-        private void MenuOptionHover(object sender, System.Windows.Input.MouseEventArgs e)
+        private void MenuOptionHover(object sender, MouseEventArgs e)
         {
             try
             {
@@ -59,7 +60,7 @@ namespace BesiegedClient.Engine.State
             }
         }
 
-        private void MenuOptionHoverLost(object sender, System.Windows.Input.MouseEventArgs e)
+        private void MenuOptionHoverLost(object sender, MouseEventArgs e)
         {
             try
             {
@@ -71,7 +72,7 @@ namespace BesiegedClient.Engine.State
             }
         }
 
-        private void MenuOptionMouseDown(object sender, System.Windows.Input.MouseEventArgs e)
+        private void MenuOptionMouseDown(object sender, MouseEventArgs e)
         {
             try
             {
@@ -82,7 +83,7 @@ namespace BesiegedClient.Engine.State
             }
         }
 
-        private void MenuOptionMouseUp(object sender, System.Windows.Input.MouseEventArgs e)
+        private void MenuOptionMouseUp(object sender, MouseEventArgs e)
         {
             try
             {
