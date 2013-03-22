@@ -4,7 +4,7 @@
   <element>
     <type>com.umlet.element.custom.Text</type>
     <coordinates>
-      <x>416</x>
+      <x>552</x>
       <y>32</y>
       <w>200</w>
       <h>32</h>
@@ -16,7 +16,7 @@ for changing UI states</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>712</x>
+      <x>848</x>
       <y>88</y>
       <w>208</w>
       <h>416</h>
@@ -27,7 +27,7 @@ for changing UI states</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>664</x>
+      <x>800</x>
       <y>56</y>
       <w>168</w>
       <h>56</h>
@@ -45,7 +45,7 @@ Render(): void
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>904</x>
+      <x>1040</x>
       <y>656</y>
       <w>352</w>
       <h>112</h>
@@ -65,7 +65,7 @@ _+Get(): IGameState_
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>808</x>
+      <x>944</x>
       <y>56</y>
       <w>104</w>
       <h>40</h>
@@ -76,16 +76,16 @@ _+Get(): IGameState_
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>904</x>
+      <x>1040</x>
       <y>56</y>
       <w>352</w>
       <h>264</h>
     </coordinates>
     <panel_attributes>State.MainMenuState
 --
-m_BackgroundBrush: ImageBrush
+-m_BackgroundBrush: ImageBrush
 _-m_Instance: MainMenuState = null_
-m_LogoImage: Image
+-m_LogoImage: Image
 -m_MenuXOffset: double
 -m_MenuYOffset: double
 -m_MouseDownSender: object
@@ -108,7 +108,7 @@ _+Get(): IGameState_
   <element>
     <type>com.umlet.element.custom.Text</type>
     <coordinates>
-      <x>1720</x>
+      <x>1856</x>
       <y>152</y>
       <w>80</w>
       <h>80</h>
@@ -122,7 +122,7 @@ anywhere.</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>384</x>
+      <x>520</x>
       <y>48</y>
       <w>296</w>
       <h>40</h>
@@ -133,7 +133,7 @@ anywhere.</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>712</x>
+      <x>848</x>
       <y>88</y>
       <w>208</w>
       <h>640</h>
@@ -144,7 +144,7 @@ anywhere.</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>40</x>
+      <x>176</x>
       <y>48</y>
       <w>368</w>
       <h>272</h>
@@ -179,16 +179,16 @@ _+Get(): ClientGameEngine_
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>904</x>
+      <x>1040</x>
       <y>344</y>
       <w>352</w>
       <h>296</h>
     </coordinates>
     <panel_attributes>State.MultiplayerMenuState
 --
-m_BackgroundBrush: ImageBrush
-m_CapacityColumn: GridViewColumn
-m_CreateGameImage: Image
+-m_BackgroundBrush: ImageBrush
+-m_CapacityColumn: GridViewColumn
+-m_CreateGameImage: Image
 -m_CurrentGameListView: ListView
 -m_GameGridView: GridView
 _-m_Instance: MultiplayerMenuStateenuState = null_
