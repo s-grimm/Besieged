@@ -23,8 +23,8 @@ the client with new messages
   <element>
     <type>com.umlet.element.custom.Text</type>
     <coordinates>
-      <x>1180</x>
-      <y>400</y>
+      <x>1240</x>
+      <y>380</y>
       <w>260</w>
       <h>30</h>
     </coordinates>
@@ -34,8 +34,8 @@ the client with new messages
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>1000</x>
-      <y>460</y>
+      <x>1060</x>
+      <y>430</y>
       <w>570</w>
       <h>330</h>
     </coordinates>
@@ -124,13 +124,35 @@ SendCommand(serializedCommand: string): void
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>1150</x>
-      <y>340</y>
-      <w>50</w>
-      <h>140</h>
+      <x>850</x>
+      <y>440</y>
+      <w>230</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>30;120;30;30</additional_attributes>
+    <additional_attributes>30;30;210;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Text</type>
+    <coordinates>
+      <x>930</x>
+      <y>440</y>
+      <w>80</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>m_Games</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1210</x>
+      <y>340</y>
+      <w>50</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;100;30;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.custom.Text</type>
