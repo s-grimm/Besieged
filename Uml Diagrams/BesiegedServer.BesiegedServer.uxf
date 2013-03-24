@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="12.0">
+  <zoom_level>8</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>232</x>
+      <y>280</y>
+      <w>256</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;IBesiegedServer&gt;&gt;
+--
+
+--
+SendCommand(serializedCommand: string): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>32</x>
+      <y>368</y>
+      <w>664</w>
+      <h>248</h>
+    </coordinates>
+    <panel_attributes>BesiegedServer
+{[ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]}
+--
+-m_MessageQueue: BlockingCollection&lt;Command&gt; = new BlockingCollection&lt;Command&gt;()
+-m_ConnectedClients: ConcurrentDictionary&lt;string, IClient&gt; = new ConcurrentDictionary&lt;string, IClient&gt;()
+-m_Games: ConcurrentDictionary&lt;string, BesiegedGameInstance&gt; = new ConcurrentDictionary&lt;string, BesiegedGameInstance&gt;()
+-m_IsServerInitialized: bool = false
+-m_ServerCallback: IClient
+--
++BesiegedServer()
+-StartProcessingMessages(): void
++NotifyAllConnectedClients(command: string): void
++NotifyClient(clientId: string, command: string): void
++ProcessMessage(command: Command): void
++SendCommand(serializedCommand: string): void
+
+--
+*Comments*
+-- Used as the central point for any clients to connect to send and receive message to and from the server.
+-- Employs a message queue to handle messages in a timely manner and distribute them to the appropriate clients and games</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>352</x>
+      <y>296</y>
+      <w>40</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>24;24;24;72</additional_attributes>
+  </element>
+</diagram>
