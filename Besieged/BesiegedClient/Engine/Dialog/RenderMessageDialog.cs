@@ -10,7 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace BesiegedClient.Rendering
+namespace BesiegedClient.Engine.Dialog
 {
     public static class RenderMessageDialog
     {
@@ -41,7 +41,7 @@ namespace BesiegedClient.Rendering
                 rect.Opacity = 0.7;
                 Canvas.SetLeft(rect,0);
                 Canvas.SetTop(rect, 0);
-                rect.Fill = RenderingUtilities.BlackBrush;
+                rect.Fill = Utilities.Rendering.BlackBrush;
                 DialogComponents.Add(rect);
             }
             catch (Exception)
@@ -147,7 +147,7 @@ namespace BesiegedClient.Rendering
                 rect.Opacity = 0.7;
                 Canvas.SetLeft(rect, 0);
                 Canvas.SetTop(rect, 0);
-                rect.Fill = RenderingUtilities.BlackBrush;
+                rect.Fill = Utilities.Rendering.BlackBrush;
                 DialogComponents.Add(rect);
             }
             catch (Exception)
@@ -223,11 +223,11 @@ namespace BesiegedClient.Rendering
                 textLabel.FontFamily = new FontFamily("Papyrus");
                 textLabel.FontSize = 18.0;
                 textLabel.MouseEnter += (s, e) => {
-                    textLabel.Foreground = RenderingUtilities.RedBrush;
+                    textLabel.Foreground = Utilities.Rendering.RedBrush;
                 };
                 textLabel.MouseLeave += (s, e) =>
                 {
-                    textLabel.Foreground = RenderingUtilities.BlackBrush;
+                    textLabel.Foreground = Utilities.Rendering.BlackBrush;
                 };
                 textLabel.MouseUp += (s, e) =>
                 {
@@ -254,11 +254,11 @@ namespace BesiegedClient.Rendering
                 textLabel.FontSize = 18.0;
                 textLabel.MouseEnter += (s, e) =>
                 {
-                    textLabel.Foreground = RenderingUtilities.RedBrush;
+                    textLabel.Foreground = Utilities.Rendering.RedBrush;
                 };
                 textLabel.MouseLeave += (s, e) =>
                 {
-                    textLabel.Foreground = RenderingUtilities.BlackBrush;
+                    textLabel.Foreground = Utilities.Rendering.BlackBrush;
                 };
                 textLabel.MouseUp += (s, e) =>
                 {

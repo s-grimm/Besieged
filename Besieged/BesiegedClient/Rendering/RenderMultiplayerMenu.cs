@@ -1,4 +1,5 @@
-﻿using Framework.Commands;
+﻿using BesiegedClient.Engine;
+using Framework.Commands;
 using Framework.Utilities.Xml;
 using System;
 using System.Windows;
@@ -481,7 +482,7 @@ namespace BesiegedClient.Rendering
 
             try
             {
-                GlobalResources.GameWindow.Background = RenderingUtilities.BlackBrush;
+                GlobalResources.GameWindow.Background = Utilities.Rendering.BlackBrush;
                 Control.LoadingAnimation la = new Control.LoadingAnimation();
                 la.Width = 100;
                 la.Height = 100;

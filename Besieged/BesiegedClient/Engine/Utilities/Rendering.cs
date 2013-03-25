@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace BesiegedClient.Rendering
+namespace BesiegedClient.Engine.Utilities
 {
-    public static class RenderingUtilities
+    public static class Rendering
     {
         public static SolidColorBrush BlackBrush = new SolidColorBrush(Colors.Black);
         public static SolidColorBrush RedBrush = new SolidColorBrush(Colors.Red);

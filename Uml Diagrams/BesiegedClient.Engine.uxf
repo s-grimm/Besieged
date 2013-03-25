@@ -5,63 +5,6 @@
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>864</x>
-      <y>312</y>
-      <w>352</w>
-      <h>296</h>
-    </coordinates>
-    <panel_attributes>*State.MultiplayerMenuState*
---
--m_BackgroundBrush: ImageBrush
--m_CapacityColumn: GridViewColumn
--m_CreateGameImage: Image
--m_CurrentGameListView: ListView
--m_GameGridView: GridView
-_-m_Instance: MultiplayerMenuStateenuState = null_
--m_JoinGameImage: Image
--m_NameColumn: GridViewColumn
--m_MainMenuImage:Image
--m_MenuXOffset: double
--m_MenuYOffset: double
--m_MouseDownSender: object
--m_SelectedGame: CommandNotifyGame
---
--MultiplayerMenuState()
--MenuOptionHover(sender: Object, e: MouseEventArgs): void
--MenuOptionHoverLost(sender: Object, e: MouseEventArgs): void
--MenuOptionMouseDown(sender: Object, e: MouseEventArgs): void
--MenuOptionUp(sender: Object, e: MouseEventArgs): void
-_+Get(): IGameState_
-+Initialize(): void
-+Render(): void
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>672</x>
-      <y>120</y>
-      <w>208</w>
-      <h>824</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>24;24;24;808;192;808</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>784</x>
-      <y>24</y>
-      <w>88</w>
-      <h>40</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>24;24;72;24</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Class</type>
-    <coordinates>
-      <x>864</x>
       <y>24</y>
       <w>352</w>
       <h>264</h>
@@ -87,6 +30,83 @@ _-m_Instance: MainMenuState = null_
 _+Get(): IGameState_
 +Initialize(): void
 +Render(): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>232</x>
+      <y>760</y>
+      <w>352</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>*State.JoinGameState*
+--
+_-m_Instance: JoinGameState = null_
+--
+-JoinGameState()
+_+Get(): IGameState_
++Initialize(): void
++Render(): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Text</type>
+    <coordinates>
+      <x>376</x>
+      <y>0</y>
+      <w>200</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>Manages and provides the mechanism
+for changing UI states</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>344</x>
+      <y>16</y>
+      <w>216</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>200;24;24;24</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>672</x>
+      <y>120</y>
+      <w>208</w>
+      <h>352</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>24;24;24;336;192;336</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>544</x>
+      <y>24</y>
+      <w>264</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>*&lt;&lt;State.IGameState&gt;&gt;*
+--
+
+--
+Initialize(): void
+Render(): void
+_Get(): IGameState_
+--
+*Comments*
+-- Get() cannot be marked as static in the interface
+but any states that implement this should make it a 
+static method for the Singleton
+
 </panel_attributes>
     <additional_attributes/>
   </element>
@@ -129,11 +149,66 @@ _+Get(): ClientGameEngine_
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>864</x>
+      <y>312</y>
+      <w>352</w>
+      <h>296</h>
+    </coordinates>
+    <panel_attributes>*State.MultiplayerMenuState*
+--
+-m_BackgroundBrush: ImageBrush
+-m_CapacityColumn: GridViewColumn
+-m_CreateGameImage: Image
+-m_CurrentGameListView: ListView
+-m_GameGridView: GridView
+_-m_Instance: MultiplayerMenuStateenuState = null_
+-m_JoinGameImage: Image
+-m_NameColumn: GridViewColumn
+-m_MainMenuImage:Image
+-m_MenuXOffset: double
+-m_MenuYOffset: double
+-m_MouseDownSender: object
+-m_SelectedGame: CommandNotifyGame
+--
+-MultiplayerMenuState()
+-MenuOptionHover(sender: Object, e: MouseEventArgs): void
+-MenuOptionHoverLost(sender: Object, e: MouseEventArgs): void
+-MenuOptionMouseDown(sender: Object, e: MouseEventArgs): void
+-MenuOptionUp(sender: Object, e: MouseEventArgs): void
+_+Get(): IGameState_
++Initialize(): void
++Render(): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>864</x>
+      <y>624</y>
+      <w>352</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>*State.LoadingState*
+--
+_-m_Instance: LoadingState = null_
+-m_LoadingAnimation: LoadingAnimation
+--
+-LoadingState()
+_+Get(): IGameState_
++Initialize(): void
++Render(): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>864</x>
       <y>760</y>
       <w>352</w>
       <h>304</h>
     </coordinates>
-    <panel_attributes>State.NewGameState
+    <panel_attributes>*State.NewGameState*
 --
 _-m_Instance: NewGameState = null_
 -m_MenuYOffset : double
@@ -162,112 +237,37 @@ _+Get(): IGameState_
     <additional_attributes/>
   </element>
   <element>
-    <type>com.umlet.element.Class</type>
+    <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>232</x>
-      <y>760</y>
-      <w>352</w>
-      <h>112</h>
+      <x>560</x>
+      <y>120</y>
+      <w>152</w>
+      <h>704</h>
     </coordinates>
-    <panel_attributes>*State.JoinGameState*
---
-_-m_Instance: JoinGameState = null_
---
--JoinGameState()
-_+Get(): IGameState_
-+Initialize(): void
-+Render(): void
-</panel_attributes>
-    <additional_attributes/>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>136;24;136;688;24;688</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>672</x>
-      <y>120</y>
-      <w>208</w>
-      <h>352</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>24;24;24;336;192;336</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.custom.Text</type>
-    <coordinates>
-      <x>376</x>
-      <y>0</y>
-      <w>200</w>
-      <h>32</h>
-    </coordinates>
-    <panel_attributes>Manages and provides the mechanism
-for changing UI states</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>672</x>
-      <y>120</y>
-      <w>208</w>
-      <h>576</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>24;24;24;560;192;560</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Class</type>
-    <coordinates>
-      <x>544</x>
+      <x>784</x>
       <y>24</y>
-      <w>264</w>
-      <h>120</h>
-    </coordinates>
-    <panel_attributes>*&lt;&lt;State.IGameState&gt;&gt;*
---
-
---
-Initialize(): void
-Render(): void
-_Get(): IGameState_
---
-*Comments*
--- Get() cannot be marked as static in the interface
-but any states that implement this should make it a 
-static method for the Singleton
-
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>344</x>
-      <y>16</y>
-      <w>216</w>
+      <w>88</w>
       <h>40</h>
     </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>200;24;24;24</additional_attributes>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>24;24;72;24</additional_attributes>
   </element>
   <element>
-    <type>com.umlet.element.Class</type>
+    <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>864</x>
-      <y>624</y>
-      <w>352</w>
-      <h>112</h>
+      <x>672</x>
+      <y>120</y>
+      <w>208</w>
+      <h>824</h>
     </coordinates>
-    <panel_attributes>*State.LoadingState*
---
-_-m_Instance: LoadingState = null_
--m_LoadingAnimation: LoadingAnimation
---
--LoadingState()
-_+Get(): IGameState_
-+Initialize(): void
-+Render(): void
-</panel_attributes>
-    <additional_attributes/>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>24;24;24;808;192;808</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.custom.Text</type>
@@ -286,12 +286,12 @@ anywhere.</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>560</x>
+      <x>672</x>
       <y>120</y>
-      <w>152</w>
-      <h>704</h>
+      <w>208</w>
+      <h>576</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>136;24;136;688;24;688</additional_attributes>
+    <additional_attributes>24;24;24;560;192;560</additional_attributes>
   </element>
 </diagram>
