@@ -183,7 +183,19 @@ namespace BesiegedClient.Engine.State
 
             m_MenuYOffset -= m_PasswordImage.Height * 1.5;
 
-            throw new NotImplementedException();
+            Canvas.SetLeft(m_OKImage, m_MenuXOffset);
+            Canvas.SetBottom(m_OKImage, m_MenuYOffset);
+            Canvas.SetZIndex(m_OKImage, 100);
+            ClientGameEngine.Get().Canvas.Children.Add(m_OKImage);
+
+            m_MenuYOffset -= m_OKImage.Height * 1.5;
+
+            Canvas.SetLeft(m_CancelImage, m_MenuXOffset);
+            Canvas.SetBottom(m_CancelImage, m_MenuYOffset);
+            Canvas.SetZIndex(m_CancelImage, 100);
+            ClientGameEngine.Get().Canvas.Children.Add(m_CancelImage);
+
+            m_MenuYOffset -= m_OKImage.Height * 1.5;
         }
     }
 }

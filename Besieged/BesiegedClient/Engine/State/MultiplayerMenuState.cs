@@ -85,13 +85,13 @@ namespace BesiegedClient.Engine.State
             }
         }
 
-        public static void MenuOptionMouseUp(object sender, System.Windows.Input.MouseEventArgs e)
+        public void MenuOptionMouseUp(object sender, System.Windows.Input.MouseEventArgs e)
         {
             try
             {
-            //    if (mousedownRef != sender) return;
-            //    Image img = sender as Image;
-            //    string selected = img.Name;
+                if (m_MouseDownSender != sender) return;
+                Image img = sender as Image;
+                string selected = img.Name;
             //    if (selected == "MainMenu")
             //    {
             //        RenderMenu.RenderMainMenu();
@@ -104,10 +104,11 @@ namespace BesiegedClient.Engine.State
             //    {
             //        RenderMessageDialog.RenderMessage("You need to select a game to join!");
             //    }
-            //    else if (selected == "CreateGame")
-            //    {
-            //        RenderNewGameMenu();
-            //    }
+                //else 
+                if (selected == "CreateGame")
+                {
+                    ClientGameEngine.Get().ChangeState(NewGameState.Get());
+                }
             //    else if (selected == "Cancel")
             //    {
             //        RenderGameLobby();
