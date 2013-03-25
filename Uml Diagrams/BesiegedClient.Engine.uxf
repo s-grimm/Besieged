@@ -4,125 +4,45 @@
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>672</x>
-      <y>56</y>
-      <w>208</w>
-      <h>640</h>
+      <x>720</x>
+      <y>152</y>
+      <w>152</w>
+      <h>704</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>24;24;24;624;192;624</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Class</type>
-    <coordinates>
-      <x>864</x>
-      <y>760</y>
-      <w>352</w>
-      <h>304</h>
-    </coordinates>
-    <panel_attributes>State.NewGameState
---
-_-m_Instance: NewGameState = null_
--m_MenuYOffset : double
--m_MenuXOffset : double
--m_GameNameImage : Image
--m_PasswordImage : Image
--m_OKImage : Image
--m_CancelImage : Image
--m_GameNameBox : TextBox
--m_PasswordBox : TextBox
--m_GameName : string
--m_Password : string
--m_BackgroundBrush : ImageBrush
---
--NewGameState()
-_+Get(): IGameState_
-
--MenuOptionHover(sender: Object, e: MouseEventArgs): void
--MenuOptionHoverLost(sender: Object, e: MouseEventArgs): void
--MenuOptionMouseDown(sender: Object, e: MouseEventArgs): void
--MenuOptionUp(sender: Object, e: MouseEventArgs): void
-
-+Initialize(): void
-+Render(): void
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.Class</type>
-    <coordinates>
-      <x>864</x>
-      <y>24</y>
-      <w>352</w>
-      <h>264</h>
-    </coordinates>
-    <panel_attributes>State.MainMenuState
---
--m_BackgroundBrush: ImageBrush
-_-m_Instance: MainMenuState = null_
--m_LogoImage: Image
--m_MenuXOffset: double
--m_MenuYOffset: double
--m_MouseDownSender: object
--m_MultiPlayerImage: Image
--m_OptionsImage: Image
--m_SinglePlayerImage: Image
--m_QuitImage: Image
---
--MainMenuState()
--MenuOptionHover(sender: Object, e: MouseEventArgs): void
--MenuOptionHoverLost(sender: Object, e: MouseEventArgs): void
--MenuOptionMouseDown(sender: Object, e: MouseEventArgs): void
--MenuOptionUp(sender: Object, e: MouseEventArgs): void
-_+Get(): IGameState_
-+Initialize(): void
-+Render(): void
-</panel_attributes>
-    <additional_attributes/>
+    <additional_attributes>136;24;136;688;24;688</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>672</x>
-      <y>56</y>
-      <w>208</w>
-      <h>760</h>
+      <x>504</x>
+      <y>48</y>
+      <w>216</w>
+      <h>40</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>24;24;24;744;192;744</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.custom.Text</type>
-    <coordinates>
-      <x>376</x>
-      <y>0</y>
-      <w>200</w>
-      <h>32</h>
-    </coordinates>
-    <panel_attributes>Manages and provides the mechanism
-for changing UI states</panel_attributes>
-    <additional_attributes/>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>200;24;24;24</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>672</x>
-      <y>56</y>
+      <x>832</x>
+      <y>152</y>
       <w>208</w>
-      <h>416</h>
+      <h>576</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>24;24;24;400;192;400</additional_attributes>
+    <additional_attributes>24;24;24;560;192;560</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>0</x>
-      <y>16</y>
+      <x>160</x>
+      <y>48</y>
       <w>368</w>
       <h>272</h>
     </coordinates>
-    <panel_attributes>ClientGameEngine
+    <panel_attributes>*ClientGameEngine*
 --
 -m_BesiegedServer: IBesiegedServer
 -m_ClientCallBack Client = new Client()
@@ -152,23 +72,73 @@ _+Get(): ClientGameEngine_
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>768</x>
-      <y>24</y>
-      <w>104</w>
+      <x>832</x>
+      <y>152</y>
+      <w>208</w>
+      <h>352</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>24;24;24;336;192;336</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>944</x>
+      <y>56</y>
+      <w>88</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>24;24;88;24</additional_attributes>
+    <additional_attributes>24;24;72;24</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>864</x>
-      <y>312</y>
+      <x>1024</x>
+      <y>656</y>
+      <w>352</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>*State.LoadingState*
+--
+_-m_Instance: LoadingState = null_
+-m_LoadingAnimation: LoadingAnimation
+--
+-LoadingState()
+_+Get(): IGameState_
++Initialize(): void
++Render(): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>392</x>
+      <y>792</y>
+      <w>352</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>*State.JoinGameState*
+--
+_-m_Instance: JoinGameState = null_
+--
+-JoinGameState()
+_+Get(): IGameState_
++Initialize(): void
++Render(): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1024</x>
+      <y>344</y>
       <w>352</w>
       <h>296</h>
     </coordinates>
-    <panel_attributes>State.MultiplayerMenuState
+    <panel_attributes>*State.MultiplayerMenuState*
 --
 -m_BackgroundBrush: ImageBrush
 -m_CapacityColumn: GridViewColumn
@@ -196,21 +166,66 @@ _+Get(): IGameState_
     <additional_attributes/>
   </element>
   <element>
-    <type>com.umlet.element.Relation</type>
+    <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>344</x>
-      <y>16</y>
-      <w>296</w>
-      <h>40</h>
+      <x>1024</x>
+      <y>56</y>
+      <w>352</w>
+      <h>264</h>
     </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>280;24;24;24</additional_attributes>
+    <panel_attributes>*State.MainMenuState*
+--
+-m_BackgroundBrush: ImageBrush
+_-m_Instance: MainMenuState = null_
+-m_LogoImage: Image
+-m_MenuXOffset: double
+-m_MenuYOffset: double
+-m_MouseDownSender: object
+-m_MultiPlayerImage: Image
+-m_OptionsImage: Image
+-m_SinglePlayerImage: Image
+-m_QuitImage: Image
+--
+-MainMenuState()
+-MenuOptionHover(sender: Object, e: MouseEventArgs): void
+-MenuOptionHoverLost(sender: Object, e: MouseEventArgs): void
+-MenuOptionMouseDown(sender: Object, e: MouseEventArgs): void
+-MenuOptionUp(sender: Object, e: MouseEventArgs): void
+_+Get(): IGameState_
++Initialize(): void
++Render(): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>704</x>
+      <y>56</y>
+      <w>264</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>*&lt;&lt;State.IGameState&gt;&gt;*
+--
+
+--
+Initialize(): void
+Render(): void
+_Get(): IGameState_
+--
+*Comments*
+-- Get() cannot be marked as static in the interface
+but any states that implement this should make it a 
+static method for the Singleton
+
+</panel_attributes>
+    <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.custom.Text</type>
     <coordinates>
-      <x>1680</x>
-      <y>120</y>
+      <x>1840</x>
+      <y>152</y>
       <w>80</w>
       <h>80</h>
     </coordinates>
@@ -221,41 +236,15 @@ anywhere.</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
-    <type>com.umlet.element.Class</type>
+    <type>com.umlet.element.custom.Text</type>
     <coordinates>
-      <x>624</x>
-      <y>24</y>
-      <w>168</w>
-      <h>56</h>
+      <x>536</x>
+      <y>32</y>
+      <w>200</w>
+      <h>32</h>
     </coordinates>
-    <panel_attributes>&lt;&lt;State.IGameState&gt;&gt;
---
-
---
-Initialize(): void
-Render(): void
-
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.Class</type>
-    <coordinates>
-      <x>864</x>
-      <y>624</y>
-      <w>352</w>
-      <h>112</h>
-    </coordinates>
-    <panel_attributes>State.LoadingState
---
-_-m_Instance: LoadingState = null_
--m_LoadingAnimation: LoadingAnimation
---
--LoadingState()
-_+Get(): IGameState_
-+Initialize(): void
-+Render(): void
-</panel_attributes>
+    <panel_attributes>Manages and provides the mechanism
+for changing UI states</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>
