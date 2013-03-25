@@ -151,6 +151,16 @@ namespace BesiegedClient.Engine.State
 
         public void Render()
         {
+            dimensions = new Dimensions() { Width = (int)GlobalResources.GameWindow.Width, Height = (int)GlobalResources.GameWindow.Height };
+            menuYOffset = dimensions.Height * 0.75;
+            menuXOffset = dimensions.Width * 0.65;
+            ClientGameEngine.Get().Canvas.Background = m_BackgroundBrush;
+
+            Canvas.SetLeft(m_GameNameImage, dimensions.Width * 0.10);
+            Canvas.SetBottom(m_GameNameImage, menuYOffset);
+            Canvas.SetZIndex(m_GameNameImage, 100);
+
+
             throw new NotImplementedException();
         }
     }
