@@ -44,7 +44,7 @@ namespace BesiegedClient.Engine.State
         public void Render()
         {
             Dimensions dimensions = ClientGameEngine.Get().ClientDimensions;
-            ClientGameEngine.Get().Canvas.Background = RenderingUtilities.BlackBrush;
+            ClientGameEngine.Get().Canvas.Background = Utilities.Rendering.BlackBrush;
             Canvas.SetLeft(m_LoadingAnimation, dimensions.Width / 2 - m_LoadingAnimation.Width / 2);
             Canvas.SetBottom(m_LoadingAnimation, dimensions.Height / 2 - m_LoadingAnimation.Height / 2);
             ClientGameEngine.Get().Canvas.Children.Add(m_LoadingAnimation);

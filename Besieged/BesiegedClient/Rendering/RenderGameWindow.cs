@@ -17,7 +17,7 @@ namespace BesiegedClient.Rendering
         {
             dimensions = new Dimensions() { Width = (int)canvas.Width, Height = (int)canvas.Height };
             canvas.Children.Clear();
-            canvas.Background = RenderingUtilities.SeaGreenBrush;
+            canvas.Background = BesiegedClient.Engine.Utilities.Rendering.SeaGreenBrush;
 
             double aspectRatio = Math.Round((double)dimensions.Width / (double)dimensions.Height, 2, MidpointRounding.AwayFromZero);
 

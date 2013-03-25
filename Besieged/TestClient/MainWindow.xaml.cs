@@ -71,7 +71,7 @@ namespace TestClient
                 {
                     CommandConnectionSuccessful commandConnectionSuccessful = command as CommandConnectionSuccessful;
                     m_ClientId = commandConnectionSuccessful.ClientId;
-                    m_IsServerConnectionEstablished = true;
+                    //m_IsServerConnectionEstablished = true;
                 }
                 else if (command is CommandChatMessage)
                 {

@@ -1,4 +1,5 @@
-﻿using BesiegedClient.Engine.State;
+﻿using BesiegedClient.Engine.Dialog;
+using BesiegedClient.Engine.State;
 using BesiegedClient.Rendering;
 using Framework.Commands;
 using Framework.ServiceContracts;
