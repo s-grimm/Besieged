@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -122,6 +118,7 @@ namespace BesiegedClient.Engine.State
                 m_OKImage.Source = bitmapImage;
                 m_OKImage.Width = bitmapImage.PixelWidth;
                 m_OKImage.Height = bitmapImage.PixelHeight;
+
                 //commented out due to handlers not existing - s_grimm 23/03/2013 - 22:07
                 //m_OKImage.MouseEnter += MenuOptionHover;
                 //m_OKImage.MouseLeave += MenuOptionHoverLost;
@@ -135,6 +132,7 @@ namespace BesiegedClient.Engine.State
                 m_CancelImage.Source = bitmapImage;
                 m_CancelImage.Width = bitmapImage.PixelWidth;
                 m_CancelImage.Height = bitmapImage.PixelHeight;
+
                 //commented out due to handlers not existing - s_grimm 23/03/2013 - 22:07
                 //m_CancelImage.MouseEnter += MenuOptionHover;
                 //m_CancelImage.MouseLeave += MenuOptionHoverLost;
@@ -146,20 +144,44 @@ namespace BesiegedClient.Engine.State
             {
                 throw ex;
             }
-            
         }
 
         public void Render()
         {
-            dimensions = new Dimensions() { Width = (int)GlobalResources.GameWindow.Width, Height = (int)GlobalResources.GameWindow.Height };
-            menuYOffset = dimensions.Height * 0.75;
-            menuXOffset = dimensions.Width * 0.65;
+            Dimensions dimensions = ClientGameEngine.Get().ClientDimensions;
+            m_MenuYOffset = dimensions.Height * 0.75;
+            m_MenuXOffset = dimensions.Width * 0.65;
             ClientGameEngine.Get().Canvas.Background = m_BackgroundBrush;
 
             Canvas.SetLeft(m_GameNameImage, dimensions.Width * 0.10);
-            Canvas.SetBottom(m_GameNameImage, menuYOffset);
+            Canvas.SetBottom(m_GameNameImage, m_MenuYOffset);
             Canvas.SetZIndex(m_GameNameImage, 100);
+            ClientGameEngine.Get().Canvas.Children.Add(m_GameNameImage);
 
+            m_GameNameBox.Width = dimensions.Width * 0.5;
+            m_GameNameBox.Height = m_GameNameImage.Height;
+            m_GameNameBox.Opacity = 0.75;
+            Canvas.SetLeft(m_GameNameBox, m_GameNameImage.Width * 1.10 + dimensions.Width * 0.10);
+            Canvas.SetBottom(m_GameNameBox, m_MenuYOffset);
+            Canvas.SetZIndex(m_GameNameBox, 100);
+            ClientGameEngine.Get().Canvas.Children.Add(m_GameNameBox);
+
+            m_MenuYOffset -= m_GameNameImage.Height * 1.5;
+
+            Canvas.SetLeft(m_PasswordImage, dimensions.Width * 0.10);
+            Canvas.SetBottom(m_PasswordImage, m_MenuYOffset);
+            Canvas.SetZIndex(m_PasswordImage, 100);
+            ClientGameEngine.Get().Canvas.Children.Add(m_PasswordImage);
+
+            m_PasswordBox.Width = dimensions.Width * 0.5;
+            m_PasswordBox.Height = m_PasswordImage.Height;
+            m_PasswordBox.Opacity = 0.75;
+            Canvas.SetLeft(m_PasswordBox, m_PasswordImage.Width * 1.10 + dimensions.Width * 0.10);
+            Canvas.SetBottom(m_PasswordBox, m_MenuYOffset);
+            Canvas.SetZIndex(m_PasswordBox, 100);
+            ClientGameEngine.Get().Canvas.Children.Add(m_PasswordBox);
+
+            m_MenuYOffset -= m_PasswordImage.Height * 1.5;
 
             throw new NotImplementedException();
         }
