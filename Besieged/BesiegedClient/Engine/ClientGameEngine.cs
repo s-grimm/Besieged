@@ -4,6 +4,7 @@ using BesiegedClient.Rendering;
 using Framework.Commands;
 using Framework.ServiceContracts;
 using Framework.Utilities;
+using Framework.Utilities.Xml;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -149,18 +150,20 @@ namespace BesiegedClient.Engine
             }, CancellationToken.None, TaskCreationOptions.None, GlobalResources.m_TaskScheduler);
         }
 
-        public void SendMessageToServer(string command)
+        public void SendMessageToServer(Command command)
         {
             //Task.Factory.StartNew(() =>
             //{
-                try
-                {
-                    m_BesiegedServer.SendCommand(command);
-                }
-                catch (Exception)
-                {
-                    IsServerConnected.Value = false;
-                }
+            command.ClientId = m_ClientId;
+            string serializedCommand = command.ToXml();
+            try
+            {
+                m_BesiegedServer.SendCommand(serializedCommand);
+            }
+            catch (Exception)
+            {
+                IsServerConnected.Value = false;
+            }
             //});
         }
     }

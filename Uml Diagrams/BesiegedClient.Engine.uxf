@@ -4,8 +4,8 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>864</x>
-      <y>24</y>
+      <x>912</x>
+      <y>16</y>
       <w>352</w>
       <h>264</h>
     </coordinates>
@@ -36,26 +36,31 @@ _+Get(): IGameState_
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>232</x>
-      <y>760</y>
-      <w>352</w>
-      <h>112</h>
+      <x>48</x>
+      <y>312</y>
+      <w>368</w>
+      <h>152</h>
     </coordinates>
-    <panel_attributes>*State.JoinGameState*
+    <panel_attributes>*_Dialog.RenderMessageDialog_*
 --
-_-m_Instance: JoinGameState = null_
+_-m_DialogComponents: List&lt;UIElement&gt;_
+_-m_Dimensions: Dimensions_
+_-m_XImage: BitmapImage_
+_-m_ClickedXImage: BitmapImage_
 --
--JoinGameState()
-_+Get(): IGameState_
-+Initialize(): void
-+Render(): void
+_+RenderMessage(message: string): void_
+_+RenderInput(display: string, textChangedHandler: EventHandler): void_
+_+ClearDialog(): void_
+--
+*Comments*
+-- Custom message dialogs for the game
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.custom.Text</type>
     <coordinates>
-      <x>376</x>
+      <x>416</x>
       <y>0</y>
       <w>200</w>
       <h>32</h>
@@ -67,8 +72,8 @@ for changing UI states</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>344</x>
-      <y>16</y>
+      <x>392</x>
+      <y>8</y>
       <w>216</w>
       <h>40</h>
     </coordinates>
@@ -78,8 +83,8 @@ for changing UI states</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>672</x>
-      <y>120</y>
+      <x>720</x>
+      <y>112</y>
       <w>208</w>
       <h>352</h>
     </coordinates>
@@ -89,8 +94,8 @@ for changing UI states</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>544</x>
-      <y>24</y>
+      <x>592</x>
+      <y>16</y>
       <w>264</w>
       <h>120</h>
     </coordinates>
@@ -113,7 +118,7 @@ static method for the Singleton
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>0</x>
+      <x>48</x>
       <y>16</y>
       <w>368</w>
       <h>272</h>
@@ -139,7 +144,7 @@ _-m_Instance: ClientGameEngine = null_
 +ChangeState(gameState: IGameState): void
 +ChangeState(gameState: IGameState, postRender: Action): void
 _+Get(): ClientGameEngine_
-+SendMessageToServer(command: string): void
++SendMessageToServer(command: Command): void
 +SetGameCanvas(gameCanvas: Canvas): void 
 
 </panel_attributes>
@@ -148,8 +153,8 @@ _+Get(): ClientGameEngine_
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>864</x>
-      <y>312</y>
+      <x>912</x>
+      <y>304</y>
       <w>352</w>
       <h>296</h>
     </coordinates>
@@ -183,8 +188,8 @@ _+Get(): IGameState_
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>864</x>
-      <y>624</y>
+      <x>912</x>
+      <y>616</y>
       <w>352</w>
       <h>112</h>
     </coordinates>
@@ -203,10 +208,10 @@ _+Get(): IGameState_
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>864</x>
-      <y>760</y>
+      <x>912</x>
+      <y>752</y>
       <w>352</w>
-      <h>304</h>
+      <h>288</h>
     </coordinates>
     <panel_attributes>*State.NewGameState*
 --
@@ -239,19 +244,8 @@ _+Get(): IGameState_
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>560</x>
-      <y>120</y>
-      <w>152</w>
-      <h>704</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>136;24;136;688;24;688</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>784</x>
-      <y>24</y>
+      <x>832</x>
+      <y>16</y>
       <w>88</w>
       <h>40</h>
     </coordinates>
@@ -261,8 +255,8 @@ _+Get(): IGameState_
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>672</x>
-      <y>120</y>
+      <x>720</x>
+      <y>112</y>
       <w>208</w>
       <h>824</h>
     </coordinates>
@@ -272,8 +266,8 @@ _+Get(): IGameState_
   <element>
     <type>com.umlet.element.custom.Text</type>
     <coordinates>
-      <x>1680</x>
-      <y>120</y>
+      <x>1728</x>
+      <y>112</y>
       <w>80</w>
       <h>80</h>
     </coordinates>
@@ -286,8 +280,8 @@ anywhere.</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>672</x>
-      <y>120</y>
+      <x>720</x>
+      <y>112</y>
       <w>208</w>
       <h>576</h>
     </coordinates>

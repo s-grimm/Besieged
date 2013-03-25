@@ -105,7 +105,7 @@ namespace BesiegedClient.Engine.State
                     Task.Factory.StartNew(() => 
                     {
                         CommandConnect commandConnect = new CommandConnect(ClientSettings.Default.Alias);
-                        ClientGameEngine.Get().SendMessageToServer(commandConnect.ToXml());
+                        ClientGameEngine.Get().SendMessageToServer(commandConnect);
                     });
                 }
                 else

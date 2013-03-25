@@ -1,4 +1,5 @@
-﻿using Framework.Commands;
+﻿using BesiegedClient.Engine.Dialog;
+using Framework.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -109,10 +110,31 @@ namespace BesiegedClient.Engine.State
                 {
                     ClientGameEngine.Get().ChangeState(NewGameState.Get());
                 }
-            //    else if (selected == "Cancel")
-            //    {
-            //        RenderGameLobby();
-            //    }
+                else if (selected == "JoinGame")
+                {
+                    if (m_SelectedGame == null)
+                    {
+                        RenderMessageDialog.RenderMessage("You need to select a game to join!");
+                    }
+                    else
+                    {
+                        if (m_SelectedGame.HasPassword)
+                        {
+                            //RenderMessageDialog.RenderInput
+                        }
+                        else
+                        {
+                            CommandJoinGame commandJoinGame = new CommandJoinGame(m_SelectedGame.GameId, string.Empty);
+                            ClientGameEngine.Get().SendMessageToServer(commandJoinGame);
+                            //commandJoinGame.ClientId = ClientGameEngine.Get().
+                            //ClientGameEngine.Get().SendMessageToServer(commandJoinGame.ToXml());
+                        }
+                    }
+                }
+                else if (selected == "MainMenu")
+                {
+                    ClientGameEngine.Get().ChangeState(MainMenuState.Get());
+                }
             //    else if (selected == "OK")
             //    {
             //        if (m_GameName.Trim() == string.Empty)
