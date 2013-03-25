@@ -79,9 +79,7 @@
     <Compile Include="GlobalResources.cs" />
     <Compile Include="Rendering\RenderGameWindow.cs" />
     <Compile Include="Engine\Utilities\Rendering.cs" />
-    <Compile Include="Rendering\RenderMenu.cs" />
     <Compile Include="Engine\Dialog\RenderMessageDialog.cs" />
-    <Compile Include="Rendering\RenderMultiplayerMenu.cs" />
     <Compile Include="Rendering\RenderPreGame.cs" />
     <Page Include="Control\Block.xaml">
       <Generator>MSBuild:Compile</Generator>
