@@ -120,14 +120,19 @@ namespace BesiegedClient.Engine.State
                     {
                         if (m_SelectedGame.HasPassword)
                         {
-                            //RenderMessageDialog.RenderInput
+                            RenderMessageDialog.RenderInput("Please enter the password: ", (se, ev) => 
+                            {
+                                if (se != null)
+                                {
+                                    CommandJoinGame commandJoinGame = new CommandJoinGame(m_SelectedGame.GameId, se as string);
+                                    ClientGameEngine.Get().SendMessageToServer(commandJoinGame);
+                                }
+                            });
                         }
                         else
                         {
                             CommandJoinGame commandJoinGame = new CommandJoinGame(m_SelectedGame.GameId, string.Empty);
                             ClientGameEngine.Get().SendMessageToServer(commandJoinGame);
-                            //commandJoinGame.ClientId = ClientGameEngine.Get().
-                            //ClientGameEngine.Get().SendMessageToServer(commandJoinGame.ToXml());
                         }
                     }
                 }
