@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Framework.Commands;
+using System;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Framework.Utilities.Xml;
 
 namespace BesiegedClient.Engine.State
 {
@@ -15,6 +17,7 @@ namespace BesiegedClient.Engine.State
 
         private double m_MenuYOffset;
         private double m_MenuXOffset;
+        private object m_MouseDownSender;
 
         private Image m_GameNameImage;
         private Image m_PasswordImage;
@@ -45,6 +48,85 @@ namespace BesiegedClient.Engine.State
                 throw ex;
             }
         }
+
+        #region Handlers
+
+        public void MenuOptionHover(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            try
+            {
+                Image img = sender as Image;
+                Canvas.SetLeft(img, m_MenuXOffset + 50);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        public void MenuOptionHoverLost(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            try
+            {
+                Image img = sender as Image;
+                Canvas.SetLeft(img, m_MenuXOffset);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        public void MenuOptionMouseDown(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            try
+            {
+                m_MouseDownSender = sender;
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        public void MenuOptionMouseUp(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            try
+            {
+                if (m_MouseDownSender != sender) return;
+                Image img = sender as Image;
+                string selected = img.Name;
+              
+                    if (selected == "Cancel")
+                    {
+                        ClientGameEngine.Get().ChangeState(State.MultiplayerMenuState.Get());
+                    }
+                    else if (selected == "OK")
+                    {
+                        if (m_GameName.Trim() == string.Empty)
+                        {
+                            Dialog.RenderMessageDialog.RenderMessage("Game name cannot be empty");
+                        }
+                        else
+                        {
+                            if (m_Password == string.Empty || m_Password == "Optional")
+                            {
+                                CommandCreateGame commandCreateGame = new CommandCreateGame(m_GameName, 4);
+                                commandCreateGame.ClientId = GlobalResources.ClientId;
+                                GlobalResources.SendMessageToServer(commandCreateGame.ToXml());
+                            }
+                            else
+                            {
+                                CommandCreateGame commandCreateGame = new CommandCreateGame(m_GameName, 4, m_Password);
+                                commandCreateGame.ClientId = GlobalResources.ClientId;
+                                GlobalResources.SendMessageToServer(commandCreateGame.ToXml());
+                            }
+                        }
+                    }
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        #endregion Handlers
 
         public void Initialize()
         {
@@ -119,11 +201,10 @@ namespace BesiegedClient.Engine.State
                 m_OKImage.Width = bitmapImage.PixelWidth;
                 m_OKImage.Height = bitmapImage.PixelHeight;
 
-                //commented out due to handlers not existing - s_grimm 23/03/2013 - 22:07
-                //m_OKImage.MouseEnter += MenuOptionHover;
-                //m_OKImage.MouseLeave += MenuOptionHoverLost;
-                //m_OKImage.MouseDown += MenuOptionMouseDown;
-                //m_OKImage.MouseUp += MenuOptionMouseUp;
+                m_OKImage.MouseEnter += MenuOptionHover;
+                m_OKImage.MouseLeave += MenuOptionHoverLost;
+                m_OKImage.MouseDown += MenuOptionMouseDown;
+                m_OKImage.MouseUp += MenuOptionMouseUp;
                 m_OKImage.Name = "OK";
 
                 //cancel button
@@ -133,11 +214,10 @@ namespace BesiegedClient.Engine.State
                 m_CancelImage.Width = bitmapImage.PixelWidth;
                 m_CancelImage.Height = bitmapImage.PixelHeight;
 
-                //commented out due to handlers not existing - s_grimm 23/03/2013 - 22:07
-                //m_CancelImage.MouseEnter += MenuOptionHover;
-                //m_CancelImage.MouseLeave += MenuOptionHoverLost;
-                //m_CancelImage.MouseDown += MenuOptionMouseDown;
-                //m_CancelImage.MouseUp += MenuOptionMouseUp;
+                m_CancelImage.MouseEnter += MenuOptionHover;
+                m_CancelImage.MouseLeave += MenuOptionHoverLost;
+                m_CancelImage.MouseDown += MenuOptionMouseDown;
+                m_CancelImage.MouseUp += MenuOptionMouseUp;
                 m_CancelImage.Name = "Cancel";
             }
             catch (Exception ex)
