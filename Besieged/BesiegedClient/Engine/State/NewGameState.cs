@@ -109,14 +109,12 @@ namespace BesiegedClient.Engine.State
                             if (m_Password == string.Empty || m_Password == "Optional")
                             {
                                 CommandCreateGame commandCreateGame = new CommandCreateGame(m_GameName, 4);
-                                commandCreateGame.ClientId = GlobalResources.ClientId;
-                                GlobalResources.SendMessageToServer(commandCreateGame.ToXml());
+                                ClientGameEngine.Get().SendMessageToServer(commandCreateGame);
                             }
                             else
                             {
                                 CommandCreateGame commandCreateGame = new CommandCreateGame(m_GameName, 4, m_Password);
-                                commandCreateGame.ClientId = GlobalResources.ClientId;
-                                GlobalResources.SendMessageToServer(commandCreateGame.ToXml());
+                                ClientGameEngine.Get().SendMessageToServer(commandCreateGame);
                             }
                         }
                     }
