@@ -45,7 +45,7 @@ namespace BesiegedClient.Engine
 
             CurrentGameCollection = new ObservableCollection<CommandNotifyGame>();
             
-            IsServerConnected = new MonitoredValue<bool>(true);
+            IsServerConnected = new MonitoredValue<bool>(false);
             IsServerConnected.ValueChanged += (from, to) =>
             {
                 if (!to)

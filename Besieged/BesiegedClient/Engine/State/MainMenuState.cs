@@ -100,13 +100,19 @@ namespace BesiegedClient.Engine.State
                 //}
                 else if (selected == "MultiPlayer")
                 {
-                    ClientGameEngine.Get().ChangeState(LoadingState.Get());
-                    
-                    Task.Factory.StartNew(() => 
+                    if (ClientGameEngine.Get().IsServerConnected.Value)
                     {
-                        CommandConnect commandConnect = new CommandConnect(ClientSettings.Default.Alias);
-                        ClientGameEngine.Get().SendMessageToServer(commandConnect);
-                    });
+                        ClientGameEngine.Get().ChangeState(MultiplayerMenuState.Get());
+                    }
+                    else
+                    {
+                        ClientGameEngine.Get().ChangeState(LoadingState.Get());
+                        Task.Factory.StartNew(() =>
+                        {
+                            CommandConnect commandConnect = new CommandConnect(ClientSettings.Default.Alias);
+                            ClientGameEngine.Get().SendMessageToServer(commandConnect);
+                        });
+                    }
                 }
                 else
                 {
