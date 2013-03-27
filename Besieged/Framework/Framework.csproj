@@ -94,6 +94,7 @@
     <Compile Include="Sprite\SpriteFactory.cs" />
     <Compile Include="Utilities\BesiegedException.cs" />
     <Compile Include="Utilities\FixedSizeList.cs" />
+    <Compile Include="Utilities\MonitoredValue.cs" />
     <Compile Include="Utilities\Xml\XmlCore.cs" />
     <Compile Include="Utilities\Xml\XmlExtensions.cs" />
   </ItemGroup>

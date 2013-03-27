@@ -55,6 +55,7 @@ namespace BesiegedServer
                         {
                             m_ServerCallback = OperationContext.Current.GetCallbackChannel<IClient>();
                             CommandServerStarted commandServerStarted = new CommandServerStarted();
+                            string test = commandServerStarted.ToXml();
                             m_ServerCallback.Notify(commandServerStarted.ToXml());
                             m_IsServerInitialized = true;
                             StartProcessingMessages();
@@ -77,11 +78,12 @@ namespace BesiegedServer
                                 if (!game.Value.IsGameInstanceFull)
                                 {
                                     string capacity = string.Format("{0}/{1} players", game.Value.ConnectedClients.Count, game.Value.MaxPlayers);
-                                    CommandNotifyGame commandNotifyGame = new CommandNotifyGame(game.Value.GameId, game.Value.Name, capacity, false);
+                                    CommandNotifyGame commandNotifyGame = new CommandNotifyGame(game.Value.GameId, game.Value.Name, capacity, false, game.Value.Password != string.Empty ? true: false);
                                     commandAggregate.Commands.Add(commandNotifyGame);
                                 }
                             }
                         }
+                        string test = commandAggregate.ToXml();
                         clientCallBack.Notify(commandAggregate.ToXml());
 
                         ConsoleLogger.Push(string.Format("Client Id {0} has joined the server", newClientId));
@@ -164,7 +166,7 @@ namespace BesiegedServer
                     NotifyClient(commandCreateGame.ClientId, commandJoinGameSuccessful.ToXml());
 
                     string capacity = string.Format("{0}/{1} players", gameInstance.ConnectedClients.Count, gameInstance.MaxPlayers);   // notify all connect clients of the updated game instance
-                    CommandNotifyGame commandNotifyGame = new CommandNotifyGame(gameInstance.GameId, gameInstance.Name, capacity, gameInstance.IsGameInstanceFull);
+                    CommandNotifyGame commandNotifyGame = new CommandNotifyGame(gameInstance.GameId, gameInstance.Name, capacity, gameInstance.IsGameInstanceFull, gameInstance.Password != string.Empty ? true:false);
                     ConsoleLogger.Push(string.Format("Client Id {0} has created a new Game Id {1}", commandCreateGame.ClientId, newGameId));
                     NotifyAllConnectedClients(commandNotifyGame.ToXml()); 
                 }
@@ -185,11 +187,25 @@ namespace BesiegedServer
                 else if (command is CommandConnectionTerminated)
                 {
                     CommandConnectionTerminated commandConnectionTerminated = command as CommandConnectionTerminated;
-                    BesiegedGameInstance gameInstance = m_Games[commandConnectionTerminated.GameId];
+
                     IClient client = m_ConnectedClients[commandConnectionTerminated.ClientId];
                     ConnectedClient connectedClient = new ConnectedClient("Alias", commandConnectionTerminated.ClientId, client);
-                    gameInstance.ConnectedClients.TryTake(out connectedClient);
-                    m_ConnectedClients.TryRemove(commandConnectionTerminated.ClientId, out client);
+
+                    if (commandConnectionTerminated.GameId != null)
+                    {
+                        BesiegedGameInstance gameInstance = m_Games[commandConnectionTerminated.GameId];
+                        var gameRemoved = gameInstance.ConnectedClients.TryTake(out connectedClient);
+                        if (gameRemoved)
+                        {
+                            ConsoleLogger.Push(string.Format("Client Id {0} has left Game Id {1}", connectedClient.UniqueIdentifier, gameInstance.GameId));
+                        }
+                    }
+                    
+                    var removed = m_ConnectedClients.TryRemove(commandConnectionTerminated.ClientId, out client);
+                    if (removed)
+                    {
+                        ConsoleLogger.Push(string.Format("Client Id {0} has disconnected", commandConnectionTerminated.ClientId));
+                    }
                 }
             }
             catch (Exception ex)

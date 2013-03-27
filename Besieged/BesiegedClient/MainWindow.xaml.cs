@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using BesiegedClient.Rendering;
 using System.Collections.ObjectModel;
+using BesiegedClient.Engine;
+using BesiegedClient.Engine.State;
 
 namespace BesiegedClient
 {
@@ -27,111 +29,107 @@ namespace BesiegedClient
     /// </summary>
     public partial class MainWindow : Window
     {
-        private SolidColorBrush _blackBrush = new SolidColorBrush(Colors.Black);
-        private SolidColorBrush _redBrush = new SolidColorBrush(Colors.Red);
-        private SolidColorBrush _greenBrush = new SolidColorBrush(Colors.Green);
-        private SolidColorBrush _blueBrush = new SolidColorBrush(Colors.Blue);
-        private List<Rectangle> _rectangles = new List<Rectangle>();
-
-        private app_code.Client m_Client = new app_code.Client();
-        private bool m_IsServerConnectionEstablished = false;
-        private TaskScheduler m_TaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
-
+        //private app_code.Client m_Client = new app_code.Client();
 
         public MainWindow()
         {
             InitializeComponent();
-            GlobalResources.GameWindow = cvsGameWindow;
-            
-            EndpointAddress endpointAddress = new EndpointAddress("net.tcp://192.168.1.117:31337/BesiegedServer/BesiegedMessage");
-            DuplexChannelFactory<IBesiegedServer> duplexChannelFactory = new DuplexChannelFactory<IBesiegedServer>(m_Client, new NetTcpBinding(SecurityMode.None), endpointAddress);
-            GlobalResources.BesiegedServer = duplexChannelFactory.CreateChannel();
-
-            // Subscribe in a separate thread to preserve the UI thread
-            Task.Factory.StartNew(() =>
-            {
-                CommandConnect commandConnect = new CommandConnect(ClientSettings.Default.Alias);
-                GlobalResources.BesiegedServer.SendCommand(commandConnect.ToXml());
-            });
-
-            Task.Factory.StartNew(() =>
-            {
-                while (true)
-                {
-                    Command message = m_Client.MessageQueue.Take();
-                    ProcessMessage(message);
-                }
-            }, TaskCreationOptions.LongRunning);
-
-            cvsGameWindow.Width = ClientWindowOptions.WindowDimensions.Width;
-            cvsGameWindow.Height = ClientWindowOptions.WindowDimensions.Height;
+            // kickstart the engine singleton and pass it the game canvas
+            cvsGameWindow.Width = ClientSettings.Default.Width;
+            cvsGameWindow.Height = ClientSettings.Default.Height;
             if (!ClientSettings.Default.Fullscreen)
             {
                 Application.Current.MainWindow.Width = ClientSettings.Default.Width + 15;
                 Application.Current.MainWindow.Height = ClientSettings.Default.Height + 38;
             }
-            RenderMenu.RenderMainMenu();
-        }
+            ClientGameEngine.Get().SetGameCanvas(cvsGameWindow);
+            ClientGameEngine.Get().ChangeState(MainMenuState.Get());
+            //register close handlers
 
-        public void ProcessMessage(Command command)
-        {
-            if (command is CommandConnectionSuccessful)
-            {
-                CommandConnectionSuccessful commandConnectionSuccessful = command as CommandConnectionSuccessful;
-                GlobalResources.ClientId = commandConnectionSuccessful.ClientId;
-                m_IsServerConnectionEstablished = true;
-                //Task.Factory.StartNew(() =>
-                //{
-                //    MessageBox.Show("Connection successful!");
-                //}, CancellationToken.None, TaskCreationOptions.None, m_TaskScheduler);
-            }
 
-            else if (command is CommandChatMessage)
-            {
-                Task.Factory.StartNew(() =>
-                {
-                    CommandChatMessage chatMessageCommand = command as CommandChatMessage;
-                    GlobalResources.GameSpecificChatMessages.Add(chatMessageCommand.Contents);
-                }, CancellationToken.None, TaskCreationOptions.None, m_TaskScheduler);
-            }
 
-            else if (command is CommandNotifyGame)
-            {
-                Task.Factory.StartNew(() =>
-                {
-                    CommandNotifyGame commandNotifyGame = command as CommandNotifyGame;
-                    CommandNotifyGame game = GlobalResources.GameLobbyCollection.Where(x => x.GameId == commandNotifyGame.GameId).FirstOrDefault();
-                    if (game != null)
-                    {
-                        GlobalResources.GameLobbyCollection.Remove(game);
-                    }
-                    GlobalResources.GameLobbyCollection.Add(commandNotifyGame);
-                }, CancellationToken.None, TaskCreationOptions.None, m_TaskScheduler);
-            }
-            
-            else if (command is CommandJoinGameSuccessful)
-            {
-                Task.Factory.StartNew(() =>
-                {
-                    GlobalResources.GameSpecificChatMessages = new ObservableCollection<string>();
-                    GlobalResources.GameId = command.GameId;
-                    RenderPreGame.RenderPreGameLobby();
-                }, CancellationToken.None, TaskCreationOptions.None, m_TaskScheduler);
-            }
+            //    this.Closing += (s, e) =>
+            //        {
+            //            if (GlobalResources.m_IsServerConnectionEstablished)
+            //            {
+            //                try
+            //                {
+            //                    CommandConnectionTerminated cmdConTerm = new CommandConnectionTerminated(GlobalResources.ClientId, GlobalResources.GameId);
+            //                    GlobalResources.BesiegedServer.Sendg Command(cmdConTerm.ToXml());
+            //                }
+            //                catch (Exception) { }
+            //            }
+            //        };
 
-            else if (command is CommandServerError)
-            {
-                CommandServerError commandServerError = command as CommandServerError;
-                Task.Factory.StartNew(() =>
-                {
-                    MessageBox.Show(commandServerError.ErrorMessage);
-                }, CancellationToken.None, TaskCreationOptions.None, m_TaskScheduler);
-            }
-        }
+            //    
 
-        private void Window_SizeChanged_1(object sender, SizeChangedEventArgs e)
-        {
-            Application.Current.MainWindow.Title = Application.Current.MainWindow.Width.ToString() + " : " + Application.Current.MainWindow.Height.ToString();
+            //    cvsGameWindow.Width = ClientSettings.Default.Width;
+            //    cvsGameWindow.Height = ClientSettings.Default.Height;
+            //    if (!ClientSettings.Default.Fullscreen)
+            //    {
+            //        Application.Current.MainWindow.Width = ClientSettings.Default.Width + 15;
+            //        Application.Current.MainWindow.Height = ClientSettings.Default.Height + 38;
+            //    }
+            //    RenderMenu.RenderMainMenu();
+            //}
+
+            //public void ProcessMessage(Command command)
+            //{
+            //    if (command is CommandConnectionSuccessful)
+            //    {
+            //        CommandConnectionSuccessful commandConnectionSuccessful = command as CommandConnectionSuccessful;
+            //        GlobalResources.ClientId = commandConnectionSuccessful.ClientId;
+            //        GlobalResources.m_IsServerConnectionEstablished = true;
+            //        GlobalResources.currentMenuState = GlobalResources.MenuState.Menu;
+            //    }
+
+            //    else if (command is CommandChatMessage)
+            //    {
+            //        Task.Factory.StartNew(() =>
+            //        {
+            //            CommandChatMessage chatMessageCommand = command as CommandChatMessage;
+            //            GlobalResources.GameSpecificChatMessages.Add(chatMessageCommand.Contents);
+            //        }, CancellationToken.None, TaskCreationOptions.None, GlobalResources.m_TaskScheduler);
+            //    }
+
+            //    else if (command is CommandNotifyGame)
+            //    {
+            //        Task.Factory.StartNew(() =>
+            //        {
+            //            CommandNotifyGame commandNotifyGame = command as CommandNotifyGame;
+            //            CommandNotifyGame game = GlobalResources.GameLobbyCollection.Where(x => x.GameId == commandNotifyGame.GameId).FirstOrDefault();
+            //            if (game != null)
+            //            {
+            //                GlobalResources.GameLobbyCollection.Remove(game);
+            //            }
+            //            GlobalResources.GameLobbyCollection.Add(commandNotifyGame);
+            //        }, CancellationToken.None, TaskCreationOptions.None, GlobalResources.m_TaskScheduler);
+            //    }
+
+            //    else if (command is CommandJoinGameSuccessful)
+            //    {
+            //        Task.Factory.StartNew(() =>
+            //        {
+            //            GlobalResources.GameSpecificChatMessages = new ObservableCollection<string>();
+            //            GlobalResources.GameId = command.GameId;
+            //            RenderPreGame.RenderPreGameLobby();
+            //        }, CancellationToken.None, TaskCreationOptions.None, GlobalResources.m_TaskScheduler);
+            //    }
+
+            //    else if (command is CommandServerError)
+            //    {
+            //        CommandServerError commandServerError = command as CommandServerError;
+            //        Task.Factory.StartNew(() =>
+            //        {
+            //            RenderMessageDialog.RenderMessage(commandServerError.ErrorMessage);
+            //        }, CancellationToken.None, TaskCreationOptions.None, GlobalResources.m_TaskScheduler);
+            //    }
+            //}
+
+            //private void Window_SizeChanged_1(object sender, SizeChangedEventArgs e)
+            //{
+            //    Application.Current.MainWindow.Title = Application.Current.MainWindow.Width.ToString() + " : " + Application.Current.MainWindow.Height.ToString();
+            //}
         }
     }
 }

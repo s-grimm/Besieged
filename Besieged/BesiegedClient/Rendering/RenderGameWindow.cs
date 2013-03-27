@@ -17,7 +17,7 @@ namespace BesiegedClient.Rendering
         {
             dimensions = new Dimensions() { Width = (int)canvas.Width, Height = (int)canvas.Height };
             canvas.Children.Clear();
-            canvas.Background = RenderingUtilities.SeaGreenBrush;
+            canvas.Background = BesiegedClient.Engine.Utilities.Rendering.SeaGreenBrush;
 
             double aspectRatio = Math.Round((double)dimensions.Width / (double)dimensions.Height, 2, MidpointRounding.AwayFromZero);
 
@@ -46,7 +46,7 @@ namespace BesiegedClient.Rendering
                 Canvas.SetZIndex(img, 999);
                 canvas.Children.Add(img);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Error Loading UI Component : BottomLeftCorner.png", "UI Load Failure", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -62,7 +62,7 @@ namespace BesiegedClient.Rendering
                 Canvas.SetZIndex(img, 999);
                 canvas.Children.Add(img);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Error Loading UI Component : BottomRightCorner.png", "UI Load Failure", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -78,7 +78,7 @@ namespace BesiegedClient.Rendering
                 Canvas.SetZIndex(img, 999);
                 canvas.Children.Add(img);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Error Loading UI Component : TopBar.png", "UI Load Failure", MessageBoxButton.OK, MessageBoxImage.Error);
             }

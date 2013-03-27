@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="12.0">
+  <zoom_level>8</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>816</x>
+      <y>152</y>
+      <w>256</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>*&lt;&lt;Framework.ServiceContracts.IClient&gt;&gt;*
+--
+--
+Notify(message: string): void
+--
+*Comments*
+-- Provides a mechanism for the server to notify 
+the client with new messages
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Text</type>
+    <coordinates>
+      <x>968</x>
+      <y>240</y>
+      <w>208</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>ConnectedClients // *CHANGING THIS*</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>824</x>
+      <y>280</y>
+      <w>456</w>
+      <h>264</h>
+    </coordinates>
+    <panel_attributes>*BesiegedGameInstance*
+--
+-m_Colors: List&lt;Color&gt; = new List&lt;Color&gt;() // *CHANGING THIS*
++ConnectedClients: BlockingCollection&lt;ConnectedClient&gt;
++MessageQueue: BlockingCollection&lt;Command&gt;
++GameId: string
++Name: string
++MaxPlayers: int
++GameCreatorClientId: string
++Password: string
++GameState: GameState
+--
++BesiegedGameInstance()
++BesiegedGameInstance(gameId: string, name: string, maxPlayers: int)
++BesiegedGameInstance(gameId: string, name: string, maxPlayers: int, password: string)
++StartProcessingMessages(): void
++ProcessMessage(command: Command): void
+--
+*Comments*
+-- Represents an individual and self contained instance of the running game
+-- Can communicate with the unique clients connected to the game</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>152</x>
+      <y>16</y>
+      <w>392</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>*&lt;&lt;Framework.ServiceContracts.IBesiegedServer&gt;&gt;*
+--
+
+--
+SendCommand(serializedCommand: string): void
+--
+*Comments*
+-- Service contract interface for the Duplex Channel client/server connection</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>16</x>
+      <y>144</y>
+      <w>664</w>
+      <h>248</h>
+    </coordinates>
+    <panel_attributes>*BesiegedServer*
+{[ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]}
+--
+-m_MessageQueue: BlockingCollection&lt;Command&gt; = new BlockingCollection&lt;Command&gt;()
+-m_ConnectedClients: ConcurrentDictionary&lt;string, IClient&gt; = new ConcurrentDictionary&lt;string, IClient&gt;()
+-m_Games: ConcurrentDictionary&lt;string, BesiegedGameInstance&gt; = new ConcurrentDictionary&lt;string, BesiegedGameInstance&gt;()
+-m_IsServerInitialized: bool = false
+-m_ServerCallback: IClient
+--
++BesiegedServer()
+-StartProcessingMessages(): void
++NotifyAllConnectedClients(command: string): void
++NotifyClient(clientId: string, command: string): void
++ProcessMessage(command: Command): void
++SendCommand(serializedCommand: string): void
+
+--
+*Comments*
+-- Used as the central access point for any clients to communicate message to and from the server
+-- Employs a message queue to handle messages in a timely manner and distribute them to the appropriate clients and games</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>656</x>
+      <y>184</y>
+      <w>176</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>24;24;160;24</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>656</x>
+      <y>288</y>
+      <w>184</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>24;24;168;24</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Text</type>
+    <coordinates>
+      <x>720</x>
+      <y>288</y>
+      <w>64</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>m_Games</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>944</x>
+      <y>208</y>
+      <w>40</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>24;72;24;24</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Text</type>
+    <coordinates>
+      <x>696</x>
+      <y>176</y>
+      <w>160</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>m_ConnectedClients
+m_ServerCallback</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>336</x>
+      <y>72</y>
+      <w>40</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>24;24;24;72</additional_attributes>
+  </element>
+</diagram>

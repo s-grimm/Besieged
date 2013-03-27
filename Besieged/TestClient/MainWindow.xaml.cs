@@ -30,7 +30,6 @@ namespace TestClient
         private Client m_Client = new Client();
         private string m_ClientId;
         private string m_GameId;
-        private bool m_IsServerConnectionEstablished = false;
         private TaskScheduler m_TaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
         private IBesiegedServer m_BesiegedServer;
 
@@ -72,7 +71,7 @@ namespace TestClient
                 {
                     CommandConnectionSuccessful commandConnectionSuccessful = command as CommandConnectionSuccessful;
                     m_ClientId = commandConnectionSuccessful.ClientId;
-                    m_IsServerConnectionEstablished = true;
+                    //m_IsServerConnectionEstablished = true;
                 }
                 else if (command is CommandChatMessage)
                 {

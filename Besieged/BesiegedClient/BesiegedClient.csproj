@@ -58,19 +58,37 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Engine\ClientGameEngine.cs" />
     <Compile Include="ClientSettings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>ClientSettings.settings</DependentUpon>
     </Compile>
     <Compile Include="ClientWindowOptions.cs" />
+    <Compile Include="Control\Block.xaml.cs">
+      <DependentUpon>Block.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\LoadingAnimation.xaml.cs">
+      <DependentUpon>LoadingAnimation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Engine\State\IGameState.cs" />
+    <Compile Include="Engine\State\LoadingState.cs" />
+    <Compile Include="Engine\State\MainMenuState.cs" />
+    <Compile Include="Engine\State\MultiplayerMenuState.cs" />
+    <Compile Include="Engine\State\NewGameState.cs" />
     <Compile Include="GlobalResources.cs" />
     <Compile Include="Rendering\RenderGameWindow.cs" />
-    <Compile Include="Rendering\RenderingUtilities.cs" />
-    <Compile Include="Rendering\RenderMenu.cs" />
-    <Compile Include="Rendering\RenderMessageDialog.cs" />
-    <Compile Include="Rendering\RenderMultiplayerMenu.cs" />
+    <Compile Include="Engine\Utilities\Rendering.cs" />
+    <Compile Include="Engine\Dialog\RenderMessageDialog.cs" />
     <Compile Include="Rendering\RenderPreGame.cs" />
+    <Page Include="Control\Block.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Control\LoadingAnimation.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -79,7 +97,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="app_code\Client.cs" />
+    <Compile Include="Client.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -122,7 +140,9 @@
     <None Include="resources\UI\PSDLayout\MainMenu-4.3.Ratio.psd" />
     <None Include="resources\UI\PSDLayout\MultiplayerMenu-4.3.Ratio.psd" />
     <None Include="resources\UI\PSDLayout\MultiplayerMenuButtons.psd" />
+    <None Include="resources\UI\PSDLayout\NewGameBackground-16.9.Ratio.psd" />
     <None Include="resources\UI\PSDLayout\WoodenSign.psd" />
+    <None Include="resources\UI\PSDLayout\XloseDialog.psd" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BesiegedClientLogic\BesiegedClientLogic.csproj">
@@ -159,10 +179,22 @@
     <Content Include="resources\sprites\alliance\Wizard.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="resources\UI\ClickedCloseDialog.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\UI\CloseDialog.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="resources\UI\Menu\MultiplayerMenu\16x9\Background.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="resources\UI\Menu\MultiplayerMenu\16x9\NewGameBackground.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="resources\UI\Menu\MultiplayerMenu\4x3\Background.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\UI\Menu\MultiplayerMenu\4x3\NewGameBackground.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="resources\UI\Menu\MultiplayerMenu\Cancel.png">

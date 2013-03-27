@@ -90,6 +90,7 @@ namespace Framework.Commands
             GameName = gameName;
             MaxPlayers = maxPlayers;
             IsGamePassworded = false;
+            Password = string.Empty;
         }
 
         public CommandCreateGame(string gameName, int maxPlayers, string password)
@@ -139,10 +140,11 @@ namespace Framework.Commands
         public string Name { get; set; }
         public string Capacity { get; set; }
         public bool IsGameFull { get; set; }
-
+        public bool HasPassword { get; set; }
         public CommandNotifyGame()
         {
             IsGameFull = false;
+            HasPassword = false;
         }
 
         public CommandNotifyGame(string gameId, string name,  string capacity, bool isGameFull)
@@ -151,6 +153,14 @@ namespace Framework.Commands
             Name = name;
             Capacity = capacity;
             IsGameFull = isGameFull;
+        }
+        public CommandNotifyGame(string gameId, string name, string capacity, bool isGameFull, bool hasPassword)
+        {
+            GameId = gameId;
+            Name = name;
+            Capacity = capacity;
+            IsGameFull = isGameFull;
+            HasPassword = hasPassword;
         }
     }
 

@@ -18,7 +18,24 @@ namespace BesiegedClient
         public static IBesiegedServer BesiegedServer { get; set; }
         public static string ClientId { get; set; }
         public static string GameId { get; set; }
-        
+        public static bool m_IsServerConnectionEstablished = false;
+        public static TaskScheduler m_TaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
+
+        public enum MenuState { Menu, Loading };
+        private static MenuState m_currentMenuState = MenuState.Menu;
+
+        public static EventHandler MenuStateChanged;
+
+        public static MenuState currentMenuState
+        {
+            get { return m_currentMenuState; }
+            set { m_currentMenuState = value;
+            //event handler
+            if (MenuStateChanged != null)
+                MenuStateChanged(null, new EventArgs());
+            }
+        }
+
         static GlobalResources()
         {
             GameLobbyCollection = new ObservableCollection<CommandNotifyGame>();
