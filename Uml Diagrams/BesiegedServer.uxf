@@ -232,7 +232,7 @@ SendCommand(serializedCommand: string): void
     </coordinates>
     <panel_attributes>*Player*
 --
-PlayerColor: Framework.PlayerColorEnum
++PlayerColor: Framework.PlayerColorEnum
 --
 
 --
