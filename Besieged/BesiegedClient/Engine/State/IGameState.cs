@@ -8,9 +8,7 @@ namespace BesiegedClient.Engine.State
 {
     public interface IGameState
     {
-        //IGameState GetInstance();
         void Initialize();
         void Render();
-        //void Cleanup();
     }
 }

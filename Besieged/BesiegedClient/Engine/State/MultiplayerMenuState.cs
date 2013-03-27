@@ -93,19 +93,6 @@ namespace BesiegedClient.Engine.State
                 if (m_MouseDownSender != sender) return;
                 Image img = sender as Image;
                 string selected = img.Name;
-            //    if (selected == "MainMenu")
-            //    {
-            //        RenderMenu.RenderMainMenu();
-            //    }
-            //    else if (selected == "JoinGame" && m_SelectedGame != null)
-            //    {
-            //        JoinGame();
-            //    }
-            //    else if (selected == "JoinGame")
-            //    {
-            //        RenderMessageDialog.RenderMessage("You need to select a game to join!");
-            //    }
-                //else 
                 if (selected == "CreateGame")
                 {
                     ClientGameEngine.Get().ChangeState(NewGameState.Get());
@@ -140,32 +127,6 @@ namespace BesiegedClient.Engine.State
                 {
                     ClientGameEngine.Get().ChangeState(MainMenuState.Get());
                 }
-            //    else if (selected == "OK")
-            //    {
-            //        if (m_GameName.Trim() == string.Empty)
-            //        {
-            //            MessageBox.Show("Game name cannot be empty");
-            //        }
-            //        else
-            //        {
-            //            if (m_Password == string.Empty || m_Password == "Optional")
-            //            {
-            //                CommandCreateGame commandCreateGame = new CommandCreateGame(m_GameName, 4);
-            //                commandCreateGame.ClientId = GlobalResources.ClientId;
-            //                GlobalResources.SendMessageToServer(commandCreateGame.ToXml());
-            //            }
-            //            else
-            //            {
-            //                CommandCreateGame commandCreateGame = new CommandCreateGame(m_GameName, 4, m_Password);
-            //                commandCreateGame.ClientId = GlobalResources.ClientId;
-            //                GlobalResources.SendMessageToServer(commandCreateGame.ToXml());
-            //            }
-            //        }
-            //    }
-            //    else
-            //    {
-            //        MessageBox.Show(selected);
-            //    }
             }
             catch (Exception)
             {
