@@ -83,7 +83,6 @@ namespace BesiegedServer
                                 }
                             }
                         }
-                        string test = commandAggregate.ToXml();
                         clientCallBack.Notify(commandAggregate.ToXml());
 
                         ConsoleLogger.Push(string.Format("Client Id {0} has joined the server", newClientId));
