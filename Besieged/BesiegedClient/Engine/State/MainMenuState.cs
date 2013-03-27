@@ -1,4 +1,5 @@
-﻿using Framework.Commands;
+﻿using BesiegedClient.Engine.Dialog;
+using Framework.Commands;
 using Framework.Utilities.Xml;
 using System;
 using System.Collections.Generic;
@@ -106,11 +107,20 @@ namespace BesiegedClient.Engine.State
                     }
                     else
                     {
-                        ClientGameEngine.Get().ChangeState(LoadingState.Get());
-                        Task.Factory.StartNew(() =>
+                        RenderMessageDialog.RenderInput("Please enter a player name: ", (se, ev) =>
                         {
-                            CommandConnect commandConnect = new CommandConnect(ClientSettings.Default.Alias);
-                            ClientGameEngine.Get().SendMessageToServer(commandConnect);
+                            if (se == null)
+                            {
+                                Action action = () => RenderMessageDialog.RenderMessage("You have to pick a name to play Besieged!");
+                                ClientGameEngine.Get().ExecuteOnUIThread(action);
+                            }
+                            else
+                            {
+                                ClientGameEngine.Get().ChangeState(LoadingState.Get());
+                                CommandConnect commandConnect = new CommandConnect(se as string);
+                                Action action = () => ClientGameEngine.Get().SendMessageToServer(commandConnect);
+                                ClientGameEngine.Get().ExecuteOnUIThread(action);
+                            }
                         });
                     }
                 }

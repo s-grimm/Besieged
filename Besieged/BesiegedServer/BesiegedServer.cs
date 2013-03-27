@@ -26,7 +26,7 @@ namespace BesiegedServer
         {
             // Hardcode a game instance as a test
             string newGameId = Guid.NewGuid().ToString();
-            m_Games.GetOrAdd(newGameId, new BesiegedGameInstance(newGameId, "Test Game", 4));
+            m_Games.GetOrAdd(newGameId, new BesiegedGameInstance(newGameId, "Test Game", 4, "jesse"));
         }
 
         private void StartProcessingMessages()

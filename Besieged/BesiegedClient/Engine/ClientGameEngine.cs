@@ -106,6 +106,12 @@ namespace BesiegedClient.Engine
                     CurrentGameCollection.Add(commandNotifyGame);
                 }, CancellationToken.None, TaskCreationOptions.None, GlobalResources.m_TaskScheduler);
             }
+
+            else if (command is CommandJoinGameSuccessful)
+            {
+                // probably need to do more here
+                ClientGameEngine.Get().ChangeState(PregameLobbyState.Get());
+            }
         }
         
         public static ClientGameEngine Get()
@@ -147,6 +153,14 @@ namespace BesiegedClient.Engine
                 m_CurrentGameState = gameState;
                 m_CurrentGameState.Render();
                 postRender.Invoke();
+            }, CancellationToken.None, TaskCreationOptions.None, GlobalResources.m_TaskScheduler);
+        }
+
+        public void ExecuteOnUIThread(Action action)
+        {
+            Task.Factory.StartNew(() =>
+            {
+                action.Invoke();
             }, CancellationToken.None, TaskCreationOptions.None, GlobalResources.m_TaskScheduler);
         }
 
