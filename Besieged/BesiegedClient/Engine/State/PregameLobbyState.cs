@@ -21,7 +21,6 @@ namespace BesiegedClient.Engine.State
 
         private Button m_SendButton;
         private TextBox m_ChatMessageBox;
-        private string m_ChatMessage;
         private ListBox m_ListBoxChatMessages;
 
         private ImageBrush m_BackgroundBrush;
@@ -51,7 +50,7 @@ namespace BesiegedClient.Engine.State
             {
                 double aspectRatio = Math.Round((double)ClientGameEngine.Get().ClientDimensions.Width / (double)ClientGameEngine.Get().ClientDimensions.Height, 2, MidpointRounding.AwayFromZero);
 
-                string UIComponentPath = "resources\\UI\\Menu\\MultiplayerMenu\\";
+                string UIComponentPath = "resources\\UI\\PreGameLobby\\";
                 string ratioPath = string.Empty;
 
                 if (aspectRatio == 1.33)
@@ -61,7 +60,7 @@ namespace BesiegedClient.Engine.State
 
                 //background
                 BitmapImage bitmapImage = new BitmapImage();
-                bitmapImage = new BitmapImage(new Uri(UIComponentPath + ratioPath + "NewGameBackground.png", UriKind.RelativeOrAbsolute));
+                bitmapImage = new BitmapImage(new Uri(UIComponentPath + ratioPath + "Background.png", UriKind.RelativeOrAbsolute));
                 m_BackgroundBrush = new ImageBrush(bitmapImage);
 
                 //Chat Text Box
@@ -75,10 +74,6 @@ namespace BesiegedClient.Engine.State
                 m_SendButton.FontFamily = new FontFamily("Papyrus");
                 m_SendButton.FontSize = 18;
                 m_SendButton.Content = "Send";
-                //m_OKImage.MouseEnter += MenuOptionHover;
-                //m_OKImage.MouseLeave += MenuOptionHoverLost;
-                //m_OKImage.MouseDown += MenuOptionMouseDown;
-                //m_OKImage.MouseUp += MenuOptionMouseUp;
                 
                 //Player List
                 m_ListBoxChatMessages = new ListBox();
@@ -86,19 +81,12 @@ namespace BesiegedClient.Engine.State
                 m_ListBoxChatMessages.Opacity = 0.75;
                 m_ListBoxChatMessages.FontFamily = new FontFamily("Papyrus");
                 m_ListBoxChatMessages.FontSize = 14;
-                
-               
-
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-
-
         }
-
-        
 
         public void Render()
         {
@@ -119,13 +107,7 @@ namespace BesiegedClient.Engine.State
             Canvas.SetLeft(m_SendButton, dimensions.Width * 0.77);
             m_SendButton.Height = dimensions.Height * 0.05;
             m_SendButton.Width = dimensions.Width * 0.08;
-            ClientGameEngine.Get().Canvas.Children.Add(m_SendButton);
-            
+            ClientGameEngine.Get().Canvas.Children.Add(m_SendButton);   
         }
-
-        
-
-
-
     }
 }
