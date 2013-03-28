@@ -34,6 +34,8 @@ namespace BesiegedClient
         public MainWindow()
         {
             InitializeComponent();
+            // fire up the xml core
+            Task.Factory.StartNew(() => XmlCore.Start());
             // kickstart the engine singleton and pass it the game canvas
             cvsGameWindow.Width = ClientSettings.Default.Width;
             cvsGameWindow.Height = ClientSettings.Default.Height;
@@ -45,9 +47,6 @@ namespace BesiegedClient
             ClientGameEngine.Get().SetGameCanvas(cvsGameWindow);
             ClientGameEngine.Get().ChangeState(MainMenuState.Get());
             //register close handlers
-
-
-
             //    this.Closing += (s, e) =>
             //        {
             //            if (GlobalResources.m_IsServerConnectionEstablished)
