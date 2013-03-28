@@ -19,7 +19,7 @@ namespace BesiegedClient.Engine.State
 
         private PregameLobbyState() { }
 
-        private Image m_OKImage;
+        private Button m_SendButton;
         private TextBox m_ChatMessageBox;
         private string m_ChatMessage;
         private ListBox m_ListBoxChatMessages;
@@ -71,12 +71,10 @@ namespace BesiegedClient.Engine.State
                 m_ChatMessageBox.FontSize = 18;
 
                 //Chat Message OK
-                bitmapImage = new BitmapImage(new Uri(UIComponentPath + "OK.png", UriKind.RelativeOrAbsolute));
-                m_OKImage = new Image();
-                m_OKImage.Source = bitmapImage;
-                m_OKImage.Width = bitmapImage.PixelWidth;
-                m_OKImage.Height = bitmapImage.PixelHeight;
-                m_OKImage.Name = "SendMessage";
+                m_SendButton = new Button();
+                m_SendButton.FontFamily = new FontFamily("Papyrus");
+                m_SendButton.FontSize = 18;
+                m_SendButton.Content = "Send";
                 //m_OKImage.MouseEnter += MenuOptionHover;
                 //m_OKImage.MouseLeave += MenuOptionHoverLost;
                 //m_OKImage.MouseDown += MenuOptionMouseDown;
@@ -117,11 +115,11 @@ namespace BesiegedClient.Engine.State
             m_ListBoxChatMessages.Height = dimensions.Height * 0.25;
             m_ListBoxChatMessages.Width = dimensions.Width * 0.7;
 
-            Canvas.SetLeft(m_OKImage, dimensions.Width * 0.9);
-            Canvas.SetBottom(m_OKImage, dimensions.Width * 0.10);
-            ClientGameEngine.Get().Canvas.Children.Add(m_OKImage);
-            
-            
+            Canvas.SetBottom(m_SendButton, dimensions.Height * 0.025);
+            Canvas.SetLeft(m_SendButton, dimensions.Width * 0.77);
+            m_SendButton.Height = dimensions.Height * 0.05;
+            m_SendButton.Width = dimensions.Width * 0.08;
+            ClientGameEngine.Get().Canvas.Children.Add(m_SendButton);
             
         }
 
