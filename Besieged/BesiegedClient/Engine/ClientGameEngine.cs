@@ -166,19 +166,19 @@ namespace BesiegedClient.Engine
 
         public void SendMessageToServer(Command command)
         {
-            //Task.Factory.StartNew(() =>
-            //{
-            command.ClientId = m_ClientId;
-            string serializedCommand = command.ToXml();
-            try
+            Task.Factory.StartNew(() =>
             {
-                m_BesiegedServer.SendCommand(serializedCommand);
-            }
-            catch (Exception)
-            {
-                IsServerConnected.Value = false;
-            }
-            //});
+                command.ClientId = m_ClientId;
+                string serializedCommand = command.ToXml();
+                try
+                {
+                    m_BesiegedServer.SendCommand(serializedCommand);
+                }
+                catch (Exception)
+                {
+                    IsServerConnected.Value = false;
+                }
+            });
         }
     }
 }

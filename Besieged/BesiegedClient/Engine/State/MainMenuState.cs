@@ -118,8 +118,7 @@ namespace BesiegedClient.Engine.State
                             {
                                 ClientGameEngine.Get().ChangeState(LoadingState.Get());
                                 CommandConnect commandConnect = new CommandConnect(se as string);
-                                Action action = () => ClientGameEngine.Get().SendMessageToServer(commandConnect);
-                                ClientGameEngine.Get().ExecuteOnUIThread(action);
+                                ClientGameEngine.Get().SendMessageToServer(commandConnect);
                             }
                         });
                     }

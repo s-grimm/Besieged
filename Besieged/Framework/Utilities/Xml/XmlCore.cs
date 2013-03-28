@@ -36,18 +36,18 @@ namespace Framework.Utilities.Xml
                 }
             });
 
-            Assembly.GetExecutingAssembly().GetTypes().ToList().Where(x => x.IsClass).ToList().ForEach(type =>
-            {
-                try
-                {
-                    XmlSerializer xmlSerializer = new XmlSerializer(type);
-                    AllKnownTypes.Add(type);
-                }
-                catch (Exception)
-                {
-                    // type couldn't be serialized
-                }
-            });
+            //Assembly.GetExecutingAssembly().GetTypes().ToList().Where(x => x.IsClass).ToList().ForEach(type =>
+            //{
+            //    //try
+            //    //{
+            //    //    XmlSerializer xmlSerializer = new XmlSerializer(type);
+            //    //    AllKnownTypes.Add(type);
+            //    //}
+            //    //catch (Exception)
+            //    //{
+            //    //    // type couldn't be serialized
+            //    //}
+            //});
             
             //AppDomain.CurrentDomain.AssemblyLoad += (sender, args) =>   // Add any newly loaded types into the List of all known types
             //{
@@ -66,7 +66,10 @@ namespace Framework.Utilities.Xml
             //};
         }
 
-
+        public static void Start()
+        {
+            Console.WriteLine("Preheating XmlCore");
+        }
 
         public static XmlSerializer GetFrameworkFallbackSerializer(Type type)
         {
