@@ -34,6 +34,8 @@ namespace BesiegedClient.Engine
         public Canvas Canvas { get; set; }
         public MonitoredValue<bool> IsServerConnected { get; set; }
         public ObservableCollection<CommandNotifyGame> CurrentGameCollection { get; set; }
+        public static ObservableCollection<string> GameSpecificChatMessageCollection { get; set; }
+        public static ObservableCollection<string> GameSpecificPlayerCollection { get; set; }
 
         private ClientGameEngine() 
         {

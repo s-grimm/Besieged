@@ -222,27 +222,27 @@
     <Resource Include="resources\UI\PreGameLobby\16x9\Background.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="resources\UI\PreGameLobby\4x3\Background.png">
+    <Content Include="resources\UI\PreGameLobby\4x3\Background.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="resources\UI\PreGameLobby\Leave.png">
+    </Content>
+    <Content Include="resources\UI\PreGameLobby\Leave.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="resources\UI\PreGameLobby\LeaveFade.png">
+    </Content>
+    <Content Include="resources\UI\PreGameLobby\LeaveFade.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="resources\UI\PreGameLobby\NotReady.png">
+    </Content>
+    <Content Include="resources\UI\PreGameLobby\NotReady.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="resources\UI\PreGameLobby\Ready.png">
+    </Content>
+    <Content Include="resources\UI\PreGameLobby\Ready.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="resources\UI\PreGameLobby\Start.png">
+    </Content>
+    <Content Include="resources\UI\PreGameLobby\Start.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="resources\UI\PreGameLobby\StartFade.png">
+    </Content>
+    <Content Include="resources\UI\PreGameLobby\StartFade.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    </Content>
     <Content Include="resources\UI\WoodenSign.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
