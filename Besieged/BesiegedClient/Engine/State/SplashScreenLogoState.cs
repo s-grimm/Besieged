@@ -60,7 +60,7 @@ namespace BesiegedClient.Engine.State
             {
                 From = 0,
                 To = 1,
-                Duration = TimeSpan.FromSeconds(3),
+                Duration = TimeSpan.FromSeconds(2),
                 BeginTime = TimeSpan.FromSeconds(0)
 
             };
@@ -72,8 +72,8 @@ namespace BesiegedClient.Engine.State
             {
                 From = 1,
                 To = 1,
-                Duration = TimeSpan.FromSeconds(4),
-                BeginTime = TimeSpan.FromSeconds(3)
+                Duration = TimeSpan.FromSeconds(3),
+                BeginTime = TimeSpan.FromSeconds(2)
             };
 
             Storyboard.SetTarget(anii, m_Logo);
@@ -83,8 +83,8 @@ namespace BesiegedClient.Engine.State
             {
                 From = 1,
                 To = 0,
-                Duration = TimeSpan.FromSeconds(3),
-                BeginTime = TimeSpan.FromSeconds(7)
+                Duration = TimeSpan.FromSeconds(2),
+                BeginTime = TimeSpan.FromSeconds(5)
             };
 
             Storyboard.SetTarget(aniii, m_Logo);
