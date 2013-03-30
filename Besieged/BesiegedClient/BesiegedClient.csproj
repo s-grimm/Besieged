@@ -77,6 +77,7 @@
     <Compile Include="Engine\State\MultiplayerMenuState.cs" />
     <Compile Include="Engine\State\NewGameState.cs" />
     <Compile Include="Engine\State\PregameLobbyState.cs" />
+    <Compile Include="Engine\State\SplashScreenLogoState.cs" />
     <Compile Include="GlobalResources.cs" />
     <Compile Include="Rendering\RenderGameWindow.cs" />
     <Compile Include="Engine\Utilities\Rendering.cs" />

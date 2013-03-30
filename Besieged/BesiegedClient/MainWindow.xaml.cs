@@ -48,18 +48,8 @@ namespace BesiegedClient
                 Application.Current.MainWindow.Height = ClientSettings.Default.Height + 38;
             }
 
-
-            BitmapImage logo = new BitmapImage(new Uri("resources/Logo.png", UriKind.RelativeOrAbsolute));
-            cvsGameWindow.Background = new SolidColorBrush(Colors.Black);
-            Image loadingImage = new Image();
-            loadingImage.Source = logo;
-            loadingImage.Width = logo.PixelWidth;
-            loadingImage.Height = logo.PixelHeight;
-            Canvas.SetLeft(loadingImage, cvsGameWindow.Width / 2 - logo.PixelWidth / 2);
-            Canvas.SetTop(loadingImage, cvsGameWindow.Height / 2 - logo.Height / 2);
-            cvsGameWindow.Children.Add(loadingImage);
-
             ClientGameEngine.Get().SetGameCanvas(cvsGameWindow);
+            ClientGameEngine.Get().ChangeState(SplashScreenLogoState.Get());
 
             DispatcherTimer dtimer = new DispatcherTimer();
             dtimer.Tick += (s, e) => {
@@ -67,7 +57,7 @@ namespace BesiegedClient
                 ClientGameEngine.Get().ChangeState(MainMenuState.Get());
             };
 
-            dtimer.Interval = new TimeSpan(0, 0, 4);
+            dtimer.Interval = new TimeSpan(0, 0, 12);
             dtimer.Start();
 
             //register close handlers
