@@ -37,15 +37,15 @@ namespace Framework.Commands
 
     public class CommandConnect : Command
     {
-        public string Alias { get; set; }
+        public string Name { get; set; }
         
         public CommandConnect()
         {
         }
 
-        public CommandConnect(string alias)
+        public CommandConnect(string name)
         {
-            Alias = alias;
+            Name = name;
         }
     }
 
@@ -183,7 +183,7 @@ namespace Framework.Commands
     public class CommandServerStarted : Command
     {
     }
-
+                                         
     public class CommandSendGameMap : Command
     {
         public string SerializedMap { get; set; }
@@ -201,6 +201,22 @@ namespace Framework.Commands
 	public class CommandStartServer : Command
     {
     }
-	
-	
+
+    public class PlayerGameInfo : Command
+    {
+        public PlayerColor.PlayerColorEnum Color { get; set; }
+        public bool IsReady { get; set; }
+        public bool IsCreator { get; set; }
+
+        public PlayerGameInfo() { }
+    }
+
+    public class PlayerChangedInfo : Command
+    {
+        public PlayerColor.PlayerColorEnum Color { get; set; }
+        public bool IsReady { get; set; }
+        public string Name { get; set; }
+
+        public PlayerChangedInfo() { }
+    }
 }

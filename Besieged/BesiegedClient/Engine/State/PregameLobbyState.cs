@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -28,7 +29,10 @@ namespace BesiegedClient.Engine.State
         private Image m_StartEnabledImage;
         private Image m_StartDisabledImage;
         private TextBox m_ChatMessageBox;
-        private ListBox m_PlayerListBox;
+        private ListView m_PlayerListView;
+        private GridView m_PlayerGridView;
+        private GridViewColumn m_NameColumn;
+        private GridViewColumn m_ReadyColumn;
         private ListBox m_ChatMessagesListBox;
 
         private ImageBrush m_BackgroundBrush;
@@ -83,9 +87,9 @@ namespace BesiegedClient.Engine.State
                 m_SendButton.FontSize = 18;
                 m_SendButton.Content = "Send";
                 
-                //Player List
+                //Chat messages
                 m_ChatMessagesListBox = new ListBox();
-                m_ChatMessagesListBox.ItemsSource = ClientGameEngine.GameSpecificChatMessageCollection;
+                m_ChatMessagesListBox.ItemsSource = ClientGameEngine.Get().ChatMessageCollection;
                 m_ChatMessagesListBox.Opacity = 0.75;
                 m_ChatMessagesListBox.FontFamily = new FontFamily("Papyrus");
                 m_ChatMessagesListBox.FontSize = 14;
@@ -169,13 +173,30 @@ namespace BesiegedClient.Engine.State
                 //m_NotReadyImage.MouseUp += MenuOptionMouseUp;
 
                 //Player list
-                m_PlayerListBox = new ListBox();
-                m_PlayerListBox.ItemsSource = ClientGameEngine.GameSpecificPlayerCollection;
+                m_PlayerListView = new ListView();
+                m_PlayerListView.Opacity = 0.75;
+
+                m_PlayerGridView = new GridView();
+                m_PlayerGridView.AllowsColumnReorder = false;
+
+                m_ReadyColumn = new GridViewColumn();
+                m_ReadyColumn.DisplayMemberBinding = new Binding("IsReady");
+                m_ReadyColumn.Header = "Ready";
+                m_PlayerGridView.Columns.Add(m_ReadyColumn);
+
+                m_NameColumn = new GridViewColumn();
+                m_NameColumn.DisplayMemberBinding = new Binding("Name");
+                m_NameColumn.Header = "Name";
+                m_PlayerGridView.Columns.Add(m_NameColumn);
+
+                m_PlayerListView.View = m_PlayerGridView;
+                m_PlayerListView.ItemsSource = ClientGameEngine.Get().PlayerCollection;
+
+
+                // Chat messages
                 m_ChatMessagesListBox.Opacity = 0.75;
                 m_ChatMessagesListBox.FontFamily = new FontFamily("Papyrus");
                 m_ChatMessagesListBox.FontSize = 14;
-
-
             }
             catch (Exception ex)
             {
@@ -191,25 +212,25 @@ namespace BesiegedClient.Engine.State
             m_MenuXOffset = dimensions.Width * 0.15;
 
             //chat text box
-            Canvas.SetLeft(m_ChatMessageBox, dimensions.Width * 0.15);
+            Canvas.SetLeft(m_ChatMessageBox, dimensions.Width * 0.075);
             Canvas.SetBottom(m_ChatMessageBox, dimensions.Height * 0.025);
             ClientGameEngine.Get().Canvas.Children.Add(m_ChatMessageBox);
-            m_ChatMessageBox.Width = dimensions.Width * 0.60;
+            m_ChatMessageBox.Width = dimensions.Width * 0.74;
             m_ChatMessageBox.Height = dimensions.Height * 0.05;
-
-            //chat list box
-            Canvas.SetLeft(m_ChatMessagesListBox, dimensions.Width * 0.15);
-            Canvas.SetBottom(m_ChatMessagesListBox, dimensions.Height * 0.10);
-            ClientGameEngine.Get().Canvas.Children.Add(m_ChatMessagesListBox);
-            m_ChatMessagesListBox.Height = dimensions.Height * 0.25;
-            m_ChatMessagesListBox.Width = dimensions.Width * 0.7;
 
             //chat send button
             Canvas.SetBottom(m_SendButton, dimensions.Height * 0.025);
-            Canvas.SetLeft(m_SendButton, dimensions.Width * 0.77);
+            Canvas.SetLeft(m_SendButton, dimensions.Width * 0.8225);
             m_SendButton.Height = dimensions.Height * 0.05;
-            m_SendButton.Width = dimensions.Width * 0.08;
+            m_SendButton.Width = dimensions.Width * 0.10;
             ClientGameEngine.Get().Canvas.Children.Add(m_SendButton);   
+
+            //chat list box
+            Canvas.SetLeft(m_ChatMessagesListBox, dimensions.Width * 0.075);
+            Canvas.SetBottom(m_ChatMessagesListBox, dimensions.Height * 0.10);
+            ClientGameEngine.Get().Canvas.Children.Add(m_ChatMessagesListBox);
+            m_ChatMessagesListBox.Height = dimensions.Height * 0.25;
+            m_ChatMessagesListBox.Width = dimensions.Width * 0.85;
 
             //start game enabled
             Canvas.SetLeft(m_StartEnabledImage, m_MenuXOffset);
@@ -249,13 +270,14 @@ namespace BesiegedClient.Engine.State
             Canvas.SetZIndex(m_NotReadyImage, 100);
             ClientGameEngine.Get().Canvas.Children.Add(m_NotReadyImage);
 
-            //player list box
-            Canvas.SetLeft(m_PlayerListBox, dimensions.Width * 0.60);
-            Canvas.SetBottom(m_PlayerListBox, dimensions.Height * 0.45);
-            ClientGameEngine.Get().Canvas.Children.Add(m_PlayerListBox);
-            m_PlayerListBox.Height = dimensions.Height * 0.50;
-            m_PlayerListBox.Width = dimensions.Width * 0.25;
-
+            //player list view
+            Canvas.SetLeft(m_PlayerListView, dimensions.Width * 0.60);
+            Canvas.SetBottom(m_PlayerListView, dimensions.Height * 0.45);
+            m_PlayerListView.Height = dimensions.Height * 0.50;
+            m_PlayerListView.Width = dimensions.Width * 0.3225;
+            m_NameColumn.Width = m_PlayerListView.Width * 0.70;
+            m_ReadyColumn.Width = m_PlayerListView.Width * 0.28;
+            ClientGameEngine.Get().Canvas.Children.Add(m_PlayerListView);
         }
     }
 }

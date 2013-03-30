@@ -14,7 +14,7 @@ namespace BesiegedServer
 {
     public class BesiegedGameInstance
     {
-        public ConcurrentBag<ConnectedClient> ConnectedClients { get; set; }
+        public ConcurrentBag<Player> Players { get; set; }
         public BlockingCollection<Command> MessageQueue { get; set; }
         public string GameId { get; set; }
         public string Name { get; set; }
@@ -23,26 +23,18 @@ namespace BesiegedServer
         public string GameCreatorClientId { get; set; }
         public bool IsGameInstanceFull { get; set; }
         public string Password { get; set; }
+        public Stack<PlayerColor.PlayerColorEnum> ColorPool { get; set; }
         
-        private List<Color> _colors = new List<Color>() { Color.Red, Color.Blue, Color.Green, Color.Yellow, Color.Orange, Color.Violet, Color.Cyan, Color.HotPink };
-
         public BesiegedGameInstance()
         {
-            ConnectedClients = new ConcurrentBag<ConnectedClient>();
+            Players = new ConcurrentBag<Player>();
             MessageQueue = new BlockingCollection<Command>();
+            ColorPool = PlayerColor.GetColors();
             IsGameInstanceFull = false;
             MaxPlayers = 2;
             Password = "";
 
-            // Start spinning the process message loop
-            Task.Factory.StartNew(() =>
-            {
-                while (true)
-                {
-                    Command command = MessageQueue.Take();
-                    ProcessMessage(command);
-                }
-            }, TaskCreationOptions.LongRunning);
+            StartProcessingMessages();
         }
 
         public BesiegedGameInstance(string gameId, string name, int maxPlayers)
@@ -50,8 +42,9 @@ namespace BesiegedServer
             GameId = gameId;
             Name = name;
             MaxPlayers = maxPlayers;
-            ConnectedClients = new ConcurrentBag<ConnectedClient>();
+            Players = new ConcurrentBag<Player>();
             MessageQueue = new BlockingCollection<Command>();
+            ColorPool = PlayerColor.GetColors();
             IsGameInstanceFull = false;
             Password = string.Empty;
 
@@ -63,12 +56,55 @@ namespace BesiegedServer
             GameId = gameId;
             Name = name;
             MaxPlayers = maxPlayers;
-            ConnectedClients = new ConcurrentBag<ConnectedClient>();
+            Players = new ConcurrentBag<Player>();
             MessageQueue = new BlockingCollection<Command>();
+            ColorPool = PlayerColor.GetColors();
             IsGameInstanceFull = false;
             Password = password;
 
             StartProcessingMessages();
+        }
+
+        public void AddPlayer(ConnectedClient client)
+        {
+            Player player = new Player(client.Name, client.ClientId, client.Callback, ColorPool.Pop());
+            Players.Add(player);
+            CommandAggregate aggregate = new CommandAggregate();
+
+            PlayerGameInfo playerGameInfo = new PlayerGameInfo()
+            {
+                GameId = this.GameId,
+                Color = player.PlayerColor,
+                IsCreator = false
+            };
+            if (Players.Count == 0)
+            {
+                playerGameInfo.IsCreator = true;
+            }
+
+            aggregate.Commands.Add(playerGameInfo);
+
+            PlayerChangedInfo playerChangedInfo = new PlayerChangedInfo()
+            {
+                ClientId = player.ClientId,
+                Name = player.Name,
+                Color = player.PlayerColor
+            };
+
+            foreach (Player p in Players)
+            {
+                if (p.ClientId != player.ClientId)
+                {
+                    p.Callback.Notify(playerChangedInfo.ToXml());
+                }
+                aggregate.Commands.Add(new PlayerChangedInfo()
+                {
+                    ClientId = p.ClientId,
+                    Name = p.Name,
+                    Color = p.PlayerColor
+                });
+            }
+            player.Callback.Notify(aggregate.ToXml());
         }
 
         public void StartProcessingMessages()
@@ -89,9 +125,9 @@ namespace BesiegedServer
             if (command is CommandChatMessage)
             {
                 CommandChatMessage commandChatMessage = command as CommandChatMessage;
-                foreach (ConnectedClient client in ConnectedClients)
+                foreach (Player player in Players)
                 {
-                    client.ClientCallBack.Notify(commandChatMessage.ToXml());
+                    player.Callback.Notify(commandChatMessage.ToXml());
                 }
             }
         }
