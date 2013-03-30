@@ -17,6 +17,6 @@ namespace Framework.Map.Tile
         public virtual int SkillModifier { get; set; }
         public virtual int RangeModifier { get; set; }
         public virtual int MovementModifier { get; set; }
-        //bool IsPassable { get; set; } //code for client: public bool IsPassable { get; set; }
+        public virtual bool IsPassable { get; set; } //code for client: public override bool IsPassable { get; set; }
     }
 }

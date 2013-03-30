@@ -1,4 +1,5 @@
-﻿using Framework.Sprite;
+﻿using Framework.Map.Tile;
+using Framework.Sprite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -108,6 +109,10 @@ namespace Framework.Unit
                 else if (drawableObject is VampireCount)
                 {
                     return "VampireCount.png";
+                }
+                else if (drawableObject is Grass)
+                {
+                    return "Grass.png";
                 }
                 else
                 {
