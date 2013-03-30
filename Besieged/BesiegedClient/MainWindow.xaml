@@ -3,6 +3,5 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Besieged!" Height="Auto" Width="Auto">
     <Canvas x:Name="cvsGameWindow" >
-
     </Canvas>
 </Window>

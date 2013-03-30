@@ -23,8 +23,8 @@ namespace Framework.Map
         {
             Name = "Default Map";
             Author = "Shane";
-            MapLength = 50;
-            MapHeight = 50;
+            MapLength = 56;
+            MapHeight = 56;
             Tiles = new BaseTile[MapHeight][];
             for (int i = 0; i < MapHeight; ++i)
             {
@@ -35,7 +35,14 @@ namespace Framework.Map
             {
                 for (int y = 0; y < MapLength; ++y)
                 {
-                    Tiles[x][y] = new Grass();
+                    if (x < 3 || y < 3 || x > 52 || y > 52)
+                    {
+                        Tiles[x][y] = new Border();
+                    }
+                    else
+                    {
+                        Tiles[x][y] = new Grass();
+                    }
                 }
             }
         }

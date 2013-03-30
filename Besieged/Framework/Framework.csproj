@@ -73,6 +73,8 @@
     <Compile Include="Map\Tile\ITileFactory.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Map\Tile\SpecialTileFactory.cs" />
+    <Compile Include="Map\Tile\SpecialTileset.cs" />
     <Compile Include="Map\Tile\WetlandTileFactory.cs">
       <SubType>Code</SubType>
     </Compile>
