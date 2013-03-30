@@ -156,6 +156,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="resources\Logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="resources\sprites\alliance\Archer.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

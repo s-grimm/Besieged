@@ -14,6 +14,7 @@ using BesiegedClient.Rendering;
 using System.Collections.ObjectModel;
 using BesiegedClient.Engine;
 using BesiegedClient.Engine.State;
+using System.Windows.Media.Imaging;
 
 namespace BesiegedClient
 {
@@ -34,6 +35,11 @@ namespace BesiegedClient
         public MainWindow()
         {
             InitializeComponent();
+            //Draw the Splash Screen
+
+            //BitmapImage logo = new BitmapImage(new Uri("resources/Logo.png", UriKind.RelativeOrAbsolute));
+            //cvsGameWindow.Background = new ImageBrush(logo);
+
             // kickstart the engine singleton and pass it the game canvas
             cvsGameWindow.Width = ClientSettings.Default.Width;
             cvsGameWindow.Height = ClientSettings.Default.Height;
