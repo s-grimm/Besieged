@@ -114,6 +114,10 @@ namespace Framework.Unit
                 {
                     return "Grass.png";
                 }
+                else if (drawableObject is Border)
+                {
+                    return "Border.png";
+                }
                 else
                 {
                     return string.Empty;
