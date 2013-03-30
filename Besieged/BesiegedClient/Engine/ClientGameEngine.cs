@@ -29,6 +29,7 @@ namespace BesiegedClient.Engine
         private NetTcpBinding m_TcpBinding;
         private DuplexChannelFactory<IBesiegedServer> m_DuplexChannelFactory;
         private string m_ClientId;
+        private string m_GameId;
 
         public Dimensions ClientDimensions { get; set; }
         public Canvas Canvas { get; set; }
@@ -112,9 +113,10 @@ namespace BesiegedClient.Engine
                 ExecuteOnUIThread(action);
             }
 
-            else if (command is CommandJoinGameSuccessful)
+            else if (command is PlayerGameInfo)
             {
-                // probably need to do more here
+                PlayerGameInfo playerGameInfo = command as PlayerGameInfo;
+                m_GameId = playerGameInfo.GameId;
                 ClientGameEngine.Get().ChangeState(PregameLobbyState.Get());
             }
 
@@ -130,6 +132,13 @@ namespace BesiegedClient.Engine
                     }
                     PlayerCollection.Add(playerChangedInfo);
                 };
+                ExecuteOnUIThread(action);
+            }
+
+            else if (command is CommandChatMessage)
+            {
+                CommandChatMessage commandChatMessage = command as CommandChatMessage;
+                Action action = () => ChatMessageCollection.Add(commandChatMessage.Contents);
                 ExecuteOnUIThread(action);
             }
         }
@@ -189,6 +198,10 @@ namespace BesiegedClient.Engine
             Task.Factory.StartNew(() =>
             {
                 command.ClientId = m_ClientId;
+                if (!(command is CommandJoinGame))
+                {
+                    command.GameId = m_GameId;
+                }
                 string serializedCommand = command.ToXml();
                 try
                 {

@@ -125,10 +125,25 @@ namespace BesiegedServer
             if (command is CommandChatMessage)
             {
                 CommandChatMessage commandChatMessage = command as CommandChatMessage;
+                string message = string.Format("{0}: {1}", LookupPlayerName(commandChatMessage.ClientId), commandChatMessage.Contents);
+                commandChatMessage.Contents = message;
                 foreach (Player player in Players)
                 {
                     player.Callback.Notify(commandChatMessage.ToXml());
                 }
+            }
+        }
+
+        public string LookupPlayerName(string clientId)
+        {
+            var player = Players.Where(x => x.ClientId == clientId).FirstOrDefault();
+            if (player == null)
+            {
+                return "*Player Left*";
+            }
+            else
+            {
+                return player.Name;
             }
         }
     }

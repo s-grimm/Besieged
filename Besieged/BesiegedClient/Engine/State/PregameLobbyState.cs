@@ -80,12 +80,33 @@ namespace BesiegedClient.Engine.State
                 m_ChatMessageBox.Opacity = 0.75;
                 m_ChatMessageBox.FontFamily = new FontFamily("Papyrus");
                 m_ChatMessageBox.FontSize = 18;
+                m_ChatMessageBox.KeyDown += (s, ev) =>
+                {
+                    if (ev.Key == Key.Enter)
+                    {
+                        if (m_ChatMessageBox.Text.Trim() != string.Empty)
+                        {
+                            CommandChatMessage commandChatMessage = new CommandChatMessage(m_ChatMessageBox.Text.Trim());
+                            m_ChatMessageBox.Text = "";
+                            ClientGameEngine.Get().SendMessageToServer(commandChatMessage);
+                        }
+                    }
+                };
 
                 //Chat Message OK
                 m_SendButton = new Button();
                 m_SendButton.FontFamily = new FontFamily("Papyrus");
                 m_SendButton.FontSize = 18;
                 m_SendButton.Content = "Send";
+                m_SendButton.Click += (s, ev) =>
+                {
+                    if (m_ChatMessageBox.Text.Trim() != string.Empty)
+                    {
+                        CommandChatMessage commandChatMessage = new CommandChatMessage(m_ChatMessageBox.Text.Trim());
+                        m_ChatMessageBox.Text = "";
+                        ClientGameEngine.Get().SendMessageToServer(commandChatMessage);
+                    }
+                };
                 
                 //Chat messages
                 m_ChatMessagesListBox = new ListBox();

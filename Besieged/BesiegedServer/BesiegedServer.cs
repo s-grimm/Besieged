@@ -123,17 +123,17 @@ namespace BesiegedServer
                                 }
 
                                 string capacity = string.Format("{0}/{1} players", gameInstance.Players.Count, gameInstance.MaxPlayers); // notify all connect clients of the updated game instance
-                                CommandNotifyGame commandNotifyGame = new CommandNotifyGame(gameInstance.GameId, gameInstance.Name, capacity, gameInstance.IsGameInstanceFull);
+                                CommandNotifyGame commandNotifyGame = new CommandNotifyGame(gameInstance.GameId, gameInstance.Name, capacity, gameInstance.IsGameInstanceFull, gameInstance.Password != string.Empty);
                                 NotifyAllConnectedClients(commandNotifyGame.ToXml());
 
-                                CommandJoinGameSuccessful commandJoinGameSuccessful = new CommandJoinGameSuccessful(gameInstance.GameId);
-                                NotifyClient(commandJoinGame.ClientId, commandJoinGameSuccessful.ToXml());
-								ConsoleLogger.Push(string.Format("Client Id {0} has joined Game {1}", commandJoinGame.ClientId, gameInstance.GameId));
+                                //CommandJoinGameSuccessful commandJoinGameSuccessful = new CommandJoinGameSuccessful(gameInstance.GameId);
+                                //NotifyClient(commandJoinGame.ClientId, commandJoinGameSuccessful.ToXml());
+								ConsoleLogger.Push(string.Format("{0} has joined Game {1}", client.Name, gameInstance.Name));
                             }
                             else
                             {
                                 CommandServerError commandServerError = new CommandServerError("Incorrect Password");
-                                ConsoleLogger.Push(string.Format("{0} has attempted to join Game Id {1} with an incorrect password", m_ConnectedClients[commandJoinGame.ClientId].Name, commandJoinGame.GameId));
+                                ConsoleLogger.Push(string.Format("{0} has attempted to join Game {1} with an incorrect password", m_ConnectedClients[commandJoinGame.ClientId].Name, m_Games[commandJoinGame.GameId].Name));
                                 NotifyClient(commandJoinGame.ClientId, commandServerError.ToXml());
                             }
                         }
@@ -165,7 +165,7 @@ namespace BesiegedServer
 
                     string capacity = string.Format("{0}/{1} players", gameInstance.Players.Count, gameInstance.MaxPlayers);   // notify all connect clients of the updated game instance
                     CommandNotifyGame commandNotifyGame = new CommandNotifyGame(gameInstance.GameId, gameInstance.Name, capacity, gameInstance.IsGameInstanceFull, gameInstance.Password != string.Empty ? true:false);
-                    ConsoleLogger.Push(string.Format("Client Id {0} has created a new Game Id {1}", commandCreateGame.ClientId, newGameId));
+                    ConsoleLogger.Push(string.Format("{0} has created a new Game Id {1}", client.Name, gameInstance.Name));
                     NotifyAllConnectedClients(commandNotifyGame.ToXml()); 
                 }
 

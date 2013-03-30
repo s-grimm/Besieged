@@ -67,7 +67,7 @@ namespace BesiegedClient
                 ClientGameEngine.Get().ChangeState(MainMenuState.Get());
             };
 
-            dtimer.Interval = new TimeSpan(0, 0, 10);
+            dtimer.Interval = new TimeSpan(0, 0, 4);
             dtimer.Start();
 
             //register close handlers
