@@ -34,7 +34,6 @@ namespace BesiegedClient.Engine.State
         }
         
         Storyboard m_FadeStory;
-
         Image m_Logo;
 
         public void Initialize()
@@ -97,8 +96,6 @@ namespace BesiegedClient.Engine.State
             m_FadeStory.Children.Add(aniii);
             //Execute Story
             m_FadeStory.Begin();
-
-
         }
     }
 }
