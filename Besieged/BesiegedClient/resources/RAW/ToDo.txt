@@ -1,0 +1,14 @@
+TO DO
+----Pre Game Lobby----
+--Buttons
+Start
+Start (Greyed out)
+Leave Game
+Ready
+Not Ready
+
+--Other
+Green Check Mark
+Red X
+Placeholder Images for Army
+Background for Placeholders
