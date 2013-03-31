@@ -19,7 +19,7 @@ for changing UI states</panel_attributes>
       <x>60</x>
       <y>110</y>
       <w>460</w>
-      <h>280</h>
+      <h>300</h>
     </coordinates>
     <panel_attributes>*InGameEngine*
 --
@@ -28,11 +28,12 @@ _-m_Instance: InGameEngine = null_
 -m_PreviousGameState: IInGameState
 
 +GameCanvas : Canvas
-+ClientDimensions: Dimensions
+-VirtualGameCanvas : VirtualCanvas
 --
 -InGameEngine()
 +ChangeState(gameState: IInGameState): void
 +ChangeState(gameState: IInGameState, postRender: Action): void
++DisposeCurrentState() : void
 +ExecuteOnGameUIThread(action: Action): void
 _+Get(): InGameEngine_
 
