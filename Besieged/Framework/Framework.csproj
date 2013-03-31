@@ -30,16 +30,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Map\GameMap.cs" />
@@ -101,9 +105,22 @@
     <Compile Include="Utilities\MonitoredValue.cs" />
     <Compile Include="Utilities\Xml\XmlCore.cs" />
     <Compile Include="Utilities\Xml\XmlExtensions.cs" />
+    <Compile Include="Controls\Gestures\AutoScroll.cs" />
+    <Compile Include="Controls\Gestures\ExponentialAnimation.cs" />
+    <Compile Include="Controls\Gestures\MapZoom.cs" />
+    <Compile Include="Controls\Gestures\Pan.cs" />
+    <Compile Include="Controls\Gestures\RectangleSelectionGesture.cs" />
+    <Compile Include="Controls\Gestures\SelectionRectVisual.cs" />
+    <Compile Include="Controls\HlsColor.cs" />
+    <Compile Include="Controls\PerfTimer.cs" />
+    <Compile Include="Controls\QuadTree.cs" />
+    <Compile Include="Controls\VirtualCanvas.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Commands\ClientCommands\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Controls\Gestures\Gestures.zip" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
