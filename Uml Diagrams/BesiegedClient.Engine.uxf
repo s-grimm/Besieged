@@ -4,64 +4,6 @@
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>686</x>
-      <y>14</y>
-      <w>76</w>
-      <h>34</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>21;21;63;21</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Class</type>
-    <coordinates>
-      <x>756</x>
-      <y>658</y>
-      <w>308</w>
-      <h>252</h>
-    </coordinates>
-    <panel_attributes>*State.NewGameState*
---
-_-m_Instance: NewGameState = null_
--m_MenuYOffset : double
--m_MenuXOffset : double
--m_GameNameImage : Image
--m_PasswordImage : Image
--m_OKImage : Image
--m_CancelImage : Image
--m_GameNameBox : TextBox
--m_PasswordBox : TextBox
--m_GameName : string
--m_Password : string
--m_BackgroundBrush : ImageBrush
---
--NewGameState()
-_+Get(): IGameState_
-
--MenuOptionHover(sender: Object, e: MouseEventArgs): void
--MenuOptionHoverLost(sender: Object, e: MouseEventArgs): void
--MenuOptionMouseDown(sender: Object, e: MouseEventArgs): void
--MenuOptionUp(sender: Object, e: MouseEventArgs): void
-
-+Initialize(): void
-+Render(): void
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>455</x>
-      <y>98</y>
-      <w>167</w>
-      <h>720</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>154;21;154;707;21;707</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
       <x>588</x>
       <y>98</y>
       <w>181</w>
@@ -71,93 +13,24 @@ _+Get(): IGameState_
     <additional_attributes>21;21;21;490;168;490</additional_attributes>
   </element>
   <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>588</x>
-      <y>98</y>
-      <w>181</w>
-      <h>307</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>21;21;21;294;168;294</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.custom.Text</type>
-    <coordinates>
-      <x>322</x>
-      <y>0</y>
-      <w>175</w>
-      <h>28</h>
-    </coordinates>
-    <panel_attributes>Manages and provides the mechanism
-for changing UI states</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>756</x>
-      <y>266</y>
-      <w>308</w>
-      <h>259</h>
+      <x>0</x>
+      <y>490</y>
+      <w>322</w>
+      <h>105</h>
     </coordinates>
-    <panel_attributes>*State.MultiplayerMenuState*
+    <panel_attributes>*_Utilities.Rendering_*
 --
--m_BackgroundBrush: ImageBrush
--m_CapacityColumn: GridViewColumn
--m_CreateGameImage: Image
--m_CurrentGameListView: ListView
--m_GameGridView: GridView
-_-m_Instance: MultiplayerMenuState = null_
--m_JoinGameImage: Image
--m_NameColumn: GridViewColumn
--m_MainMenuImage:Image
--m_MenuXOffset: double
--m_MenuYOffset: double
--m_MouseDownSender: object
--m_SelectedGame: CommandNotifyGame
+_+BlackBrush: SolidColorBrush_
+_+RedBrush: SolidColorBrush_
+_+GreenBrush: SolidColorBrush_
+_+BlueBrush: SolidColorBrush_
+_+SeaGreenBrush: SolidColorBrush_
 --
--MultiplayerMenuState()
--MenuOptionHover(sender: Object, e: MouseEventArgs): void
--MenuOptionHoverLost(sender: Object, e: MouseEventArgs): void
--MenuOptionMouseDown(sender: Object, e: MouseEventArgs): void
--MenuOptionUp(sender: Object, e: MouseEventArgs): void
-_+Get(): IGameState_
-+Initialize(): void
-+Render(): void
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.Class</type>
-    <coordinates>
-      <x>756</x>
-      <y>14</y>
-      <w>308</w>
-      <h>231</h>
-    </coordinates>
-    <panel_attributes>*State.MainMenuState*
 --
--m_BackgroundBrush: ImageBrush
-_-m_Instance: MainMenuState = null_
--m_LogoImage: Image
--m_MenuXOffset: double
--m_MenuYOffset: double
--m_MouseDownSender: object
--m_MultiPlayerImage: Image
--m_OptionsImage: Image
--m_SinglePlayerImage: Image
--m_QuitImage: Image
---
--MainMenuState()
--MenuOptionHover(sender: Object, e: MouseEventArgs): void
--MenuOptionHoverLost(sender: Object, e: MouseEventArgs): void
--MenuOptionMouseDown(sender: Object, e: MouseEventArgs): void
--MenuOptionUp(sender: Object, e: MouseEventArgs): void
-_+Get(): IGameState_
-+Initialize(): void
-+Render(): void
-</panel_attributes>
+*Comments*
+-- Provides static access to common rendering utilities</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -185,17 +58,6 @@ static method for the Singleton
     <additional_attributes/>
   </element>
   <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>588</x>
-      <y>98</y>
-      <w>181</w>
-      <h>720</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>21;21;21;707;168;707</additional_attributes>
-  </element>
-  <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>168</x>
@@ -217,6 +79,52 @@ _+Get(): IGameState_
     <additional_attributes/>
   </element>
   <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>455</x>
+      <y>98</y>
+      <w>167</w>
+      <h>888</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>154;21;154;875;21;875</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>0</x>
+      <y>343</y>
+      <w>322</w>
+      <h>133</h>
+    </coordinates>
+    <panel_attributes>*_Dialog.RenderMessageDialog_*
+--
+_-m_DialogComponents: List&lt;UIElement&gt;_
+_-m_Dimensions: Dimensions_
+_-m_XImage: BitmapImage_
+_-m_ClickedXImage: BitmapImage_
+--
+_+RenderMessage(message: string): void_
+_+RenderInput(display: string, textChangedHandler: EventHandler): void_
+_+ClearDialog(): void_
+--
+*Comments*
+-- Custom message dialogs for the game
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>588</x>
+      <y>98</y>
+      <w>181</w>
+      <h>307</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>21;21;21;294;168;294</additional_attributes>
+  </element>
+  <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>756</x>
@@ -234,6 +142,65 @@ _+Get(): IGameState_
 +Initialize(): void
 +Render(): void
 </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Text</type>
+    <coordinates>
+      <x>322</x>
+      <y>0</y>
+      <w>175</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>Manages and provides the mechanism
+for changing UI states</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>301</x>
+      <y>7</y>
+      <w>188</w>
+      <h>34</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>175;21;21;21</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>686</x>
+      <y>14</y>
+      <w>76</w>
+      <h>34</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>21;21;63;21</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>168</x>
+      <y>924</y>
+      <w>308</w>
+      <h>175</h>
+    </coordinates>
+    <panel_attributes>*State.PlayingGameState*
+--
+_-m_Instance: PlayingGameState = null_
+-m_TopBar : Image
+-m_LeftCorner : Image
+-m_RightCorner : Image
+--
+-PlayingGameState()
+_+Get(): IGameState_
++Initialize(): void
++Render(): void
+--
+*Comments*
+-- This state calls InGameEngine. As long as the game is playing,
+this is the active state</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -280,15 +247,75 @@ _+Get(): ClientGameEngine_
     <additional_attributes/>
   </element>
   <element>
-    <type>com.umlet.element.Relation</type>
+    <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>301</x>
-      <y>7</y>
-      <w>188</w>
-      <h>34</h>
+      <x>756</x>
+      <y>658</y>
+      <w>308</w>
+      <h>252</h>
     </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>175;21;21;21</additional_attributes>
+    <panel_attributes>*State.NewGameState*
+--
+_-m_Instance: NewGameState = null_
+-m_MenuYOffset : double
+-m_MenuXOffset : double
+-m_GameNameImage : Image
+-m_PasswordImage : Image
+-m_OKImage : Image
+-m_CancelImage : Image
+-m_GameNameBox : TextBox
+-m_PasswordBox : TextBox
+-m_GameName : string
+-m_Password : string
+-m_BackgroundBrush : ImageBrush
+--
+-NewGameState()
+_+Get(): IGameState_
+
+-MenuOptionHover(sender: Object, e: MouseEventArgs): void
+-MenuOptionHoverLost(sender: Object, e: MouseEventArgs): void
+-MenuOptionMouseDown(sender: Object, e: MouseEventArgs): void
+-MenuOptionUp(sender: Object, e: MouseEventArgs): void
+
++Initialize(): void
++Render(): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>756</x>
+      <y>266</y>
+      <w>308</w>
+      <h>259</h>
+    </coordinates>
+    <panel_attributes>*State.MultiplayerMenuState*
+--
+-m_BackgroundBrush: ImageBrush
+-m_CapacityColumn: GridViewColumn
+-m_CreateGameImage: Image
+-m_CurrentGameListView: ListView
+-m_GameGridView: GridView
+_-m_Instance: MultiplayerMenuState = null_
+-m_JoinGameImage: Image
+-m_NameColumn: GridViewColumn
+-m_MainMenuImage:Image
+-m_MenuXOffset: double
+-m_MenuYOffset: double
+-m_MouseDownSender: object
+-m_SelectedGame: CommandNotifyGame
+--
+-MultiplayerMenuState()
+-MenuOptionHover(sender: Object, e: MouseEventArgs): void
+-MenuOptionHoverLost(sender: Object, e: MouseEventArgs): void
+-MenuOptionMouseDown(sender: Object, e: MouseEventArgs): void
+-MenuOptionUp(sender: Object, e: MouseEventArgs): void
+_+Get(): IGameState_
++Initialize(): void
++Render(): void
+</panel_attributes>
+    <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
@@ -296,31 +323,21 @@ _+Get(): ClientGameEngine_
       <x>588</x>
       <y>98</y>
       <w>181</w>
-      <h>888</h>
+      <h>720</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>21;21;21;875;168;875</additional_attributes>
+    <additional_attributes>21;21;21;707;168;707</additional_attributes>
   </element>
   <element>
-    <type>com.umlet.element.Class</type>
+    <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>0</x>
-      <y>490</y>
-      <w>322</w>
-      <h>105</h>
+      <x>455</x>
+      <y>98</y>
+      <w>167</w>
+      <h>720</h>
     </coordinates>
-    <panel_attributes>*_Utilities.Rendering_*
---
-_+BlackBrush: SolidColorBrush_
-_+RedBrush: SolidColorBrush_
-_+GreenBrush: SolidColorBrush_
-_+BlueBrush: SolidColorBrush_
-_+SeaGreenBrush: SolidColorBrush_
---
---
-*Comments*
--- Provides static access to common rendering utilities</panel_attributes>
-    <additional_attributes/>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>154;21;154;707;21;707</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
@@ -355,26 +372,45 @@ _+Get(): IGameState_
     <additional_attributes/>
   </element>
   <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>588</x>
+      <y>98</y>
+      <w>181</w>
+      <h>888</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>21;21;21;875;168;875</additional_attributes>
+  </element>
+  <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>0</x>
-      <y>343</y>
-      <w>322</w>
-      <h>133</h>
+      <x>756</x>
+      <y>14</y>
+      <w>308</w>
+      <h>231</h>
     </coordinates>
-    <panel_attributes>*_Dialog.RenderMessageDialog_*
+    <panel_attributes>*State.MainMenuState*
 --
-_-m_DialogComponents: List&lt;UIElement&gt;_
-_-m_Dimensions: Dimensions_
-_-m_XImage: BitmapImage_
-_-m_ClickedXImage: BitmapImage_
+-m_BackgroundBrush: ImageBrush
+_-m_Instance: MainMenuState = null_
+-m_LogoImage: Image
+-m_MenuXOffset: double
+-m_MenuYOffset: double
+-m_MouseDownSender: object
+-m_MultiPlayerImage: Image
+-m_OptionsImage: Image
+-m_SinglePlayerImage: Image
+-m_QuitImage: Image
 --
-_+RenderMessage(message: string): void_
-_+RenderInput(display: string, textChangedHandler: EventHandler): void_
-_+ClearDialog(): void_
---
-*Comments*
--- Custom message dialogs for the game
+-MainMenuState()
+-MenuOptionHover(sender: Object, e: MouseEventArgs): void
+-MenuOptionHoverLost(sender: Object, e: MouseEventArgs): void
+-MenuOptionMouseDown(sender: Object, e: MouseEventArgs): void
+-MenuOptionUp(sender: Object, e: MouseEventArgs): void
+_+Get(): IGameState_
++Initialize(): void
++Render(): void
 </panel_attributes>
     <additional_attributes/>
   </element>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace BesiegedClient.Engine.State
 {
@@ -11,6 +12,10 @@ namespace BesiegedClient.Engine.State
         private static PlayingGameState m_Instance = null;
 
         private PlayingGameState() { }
+
+        private Image m_TopBar;
+        private Image m_LeftCorner;
+        private Image m_RightCorner;
 
         public static IGameState Get()
         {
@@ -32,12 +37,12 @@ namespace BesiegedClient.Engine.State
 
         public void Initialize()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException(); //ehhh draw teh UI stuff here
         }
 
         public void Render()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException(); //render the UI stuff and add the Virtual Canvas
         }
     }
 }
