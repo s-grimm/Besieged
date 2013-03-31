@@ -2,9 +2,6 @@
 using Framework.Controls;
 using Framework.Map;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -38,6 +35,8 @@ namespace BesiegedClient.Engine.State.InGameEngine
 
         private InGameEngine()
         {
+            #region "DrawCanvas"
+
             VirtualGameCanvas = new VirtualCanvas();
             GameCanvas = VirtualGameCanvas.ContentCanvas;
             VirtualGameCanvas.Width = 800;
@@ -50,6 +49,8 @@ namespace BesiegedClient.Engine.State.InGameEngine
             rectZoom = new RectangleSelectionGesture(GameCanvas, zoom, ModifierKeys.Control);
             rectZoom.ZoomSelection = true;
             autoScroll = new AutoScroll(GameCanvas, zoom);
+
+            #endregion "DrawCanvas"
 
             //Hack to get a map for Shane to use - replace this with the REAL map later
             GameBoard = new GameMap();
