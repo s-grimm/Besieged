@@ -1,55 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="12.0">
-  <zoom_level>10</zoom_level>
+  <zoom_level>14</zoom_level>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>60</x>
-      <y>100</y>
-      <w>460</w>
-      <h>300</h>
-    </coordinates>
-    <panel_attributes>*InGameEngine*
---
--m_CurrentGameState: IInGameState
-_-m_Instance: InGameEngine = null_
--m_PreviousGameState: IInGameState
-
-+GameCanvas : Canvas
-+VirtualGameCanvas : VirtualCanvas
---
--InGameEngine()
-+ChangeState(gameState: IInGameState): void
-+ChangeState(gameState: IInGameState, postRender: Action): void
-+DisposeCurrentState() : void
-+ExecuteOnGameUIThread(action: Action): void
-_+Get(): InGameEngine_
-
---
-*Comments*
--- Primarily used to transition between UI States, such as Unit Selected,
-Menu Showing, Game Over, etc
--- GameCanvas is a Virtual Canvas' Target Canvas</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>490</x>
-      <y>100</y>
-      <w>340</w>
-      <h>60</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>320;40;30;30</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Class</type>
-    <coordinates>
-      <x>810</x>
-      <y>110</y>
-      <w>330</w>
-      <h>250</h>
+      <x>1162</x>
+      <y>98</y>
+      <w>462</w>
+      <h>350</h>
     </coordinates>
     <panel_attributes>*&lt;&lt;State.IInGameState&gt;&gt;*
 --
@@ -70,15 +28,57 @@ of the UI elements drawn by Render()
     <additional_attributes/>
   </element>
   <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>714</x>
+      <y>98</y>
+      <w>476</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>448;42;42;42</additional_attributes>
+  </element>
+  <element>
     <type>com.umlet.element.custom.Text</type>
     <coordinates>
-      <x>530</x>
-      <y>100</y>
-      <w>250</w>
-      <h>40</h>
+      <x>770</x>
+      <y>84</y>
+      <w>350</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>Manages and provides the mechanism
 for changing UI states</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>112</x>
+      <y>84</y>
+      <w>644</w>
+      <h>420</h>
+    </coordinates>
+    <panel_attributes>*InGameEngine*
+--
+-m_CurrentGameState: IInGameState
+_-m_Instance: InGameEngine = null_
+-m_PreviousGameState: IInGameState
++GameBoard : GameMap
++GameCanvas : Canvas
++VirtualGameCanvas : VirtualCanvas
+--
+-InGameEngine()
++ChangeState(gameState: IInGameState): void
++ChangeState(gameState: IInGameState, postRender: Action): void
++DisposeCurrentState() : void
++ExecuteOnGameUIThread(action: Action): void
+_+Get(): InGameEngine_
+
+--
+*Comments*
+-- Primarily used to transition between UI States, such as Unit Selected,
+Menu Showing, Game Over, etc
+-- GameCanvas is a Virtual Canvas' Target Canvas</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>
