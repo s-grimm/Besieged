@@ -72,6 +72,9 @@
       <DependentUpon>LoadingAnimation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Engine\State\IGameState.cs" />
+    <Compile Include="Engine\State\InGameEngine\InGameEngine.cs" />
+    <Compile Include="Engine\State\InGameEngine\State\IInGameState.cs" />
+    <Compile Include="Engine\State\PlayingGameState.cs" />
     <Compile Include="Engine\State\LoadingState.cs" />
     <Compile Include="Engine\State\MainMenuState.cs" />
     <Compile Include="Engine\State\MultiplayerMenuState.cs" />
@@ -445,6 +448,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
