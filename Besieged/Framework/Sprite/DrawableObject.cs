@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Framework.Unit;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ namespace Framework.Sprite
             object sprite = null;
             try
             {
-                //sprite = SpriteFactory.GetSprite(this);
+                sprite = SpriteFactory.GetSprite(this);
             }
             catch (Exception ex)
             {

@@ -35,10 +35,11 @@ namespace BesiegedClient.Engine.State.InGameEngine.State
             {
                 for (int y = 0; y < map.MapHeight; y += 1)
                 {
+                    var sprite = map.Tiles[i][y].GetSprite();
                     Rectangle rect = new Rectangle(); //create the rectangle
                     rect.StrokeThickness = 1;  //border to 1 stroke thick
                     rect.Stroke = new SolidColorBrush(Colors.Black); //border color to black
-                    rect.Fill = new SolidColorBrush(CreateRandomColor());
+                    rect.Fill = Utilities.Rendering.GetBrushForTile(sprite.ToString());
                     rect.Width = 50;
                     rect.Height = 50;
                     rect.Name = "box" + i.ToString();
