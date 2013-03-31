@@ -72,6 +72,8 @@
       <DependentUpon>LoadingAnimation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Engine\State\IGameState.cs" />
+    <Compile Include="Engine\State\InGameEngine\InGameEngine.cs" />
+    <Compile Include="Engine\State\PlayingGameState.cs" />
     <Compile Include="Engine\State\LoadingState.cs" />
     <Compile Include="Engine\State\MainMenuState.cs" />
     <Compile Include="Engine\State\MultiplayerMenuState.cs" />
@@ -440,6 +442,9 @@
     <Content Include="resources\UI\Menu\MainMenu\SinglePlayer.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Engine\State\InGameEngine\State\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
