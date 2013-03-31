@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -105,6 +106,29 @@ namespace BesiegedClient.Engine.State
                 {
                     ClientGameEngine.Get().ChangeState(PlayingGameState.Get());
                 }
+
+                else if (selected == "NotReady")
+                {
+                    PlayerNotReady playerNotReady = new PlayerNotReady();
+                    ClientGameEngine.Get().SendMessageToServer(playerNotReady);
+
+                    m_ReadyImage.Visibility = Visibility.Visible;
+                    m_ReadyImage.IsEnabled = true;
+                    m_NotReadyImage.Visibility = Visibility.Hidden;
+                    m_NotReadyImage.IsEnabled = false;
+                }
+
+                else if (selected == "Ready")
+                {
+                    PlayerReady playerReady = new PlayerReady();
+                    ClientGameEngine.Get().SendMessageToServer(playerReady);
+
+                    m_ReadyImage.Visibility = Visibility.Hidden;
+                    m_ReadyImage.IsEnabled = false;
+                    m_NotReadyImage.Visibility = Visibility.Visible;
+                    m_NotReadyImage.IsEnabled = true;
+                }
+
                 //else if (selected == "JoinGame")
                 //{
                 //    if (m_SelectedGame == null)
@@ -262,10 +286,10 @@ namespace BesiegedClient.Engine.State
                 m_ReadyImage.Height = bitmapImage.PixelHeight;
                 m_ReadyImage.Visibility = System.Windows.Visibility.Visible;
                 m_ReadyImage.Name = "Ready";
-                //m_ReadyImage.MouseEnter += MenuOptionHover;
-                //m_ReadyImage.MouseLeave += MenuOptionHoverLost;
-                //m_ReadyImage.MouseDown += MenuOptionMouseDown;
-                //m_ReadyImage.MouseUp += MenuOptionMouseUp;
+                m_ReadyImage.MouseEnter += MenuOptionHover;
+                m_ReadyImage.MouseLeave += MenuOptionHoverLost;
+                m_ReadyImage.MouseDown += MenuOptionMouseDown;
+                m_ReadyImage.MouseUp += MenuOptionMouseUp;
 
                 //NotReady
                 bitmapImage = new BitmapImage(new Uri(UIComponentPath + "NotReady.png", UriKind.RelativeOrAbsolute));
@@ -275,10 +299,10 @@ namespace BesiegedClient.Engine.State
                 m_NotReadyImage.Height = bitmapImage.PixelHeight;
                 m_NotReadyImage.Visibility = System.Windows.Visibility.Hidden;
                 m_NotReadyImage.Name = "NotReady";
-                //m_NotReadyImage.MouseEnter += MenuOptionHover;
-                //m_NotReadyImage.MouseLeave += MenuOptionHoverLost;
-                //m_NotReadyImage.MouseDown += MenuOptionMouseDown;
-                //m_NotReadyImage.MouseUp += MenuOptionMouseUp;
+                m_NotReadyImage.MouseEnter += MenuOptionHover;
+                m_NotReadyImage.MouseLeave += MenuOptionHoverLost;
+                m_NotReadyImage.MouseDown += MenuOptionMouseDown;
+                m_NotReadyImage.MouseUp += MenuOptionMouseUp;
 
                 //Player list
                 m_PlayerListView = new ListView();

@@ -182,6 +182,18 @@ namespace BesiegedServer
                     MapUtilities.SaveToFile(commandSendGameMap.SerializedMap);
                 }
 
+                else if (command is PlayerReady)
+                {
+                    var playerReady = command as PlayerReady;
+                    m_Games[playerReady.GameId].MessageQueue.Add(playerReady);
+                }
+
+                else if (command is PlayerNotReady)
+                {
+                    var playerNotReady = command as PlayerNotReady;
+                    m_Games[playerNotReady.GameId].MessageQueue.Add(playerNotReady);
+                }
+
                 else if (command is CommandConnectionTerminated)
                 {
                     //CommandConnectionTerminated commandConnectionTerminated = command as CommandConnectionTerminated;
