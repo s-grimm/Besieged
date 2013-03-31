@@ -16,7 +16,7 @@ namespace Framework.Controls
     /// <summary>
     /// This class provides the ability to draw a rectangle on a zoomable object and zoom into that location.
     /// </summary>
-    internal class RectangleSelectionGesture
+    public class RectangleSelectionGesture
     {
         SelectionRectVisual _selectionRectVisual;
         Point _start;

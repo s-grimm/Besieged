@@ -84,6 +84,8 @@ namespace BesiegedClient.Engine.State
 
         public void Render()
         {
+            ClientGameEngine.Get().Canvas.Background = Utilities.Rendering.GrayBrush;
+
             Canvas.SetLeft(m_LeftCorner, 0);
             Canvas.SetBottom(m_LeftCorner, 0);
             Canvas.SetZIndex(m_LeftCorner, 999);
@@ -102,7 +104,7 @@ namespace BesiegedClient.Engine.State
             ClientGameEngine.Get().Canvas.Children.Add(m_TopBar);
             
             //set the InGameState up
-            //InGameEngine.InGameEngine.Get().ChangeState(InitalizeGameState);
+            InGameEngine.InGameEngine.Get().ChangeState(InGameEngine.State.InGameSetupState.Get());
             //add the Virtual Canvas
             ClientGameEngine.Get().Canvas.Children.Add(InGameEngine.InGameEngine.Get().VirtualGameCanvas);
         }

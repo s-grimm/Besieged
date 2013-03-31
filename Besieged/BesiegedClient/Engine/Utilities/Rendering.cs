@@ -14,5 +14,6 @@ namespace BesiegedClient.Engine.Utilities
         public static SolidColorBrush GreenBrush = new SolidColorBrush(Colors.Green);
         public static SolidColorBrush BlueBrush = new SolidColorBrush(Colors.Blue);
         public static SolidColorBrush SeaGreenBrush = new SolidColorBrush(Colors.LightSeaGreen);
+        public static SolidColorBrush GrayBrush = new SolidColorBrush(Colors.Gray);
     }
 }

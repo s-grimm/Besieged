@@ -1,28 +1,58 @@
 ﻿using BesiegedClient.Engine.State.InGameEngine.State;
+using Framework.Controls;
+using Framework.Map;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using Framework.Controls;
 using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace BesiegedClient.Engine.State.InGameEngine
 {
     public class InGameEngine
     {
-        IInGameState m_CurrentGameState;
-        IInGameState m_PreviousGameState;
+        private IInGameState m_CurrentGameState;
+        private IInGameState m_PreviousGameState;
 
         private static InGameEngine m_Instance = null;
 
         public Canvas GameCanvas { get; private set; } //what to draw on
-        public VirtualCanvas VirtualGameCanvas;//the actual control
 
-        private InGameEngine() {
+        //the following is ALL Virtual Canvas code
+
+        #region "Virtual Canvas"
+
+        public VirtualCanvas VirtualGameCanvas;//the actual control
+        private MapZoom zoom;
+        private Pan pan;
+        private RectangleSelectionGesture rectZoom;
+        private AutoScroll autoScroll;
+
+        #endregion "Virtual Canvas"
+
+        public GameMap GameBoard { get; set; }
+
+        private InGameEngine()
+        {
             VirtualGameCanvas = new VirtualCanvas();
             GameCanvas = VirtualGameCanvas.ContentCanvas;
+            VirtualGameCanvas.Width = 800;
+            VirtualGameCanvas.Height = 600;
+
+            VirtualGameCanvas.SmallScrollIncrement = new Size(50 / 2, 50 / 2); //smallest scroll increment //change this later
+
+            zoom = new MapZoom(GameCanvas); //set the zoom to the canvas we are drawing on.
+            pan = new Pan(GameCanvas, zoom); //panning
+            rectZoom = new RectangleSelectionGesture(GameCanvas, zoom, ModifierKeys.Control);
+            rectZoom.ZoomSelection = true;
+            autoScroll = new AutoScroll(GameCanvas, zoom);
+
+            //Hack to get a map for Shane to use - replace this with the REAL map later
+            GameBoard = new GameMap();
         }
 
         public static InGameEngine Get()
@@ -34,30 +64,33 @@ namespace BesiegedClient.Engine.State.InGameEngine
             return m_Instance;
         }
 
-
-        public void ChangeState(IGameState gameState)
+        public void ChangeState(IInGameState gameState)
         {
-            throw new NotImplementedException();
-            //Task.Factory.StartNew(() =>
-            //{
-            //    Canvas.Children.Clear();
-            //    m_PreviousGameState = m_CurrentGameState;
-            //    m_CurrentGameState = gameState;
-            //    m_CurrentGameState.Render();
-            //}, CancellationToken.None, TaskCreationOptions.None, GlobalResources.m_TaskScheduler);
+            Task.Factory.StartNew(() =>
+            {
+                if (m_CurrentGameState != null)
+                {
+                    m_CurrentGameState.Dispose();
+                }
+                m_PreviousGameState = m_CurrentGameState;
+                m_CurrentGameState = gameState;
+                m_CurrentGameState.Render();
+            }, CancellationToken.None, TaskCreationOptions.None, GlobalResources.m_TaskScheduler);
         }
 
-        public void ChangeState(IGameState gameState, Action postRender)
+        public void ChangeState(IInGameState gameState, Action postRender)
         {
-            throw new NotImplementedException();
-            //Task.Factory.StartNew(() =>
-            //{
-            //    Canvas.Children.Clear();
-            //    m_PreviousGameState = m_CurrentGameState;
-            //    m_CurrentGameState = gameState;
-            //    m_CurrentGameState.Render();
-            //    postRender.Invoke();
-            //}, CancellationToken.None, TaskCreationOptions.None, GlobalResources.m_TaskScheduler);
+            Task.Factory.StartNew(() =>
+            {
+                if (m_CurrentGameState != null)
+                {
+                    m_CurrentGameState.Dispose();
+                }
+                m_PreviousGameState = m_CurrentGameState;
+                m_CurrentGameState = gameState;
+                m_CurrentGameState.Render();
+                postRender.Invoke();
+            }, CancellationToken.None, TaskCreationOptions.None, GlobalResources.m_TaskScheduler);
         }
     }
 }
