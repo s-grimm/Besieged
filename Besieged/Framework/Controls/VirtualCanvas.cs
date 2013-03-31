@@ -19,7 +19,7 @@ using System.IO;
 using System.Xml;
 using System.Globalization;
 
-namespace Controls
+namespace Framework.Controls
 {
 #if ANIMATE_FEEDBACK
     public class VisualChangeEventArgs : EventArgs
