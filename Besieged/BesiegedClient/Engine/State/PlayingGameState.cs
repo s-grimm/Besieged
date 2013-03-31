@@ -58,16 +58,19 @@ namespace BesiegedClient.Engine.State
                     UIComponentPath = "resources\\UI\\Game\\16x9\\";
                 }
                 bimg = new BitmapImage(new Uri(UIComponentPath + "BottomLeftCorner.png", UriKind.RelativeOrAbsolute));
+                m_LeftCorner = new Image();
                 m_LeftCorner.Source = bimg;
                 m_LeftCorner.Width = bimg.PixelWidth;
                 m_LeftCorner.Height = bimg.PixelHeight;
 
                 bimg = new BitmapImage(new Uri(UIComponentPath + "BottomRightCorner.png", UriKind.RelativeOrAbsolute));
+                m_RightCorner = new Image();
                 m_RightCorner.Source = bimg;
                 m_RightCorner.Width = bimg.PixelWidth;
                 m_RightCorner.Height = bimg.PixelHeight;
 
                 bimg = new BitmapImage(new Uri(UIComponentPath + "TopBar.png", UriKind.RelativeOrAbsolute));
+                m_TopBar = new Image();
                 m_TopBar.Source = bimg;
                 m_TopBar.Width = bimg.PixelWidth;
                 m_TopBar.Height = bimg.PixelHeight;

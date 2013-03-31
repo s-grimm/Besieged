@@ -27,6 +27,7 @@
 +AddPlayer(connectedClient: ConnectedClient): void
 +StartProcessingMessages(): void
 +ProcessMessage(command: Command): void
++LookupPlayerName(clientId: string): string
 --
 *Comments*
 -- Represents an individual and self contained instance of the running game
