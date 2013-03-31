@@ -15,7 +15,7 @@ using System.Windows.Media;
 using System.Xml;
 #endif
 
-namespace Controls
+namespace Framework.Controls
 
 {
 

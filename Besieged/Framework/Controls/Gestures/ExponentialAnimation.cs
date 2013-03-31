@@ -10,7 +10,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
-namespace Controls
+namespace Framework.Controls
 {
     /// <summary>
     /// EdgeBehavior defines what type of exponential animation to do.

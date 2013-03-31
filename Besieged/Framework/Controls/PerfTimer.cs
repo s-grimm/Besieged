@@ -7,7 +7,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Controls
+namespace Framework.Controls
 {
     /// <summary>
     /// This class implements a high precision timer using the Win32 QueryPerformanceCounter API.
