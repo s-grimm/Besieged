@@ -19,7 +19,9 @@ namespace Framework.Utilities
             {
                 if (ValueChanged != null) // if invocation list is not empty, fire the event
                 {
-                    ValueChanged(m_Value, value);
+                    var temp = m_Value;
+                    m_Value = value;
+                    ValueChanged(temp, value);
                 }
                 m_Value = value;
             }
