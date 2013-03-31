@@ -18,6 +18,7 @@ namespace BesiegedClient.Engine.State
         private static PregameLobbyState m_Instance;
         private double m_MenuYOffset;
         private double m_MenuXOffset;
+        private object m_MouseDownSender;
 
         private PregameLobbyState() { }
 
@@ -55,6 +56,92 @@ namespace BesiegedClient.Engine.State
                 throw ex;
             }
         }
+
+        #region Handlers
+
+        public void MenuOptionHover(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            try
+            {
+                Image img = sender as Image;
+                Canvas.SetLeft(img, m_MenuXOffset + 50);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        public void MenuOptionHoverLost(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            try
+            {
+                Image img = sender as Image;
+                Canvas.SetLeft(img, m_MenuXOffset);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        public void MenuOptionMouseDown(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            try
+            {
+                m_MouseDownSender = sender;
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        public void MenuOptionMouseUp(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            try
+            {
+                if (m_MouseDownSender != sender) return;
+                Image img = sender as Image;
+                string selected = img.Name;
+                if (selected == "StartEnabled")
+                {
+                    ClientGameEngine.Get().ChangeState(PlayingGameState.Get());
+                }
+                //else if (selected == "JoinGame")
+                //{
+                //    if (m_SelectedGame == null)
+                //    {
+                //        RenderMessageDialog.RenderMessage("You need to select a game to join!");
+                //    }
+                //    else
+                //    {
+                //        if (m_SelectedGame.HasPassword)
+                //        {
+                //            RenderMessageDialog.RenderInput("Please enter the password: ", (se, ev) =>
+                //            {
+                //                if (se != null)
+                //                {
+                //                    CommandJoinGame commandJoinGame = new CommandJoinGame(m_SelectedGame.GameId, se as string);
+                //                    ClientGameEngine.Get().SendMessageToServer(commandJoinGame);
+                //                }
+                //            });
+                //        }
+                //        else
+                //        {
+                //            CommandJoinGame commandJoinGame = new CommandJoinGame(m_SelectedGame.GameId, string.Empty);
+                //            ClientGameEngine.Get().SendMessageToServer(commandJoinGame);
+                //        }
+                //    }
+                //}
+                //else if (selected == "MainMenu")
+                //{
+                //    ClientGameEngine.Get().ChangeState(MainMenuState.Get());
+                //}
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        #endregion Handlers
 
         public void Initialize()
         {
@@ -123,10 +210,10 @@ namespace BesiegedClient.Engine.State
                 m_StartEnabledImage.Height = bitmapImage.PixelHeight;
                 m_StartEnabledImage.Visibility = System.Windows.Visibility.Visible;
                 m_StartEnabledImage.Name = "StartEnabled";
-                //m_StartEnabledImage.MouseEnter += MenuOptionHover;
-                //m_StartEnabledImage.MouseLeave += MenuOptionHoverLost;
-                //m_StartEnabledImage.MouseDown += MenuOptionMouseDown;
-                //m_StartEnabledImage.MouseUp += MenuOptionMouseUp;
+                m_StartEnabledImage.MouseEnter += MenuOptionHover;
+                m_StartEnabledImage.MouseLeave += MenuOptionHoverLost;
+                m_StartEnabledImage.MouseDown += MenuOptionMouseDown;
+                m_StartEnabledImage.MouseUp += MenuOptionMouseUp;
 
                 //StartDisabled
                 bitmapImage = new BitmapImage(new Uri(UIComponentPath + "StartFade.png", UriKind.RelativeOrAbsolute));
