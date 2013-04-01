@@ -42,16 +42,6 @@ namespace BesiegedServer
             Password = "";
 
             StartProcessingMessages();
-
-            m_GameMachine = new StateMachine<State, Trigger>(() => m_CurrentState, newState => m_CurrentState = newState);
-
-            m_GameMachine.Configure(State.WaitingForPlayers)
-                .OnEntryFrom(Trigger.PlayerNotReady, t => Transition("WAITING FOR PLAYER!"))
-                .Permit(Trigger.AllPlayersReady, State.AllPlayersReady);
-
-            m_GameMachine.Configure(State.AllPlayersReady)
-                .OnEntry(t => Transition("ALL PLAYERS ARE READY!"))
-                .Permit(Trigger.PlayerNotReady, State.WaitingForPlayers);
         }
 
         public BesiegedGameInstance(string gameId, string name, int maxPlayers)
@@ -66,16 +56,6 @@ namespace BesiegedServer
             Password = string.Empty;
 
             StartProcessingMessages();
-
-            m_GameMachine = new StateMachine<State, Trigger>(() => m_CurrentState, newState => m_CurrentState = newState);
-
-            m_GameMachine.Configure(State.WaitingForPlayers)
-                .OnEntryFrom(Trigger.PlayerNotReady, t => Transition("WAITING FOR PLAYER!"))
-                .Permit(Trigger.AllPlayersReady, State.AllPlayersReady);
-
-            m_GameMachine.Configure(State.AllPlayersReady)
-                .OnEntry(t => Transition("ALL PLAYERS ARE READY!"))
-                .Permit(Trigger.PlayerNotReady, State.WaitingForPlayers);
         }
 
         public BesiegedGameInstance(string gameId, string name, int maxPlayers, string password)
@@ -90,7 +70,10 @@ namespace BesiegedServer
             Password = password;
 
             StartProcessingMessages();
+        }
 
+        private void ConfigureMachine()
+        {
             m_GameMachine = new StateMachine<State, Trigger>(() => m_CurrentState, newState => m_CurrentState = newState);
 
             m_GameMachine.Configure(State.WaitingForPlayers)
@@ -187,6 +170,8 @@ namespace BesiegedServer
 
         public void StartProcessingMessages()
         {
+            ConfigureMachine();
+            
             // Start spinning the process message loop
             Task.Factory.StartNew(() =>
             {
