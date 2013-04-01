@@ -219,14 +219,4 @@ namespace Framework.Commands
 
         public PlayerChangedInfo() { }
     }
-
-    public class PlayerReady: Command
-    {
-        public PlayerReady() { }
-    }
-
-    public class PlayerNotReady: Command
-    {
-        public PlayerNotReady() { }
-    }
 }

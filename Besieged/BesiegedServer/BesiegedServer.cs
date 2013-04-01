@@ -105,7 +105,15 @@ namespace BesiegedServer
         {
             try
             {
-                if (command is CommandJoinGame)
+                if (command is GameSpecificCommand)
+                {
+                    if (m_Games.ContainsKey(command.GameId))
+                    {
+                        m_Games[command.GameId].MessageQueue.Add(command);
+                    }
+                }
+                
+                else if (command is CommandJoinGame)
                 {
                     CommandJoinGame commandJoinGame = command as CommandJoinGame;
                     if (m_Games.ContainsKey(commandJoinGame.GameId))
@@ -180,18 +188,6 @@ namespace BesiegedServer
                 {
                     CommandSendGameMap commandSendGameMap = command as CommandSendGameMap;
                     MapUtilities.SaveToFile(commandSendGameMap.SerializedMap);
-                }
-
-                else if (command is PlayerReady)
-                {
-                    var playerReady = command as PlayerReady;
-                    m_Games[playerReady.GameId].MessageQueue.Add(playerReady);
-                }
-
-                else if (command is PlayerNotReady)
-                {
-                    var playerNotReady = command as PlayerNotReady;
-                    m_Games[playerNotReady.GameId].MessageQueue.Add(playerNotReady);
                 }
 
                 else if (command is CommandConnectionTerminated)
