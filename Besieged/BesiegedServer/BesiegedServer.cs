@@ -17,7 +17,7 @@ namespace BesiegedServer
     {
 
         private BlockingCollection<Command> m_MessageQueue = new BlockingCollection<Command>();
-        private ConcurrentDictionary<string, IClient> m_ConnectedClients = new ConcurrentDictionary<string, IClient>();  // global hook for all clients
+        private ConcurrentDictionary<string, ConnectedClient> m_ConnectedClients = new ConcurrentDictionary<string, ConnectedClient>();  // global hook for all clients
         private ConcurrentDictionary<string, BesiegedGameInstance> m_Games = new ConcurrentDictionary<string, BesiegedGameInstance>();
         private bool m_IsServerInitialized = false;
         private IClient m_ServerCallback;
@@ -65,10 +65,11 @@ namespace BesiegedServer
                     else if (command is CommandConnect)
                     {
                         CommandConnect connectCommand = command as CommandConnect;
-                        IClient clientCallBack = OperationContext.Current.GetCallbackChannel<IClient>();
+                        IClient callback = OperationContext.Current.GetCallbackChannel<IClient>();
+                        string newClientId = Guid.NewGuid().ToString();     // notify the client of their unique identifier which will be used for inter-client communication
+                        ConnectedClient connectedClient = new ConnectedClient(connectCommand.Name, newClientId, callback);
 
                         CommandAggregate commandAggregate = new CommandAggregate();
-                        string newClientId = Guid.NewGuid().ToString();     // notify the client of their unique identifier which will be used for inter-client communication
                         CommandConnectionSuccessful commandConnectionSuccsessful = new CommandConnectionSuccessful(newClientId);
                         commandAggregate.Commands.Add(commandConnectionSuccsessful);
                         if (m_Games.Count > 0)  // notify the client of any pre-existing game instances that they might be able to join
@@ -77,16 +78,16 @@ namespace BesiegedServer
                             {
                                 if (!game.Value.IsGameInstanceFull)
                                 {
-                                    string capacity = string.Format("{0}/{1} players", game.Value.ConnectedClients.Count, game.Value.MaxPlayers);
+                                    string capacity = string.Format("{0}/{1} players", game.Value.Players.Count, game.Value.MaxPlayers);
                                     CommandNotifyGame commandNotifyGame = new CommandNotifyGame(game.Value.GameId, game.Value.Name, capacity, false, game.Value.Password != string.Empty ? true: false);
                                     commandAggregate.Commands.Add(commandNotifyGame);
                                 }
                             }
                         }
-                        clientCallBack.Notify(commandAggregate.ToXml());
+                        connectedClient.Callback.Notify(commandAggregate.ToXml());
 
-                        ConsoleLogger.Push(string.Format("Client Id {0} has joined the server", newClientId));
-                        m_ConnectedClients.GetOrAdd(newClientId, clientCallBack);     // Add an entry to the global client hook
+                        ConsoleLogger.Push(string.Format("{0} has joined the server", connectedClient.Name));
+                        m_ConnectedClients.GetOrAdd(newClientId, connectedClient);     // Add an entry to the global client hook
                     }
                     else
                     {
@@ -104,7 +105,15 @@ namespace BesiegedServer
         {
             try
             {
-                if (command is CommandJoinGame)
+                if (command is GameSpecificCommand)
+                {
+                    if (m_Games.ContainsKey(command.GameId))
+                    {
+                        m_Games[command.GameId].MessageQueue.Add(command);
+                    }
+                }
+                
+                else if (command is CommandJoinGame)
                 {
                     CommandJoinGame commandJoinGame = command as CommandJoinGame;
                     if (m_Games.ContainsKey(commandJoinGame.GameId))
@@ -114,26 +123,25 @@ namespace BesiegedServer
                             if (m_Games[commandJoinGame.GameId].Password == commandJoinGame.Password)
                             {
                                 BesiegedGameInstance gameInstance = m_Games[commandJoinGame.GameId];
-                                IClient client = m_ConnectedClients[commandJoinGame.ClientId];
-                                ConnectedClient connectedClient = new ConnectedClient("Alias", commandJoinGame.ClientId, client);
-                                gameInstance.ConnectedClients.Add(connectedClient);
-                                if (gameInstance.ConnectedClients.Count == gameInstance.MaxPlayers)
+                                ConnectedClient client = m_ConnectedClients[commandJoinGame.ClientId];
+                                gameInstance.AddPlayer(client);
+                                if (gameInstance.Players.Count == gameInstance.MaxPlayers)
                                 {
                                     gameInstance.IsGameInstanceFull = true;
                                 }
 
-                                string capacity = string.Format("{0}/{1} players", gameInstance.ConnectedClients.Count, gameInstance.MaxPlayers); // notify all connect clients of the updated game instance
-                                CommandNotifyGame commandNotifyGame = new CommandNotifyGame(gameInstance.GameId, gameInstance.Name, capacity, gameInstance.IsGameInstanceFull);
+                                string capacity = string.Format("{0}/{1} players", gameInstance.Players.Count, gameInstance.MaxPlayers); // notify all connect clients of the updated game instance
+                                CommandNotifyGame commandNotifyGame = new CommandNotifyGame(gameInstance.GameId, gameInstance.Name, capacity, gameInstance.IsGameInstanceFull, gameInstance.Password != string.Empty);
                                 NotifyAllConnectedClients(commandNotifyGame.ToXml());
 
-                                CommandJoinGameSuccessful commandJoinGameSuccessful = new CommandJoinGameSuccessful(gameInstance.GameId);
-                                NotifyClient(commandJoinGame.ClientId, commandJoinGameSuccessful.ToXml());
-								ConsoleLogger.Push(string.Format("Client Id {0} has joined Game {1}", commandJoinGame.ClientId, gameInstance.GameId));
+                                //CommandJoinGameSuccessful commandJoinGameSuccessful = new CommandJoinGameSuccessful(gameInstance.GameId);
+                                //NotifyClient(commandJoinGame.ClientId, commandJoinGameSuccessful.ToXml());
+								ConsoleLogger.Push(string.Format("{0} has joined Game {1}", client.Name, gameInstance.Name));
                             }
                             else
                             {
                                 CommandServerError commandServerError = new CommandServerError("Incorrect Password");
-                                ConsoleLogger.Push(string.Format("Client Id {0} has attempted to join Game Id {1} with an incorrect password", commandJoinGame.ClientId, commandJoinGame.GameId));
+                                ConsoleLogger.Push(string.Format("{0} has attempted to join Game {1} with an incorrect password", m_ConnectedClients[commandJoinGame.ClientId].Name, m_Games[commandJoinGame.GameId].Name));
                                 NotifyClient(commandJoinGame.ClientId, commandServerError.ToXml());
                             }
                         }
@@ -157,16 +165,15 @@ namespace BesiegedServer
                     BesiegedGameInstance gameInstance = new BesiegedGameInstance(newGameId, commandCreateGame.GameName, commandCreateGame.MaxPlayers, commandCreateGame.Password);
                     m_Games.GetOrAdd(newGameId, gameInstance);
 
-					IClient client = m_ConnectedClients[commandCreateGame.ClientId];    // add the client that requested the new game to the game instance
-					ConnectedClient connectedClient = new ConnectedClient("Alias", commandCreateGame.ClientId, client);
-					gameInstance.ConnectedClients.Add(connectedClient);
+					ConnectedClient client = m_ConnectedClients[commandCreateGame.ClientId];    // add the client that requested the new game to the game instance
+                    gameInstance.AddPlayer(client);
 
                     CommandJoinGameSuccessful commandJoinGameSuccessful = new CommandJoinGameSuccessful(gameInstance.GameId);
                     NotifyClient(commandCreateGame.ClientId, commandJoinGameSuccessful.ToXml());
 
-                    string capacity = string.Format("{0}/{1} players", gameInstance.ConnectedClients.Count, gameInstance.MaxPlayers);   // notify all connect clients of the updated game instance
+                    string capacity = string.Format("{0}/{1} players", gameInstance.Players.Count, gameInstance.MaxPlayers);   // notify all connect clients of the updated game instance
                     CommandNotifyGame commandNotifyGame = new CommandNotifyGame(gameInstance.GameId, gameInstance.Name, capacity, gameInstance.IsGameInstanceFull, gameInstance.Password != string.Empty ? true:false);
-                    ConsoleLogger.Push(string.Format("Client Id {0} has created a new Game Id {1}", commandCreateGame.ClientId, newGameId));
+                    ConsoleLogger.Push(string.Format("{0} has created a new game called: {1}", client.Name, gameInstance.Name));
                     NotifyAllConnectedClients(commandNotifyGame.ToXml()); 
                 }
 
@@ -185,26 +192,26 @@ namespace BesiegedServer
 
                 else if (command is CommandConnectionTerminated)
                 {
-                    CommandConnectionTerminated commandConnectionTerminated = command as CommandConnectionTerminated;
+                    //CommandConnectionTerminated commandConnectionTerminated = command as CommandConnectionTerminated;
 
-                    IClient client = m_ConnectedClients[commandConnectionTerminated.ClientId];
-                    ConnectedClient connectedClient = new ConnectedClient("Alias", commandConnectionTerminated.ClientId, client);
+                    //IClient client = m_ConnectedClients[commandConnectionTerminated.ClientId];
+                    //ConnectedClient connectedClient = new ConnectedClient("Alias", commandConnectionTerminated.ClientId, client);
 
-                    if (commandConnectionTerminated.GameId != null)
-                    {
-                        BesiegedGameInstance gameInstance = m_Games[commandConnectionTerminated.GameId];
-                        var gameRemoved = gameInstance.ConnectedClients.TryTake(out connectedClient);
-                        if (gameRemoved)
-                        {
-                            ConsoleLogger.Push(string.Format("Client Id {0} has left Game Id {1}", connectedClient.UniqueIdentifier, gameInstance.GameId));
-                        }
-                    }
+                    //if (commandConnectionTerminated.GameId != null)
+                    //{
+                    //    BesiegedGameInstance gameInstance = m_Games[commandConnectionTerminated.GameId];
+                    //    //var gameRemoved = gameInstance.Players.TryTake(out connectedClient);
+                    //    //if (gameRemoved)
+                    //    //{
+                    //    //    ConsoleLogger.Push(string.Format("Client Id {0} has left Game Id {1}", connectedClient.ClientId, gameInstance.GameId));
+                    //    //}
+                    //}
                     
-                    var removed = m_ConnectedClients.TryRemove(commandConnectionTerminated.ClientId, out client);
-                    if (removed)
-                    {
-                        ConsoleLogger.Push(string.Format("Client Id {0} has disconnected", commandConnectionTerminated.ClientId));
-                    }
+                    //var removed = m_ConnectedClients.TryRemove(commandConnectionTerminated.ClientId, out client);
+                    //if (removed)
+                    //{
+                    //    ConsoleLogger.Push(string.Format("Client Id {0} has disconnected", commandConnectionTerminated.ClientId));
+                    //}
                 }
             }
             catch (Exception ex)
@@ -217,7 +224,7 @@ namespace BesiegedServer
         {
             if (m_ConnectedClients.ContainsKey(clientId))
             {
-                m_ConnectedClients[clientId].Notify(command);   
+                m_ConnectedClients[clientId].Callback.Notify(command);   
             }
         }
 
@@ -225,11 +232,11 @@ namespace BesiegedServer
         {
             try
             {
-                foreach (KeyValuePair<string, IClient> client in m_ConnectedClients)
+                foreach (KeyValuePair<string, ConnectedClient> client in m_ConnectedClients)
                 {
-                    if (((ICommunicationObject)client.Value).State == CommunicationState.Opened)
+                    if (((ICommunicationObject)client.Value.Callback).State == CommunicationState.Opened)
                     {
-                        client.Value.Notify(command);
+                        client.Value.Callback.Notify(command);
                     }
                 }
             }

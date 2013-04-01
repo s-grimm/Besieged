@@ -143,7 +143,7 @@ namespace BesiegedClient.Engine.State
                 m_CurrentGameListView.Opacity = 0.75;
 
                 m_GameGridView = new GridView();
-                m_GameGridView.AllowsColumnReorder = true;
+                m_GameGridView.AllowsColumnReorder = false;
 
                 m_NameColumn = new GridViewColumn();
                 m_NameColumn.DisplayMemberBinding = new Binding("Name");
@@ -156,7 +156,7 @@ namespace BesiegedClient.Engine.State
                 m_GameGridView.Columns.Add(m_CapacityColumn);
 
                 m_CurrentGameListView.View = m_GameGridView;
-                m_CurrentGameListView.ItemsSource = ClientGameEngine.Get().CurrentGameCollection;
+                m_CurrentGameListView.ItemsSource = ClientGameEngine.Get().GamesCollection;
 
                 m_CurrentGameListView.SelectionChanged += (s, e) =>
                 {

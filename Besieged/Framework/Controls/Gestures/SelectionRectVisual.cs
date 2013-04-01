@@ -18,7 +18,6 @@ namespace Framework.Controls
     /// Create a host visual derived from the FrameworkElement class for drawing the
     /// selection rubber band.
     /// </summary>
-    internal class SelectionRectVisual : FrameworkElement
     {
 
         private const double _dashRepeatLength = 8;

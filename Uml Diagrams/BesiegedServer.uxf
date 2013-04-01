@@ -4,7 +4,52 @@
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>352</x>
+      <x>816</x>
+      <y>504</y>
+      <w>456</w>
+      <h>264</h>
+    </coordinates>
+    <panel_attributes>*BesiegedGameInstance*
+--
++Players: ConcurrentBag&lt;Player&gt;
++MessageQueue: BlockingCollection&lt;Command&gt;
++GameId: string
++Name: string
++MaxPlayers: int
++GameCreatorClientId: string
++Password: string
++ColorPool: Stack&lt;PlayerColor.PlayerColorEnum&gt;
++GameState: GameState
+--
++BesiegedGameInstance()
++BesiegedGameInstance(gameId: string, name: string, maxPlayers: int)
++BesiegedGameInstance(gameId: string, name: string, maxPlayers: int, password: string)
++AddPlayer(connectedClient: ConnectedClient): void
++StartProcessingMessages(): void
++ProcessMessage(command: Command): void
++LookupPlayerName(clientId: string): string
+--
+*Comments*
+-- Represents an individual and self contained instance of the running game
+-- Can communicate with the unique clients connected to the game</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>960</x>
+      <y>240</y>
+      <w>88</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+Callback</panel_attributes>
+    <additional_attributes>48;96;48;24</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>360</x>
       <y>112</y>
       <w>40</w>
       <h>88</h>
@@ -13,29 +58,86 @@
     <additional_attributes>24;24;24;72</additional_attributes>
   </element>
   <element>
-    <type>com.umlet.element.Class</type>
+    <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>864</x>
-      <y>632</y>
-      <w>184</w>
-      <h>112</h>
+      <x>992</x>
+      <y>424</y>
+      <w>40</w>
+      <h>104</h>
     </coordinates>
-    <panel_attributes>&lt;&lt;Enumeration&gt;&gt;
-*Framework.PlayerColorEnum*
---
-Red
-Green
-Blue
-Yellow
-Orange
-Purple
-</panel_attributes>
-    <additional_attributes/>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>24;24;24;88</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>32</x>
+      <x>824</x>
+      <y>648</y>
+      <w>368</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>
+*Framework.PlayerColor*
+--
+PlayerColorEnum { Red, Green, Blue, Yellow, Orange, Purple }: enum
+--
++GetColors: Stack&lt;PlayerColorEnum&gt;
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>368</x>
+      <y>408</y>
+      <w>88</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m_Games</panel_attributes>
+    <additional_attributes>48;24;48;96</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>888</x>
+      <y>184</y>
+      <w>40</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>ConnectedClients // *CHANGING THIS*</panel_attributes>
+    <additional_attributes/>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>824</x>
+      <y>280</y>
+      <w>184</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>*BesiegedGameInstance*
+*Framework.PlayerColorEnum*
+--
+-m_Colors: List&lt;Color&gt; = new List&lt;Color&gt;() // *CHANGING THIS*
++GameId: string
+Yellow
+Orange
+Purple
+-- Represents an individual and self contained instance of the running game
+-- Can communicate with the unique clients connected to the game</panel_attributes>
+</panel_attributes>
+    <type>com.umlet.element.Class</type>
+      <x>152</x>
+      <y>16</y>
+      <w>392</w>
+      <h>80</h>
+    <panel_attributes>*&lt;&lt;Framework.ServiceContracts.IBesiegedServer&gt;&gt;*
+m_ConnectedClients</panel_attributes>
+    <additional_attributes>32;40;120;40</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>16</x>
       <y>184</y>
       <w>664</w>
       <h>248</h>
@@ -63,12 +165,12 @@ Purple
     <additional_attributes/>
   </element>
   <element>
-    <type>com.umlet.element.Relation</type>
+    <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>616</x>
-      <y>648</y>
-      <w>264</w>
-      <h>56</h>
+      <x>656</x>
+      <y>184</y>
+      <w>176</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 Assigns colors to Player</panel_attributes>
@@ -82,9 +184,16 @@ Assigns colors to Player</panel_attributes>
       <w>88</w>
       <h>112</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
 m_Games</panel_attributes>
-    <additional_attributes>48;24;48;96</additional_attributes>
+    <additional_attributes>24;24;160;24</additional_attributes>
+
+--
+SendCommand(serializedCommand: string): void
+--
+*Comments*
+-- Service contract interface for the Duplex Channel client/server connection</panel_attributes>
+    <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
@@ -102,30 +211,28 @@ m1=1</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>664</x>
-      <y>344</y>
+      <x>656</x>
+      <y>288</y>
       <w>148</w>
       <h>56</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
-m_ConnectedClients</panel_attributes>
-    <additional_attributes>32;40;120;40</additional_attributes>
+    <additional_attributes>24;24;168;24</additional_attributes>
   </element>
   <element>
-    <type>com.umlet.element.Class</type>
+    <type>com.umlet.element.custom.Text</type>
     <coordinates>
-      <x>184</x>
-      <y>504</y>
-      <w>456</w>
-      <h>240</h>
+      <x>720</x>
+      <y>288</y>
+      <w>64</w>
+      <h>24</h>
     </coordinates>
-    <panel_attributes>*BesiegedGameInstance*
+    <panel_attributes>m_Games</panel_attributes>
 --
 +Players: BlockingCollection&lt;Player&gt;
 +MessageQueue: BlockingCollection&lt;Command&gt;
 +GameId: string
 +Name: string
-+MaxPlayers: int
 +GameCreatorClientId: string
 +Password: string
 +GameState: GameState
@@ -139,29 +246,29 @@ m_ConnectedClients</panel_attributes>
 *Comments*
 -- Represents an individual and self contained instance of the running game
 -- Can communicate with the unique clients connected to the game</panel_attributes>
-    <additional_attributes/>
+m1=1</panel_attributes>
+    <additional_attributes>56;80;56;24</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>952</x>
-      <y>240</y>
-      <w>88</w>
-      <h>112</h>
+      <x>944</x>
+      <y>208</y>
+      <w>40</w>
+      <h>88</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
-Callback</panel_attributes>
-    <additional_attributes>48;96;48;24</additional_attributes>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>24;72;24;24</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>784</x>
-      <y>336</y>
+      <x>696</x>
+      <y>176</y>
       <w>456</w>
-      <h>112</h>
+      <h>32</h>
     </coordinates>
-    <panel_attributes>*ConnectedClient*
+    <panel_attributes>m_ConnectedClients
 --
 +ClientId: string
 +Callback: IClient
@@ -190,10 +297,17 @@ Notify(message: string): void
 *Comments*
 -- Provides a mechanism for the server to notify 
 the client with new messages
-</panel_attributes>
+m_ServerCallback</panel_attributes>
+--
++PlayerColor: Framework.PlayerColorEnum
++Ready: MonitoredValue&lt;bool&gt;
+--
+
+--
+*Comments*
+-- Represents a ConnectedClient participating in a BesiegedGameInstance</panel_attributes>
     <additional_attributes/>
   </element>
-  <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>168</x>
@@ -212,16 +326,11 @@ SendCommand(serializedCommand: string): void
     <additional_attributes/>
   </element>
   <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>984</x>
-      <y>424</y>
-      <w>40</w>
-      <h>104</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>24;24;24;88</additional_attributes>
-  </element>
+      <x>336</x>
+      <y>72</y>
+      <h>88</h>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>24;24;24;72</additional_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>

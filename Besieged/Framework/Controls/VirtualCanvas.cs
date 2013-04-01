@@ -93,7 +93,7 @@ namespace Framework.Controls
         int _nodeCollectCycle;
         bool _done = true;
         MapZoom _zoom;
-
+        Size _boundry;
         public static DependencyProperty VirtualChildProperty = DependencyProperty.Register("VirtualChild", typeof(IVirtualChild), typeof(VirtualCanvas));
 
 #if ANIMATE_FEEDBACK
@@ -113,7 +113,7 @@ namespace Framework.Controls
             _content = new Canvas();
             _backdrop = new Border();
             _content.Children.Add(_backdrop);
-
+            _boundry = new Size(0,0);
             TransformGroup g = new TransformGroup();
             _scale = new ScaleTransform();
             _translate = new TranslateTransform();
@@ -125,6 +125,8 @@ namespace Framework.Controls
             _scale.Changed += new EventHandler(OnScaleChanged);
             this.Children.Add(_content);
         }
+
+        public Size Boundry { get { return _boundry; } set { _boundry = value; } }
 
         /// <summary>
         /// Callback when _children collection is changed.
@@ -280,6 +282,14 @@ namespace Framework.Controls
         /// <param name="e">noop</param>
         void OnTranslateChanged(object sender, EventArgs e)
         {
+            if(VerticalOffset > Boundry.Height - _viewPortSize.Height)
+            {
+                SetVerticalOffset(Boundry.Height - _viewPortSize.Height);
+            }
+            if (HorizontalOffset > Boundry.Width - _viewPortSize.Width)
+            {
+                SetHorizontalOffset(Boundry.Width - _viewPortSize.Width);
+            }
             OnScrollChanged();
         }
 
@@ -1017,7 +1027,6 @@ namespace Framework.Controls
         /// <param name="offset">The horizontal position to scroll to</param>
         public void SetHorizontalOffset(double offset)
         {
-            double xoffset = Math.Max(Math.Min(offset, ExtentWidth - ViewportWidth), 0);
             _translate.X = -xoffset;
             OnScrollChanged();
         }
@@ -1028,7 +1037,6 @@ namespace Framework.Controls
         /// <param name="offset">The vertical position to scroll to</param>
         public void SetVerticalOffset(double offset)
         {
-            double yoffset = Math.Max(Math.Min(offset, ExtentHeight - ViewportHeight), 0);
             _translate.Y = -yoffset;
             OnScrollChanged();
         }

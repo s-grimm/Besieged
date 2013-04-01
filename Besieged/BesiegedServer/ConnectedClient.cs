@@ -10,16 +10,15 @@ namespace BesiegedServer
 {
     public class ConnectedClient
     {
-        public string Alias { get; set; }
-        public string UniqueIdentifier { get; set; }
-        public IClient ClientCallBack { get; set; }
-        public Color PlayerColor { get; set; }
+        public string Name { get; set; }
+        public string ClientId { get; set; }
+        public IClient Callback { get; set; }
 
-        public ConnectedClient(string alias, string uniqueIdenifier, IClient clientCallBack)
+        public ConnectedClient(string name, string clientId, IClient callback)
         {
-            Alias = alias;
-            UniqueIdentifier = uniqueIdenifier;
-            ClientCallBack = clientCallBack;
+            Name = name;
+            ClientId = clientId;
+            Callback = callback;
         }
     }
 }

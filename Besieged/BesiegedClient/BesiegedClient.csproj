@@ -74,12 +74,14 @@
     <Compile Include="Engine\State\IGameState.cs" />
     <Compile Include="Engine\State\InGameEngine\InGameEngine.cs" />
     <Compile Include="Engine\State\InGameEngine\State\IInGameState.cs" />
+    <Compile Include="Engine\State\InGameEngine\State\InGameSetupState.cs" />
     <Compile Include="Engine\State\PlayingGameState.cs" />
     <Compile Include="Engine\State\LoadingState.cs" />
     <Compile Include="Engine\State\MainMenuState.cs" />
     <Compile Include="Engine\State\MultiplayerMenuState.cs" />
     <Compile Include="Engine\State\NewGameState.cs" />
     <Compile Include="Engine\State\PregameLobbyState.cs" />
+    <Compile Include="Engine\State\SplashScreenLogoState.cs" />
     <Compile Include="GlobalResources.cs" />
     <Compile Include="Rendering\RenderGameWindow.cs" />
     <Compile Include="Engine\Utilities\Rendering.cs" />
@@ -159,6 +161,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="resources\Logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="resources\sprites\alliance\Archer.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

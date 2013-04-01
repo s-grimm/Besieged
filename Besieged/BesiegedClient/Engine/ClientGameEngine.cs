@@ -29,11 +29,14 @@ namespace BesiegedClient.Engine
         private NetTcpBinding m_TcpBinding;
         private DuplexChannelFactory<IBesiegedServer> m_DuplexChannelFactory;
         private string m_ClientId;
+        private string m_GameId;
 
         public Dimensions ClientDimensions { get; set; }
         public Canvas Canvas { get; set; }
         public MonitoredValue<bool> IsServerConnected { get; set; }
-        public ObservableCollection<CommandNotifyGame> CurrentGameCollection { get; set; }
+        public ObservableCollection<CommandNotifyGame> GamesCollection { get; set; }
+        public ObservableCollection<PlayerChangedInfo> PlayerCollection { get; set; }
+        public ObservableCollection<string> ChatMessageCollection { get; set; }
 
         private ClientGameEngine() 
         {
@@ -43,7 +46,9 @@ namespace BesiegedClient.Engine
             m_TcpBinding.SendTimeout = new TimeSpan(0, 0, 10);
             m_TcpBinding.ReceiveTimeout = new TimeSpan(0, 0, 10);
 
-            CurrentGameCollection = new ObservableCollection<CommandNotifyGame>();
+            GamesCollection = new ObservableCollection<CommandNotifyGame>();
+            PlayerCollection = new ObservableCollection<PlayerChangedInfo>();
+            ChatMessageCollection = new ObservableCollection<string>();
             
             IsServerConnected = new MonitoredValue<bool>(false);
             IsServerConnected.ValueChanged += (from, to) =>
@@ -95,22 +100,46 @@ namespace BesiegedClient.Engine
 
             else if (command is CommandNotifyGame)
             {
-                Task.Factory.StartNew(() =>
+                CommandNotifyGame commandNotifyGame = command as CommandNotifyGame;
+                CommandNotifyGame game = GamesCollection.Where(x => x.GameId == commandNotifyGame.GameId).FirstOrDefault();
+                Action action = () =>
                 {
-                    CommandNotifyGame commandNotifyGame = command as CommandNotifyGame;
-                    CommandNotifyGame game = GlobalResources.GameLobbyCollection.Where(x => x.GameId == commandNotifyGame.GameId).FirstOrDefault();
                     if (game != null)
                     {
-                        CurrentGameCollection.Remove(game);
+                        GamesCollection.Remove(game);
                     }
-                    CurrentGameCollection.Add(commandNotifyGame);
-                }, CancellationToken.None, TaskCreationOptions.None, GlobalResources.m_TaskScheduler);
+                    GamesCollection.Add(commandNotifyGame);
+                };
+                ExecuteOnUIThread(action);
             }
 
-            else if (command is CommandJoinGameSuccessful)
+            else if (command is PlayerGameInfo)
             {
-                // probably need to do more here
+                PlayerGameInfo playerGameInfo = command as PlayerGameInfo;
+                m_GameId = playerGameInfo.GameId;
                 ClientGameEngine.Get().ChangeState(PregameLobbyState.Get());
+            }
+
+            else if (command is PlayerChangedInfo)
+            {
+                PlayerChangedInfo playerChangedInfo = command as PlayerChangedInfo;
+                PlayerChangedInfo player = PlayerCollection.Where(x => x.ClientId == playerChangedInfo.ClientId).FirstOrDefault();
+                Action action = () =>
+                {
+                    if (player != null)
+                    {
+                        PlayerCollection.Remove(player);
+                    }
+                    PlayerCollection.Add(playerChangedInfo);
+                };
+                ExecuteOnUIThread(action);
+            }
+
+            else if (command is CommandChatMessage)
+            {
+                CommandChatMessage commandChatMessage = command as CommandChatMessage;
+                Action action = () => ChatMessageCollection.Add(commandChatMessage.Contents);
+                ExecuteOnUIThread(action);
             }
         }
         
@@ -169,6 +198,10 @@ namespace BesiegedClient.Engine
             Task.Factory.StartNew(() =>
             {
                 command.ClientId = m_ClientId;
+                if (!(command is CommandJoinGame))
+                {
+                    command.GameId = m_GameId;
+                }
                 string serializedCommand = command.ToXml();
                 try
                 {

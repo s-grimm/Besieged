@@ -14,6 +14,9 @@ using BesiegedClient.Rendering;
 using System.Collections.ObjectModel;
 using BesiegedClient.Engine;
 using BesiegedClient.Engine.State;
+using System.Windows.Media.Imaging;
+using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace BesiegedClient
 {
@@ -44,8 +47,19 @@ namespace BesiegedClient
                 Application.Current.MainWindow.Width = ClientSettings.Default.Width + 15;
                 Application.Current.MainWindow.Height = ClientSettings.Default.Height + 38;
             }
+
             ClientGameEngine.Get().SetGameCanvas(cvsGameWindow);
-            ClientGameEngine.Get().ChangeState(MainMenuState.Get());
+            ClientGameEngine.Get().ChangeState(SplashScreenLogoState.Get());
+
+            DispatcherTimer dtimer = new DispatcherTimer();
+            dtimer.Tick += (s, e) => {
+                dtimer.Stop();
+                ClientGameEngine.Get().ChangeState(MainMenuState.Get());
+            };
+
+            dtimer.Interval = new TimeSpan(0, 0, 9);
+            dtimer.Start();
+
             //register close handlers
             //    this.Closing += (s, e) =>
             //        {
