@@ -414,5 +414,26 @@ namespace Framework.Unit
         }
     }
 
+    public class BeastCastle : DrawableObject, IUnit
+    {
+
+        public int CurrentHealthPoints { get; set; }
+
+        public int MaxHealthPoints { get; set; }
+
+        public int Initiative { get; set; }
+
+        public int Skill { get; set; }
+
+        public int Range { get; set; }
+
+        public int Cost { get; set; }
+
+        public int Movement { get; set; }
+
+        public string Description { get; set; }
+    }
+
+
 
 }

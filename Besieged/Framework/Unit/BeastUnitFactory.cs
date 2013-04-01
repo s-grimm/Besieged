@@ -47,5 +47,10 @@ namespace Framework.Unit
         {
             return new MasterGenie();
         }
+
+        public IUnit GetCastle()
+        {
+            return new BeastCastle();
+        }
     }
 }
