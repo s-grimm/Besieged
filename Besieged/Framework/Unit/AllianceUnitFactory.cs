@@ -47,5 +47,10 @@ namespace Framework.Unit
         {
             return new AscendantWizard();
         }
+
+        public IUnit GetCastle()
+        {
+            return new AllianceCastle();
+        }
     }
 }

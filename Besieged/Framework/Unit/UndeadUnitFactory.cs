@@ -47,5 +47,10 @@ namespace Framework.Unit
         {
             return new VampireCount();
         }
+
+        public IUnit GetCastle()
+        {
+            return new UndeadCastle();
+        }
     }
 }
