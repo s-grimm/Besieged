@@ -34,6 +34,11 @@ namespace BesiegedClient.Engine.State.InGameEngine.State
             //throw new NotImplementedException();
             GameMap map = InGameEngine.Get().GameBoard;
 
+            double mapHeight = map.MapHeight * _tileHeight;
+            double mapWidth = map.MapLength * _tileWidth;
+
+            InGameEngine.Get().VirtualGameCanvas.Boundry = new System.Windows.Size(mapWidth, mapHeight);
+
             for (int i = 0; i < map.MapLength; i += 1)
             {
                 for (int y = 0; y < map.MapHeight; y += 1)

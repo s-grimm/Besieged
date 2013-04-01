@@ -41,7 +41,7 @@ namespace BesiegedClient.Engine.State.InGameEngine
             GameCanvas = VirtualGameCanvas.ContentCanvas;
             VirtualGameCanvas.Width = 800;
             VirtualGameCanvas.Height = 600;
-
+           
             VirtualGameCanvas.SmallScrollIncrement = new Size(50 / 2, 50 / 2); //smallest scroll increment //change this later
 
             zoom = new MapZoom(GameCanvas); //set the zoom to the canvas we are drawing on.
