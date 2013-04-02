@@ -24,26 +24,24 @@ namespace BesiegedClient.Engine.State.InGameEngine.State
         {
             //throw new NotImplementedException();
             GameMap map = InGameEngine.Get().GameBoard;
-            IUnit[][] units = InGameEngine.Get().Units;
+            List<IUnit> units = InGameEngine.Get().Units;
 
-            for (int i = 0; i < map.MapLength; i += 1)
+
+            foreach (IUnit unit in units)
             {
-                for (int y = 0; y < map.MapHeight; y += 1)
-                {
-                    if (units[i][y] == null) continue;
-                    var sprite = units[i][y].GetSprite();
-                    Image rect = Utilities.Rendering.GetImageForUnit(sprite.ToString());
-                    rect.Width = _tileWidth;
-                    rect.Height = _tileHeight;
-                    
+                var sprite = unit.GetSprite();
+                Image rect = Utilities.Rendering.GetImageForUnit(sprite.ToString());
+                rect.Width = _tileWidth;
+                rect.Height = _tileHeight;
 
-                    
-                    Canvas.SetLeft(rect, i * _tileWidth);
-                    Canvas.SetTop(rect, y * _tileHeight);
-                    Canvas.SetZIndex(rect, 15);
-                    _units.Add(rect);
-                }
+
+
+                Canvas.SetLeft(rect, unit.X_Position * _tileWidth);
+                Canvas.SetTop(rect, unit.Y_Position * _tileHeight);
+                Canvas.SetZIndex(rect, 15);
+                _units.Add(rect);
             }
+
         }
 
         public void Render()
