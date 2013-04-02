@@ -35,6 +35,7 @@ namespace BesiegedClient.Engine
         public Dimensions ClientDimensions { get; set; }
         public Canvas Canvas { get; set; }
         public MonitoredValue<bool> IsServerConnected { get; set; }
+        public MonitoredValue<bool> AllPlayersReady { get; set; }
         public ObservableCollection<CommandNotifyGame> GamesCollection { get; set; }
         public ObservableCollection<PlayerChangedInfo> PlayerCollection { get; set; }
         public ObservableCollection<string> ChatMessageCollection { get; set; }
@@ -51,7 +52,8 @@ namespace BesiegedClient.Engine
             GamesCollection = new ObservableCollection<CommandNotifyGame>();
             PlayerCollection = new ObservableCollection<PlayerChangedInfo>();
             ChatMessageCollection = new ObservableCollection<string>();
-            
+
+            AllPlayersReady = new MonitoredValue<bool>(false);
             IsServerConnected = new MonitoredValue<bool>(false);
             IsServerConnected.ValueChanged += (from, to) =>
             {
@@ -151,6 +153,16 @@ namespace BesiegedClient.Engine
             else if (command is StartGame)
             {
                 ChangeState(PlayingGameState.Get());
+            }
+
+            else if (command is AllAreReady)
+            {
+                AllPlayersReady.Value = true;
+            }
+
+            else if (command is WaitingForPlayer)
+            {
+                AllPlayersReady.Value = false;
             }
         }
         

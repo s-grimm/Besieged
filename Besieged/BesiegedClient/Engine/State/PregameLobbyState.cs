@@ -188,6 +188,30 @@ namespace BesiegedClient.Engine.State
                 bitmapImage = new BitmapImage(new Uri(UIComponentPath + ratioPath + "Background.png", UriKind.RelativeOrAbsolute));
                 m_BackgroundBrush = new ImageBrush(bitmapImage);
 
+                ClientGameEngine.Get().AllPlayersReady.ValueChanged += (from, to) =>
+                {
+                    if (to)
+                    {
+                        Action action = () =>
+                        {
+                            m_StartEnabledImage.Visibility = Visibility.Visible;
+                            m_StartEnabledImage.IsEnabled = true;
+                            m_StartDisabledImage.Visibility = Visibility.Hidden;
+                        };
+                        ClientGameEngine.Get().ExecuteOnUIThread(action);
+                    }
+                    else
+                    {
+                        Action action = () =>
+                        {
+                            m_StartDisabledImage.Visibility = Visibility.Visible;
+                            m_StartEnabledImage.IsEnabled = false;
+                            m_StartEnabledImage.Visibility = Visibility.Hidden;
+                        };
+                        ClientGameEngine.Get().ExecuteOnUIThread(action);
+                    }
+                };
+
                 //Chat Text Box
                 m_ChatMessageBox = new TextBox();
                 m_ChatMessageBox.Opacity = 0.75;
@@ -234,7 +258,8 @@ namespace BesiegedClient.Engine.State
                 m_StartEnabledImage.Source = bitmapImage;
                 m_StartEnabledImage.Width = bitmapImage.PixelWidth;
                 m_StartEnabledImage.Height = bitmapImage.PixelHeight;
-                m_StartEnabledImage.Visibility = System.Windows.Visibility.Visible;
+                m_StartEnabledImage.Visibility = Visibility.Hidden;
+                m_StartEnabledImage.IsEnabled = false;
                 m_StartEnabledImage.Name = "StartEnabled";
                 m_StartEnabledImage.MouseEnter += MenuOptionHover;
                 m_StartEnabledImage.MouseLeave += MenuOptionHoverLost;
@@ -247,7 +272,7 @@ namespace BesiegedClient.Engine.State
                 m_StartDisabledImage.Source = bitmapImage;
                 m_StartDisabledImage.Width = bitmapImage.PixelWidth;
                 m_StartDisabledImage.Height = bitmapImage.PixelHeight;
-                m_StartDisabledImage.Visibility = System.Windows.Visibility.Hidden;
+                m_StartDisabledImage.Visibility = Visibility.Visible;
                 m_StartDisabledImage.Name = "StartDisabled";
                 //m_StartDisabledImage.MouseEnter += MenuOptionHover;
                 //m_StartDisabledImage.MouseLeave += MenuOptionHoverLost;

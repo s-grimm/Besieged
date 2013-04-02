@@ -80,6 +80,11 @@ namespace BesiegedServer
 
             m_GameMachine.Configure(State.WaitingForPlayers)
                 .Permit(Trigger.AllPlayersReady, State.AllPlayersReady)
+                .OnEntryFrom(Trigger.PlayerNotReady, x =>
+                {
+                    WaitingForPlayer waiting = new WaitingForPlayer();
+                    LookupPlayerById(m_GameCreatorClientId).Callback.Notify(waiting.ToXml());
+                })
                 .Ignore(Trigger.PlayerNotReady)
                 .Ignore(Trigger.CreatorPressedStart);
 

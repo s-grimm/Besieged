@@ -226,4 +226,9 @@ namespace Framework.Commands
     {
         public AllAreReady() { }
     }
+
+    public class WaitingForPlayer: Command
+    {
+        public WaitingForPlayer() { }
+    }
 }
