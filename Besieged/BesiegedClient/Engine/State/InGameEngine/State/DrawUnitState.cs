@@ -1,52 +1,47 @@
 ﻿using Framework.Map;
+using Framework.Unit;
 using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BesiegedClient.Engine.State.InGameEngine.State
 {
-    public class InGameSetupState : IInGameState
+    public class DrawUnitState : IInGameState
     {
-        private static InGameSetupState m_Instance = null;
+        private static DrawUnitState m_Instance = null;
 
-        private InGameSetupState()
+        private DrawUnitState()
         {
         }
-
+        
         private double _tileWidth = 50;
         private double _tileHeight = 50;
-        private List<Rectangle> _rectangles = new List<Rectangle>();
+        private List<Image> _units = new List<Image>();
 
         public void Initialize()
         {
             //throw new NotImplementedException();
             GameMap map = InGameEngine.Get().GameBoard;
-
-            double mapHeight = map.MapHeight * _tileHeight;
-            double mapWidth = map.MapLength * _tileWidth;
-
-            InGameEngine.Get().VirtualGameCanvas.Boundry = new System.Windows.Size(mapWidth, mapHeight);
+            IUnit[][] units = InGameEngine.Get().Units;
 
             for (int i = 0; i < map.MapLength; i += 1)
             {
                 for (int y = 0; y < map.MapHeight; y += 1)
                 {
-                    var sprite = map.Tiles[i][y].GetSprite();
-                    Rectangle rect = new Rectangle(); //create the rectangle
-                    rect.StrokeThickness = 1;  //border to 1 stroke thick
-                    rect.Stroke = new SolidColorBrush(Colors.Black); //border color to black
-                    rect.Fill = Utilities.Rendering.GetBrushForTile(sprite.ToString());
-                    rect.Width = 50;
-                    rect.Height = 50;
-                    rect.Name = "box" + i.ToString();
+                    if (units[i][y] == null) continue;
+                    var sprite = units[i][y].GetSprite();
+                    Image rect = Utilities.Rendering.GetImageForUnit(sprite.ToString());
+                    rect.Width = _tileWidth;
+                    rect.Height = _tileHeight;
+                    
+
+                    
                     Canvas.SetLeft(rect, i * _tileWidth);
                     Canvas.SetTop(rect, y * _tileHeight);
-                    _rectangles.Add(rect);
+                    Canvas.SetZIndex(rect, 15);
+                    _units.Add(rect);
                 }
             }
         }
@@ -54,18 +49,19 @@ namespace BesiegedClient.Engine.State.InGameEngine.State
         public void Render()
         {
             Canvas target = InGameEngine.Get().GameCanvas;
-            foreach (Rectangle r in _rectangles)
+            foreach (Image r in _units)
             {
+                r.MouseDown += InGameEngine.Get().unit_MouseLeftButtonDown;
+                r.MouseMove += InGameEngine.Get().unit_MouseMove;
+                r.MouseUp   += InGameEngine.Get().unit_MouseLeftButtonUp;
                 target.Children.Add(r);
             }
-
-            InGameEngine.Get().ChangeState(DrawUnitState.Get());
         }
 
         public void Dispose()
         {
             Canvas target = InGameEngine.Get().GameCanvas;
-            foreach (Rectangle r in _rectangles)
+            foreach (Image r in _units)
             {
                 if (target.Children.Contains(r))
                 {
@@ -80,7 +76,7 @@ namespace BesiegedClient.Engine.State.InGameEngine.State
             {
                 if (m_Instance == null)
                 {
-                    m_Instance = new InGameSetupState();
+                    m_Instance = new DrawUnitState();
                     m_Instance.Initialize();
                 }
                 return m_Instance;

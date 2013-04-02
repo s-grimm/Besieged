@@ -19,4 +19,9 @@ namespace Framework.Commands
     {
         public PlayerNotReady() { }
     }
+
+    public class StartGame : GameSpecificCommand
+    {
+        public StartGame() { }
+    }
 }

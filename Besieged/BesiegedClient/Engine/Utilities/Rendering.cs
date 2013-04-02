@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -31,6 +32,25 @@ namespace BesiegedClient.Engine.Utilities
                     TileBrushes.Add(TilePNGName, new ImageBrush(bimg));
                 }
                 return TileBrushes[TilePNGName];
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public static Image GetImageForUnit(string ImagePNGName)
+        {
+            try
+            {
+
+                    BitmapImage bimg = new BitmapImage(new Uri(@"resources\sprites\units\" + ImagePNGName, UriKind.RelativeOrAbsolute));
+                    Image res = new Image() {
+                    Source = bimg,
+                    Width = bimg.PixelWidth,
+                    Height = bimg.PixelHeight
+                    };
+                    return res;
             }
             catch (Exception)
             {

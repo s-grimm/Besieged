@@ -25,8 +25,8 @@ namespace BesiegedServer
         public BesiegedServer()
         {
             // Hardcode a game instance as a test
-            string newGameId = Guid.NewGuid().ToString();
-            m_Games.GetOrAdd(newGameId, new BesiegedGameInstance(newGameId, "Test Game", 4, "jesse"));
+            //string newGameId = Guid.NewGuid().ToString();
+            //m_Games.GetOrAdd(newGameId, new BesiegedGameInstance(newGameId, "Test Game", 4, "jesse"));
         }
 
         private void StartProcessingMessages()
@@ -162,7 +162,7 @@ namespace BesiegedServer
                 {
                     CommandCreateGame commandCreateGame = command as CommandCreateGame; // create the new game instance
                     string newGameId = Guid.NewGuid().ToString();
-                    BesiegedGameInstance gameInstance = new BesiegedGameInstance(newGameId, commandCreateGame.GameName, commandCreateGame.MaxPlayers, commandCreateGame.Password);
+                    BesiegedGameInstance gameInstance = new BesiegedGameInstance(newGameId, commandCreateGame.GameName, commandCreateGame.MaxPlayers, commandCreateGame.Password, commandCreateGame.ClientId);
                     m_Games.GetOrAdd(newGameId, gameInstance);
 
 					ConnectedClient client = m_ConnectedClients[commandCreateGame.ClientId];    // add the client that requested the new game to the game instance

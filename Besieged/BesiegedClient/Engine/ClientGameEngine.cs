@@ -117,7 +117,7 @@ namespace BesiegedClient.Engine
             {
                 PlayerGameInfo playerGameInfo = command as PlayerGameInfo;
                 m_GameId = playerGameInfo.GameId;
-                ClientGameEngine.Get().ChangeState(PregameLobbyState.Get());
+                ChangeState(PregameLobbyState.Get());
             }
 
             else if (command is PlayerChangedInfo)
@@ -140,6 +140,11 @@ namespace BesiegedClient.Engine
                 CommandChatMessage commandChatMessage = command as CommandChatMessage;
                 Action action = () => ChatMessageCollection.Add(commandChatMessage.Contents);
                 ExecuteOnUIThread(action);
+            }
+
+            else if (command is StartGame)
+            {
+                ChangeState(PlayingGameState.Get());
             }
         }
         
