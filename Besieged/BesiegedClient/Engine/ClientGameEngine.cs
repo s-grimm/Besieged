@@ -37,6 +37,7 @@ namespace BesiegedClient.Engine
         public ObservableCollection<CommandNotifyGame> GamesCollection { get; set; }
         public ObservableCollection<PlayerChangedInfo> PlayerCollection { get; set; }
         public ObservableCollection<string> ChatMessageCollection { get; set; }
+        public bool IsGameCreator { get; set; }
 
         private ClientGameEngine() 
         {
@@ -117,6 +118,10 @@ namespace BesiegedClient.Engine
             {
                 PlayerGameInfo playerGameInfo = command as PlayerGameInfo;
                 m_GameId = playerGameInfo.GameId;
+                if (playerGameInfo.IsCreator)
+                {
+                    IsGameCreator = true;
+                }
                 ChangeState(PregameLobbyState.Get());
             }
 

@@ -168,8 +168,8 @@ namespace BesiegedServer
 					ConnectedClient client = m_ConnectedClients[commandCreateGame.ClientId];    // add the client that requested the new game to the game instance
                     gameInstance.AddPlayer(client);
 
-                    CommandJoinGameSuccessful commandJoinGameSuccessful = new CommandJoinGameSuccessful(gameInstance.GameId);
-                    NotifyClient(commandCreateGame.ClientId, commandJoinGameSuccessful.ToXml());
+                    //CommandJoinGameSuccessful commandJoinGameSuccessful = new CommandJoinGameSuccessful(gameInstance.GameId, true);
+                    //NotifyClient(commandCreateGame.ClientId, commandJoinGameSuccessful.ToXml());
 
                     string capacity = string.Format("{0}/{1} players", gameInstance.Players.Count, gameInstance.MaxPlayers);   // notify all connect clients of the updated game instance
                     CommandNotifyGame commandNotifyGame = new CommandNotifyGame(gameInstance.GameId, gameInstance.Name, capacity, gameInstance.IsGameInstanceFull, gameInstance.Password != string.Empty ? true:false);

@@ -150,7 +150,7 @@ namespace BesiegedServer
             {
                 GameId = this.GameId,
                 Color = player.PlayerColor,
-                IsCreator = false
+                IsCreator = (Players.Count == 1) ? true : false
             };
             if (Players.Count == 0)
             {

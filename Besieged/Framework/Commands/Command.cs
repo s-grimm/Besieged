@@ -125,13 +125,15 @@ namespace Framework.Commands
 
     public class CommandJoinGameSuccessful : Command
     {
+        public bool IsCreator { get; set; }
         public CommandJoinGameSuccessful()
         {
         }
 
-        public CommandJoinGameSuccessful(string gameId)
+        public CommandJoinGameSuccessful(string gameId, bool isCreator)
         {
             GameId = gameId;
+            IsCreator = isCreator;
         }
     }
 

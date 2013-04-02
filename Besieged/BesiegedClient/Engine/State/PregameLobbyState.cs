@@ -366,18 +366,21 @@ namespace BesiegedClient.Engine.State
             m_ChatMessagesListBox.Height = dimensions.Height * 0.25;
             m_ChatMessagesListBox.Width = dimensions.Width * 0.85;
 
-            //start game enabled
-            Canvas.SetLeft(m_StartEnabledImage, m_MenuXOffset);
-            Canvas.SetBottom(m_StartEnabledImage, m_MenuYOffset);
-            Canvas.SetZIndex(m_StartEnabledImage, 100);
-            ClientGameEngine.Get().Canvas.Children.Add(m_StartEnabledImage);
+            if (ClientGameEngine.Get().IsGameCreator)
+            {
+                //start game enabled
+                Canvas.SetLeft(m_StartEnabledImage, m_MenuXOffset);
+                Canvas.SetBottom(m_StartEnabledImage, m_MenuYOffset);
+                Canvas.SetZIndex(m_StartEnabledImage, 100);
+                ClientGameEngine.Get().Canvas.Children.Add(m_StartEnabledImage);
 
-            //start game disabled
-            Canvas.SetLeft(m_StartDisabledImage, m_MenuXOffset);
-            Canvas.SetBottom(m_StartDisabledImage, m_MenuYOffset);
-            Canvas.SetZIndex(m_StartDisabledImage, 100);
-            ClientGameEngine.Get().Canvas.Children.Add(m_StartDisabledImage);
-            m_MenuYOffset -= m_StartDisabledImage.Height * 1.5;
+                //start game disabled
+                Canvas.SetLeft(m_StartDisabledImage, m_MenuXOffset);
+                Canvas.SetBottom(m_StartDisabledImage, m_MenuYOffset);
+                Canvas.SetZIndex(m_StartDisabledImage, 100);
+                ClientGameEngine.Get().Canvas.Children.Add(m_StartDisabledImage);
+                m_MenuYOffset -= m_StartDisabledImage.Height * 1.5;
+            }
 
             //leave game enabled
             Canvas.SetLeft(m_LeaveEnabledImage, m_MenuXOffset);
