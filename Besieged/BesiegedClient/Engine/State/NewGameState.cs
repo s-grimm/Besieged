@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Framework.Utilities.Xml;
+using Framework.BesiegedMessages;
 
 namespace BesiegedClient.Engine.State
 {
@@ -108,13 +109,13 @@ namespace BesiegedClient.Engine.State
                         {
                             if (m_Password == string.Empty || m_Password == "Optional" || m_Password == null)
                             {
-                                CommandCreateGame commandCreateGame = new CommandCreateGame(m_GameName, 4);
-                                ClientGameEngine.Get().SendMessageToServer(commandCreateGame);
+                                CreateGameMessage createGame = new CreateGameMessage(m_GameName, 4);
+                                ClientGameEngine.Get().SendMessageToServer(createGame);
                             }
                             else
                             {
-                                CommandCreateGame commandCreateGame = new CommandCreateGame(m_GameName, 4, m_Password);
-                                ClientGameEngine.Get().SendMessageToServer(commandCreateGame);
+                                CreateGameMessage createGame = new CreateGameMessage(m_GameName, 4, m_Password);
+                                ClientGameEngine.Get().SendMessageToServer(createGame);
                             }
                         }
                     }

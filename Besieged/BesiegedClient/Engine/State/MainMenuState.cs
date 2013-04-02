@@ -1,4 +1,5 @@
 ﻿using BesiegedClient.Engine.Dialog;
+using Framework.BesiegedMessages;
 using Framework.Commands;
 using Framework.Utilities.Xml;
 using System;
@@ -117,8 +118,8 @@ namespace BesiegedClient.Engine.State
                             else
                             {
                                 ClientGameEngine.Get().ChangeState(LoadingState.Get());
-                                CommandConnect commandConnect = new CommandConnect(se as string);
-                                ClientGameEngine.Get().SendMessageToServer(commandConnect);
+                                ConnectMessage connect = new ConnectMessage() { Name = se as string };
+                                ClientGameEngine.Get().SendMessageToServer(connect);
                             }
                         });
                     }

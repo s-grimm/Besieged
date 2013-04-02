@@ -1,4 +1,5 @@
 ﻿using BesiegedClient.Engine.Dialog;
+using Framework.BesiegedMessages;
 using Framework.Commands;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace BesiegedClient.Engine.State
         private double m_MenuYOffset;
         private double m_MenuXOffset;
         private object m_MouseDownSender;
-        private CommandNotifyGame m_SelectedGame;
+        private GameInfoMessage m_SelectedGame;
 
         private ListView m_CurrentGameListView;
         private GridView m_GameGridView;
@@ -111,15 +112,15 @@ namespace BesiegedClient.Engine.State
                             {
                                 if (se != null)
                                 {
-                                    CommandJoinGame commandJoinGame = new CommandJoinGame(m_SelectedGame.GameId, se as string);
-                                    ClientGameEngine.Get().SendMessageToServer(commandJoinGame);
+                                    JoinGameMessage joinGame = new JoinGameMessage() { Password = se as string };
+                                    ClientGameEngine.Get().SendMessageToServer(joinGame);
                                 }
                             });
                         }
                         else
                         {
-                            CommandJoinGame commandJoinGame = new CommandJoinGame(m_SelectedGame.GameId, string.Empty);
-                            ClientGameEngine.Get().SendMessageToServer(commandJoinGame);
+                            JoinGameMessage joinGame = new JoinGameMessage() { Password = string.Empty };
+                            ClientGameEngine.Get().SendMessageToServer(joinGame);
                         }
                     }
                 }
@@ -160,7 +161,7 @@ namespace BesiegedClient.Engine.State
 
                 m_CurrentGameListView.SelectionChanged += (s, e) =>
                 {
-                    m_SelectedGame = ((ListView)s).SelectedItem as CommandNotifyGame;
+                    m_SelectedGame = ((ListView)s).SelectedItem as GameInfoMessage;
                 };
 
                 double aspectRatio = Math.Round((double)ClientGameEngine.Get().ClientDimensions.Width / (double)ClientGameEngine.Get().ClientDimensions.Height, 2, MidpointRounding.AwayFromZero);

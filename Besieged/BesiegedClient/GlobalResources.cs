@@ -44,7 +44,7 @@ namespace BesiegedClient
 
         public static void SendMessageToServer(string command)
         {
-            Task.Factory.StartNew(() => BesiegedServer.SendCommand(command));
+            Task.Factory.StartNew(() => BesiegedServer.SendMessage(command));
         }
     }
 }

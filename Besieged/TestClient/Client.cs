@@ -14,7 +14,7 @@ namespace TestClient
     {
         public BlockingCollection<Command> MessageQueue = new BlockingCollection<Command>();
 
-        public void Notify(string serializedMessage)
+        public void SendMessage(string serializedMessage)
         {
             try
             {
