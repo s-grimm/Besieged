@@ -111,6 +111,7 @@ namespace BesiegedClient.Engine.State
                             {
                                 if (se != null)
                                 {
+                                    ClientGameEngine.Get().ChangeState(LoadingState.Get());
                                     CommandJoinGame commandJoinGame = new CommandJoinGame(m_SelectedGame.GameId, se as string);
                                     ClientGameEngine.Get().SendMessageToServer(commandJoinGame);
                                 }

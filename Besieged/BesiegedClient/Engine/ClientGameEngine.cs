@@ -147,6 +147,18 @@ namespace BesiegedClient.Engine
             {
                 ChangeState(PlayingGameState.Get());
             }
+
+            else if (command is CommandServerError)
+            {
+                CommandServerError commandServerError = command as CommandServerError;
+                
+                    Action postRender = () =>
+                    {
+                        RenderMessageDialog.RenderMessage(commandServerError.ErrorMessage);
+                    };
+                    ChangeState(m_PreviousGameState, postRender);
+                
+            }
         }
         
         public static ClientGameEngine Get()
