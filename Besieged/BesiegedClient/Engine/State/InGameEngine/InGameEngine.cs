@@ -125,6 +125,8 @@ namespace BesiegedClient.Engine.State.InGameEngine
             selectedUnit = Units[y_original][x_original];
 
             e.Handled = true;
+
+            //this.ChangeState(UnitSelectedState);
         }
         public void unit_MouseMove(object sender, MouseEventArgs e)
         {
@@ -148,7 +150,15 @@ namespace BesiegedClient.Engine.State.InGameEngine
                 int factor = 50;
                 int nearestX = (int)Math.Round((x / (double)factor)) * factor;
                 int nearestY = (int)Math.Round((y / (double)factor)) * factor;
-                if (Units[nearestY / 50][nearestX / 50] != null || !GameBoard.Tiles[nearestY / 50][nearestX / 50].IsPassable) //there is a unit here already OR the tile is impassable, return it to its original position
+
+                //check bounds on unit
+                int movementRange = selectedUnit.Movement;
+                int totalMovedY = nearestY / 50 - y_original;
+                int totalMovedX = nearestX / 50 - x_original;
+                if (totalMovedY < 0) totalMovedY *= -1;
+                if (totalMovedX < 0) totalMovedX *= -1;
+                
+                if (Units[nearestY / 50][nearestX / 50] != null || !GameBoard.Tiles[nearestY / 50][nearestX / 50].IsPassable || totalMovedX + totalMovedY > movementRange) //there is a unit here already OR the tile is impassable, return it to its original position
                 {
                     Canvas.SetLeft(source, x_original * 50);
                     Canvas.SetTop(source, y_original * 50);
