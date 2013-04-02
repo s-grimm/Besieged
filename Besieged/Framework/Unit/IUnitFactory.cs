@@ -16,6 +16,7 @@ namespace Framework.Unit
         IUnit GetAdvancedMounted();
         IUnit GetBasicSpellCaster();
         IUnit GetAdvancedSpellCaster();
+        IUnit GetCastle();
         // something for the hero
     }
 }

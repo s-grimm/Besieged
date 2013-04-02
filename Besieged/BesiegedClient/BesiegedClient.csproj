@@ -73,6 +73,7 @@
     </Compile>
     <Compile Include="Engine\State\IGameState.cs" />
     <Compile Include="Engine\State\InGameEngine\InGameEngine.cs" />
+    <Compile Include="Engine\State\InGameEngine\State\DrawUnitState.cs" />
     <Compile Include="Engine\State\InGameEngine\State\IInGameState.cs" />
     <Compile Include="Engine\State\InGameEngine\State\InGameSetupState.cs" />
     <Compile Include="Engine\State\PlayingGameState.cs" />
@@ -164,28 +165,34 @@
     <Content Include="resources\Logo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="resources\sprites\alliance\Archer.png">
+    <Content Include="resources\sprites\units\AllianceCastle.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="resources\sprites\alliance\AscendantWizard.png">
+    <Content Include="resources\sprites\units\Archer.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="resources\sprites\alliance\Centaur.png">
+    <Content Include="resources\sprites\units\AscendantWizard.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="resources\sprites\alliance\CentaurOutrider.png">
+    <Content Include="resources\sprites\units\Centaur.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="resources\sprites\alliance\Dwarf.png">
+    <Content Include="resources\sprites\units\CentaurOutrider.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="resources\sprites\alliance\DwarfChampion.png">
+    <Content Include="resources\sprites\units\Dwarf.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="resources\sprites\alliance\ElvenRanger.png">
+    <Content Include="resources\sprites\units\DwarfChampion.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="resources\sprites\alliance\Wizard.png">
+    <Content Include="resources\sprites\units\ElvenRanger.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\sprites\units\Wizard.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\sprites\units\BeastCastle.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="resources\sprites\tiles\ArcticBridge.png">
@@ -278,6 +285,9 @@
     <Content Include="resources\sprites\tiles\WetlandRoad.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="resources\sprites\units\UndeadCastle.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="resources\UI\ClickedCloseDialog.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -352,54 +362,54 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="resources\sprites\beasts\Genie.png">
+    <Content Include="resources\sprites\units\Genie.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="resources\sprites\beasts\Gnoll.png">
+    <Content Include="resources\sprites\units\Gnoll.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="resources\sprites\beasts\GnollMarauder.png">
+    <Content Include="resources\sprites\units\GnollMarauder.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="resources\sprites\beasts\Lizardman.png">
+    <Content Include="resources\sprites\units\Lizardman.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="resources\sprites\beasts\LizardmanCaptain.png">
+    <Content Include="resources\sprites\units\LizardmanCaptain.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="resources\sprites\beasts\MasterGenie.png">
+    <Content Include="resources\sprites\units\MasterGenie.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="resources\sprites\beasts\Taurus.png">
+    <Content Include="resources\sprites\units\Taurus.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="resources\sprites\beasts\TaurusLord.png">
+    <Content Include="resources\sprites\units\TaurusLord.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="resources\sprites\undead\Orc.png">
+    <Content Include="resources\sprites\units\Orc.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="resources\sprites\undead\OrcChief.png">
+    <Content Include="resources\sprites\units\OrcChief.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="resources\sprites\undead\Skeleton.png">
+    <Content Include="resources\sprites\units\Skeleton.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="resources\sprites\undead\SkeletonCaptain.png">
+    <Content Include="resources\sprites\units\SkeletonCaptain.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="resources\sprites\undead\Vampire.png">
+    <Content Include="resources\sprites\units\Vampire.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="resources\sprites\undead\VampireCount.png">
+    <Content Include="resources\sprites\units\VampireCount.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="resources\sprites\undead\WolfLord.png">
+    <Content Include="resources\sprites\units\WolfLord.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="resources\sprites\undead\WolfRider.png">
+    <Content Include="resources\sprites\units\WolfRider.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

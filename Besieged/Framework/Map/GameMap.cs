@@ -37,11 +37,11 @@ namespace Framework.Map
                 {
                     if (x < 3 || y < 3 || x > 52 || y > 52)
                     {
-                        Tiles[x][y] = new Border();
+                        Tiles[x][y] = new Border() { IsPassable = false };
                     }
                     else
                     {
-                        Tiles[x][y] = new Grass();
+                        Tiles[x][y] = new Grass() { IsPassable = true };
                     }
                 }
             }
