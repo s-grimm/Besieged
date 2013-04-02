@@ -102,12 +102,8 @@ namespace BesiegedClient.Engine.State
                 if (m_MouseDownSender != sender) return;
                 Image img = sender as Image;
                 string selected = img.Name;
-                if (selected == "StartEnabled")
-                {
-                    ClientGameEngine.Get().ChangeState(PlayingGameState.Get());
-                }
 
-                else if (selected == "NotReady")
+                if (selected == "NotReady")
                 {
                     PlayerNotReady playerNotReady = new PlayerNotReady();
                     ClientGameEngine.Get().SendMessageToServer(playerNotReady);
@@ -127,6 +123,12 @@ namespace BesiegedClient.Engine.State
                     m_ReadyImage.IsEnabled = false;
                     m_NotReadyImage.Visibility = Visibility.Visible;
                     m_NotReadyImage.IsEnabled = true;
+                }
+
+                else if (selected == "StartEnabled")
+                {
+                    StartGame start = new StartGame();
+                    ClientGameEngine.Get().SendMessageToServer(start);
                 }
 
                 //else if (selected == "JoinGame")

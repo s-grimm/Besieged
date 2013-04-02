@@ -219,4 +219,9 @@ namespace Framework.Commands
 
         public PlayerChangedInfo() { }
     }
+
+    public class AllAreReady: Command
+    {
+        public AllAreReady() { }
+    }
 }
