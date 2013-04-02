@@ -4,12 +4,13 @@ using Framework.Map;
 using Framework.Unit;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Linq;
+
 namespace BesiegedClient.Engine.State.InGameEngine
 {
     public class InGameEngine
@@ -34,6 +35,7 @@ namespace BesiegedClient.Engine.State.InGameEngine
         #endregion "Virtual Canvas"
 
         public GameMap GameBoard { get; set; }
+
         public List<IUnit> Units { get; set; }
 
         private InGameEngine()
@@ -44,7 +46,7 @@ namespace BesiegedClient.Engine.State.InGameEngine
             GameCanvas = VirtualGameCanvas.ContentCanvas;
             VirtualGameCanvas.Width = 800;
             VirtualGameCanvas.Height = 600;
-           
+
             VirtualGameCanvas.SmallScrollIncrement = new Size(50 / 2, 50 / 2); //smallest scroll increment //change this later
 
             zoom = new MapZoom(GameCanvas); //set the zoom to the canvas we are drawing on.
@@ -62,6 +64,7 @@ namespace BesiegedClient.Engine.State.InGameEngine
             Units = new List<IUnit>();
 
             BeastUnitFactory bFac = new BeastUnitFactory();
+
             //place a couple of units for testing purposes
             for (int i = 4; i <= 12; i += 4)
             {
@@ -111,11 +114,12 @@ namespace BesiegedClient.Engine.State.InGameEngine
         }
 
         //unit movement shit
-        bool captured = false;
-        double x_shape, y_shape;
-        int x_original, y_original;
-        UIElement source = null;
-        IUnit selectedUnit = null;
+        private bool captured = false;
+
+        private double x_shape, y_shape;
+        private int x_original, y_original;
+        private UIElement source = null;
+        private IUnit selectedUnit = null;
 
         public void unit_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -131,8 +135,10 @@ namespace BesiegedClient.Engine.State.InGameEngine
             e.Handled = true;
 
             ClientGameEngine.Get().m_CurrentWindow.Cursor = Cursors.Hand;
+
             //this.ChangeState(UnitSelectedState);
         }
+
         public void unit_MouseMove(object sender, MouseEventArgs e)
         {
             if (captured && selectedUnit != null)
@@ -187,7 +193,6 @@ namespace BesiegedClient.Engine.State.InGameEngine
             selectedUnit = null;
 
             ClientGameEngine.Get().m_CurrentWindow.Cursor = Cursors.Arrow;
-
         }
     }
 }
