@@ -8,6 +8,9 @@ namespace Framework.Unit
 {
     public class Dwarf : DrawableObject, IUnit
     {
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
+
         public int CurrentHealthPoints
         {
             get { return CurrentHealthPoints; }
@@ -59,6 +62,9 @@ namespace Framework.Unit
 
     public class DwarfChampion : DrawableObject, IUnit
     {
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
+
         public int CurrentHealthPoints
         {
             get { return CurrentHealthPoints; }
@@ -110,6 +116,9 @@ namespace Framework.Unit
 
     public class Archer : DrawableObject, IUnit
     {
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
+
         public int CurrentHealthPoints
         {
             get { return CurrentHealthPoints; }
@@ -161,6 +170,9 @@ namespace Framework.Unit
 
     public class ElvenRanger : DrawableObject, IUnit
     {
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
+
         public int CurrentHealthPoints
         {
             get { return CurrentHealthPoints; }
@@ -212,6 +224,9 @@ namespace Framework.Unit
 
     public class Centaur : DrawableObject, IUnit
     {
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
+
         public int CurrentHealthPoints
         {
             get { return CurrentHealthPoints; }
@@ -263,6 +278,9 @@ namespace Framework.Unit
 
     public class CentaurOutrider : DrawableObject, IUnit
     {
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
+
         public int CurrentHealthPoints
         {
             get { return CurrentHealthPoints; }
@@ -314,6 +332,9 @@ namespace Framework.Unit
 
     public class Wizard : DrawableObject, IUnit
     {
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
+
         public int CurrentHealthPoints
         {
             get { return CurrentHealthPoints; }
@@ -365,6 +386,9 @@ namespace Framework.Unit
 
     public class AscendantWizard : DrawableObject, IUnit
     {
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
+
         public int CurrentHealthPoints
         {
             get { return CurrentHealthPoints; }
@@ -416,6 +440,8 @@ namespace Framework.Unit
 
     public class AllianceCastle : DrawableObject, IUnit
     {
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
 
         public int CurrentHealthPoints { get; set; }
 

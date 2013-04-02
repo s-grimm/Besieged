@@ -9,6 +9,9 @@ namespace Framework.Unit
 {
     public class Skeleton : DrawableObject, IUnit
     {
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
+
         public int CurrentHealthPoints
         {
             get { return CurrentHealthPoints; }
@@ -60,6 +63,9 @@ namespace Framework.Unit
 
     public class SkeletonCaptain : DrawableObject, IUnit
     {
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
+
         public int CurrentHealthPoints
         {
             get { return CurrentHealthPoints; }
@@ -111,6 +117,9 @@ namespace Framework.Unit
 
     public class Orc : DrawableObject, IUnit
     {
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
+
         public int CurrentHealthPoints
         {
             get { return CurrentHealthPoints; }
@@ -162,6 +171,9 @@ namespace Framework.Unit
 
     public class OrcChief : DrawableObject, IUnit
     {
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
+
         public int CurrentHealthPoints
         {
             get { return CurrentHealthPoints; }
@@ -213,6 +225,9 @@ namespace Framework.Unit
 
     public class WolfRider : DrawableObject, IUnit
     {
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
+
         public int CurrentHealthPoints
         {
             get { return CurrentHealthPoints; }
@@ -264,6 +279,9 @@ namespace Framework.Unit
 
     public class WolfLord : DrawableObject, IUnit
     {
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
+
         public int CurrentHealthPoints
         {
             get { return CurrentHealthPoints; }
@@ -315,6 +333,9 @@ namespace Framework.Unit
 
     public class Vampire : DrawableObject, IUnit
     {
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
+
         public int CurrentHealthPoints
         {
             get { return CurrentHealthPoints; }
@@ -366,6 +387,9 @@ namespace Framework.Unit
 
     public class VampireCount : DrawableObject, IUnit
     {
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
+
         public int CurrentHealthPoints
         {
             get { return CurrentHealthPoints; }
@@ -417,6 +441,8 @@ namespace Framework.Unit
 
     public class UndeadCastle : DrawableObject, IUnit
     {
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
 
         public int CurrentHealthPoints { get; set; }
 

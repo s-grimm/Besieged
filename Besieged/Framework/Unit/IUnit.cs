@@ -8,6 +8,8 @@ namespace Framework.Unit
 {
     public interface IUnit
     {
+        int X_Position { get; set; }
+        int Y_Position { get; set; }
         int CurrentHealthPoints { get; set; }
         int MaxHealthPoints { get; set; }
         int Initiative { get; set; }

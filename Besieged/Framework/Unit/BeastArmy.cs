@@ -8,6 +8,9 @@ namespace Framework.Unit
 {
     public class Gnoll : DrawableObject, IUnit
     {
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
+
         public int CurrentHealthPoints
         {
             get { return CurrentHealthPoints; }
@@ -59,6 +62,9 @@ namespace Framework.Unit
 
     public class GnollMarauder : DrawableObject, IUnit
     {
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
+
         public int CurrentHealthPoints
         {
             get { return CurrentHealthPoints; }
@@ -110,6 +116,9 @@ namespace Framework.Unit
 
     public class Lizardman : DrawableObject, IUnit
     {
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
+
         public int CurrentHealthPoints
         {
             get { return CurrentHealthPoints; }
@@ -161,6 +170,9 @@ namespace Framework.Unit
 
     public class LizardmanCaptain : DrawableObject, IUnit
     {
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
+
         public int CurrentHealthPoints
         {
             get { return CurrentHealthPoints; }
@@ -212,6 +224,9 @@ namespace Framework.Unit
 
     public class Taurus : DrawableObject, IUnit
     {
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
+
         public int CurrentHealthPoints
         {
             get { return CurrentHealthPoints; }
@@ -263,6 +278,9 @@ namespace Framework.Unit
 
     public class TaurusLord : DrawableObject, IUnit
     {
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
+
         public int CurrentHealthPoints
         {
             get { return CurrentHealthPoints; }
@@ -314,6 +332,9 @@ namespace Framework.Unit
 
     public class Genie : DrawableObject, IUnit
     {
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
+
         public int CurrentHealthPoints
         {
             get { return CurrentHealthPoints; }
@@ -365,6 +386,9 @@ namespace Framework.Unit
 
     public class MasterGenie : DrawableObject, IUnit
     {
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
+
         public int CurrentHealthPoints
         {
             get { return CurrentHealthPoints;    }
@@ -416,6 +440,8 @@ namespace Framework.Unit
 
     public class BeastCastle : DrawableObject, IUnit
     {
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
 
         public int CurrentHealthPoints { get; set; }
 
