@@ -1,14 +1,13 @@
 ﻿using Framework.Sprite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Framework.Unit
 {
     public class Gnoll : DrawableObject, IUnit
     {
+        public string Owner { get; set; }
+
         public int X_Position { get; set; }
+
         public int Y_Position { get; set; }
 
         public int CurrentHealthPoints { get; set; }
@@ -51,7 +50,10 @@ namespace Framework.Unit
 
     public class GnollMarauder : DrawableObject, IUnit
     {
+        public string Owner { get; set; }
+
         public int X_Position { get; set; }
+
         public int Y_Position { get; set; }
 
         public int CurrentHealthPoints { get; set; }
@@ -101,7 +103,10 @@ namespace Framework.Unit
 
     public class Lizardman : DrawableObject, IUnit
     {
+        public string Owner { get; set; }
+
         public int X_Position { get; set; }
+
         public int Y_Position { get; set; }
 
         public int CurrentHealthPoints { get; set; }
@@ -151,7 +156,10 @@ namespace Framework.Unit
 
     public class LizardmanCaptain : DrawableObject, IUnit
     {
+        public string Owner { get; set; }
+
         public int X_Position { get; set; }
+
         public int Y_Position { get; set; }
 
         public int CurrentHealthPoints { get; set; }
@@ -201,7 +209,10 @@ namespace Framework.Unit
 
     public class Taurus : DrawableObject, IUnit
     {
+        public string Owner { get; set; }
+
         public int X_Position { get; set; }
+
         public int Y_Position { get; set; }
 
         public int CurrentHealthPoints { get; set; }
@@ -251,7 +262,10 @@ namespace Framework.Unit
 
     public class TaurusLord : DrawableObject, IUnit
     {
+        public string Owner { get; set; }
+
         public int X_Position { get; set; }
+
         public int Y_Position { get; set; }
 
         public int CurrentHealthPoints { get; set; }
@@ -301,7 +315,10 @@ namespace Framework.Unit
 
     public class Genie : DrawableObject, IUnit
     {
+        public string Owner { get; set; }
+
         public int X_Position { get; set; }
+
         public int Y_Position { get; set; }
 
         public int CurrentHealthPoints { get; set; }
@@ -351,7 +368,10 @@ namespace Framework.Unit
 
     public class MasterGenie : DrawableObject, IUnit
     {
+        public string Owner { get; set; }
+
         public int X_Position { get; set; }
+
         public int Y_Position { get; set; }
 
         public int CurrentHealthPoints { get; set; }
@@ -394,33 +414,33 @@ namespace Framework.Unit
 
         public string Description
         {
-            get { return "Master Genie"; } 
+            get { return "Master Genie"; }
             set { Description = value; }
         }
     }
 
     public class BeastCastle : DrawableObject, IUnit
     {
+        public string Owner { get; set; }
+
         public int X_Position { get; set; }
+
         public int Y_Position { get; set; }
 
         public int CurrentHealthPoints { get; set; }
 
-        public int MaxHealthPoints { get; set; }
+        public int MaxHealthPoints { get { return 25; } }
 
-        public int Initiative { get; set; }
+        public int Initiative { get { return 0; } }
 
-        public int Skill { get; set; }
+        public int Skill { get { return 0; } }
 
-        public int Range { get; set; }
+        public int Range { get { return 0; } }
 
-        public int Cost { get; set; }
+        public int Cost { get { return 0; } }
 
-        public int Movement { get; set; }
+        public int Movement { get { return 0; } }
 
-        public string Description { get; set; }
+        public string Description { get { return "Beast Castle"; } }
     }
-
-
-
 }

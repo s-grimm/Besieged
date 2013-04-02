@@ -1,21 +1,16 @@
 ﻿using Framework.Sprite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Framework.Unit
 {
     public class Dwarf : DrawableObject, IUnit
     {
         public int X_Position { get; set; }
+
         public int Y_Position { get; set; }
 
-        public int CurrentHealthPoints
-        {
-            get { return CurrentHealthPoints; }
-            set { CurrentHealthPoints = value; }
-        }
+        public string Owner { get; set; }
+
+        public int CurrentHealthPoints { get; set; }
 
         public int MaxHealthPoints
         {
@@ -62,14 +57,13 @@ namespace Framework.Unit
 
     public class DwarfChampion : DrawableObject, IUnit
     {
+        public string Owner { get; set; }
+
         public int X_Position { get; set; }
+
         public int Y_Position { get; set; }
 
-        public int CurrentHealthPoints
-        {
-            get { return CurrentHealthPoints; }
-            set { CurrentHealthPoints = value; }
-        }
+        public int CurrentHealthPoints { get; set; }
 
         public int MaxHealthPoints
         {
@@ -116,14 +110,13 @@ namespace Framework.Unit
 
     public class Archer : DrawableObject, IUnit
     {
+        public string Owner { get; set; }
+
         public int X_Position { get; set; }
+
         public int Y_Position { get; set; }
 
-        public int CurrentHealthPoints
-        {
-            get { return CurrentHealthPoints; }
-            set { CurrentHealthPoints = value; }
-        }
+        public int CurrentHealthPoints { get; set; }
 
         public int MaxHealthPoints
         {
@@ -170,14 +163,13 @@ namespace Framework.Unit
 
     public class ElvenRanger : DrawableObject, IUnit
     {
+        public string Owner { get; set; }
+
         public int X_Position { get; set; }
+
         public int Y_Position { get; set; }
 
-        public int CurrentHealthPoints
-        {
-            get { return CurrentHealthPoints; }
-            set { CurrentHealthPoints = value; }
-        }
+        public int CurrentHealthPoints { get; set; }
 
         public int MaxHealthPoints
         {
@@ -224,14 +216,13 @@ namespace Framework.Unit
 
     public class Centaur : DrawableObject, IUnit
     {
+        public string Owner { get; set; }
+
         public int X_Position { get; set; }
+
         public int Y_Position { get; set; }
 
-        public int CurrentHealthPoints
-        {
-            get { return CurrentHealthPoints; }
-            set { CurrentHealthPoints = value; }
-        }
+        public int CurrentHealthPoints { get; set; }
 
         public int MaxHealthPoints
         {
@@ -278,14 +269,13 @@ namespace Framework.Unit
 
     public class CentaurOutrider : DrawableObject, IUnit
     {
+        public string Owner { get; set; }
+
         public int X_Position { get; set; }
+
         public int Y_Position { get; set; }
 
-        public int CurrentHealthPoints
-        {
-            get { return CurrentHealthPoints; }
-            set { CurrentHealthPoints = value; }
-        }
+        public int CurrentHealthPoints { get; set; }
 
         public int MaxHealthPoints
         {
@@ -332,14 +322,13 @@ namespace Framework.Unit
 
     public class Wizard : DrawableObject, IUnit
     {
+        public string Owner { get; set; }
+
         public int X_Position { get; set; }
+
         public int Y_Position { get; set; }
 
-        public int CurrentHealthPoints
-        {
-            get { return CurrentHealthPoints; }
-            set { CurrentHealthPoints = value; }
-        }
+        public int CurrentHealthPoints { get; set; }
 
         public int MaxHealthPoints
         {
@@ -386,14 +375,13 @@ namespace Framework.Unit
 
     public class AscendantWizard : DrawableObject, IUnit
     {
+        public string Owner { get; set; }
+
         public int X_Position { get; set; }
+
         public int Y_Position { get; set; }
 
-        public int CurrentHealthPoints
-        {
-            get { return CurrentHealthPoints; }
-            set { CurrentHealthPoints = value; }
-        }
+        public int CurrentHealthPoints { get; set; }
 
         public int MaxHealthPoints
         {
@@ -440,24 +428,26 @@ namespace Framework.Unit
 
     public class AllianceCastle : DrawableObject, IUnit
     {
+        public string Owner { get; set; }
+
         public int X_Position { get; set; }
+
         public int Y_Position { get; set; }
 
         public int CurrentHealthPoints { get; set; }
 
-        public int MaxHealthPoints { get; set; }
+        public int MaxHealthPoints { get { return 25; } }
 
-        public int Initiative { get; set; }
+        public int Initiative { get { return 0; } }
 
-        public int Skill { get; set; }
+        public int Skill { get { return 0; } }
 
-        public int Range { get; set; }
+        public int Range { get { return 0; } }
 
-        public int Cost { get; set; }
+        public int Cost { get { return 0; } }
 
-        public int Movement { get; set; }
+        public int Movement { get { return 0; } }
 
-        public string Description { get; set; }
+        public string Description { get { return "Alliance Castle"; } }
     }
-
 }
