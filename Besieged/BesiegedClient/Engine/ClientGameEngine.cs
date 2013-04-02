@@ -116,14 +116,13 @@ namespace BesiegedClient.Engine
             else if (command is CommandServerError)
             {
                 CommandServerError commandServerError = command as CommandServerError;
-                if (commandServerError.ErrorMessage == "Incorrect Password")
-                {
+                
                     Action postRender = () =>
                     {
                         RenderMessageDialog.RenderMessage("Incorrect Password");
                     };
                     ChangeState(m_PreviousGameState, postRender);
-                }
+                
             }
         }
         
