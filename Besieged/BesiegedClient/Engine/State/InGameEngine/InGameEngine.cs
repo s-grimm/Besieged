@@ -1,6 +1,7 @@
 ﻿using BesiegedClient.Engine.State.InGameEngine.State;
 using Framework.Controls;
 using Framework.Map;
+using Framework.Unit;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,6 +33,7 @@ namespace BesiegedClient.Engine.State.InGameEngine
         #endregion "Virtual Canvas"
 
         public GameMap GameBoard { get; set; }
+        public IUnit[][] Units { get; set; }
 
         private InGameEngine()
         {
@@ -54,6 +56,17 @@ namespace BesiegedClient.Engine.State.InGameEngine
 
             //Hack to get a map for Shane to use - replace this with the REAL map later
             GameBoard = new GameMap();
+
+            //unit shit
+            Units = new IUnit[GameBoard.MapHeight][];
+            for (int i = 0; i < GameBoard.MapHeight; ++i)
+            {
+                Units[i] = new IUnit[GameBoard.MapLength];
+            }
+            BeastUnitFactory bFac = new BeastUnitFactory();
+            //place a couple of units for testing purposes
+            for (int i = 4; i <= 12; i += 4)
+                Units[i][i] = bFac.GetBasicInfantry();
         }
 
         public static InGameEngine Get()
@@ -69,7 +82,7 @@ namespace BesiegedClient.Engine.State.InGameEngine
         {
             Task.Factory.StartNew(() =>
             {
-                if (m_CurrentGameState != null)
+                if (m_CurrentGameState != null && m_CurrentGameState != InGameSetupState.Get())
                 {
                     m_CurrentGameState.Dispose();
                 }
@@ -83,7 +96,7 @@ namespace BesiegedClient.Engine.State.InGameEngine
         {
             Task.Factory.StartNew(() =>
             {
-                if (m_CurrentGameState != null)
+                if (m_CurrentGameState != null && m_CurrentGameState != InGameSetupState.Get())
                 {
                     m_CurrentGameState.Dispose();
                 }
@@ -92,6 +105,64 @@ namespace BesiegedClient.Engine.State.InGameEngine
                 m_CurrentGameState.Render();
                 postRender.Invoke();
             }, CancellationToken.None, TaskCreationOptions.None, GlobalResources.m_TaskScheduler);
+        }
+
+        //unit movement shit
+        bool captured = false;
+        double x_shape, y_shape;
+        int x_original, y_original;
+        UIElement source = null;
+        IUnit selectedUnit = null;
+        public void unit_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            source = (UIElement)sender;
+            Mouse.Capture(source);
+            captured = true;
+            x_shape = Canvas.GetLeft(source);
+            y_shape = Canvas.GetTop(source);
+            y_original = (int)y_shape / 50;
+            x_original = (int)x_shape / 50;
+            selectedUnit = Units[y_original][x_original];
+
+            e.Handled = true;
+        }
+        public void unit_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (captured)
+            {
+                double x = e.GetPosition(ClientGameEngine.Get().Canvas).X;
+                double y = e.GetPosition(ClientGameEngine.Get().Canvas).Y;
+                Canvas.SetLeft(source, x + VirtualGameCanvas.HorizontalOffset);
+                Canvas.SetTop(source, y + VirtualGameCanvas.VerticalOffset);
+                e.Handled = true;
+            }
+        }
+
+        public void unit_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (captured)
+            {
+                //snap to closest tile
+                double x = e.GetPosition(ClientGameEngine.Get().Canvas).X + VirtualGameCanvas.HorizontalOffset;
+                double y = e.GetPosition(ClientGameEngine.Get().Canvas).Y + VirtualGameCanvas.VerticalOffset;
+                int factor = 50;
+                int nearestX = (int)Math.Round((x / (double)factor)) * factor;
+                int nearestY = (int)Math.Round((y / (double)factor)) * factor;
+                if (Units[nearestY / 50][nearestX / 50] != null || !GameBoard.Tiles[nearestY / 50][nearestX / 50].IsPassable) //there is a unit here already OR the tile is impassable, return it to its original position
+                {
+                    Canvas.SetLeft(source, x_original * 50);
+                    Canvas.SetTop(source, y_original * 50);
+                }
+                else
+                {
+                    Units[nearestY / 50][nearestX / 50] = selectedUnit; // put unit in its new place
+                    Units[y_original][x_original] = null; //remove from old place
+                    Canvas.SetLeft(source, nearestX);
+                    Canvas.SetTop(source, nearestY);
+                }
+            }
+            Mouse.Capture(null);
+            captured = false;
         }
     }
 }

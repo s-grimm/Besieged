@@ -9,13 +9,6 @@ namespace BesiegedClient.Engine.State.InGameEngine.State
 {
     public class InGameSetupState : IInGameState
     {
-        private Color CreateRandomColor()
-        {
-            Random randonGen = new Random();
-            Color randomColor = Color.FromRgb((byte)randonGen.Next(0, 255), (byte)randonGen.Next(0, 255), (byte)randonGen.Next(0, 255));
-            return randomColor;
-        }
-
         private static InGameSetupState m_Instance = null;
 
         private InGameSetupState()
@@ -62,6 +55,8 @@ namespace BesiegedClient.Engine.State.InGameEngine.State
             {
                 target.Children.Add(r);
             }
+
+            InGameEngine.Get().ChangeState(DrawUnitState.Get());
         }
 
         public void Dispose()
