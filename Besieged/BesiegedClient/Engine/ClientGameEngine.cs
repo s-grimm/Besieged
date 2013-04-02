@@ -112,6 +112,19 @@ namespace BesiegedClient.Engine
                 // probably need to do more here
                 ClientGameEngine.Get().ChangeState(PregameLobbyState.Get());
             }
+
+            else if (command is CommandServerError)
+            {
+                CommandServerError commandServerError = command as CommandServerError;
+                if (commandServerError.ErrorMessage == "Incorrect Password")
+                {
+                    Action postRender = () =>
+                    {
+                        RenderMessageDialog.RenderMessage("Incorrect Password");
+                    };
+                    ChangeState(m_PreviousGameState, postRender);
+                }
+            }
         }
         
         public static ClientGameEngine Get()
