@@ -119,7 +119,7 @@ namespace BesiegedClient.Engine
                 
                     Action postRender = () =>
                     {
-                        RenderMessageDialog.RenderMessage("Incorrect Password");
+                        RenderMessageDialog.RenderMessage(commandServerError.ErrorMessage);
                     };
                     ChangeState(m_PreviousGameState, postRender);
                 
