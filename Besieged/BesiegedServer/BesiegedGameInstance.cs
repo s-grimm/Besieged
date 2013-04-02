@@ -21,13 +21,13 @@ namespace BesiegedServer
         public string Name { get; set; }
         public int MaxPlayers { get; set; }
         public GameState GameState { get; set; }
-        public string GameCreatorClientId { get; set; }
+        private string m_GameCreatorClientId { get; set; }
         public bool IsGameInstanceFull { get; set; }
         public string Password { get; set; }
         public Stack<PlayerColor.PlayerColorEnum> ColorPool { get; set; }
 
-        enum State { WaitingForPlayers, AllPlayersReady };
-        enum Trigger { AllPlayersReady, PlayerNotReady };
+        enum State { WaitingForPlayers, AllPlayersReady, GameStarted };
+        enum Trigger { AllPlayersReady, PlayerNotReady, CreatorPressedStart };
 
         StateMachine<State, Trigger> m_GameMachine;
         State m_CurrentState = State.WaitingForPlayers;
@@ -44,25 +44,27 @@ namespace BesiegedServer
             StartProcessingMessages();
         }
 
-        public BesiegedGameInstance(string gameId, string name, int maxPlayers)
+        //public BesiegedGameInstance(string gameId, string name, int maxPlayers, string creatorId)
+        //{
+        //    GameId = gameId;
+        //    Name = name;
+        //    MaxPlayers = maxPlayers;
+        //    Players = new ConcurrentBag<Player>();
+        //    m_GameCreatorClientId = creatorId;
+        //    MessageQueue = new BlockingCollection<Command>();
+        //    ColorPool = PlayerColor.GetColors();
+        //    IsGameInstanceFull = false;
+        //    Password = string.Empty;
+
+        //    StartProcessingMessages();
+        //}
+
+        public BesiegedGameInstance(string gameId, string name, int maxPlayers, string password, string creatorId)
         {
             GameId = gameId;
             Name = name;
             MaxPlayers = maxPlayers;
-            Players = new ConcurrentBag<Player>();
-            MessageQueue = new BlockingCollection<Command>();
-            ColorPool = PlayerColor.GetColors();
-            IsGameInstanceFull = false;
-            Password = string.Empty;
-
-            StartProcessingMessages();
-        }
-
-        public BesiegedGameInstance(string gameId, string name, int maxPlayers, string password)
-        {
-            GameId = gameId;
-            Name = name;
-            MaxPlayers = maxPlayers;
+            m_GameCreatorClientId = creatorId;
             Players = new ConcurrentBag<Player>();
             MessageQueue = new BlockingCollection<Command>();
             ColorPool = PlayerColor.GetColors();
@@ -77,13 +79,26 @@ namespace BesiegedServer
             m_GameMachine = new StateMachine<State, Trigger>(() => m_CurrentState, newState => m_CurrentState = newState);
 
             m_GameMachine.Configure(State.WaitingForPlayers)
-                .OnEntryFrom(Trigger.PlayerNotReady, t => Transition("WAITING FOR PLAYER!"))
                 .Permit(Trigger.AllPlayersReady, State.AllPlayersReady)
-                .Ignore(Trigger.PlayerNotReady);
+                .Ignore(Trigger.PlayerNotReady)
+                .Ignore(Trigger.CreatorPressedStart);
 
             m_GameMachine.Configure(State.AllPlayersReady)
-                .OnEntry(t => Transition("ALL PLAYERS ARE READY!"))
-                .Permit(Trigger.PlayerNotReady, State.WaitingForPlayers);
+                .OnEntry(x => 
+                    {
+                        AllAreReady ready = new AllAreReady();
+                        LookupPlayerById(m_GameCreatorClientId).Callback.Notify(ready.ToXml());
+                    })
+                .Permit(Trigger.PlayerNotReady, State.WaitingForPlayers)
+                .Permit(Trigger.CreatorPressedStart, State.GameStarted);
+
+            m_GameMachine.Configure(State.GameStarted)
+                .OnEntry(x =>
+                {
+                    StartGame start = new StartGame();
+                    NotifyAllPlayers(start.ToXml());
+                })
+                .Ignore(Trigger.PlayerNotReady);
         }
 
         private void CheckIfAllAreReady()
@@ -201,6 +216,11 @@ namespace BesiegedServer
             else if (command is PlayerNotReady)
             {
                 LookupPlayerById(command.ClientId).IsReady.Value = false;
+            }
+
+            else if (command is StartGame && command.ClientId == m_GameCreatorClientId)
+            {
+                m_GameMachine.Fire(Trigger.CreatorPressedStart);
             }
         }
 
