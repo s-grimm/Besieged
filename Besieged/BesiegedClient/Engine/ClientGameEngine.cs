@@ -31,6 +31,7 @@ namespace BesiegedClient.Engine
         private string m_ClientId;
         private string m_GameId;
 
+        public MainWindow m_CurrentWindow { get; set; }
         public Dimensions ClientDimensions { get; set; }
         public Canvas Canvas { get; set; }
         public MonitoredValue<bool> IsServerConnected { get; set; }

@@ -8,62 +8,53 @@ namespace Framework.Unit
 {
     public class Gnoll : DrawableObject, IUnit
     {
-        public int CurrentHealthPoints
-        {
-            get { return CurrentHealthPoints; }
-            set { CurrentHealthPoints = value; }
-        }
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
+
+        public int CurrentHealthPoints { get; set; }
 
         public int MaxHealthPoints
         {
             get { return 4; }
-            set { MaxHealthPoints = value; }
         }
 
         public int Initiative
         {
             get { return 2; }
-            set { Initiative = value; }
         }
 
         public int Skill
         {
             get { return 2; }
-            set { Skill = value; }
         }
 
         public int Range
         {
             get { return 1; }
-            set { Range = value; }
         }
 
         public int Cost
         {
             get { return 2; }
-            set { Cost = value; }
         }
 
         public int Movement
         {
             get { return 4; }
-            set { Movement = value; }
         }
 
         public string Description
         {
             get { return "Gnoll"; }
-            set { Description = value; }
         }
     }
 
     public class GnollMarauder : DrawableObject, IUnit
     {
-        public int CurrentHealthPoints
-        {
-            get { return CurrentHealthPoints; }
-            set { CurrentHealthPoints = value; }
-        }
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
+
+        public int CurrentHealthPoints { get; set; }
 
         public int MaxHealthPoints
         {
@@ -110,11 +101,10 @@ namespace Framework.Unit
 
     public class Lizardman : DrawableObject, IUnit
     {
-        public int CurrentHealthPoints
-        {
-            get { return CurrentHealthPoints; }
-            set { CurrentHealthPoints = value; }
-        }
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
+
+        public int CurrentHealthPoints { get; set; }
 
         public int MaxHealthPoints
         {
@@ -161,11 +151,10 @@ namespace Framework.Unit
 
     public class LizardmanCaptain : DrawableObject, IUnit
     {
-        public int CurrentHealthPoints
-        {
-            get { return CurrentHealthPoints; }
-            set { CurrentHealthPoints = value; }
-        }
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
+
+        public int CurrentHealthPoints { get; set; }
 
         public int MaxHealthPoints
         {
@@ -212,11 +201,10 @@ namespace Framework.Unit
 
     public class Taurus : DrawableObject, IUnit
     {
-        public int CurrentHealthPoints
-        {
-            get { return CurrentHealthPoints; }
-            set { CurrentHealthPoints = value; }
-        }
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
+
+        public int CurrentHealthPoints { get; set; }
 
         public int MaxHealthPoints
         {
@@ -263,11 +251,10 @@ namespace Framework.Unit
 
     public class TaurusLord : DrawableObject, IUnit
     {
-        public int CurrentHealthPoints
-        {
-            get { return CurrentHealthPoints; }
-            set { CurrentHealthPoints = value; }
-        }
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
+
+        public int CurrentHealthPoints { get; set; }
 
         public int MaxHealthPoints
         {
@@ -314,11 +301,10 @@ namespace Framework.Unit
 
     public class Genie : DrawableObject, IUnit
     {
-        public int CurrentHealthPoints
-        {
-            get { return CurrentHealthPoints; }
-            set { CurrentHealthPoints = value; }
-        }
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
+
+        public int CurrentHealthPoints { get; set; }
 
         public int MaxHealthPoints
         {
@@ -365,11 +351,10 @@ namespace Framework.Unit
 
     public class MasterGenie : DrawableObject, IUnit
     {
-        public int CurrentHealthPoints
-        {
-            get { return CurrentHealthPoints;    }
-            set { CurrentHealthPoints = value; }
-        }
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
+
+        public int CurrentHealthPoints { get; set; }
 
         public int MaxHealthPoints
         {
@@ -416,6 +401,8 @@ namespace Framework.Unit
 
     public class BeastCastle : DrawableObject, IUnit
     {
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
 
         public int CurrentHealthPoints { get; set; }
 

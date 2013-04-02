@@ -106,7 +106,7 @@ namespace BesiegedClient.Engine.State
                         }
                         else
                         {
-                            if (m_Password == string.Empty || m_Password == "Optional")
+                            if (m_Password == string.Empty || m_Password == "Optional" || m_Password == null)
                             {
                                 CommandCreateGame commandCreateGame = new CommandCreateGame(m_GameName, 4);
                                 ClientGameEngine.Get().SendMessageToServer(commandCreateGame);
