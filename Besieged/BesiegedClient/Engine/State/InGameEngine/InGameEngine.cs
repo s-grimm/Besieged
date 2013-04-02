@@ -3,12 +3,13 @@ using Framework.Controls;
 using Framework.Map;
 using Framework.Unit;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-
+using System.Linq;
 namespace BesiegedClient.Engine.State.InGameEngine
 {
     public class InGameEngine
@@ -33,7 +34,7 @@ namespace BesiegedClient.Engine.State.InGameEngine
         #endregion "Virtual Canvas"
 
         public GameMap GameBoard { get; set; }
-        public IUnit[][] Units { get; set; }
+        public List<IUnit> Units { get; set; }
 
         private InGameEngine()
         {
@@ -58,15 +59,17 @@ namespace BesiegedClient.Engine.State.InGameEngine
             GameBoard = new GameMap();
 
             //unit shit
-            Units = new IUnit[GameBoard.MapHeight][];
-            for (int i = 0; i < GameBoard.MapHeight; ++i)
-            {
-                Units[i] = new IUnit[GameBoard.MapLength];
-            }
+            Units = new List<IUnit>();
+
             BeastUnitFactory bFac = new BeastUnitFactory();
             //place a couple of units for testing purposes
             for (int i = 4; i <= 12; i += 4)
-                Units[i][i] = bFac.GetBasicInfantry();
+            {
+                IUnit l = bFac.GetBasicInfantry();
+                l.X_Position = i;
+                l.Y_Position = i;
+                Units.Add(l);
+            }
         }
 
         public static InGameEngine Get()
@@ -122,7 +125,7 @@ namespace BesiegedClient.Engine.State.InGameEngine
             y_shape = Canvas.GetTop(source);
             y_original = (int)y_shape / 50;
             x_original = (int)x_shape / 50;
-            selectedUnit = Units[y_original][x_original];
+            selectedUnit = Units.Where(x => x.X_Position == x_original && x.Y_Position == y_original).FirstOrDefault();
 
             e.Handled = true;
 
@@ -130,7 +133,7 @@ namespace BesiegedClient.Engine.State.InGameEngine
         }
         public void unit_MouseMove(object sender, MouseEventArgs e)
         {
-            if (captured)
+            if (captured && selectedUnit != null)
             {
                 double x = e.GetPosition(ClientGameEngine.Get().Canvas).X;
                 double y = e.GetPosition(ClientGameEngine.Get().Canvas).Y;
@@ -144,35 +147,42 @@ namespace BesiegedClient.Engine.State.InGameEngine
         {
             if (captured)
             {
-                //snap to closest tile
-                double x = e.GetPosition(ClientGameEngine.Get().Canvas).X + VirtualGameCanvas.HorizontalOffset;
-                double y = e.GetPosition(ClientGameEngine.Get().Canvas).Y + VirtualGameCanvas.VerticalOffset;
-                int factor = 50;
-                int nearestX = (int)Math.Round((x / (double)factor)) * factor;
-                int nearestY = (int)Math.Round((y / (double)factor)) * factor;
+                if (selectedUnit != null)
+                {
+                    //snap to closest tile
+                    double x = e.GetPosition(ClientGameEngine.Get().Canvas).X + VirtualGameCanvas.HorizontalOffset;
+                    double y = e.GetPosition(ClientGameEngine.Get().Canvas).Y + VirtualGameCanvas.VerticalOffset;
+                    int factor = 50;
+                    int nearestX = (int)Math.Round((x / (double)factor)) * factor;
+                    int nearestY = (int)Math.Round((y / (double)factor)) * factor;
 
-                //check bounds on unit
-                int movementRange = selectedUnit.Movement;
-                int totalMovedY = nearestY / 50 - y_original;
-                int totalMovedX = nearestX / 50 - x_original;
-                if (totalMovedY < 0) totalMovedY *= -1;
-                if (totalMovedX < 0) totalMovedX *= -1;
-                
-                if (Units[nearestY / 50][nearestX / 50] != null || !GameBoard.Tiles[nearestY / 50][nearestX / 50].IsPassable || totalMovedX + totalMovedY > movementRange) //there is a unit here already OR the tile is impassable, return it to its original position
-                {
-                    Canvas.SetLeft(source, x_original * 50);
-                    Canvas.SetTop(source, y_original * 50);
-                }
-                else
-                {
-                    Units[nearestY / 50][nearestX / 50] = selectedUnit; // put unit in its new place
-                    Units[y_original][x_original] = null; //remove from old place
-                    Canvas.SetLeft(source, nearestX);
-                    Canvas.SetTop(source, nearestY);
+                    //check bounds on unit
+
+                    int movementRange = selectedUnit.Movement;
+                    int totalMovedY = nearestY / 50 - y_original;
+                    int totalMovedX = nearestX / 50 - x_original;
+                    if (totalMovedY < 0) totalMovedY *= -1;
+                    if (totalMovedX < 0) totalMovedX *= -1;
+
+                    if (totalMovedX + totalMovedY > movementRange || !GameBoard.Tiles[nearestY / 50][nearestX / 50].IsPassable || Units.Any(unit => unit.X_Position == nearestX / 50 && unit.Y_Position == nearestY / 50)) //there is a unit here already OR the tile is impassable, return it to its original position
+                    {
+                        Canvas.SetLeft(source, x_original * 50);
+                        Canvas.SetTop(source, y_original * 50);
+                    }
+                    else
+                    {
+                        // update unit with its new place
+                        selectedUnit.X_Position = nearestY / 50;
+                        selectedUnit.X_Position = nearestX / 50;
+
+                        Canvas.SetLeft(source, nearestX);
+                        Canvas.SetTop(source, nearestY);
+                    }
                 }
             }
             Mouse.Capture(null);
             captured = false;
+            selectedUnit = null;
         }
     }
 }
