@@ -116,6 +116,7 @@ namespace BesiegedClient.Engine.State.InGameEngine
         int x_original, y_original;
         UIElement source = null;
         IUnit selectedUnit = null;
+
         public void unit_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             source = (UIElement)sender;
@@ -129,6 +130,7 @@ namespace BesiegedClient.Engine.State.InGameEngine
 
             e.Handled = true;
 
+            ClientGameEngine.Get().m_CurrentWindow.Cursor = Cursors.Hand;
             //this.ChangeState(UnitSelectedState);
         }
         public void unit_MouseMove(object sender, MouseEventArgs e)
@@ -172,7 +174,7 @@ namespace BesiegedClient.Engine.State.InGameEngine
                     else
                     {
                         // update unit with its new place
-                        selectedUnit.X_Position = nearestY / 50;
+                        selectedUnit.Y_Position = nearestY / 50;
                         selectedUnit.X_Position = nearestX / 50;
 
                         Canvas.SetLeft(source, nearestX);
@@ -183,6 +185,9 @@ namespace BesiegedClient.Engine.State.InGameEngine
             Mouse.Capture(null);
             captured = false;
             selectedUnit = null;
+
+            ClientGameEngine.Get().m_CurrentWindow.Cursor = Cursors.Arrow;
+
         }
     }
 }

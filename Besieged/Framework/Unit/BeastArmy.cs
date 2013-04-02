@@ -11,52 +11,41 @@ namespace Framework.Unit
         public int X_Position { get; set; }
         public int Y_Position { get; set; }
 
-        public int CurrentHealthPoints
-        {
-            get { return CurrentHealthPoints; }
-            set { CurrentHealthPoints = value; }
-        }
+        public int CurrentHealthPoints { get; set; }
 
         public int MaxHealthPoints
         {
             get { return 4; }
-            set { MaxHealthPoints = value; }
         }
 
         public int Initiative
         {
             get { return 2; }
-            set { Initiative = value; }
         }
 
         public int Skill
         {
             get { return 2; }
-            set { Skill = value; }
         }
 
         public int Range
         {
             get { return 1; }
-            set { Range = value; }
         }
 
         public int Cost
         {
             get { return 2; }
-            set { Cost = value; }
         }
 
         public int Movement
         {
             get { return 4; }
-            set { Movement = value; }
         }
 
         public string Description
         {
             get { return "Gnoll"; }
-            set { Description = value; }
         }
     }
 
@@ -65,11 +54,7 @@ namespace Framework.Unit
         public int X_Position { get; set; }
         public int Y_Position { get; set; }
 
-        public int CurrentHealthPoints
-        {
-            get { return CurrentHealthPoints; }
-            set { CurrentHealthPoints = value; }
-        }
+        public int CurrentHealthPoints { get; set; }
 
         public int MaxHealthPoints
         {
@@ -119,11 +104,7 @@ namespace Framework.Unit
         public int X_Position { get; set; }
         public int Y_Position { get; set; }
 
-        public int CurrentHealthPoints
-        {
-            get { return CurrentHealthPoints; }
-            set { CurrentHealthPoints = value; }
-        }
+        public int CurrentHealthPoints { get; set; }
 
         public int MaxHealthPoints
         {
@@ -173,11 +154,7 @@ namespace Framework.Unit
         public int X_Position { get; set; }
         public int Y_Position { get; set; }
 
-        public int CurrentHealthPoints
-        {
-            get { return CurrentHealthPoints; }
-            set { CurrentHealthPoints = value; }
-        }
+        public int CurrentHealthPoints { get; set; }
 
         public int MaxHealthPoints
         {
@@ -227,11 +204,7 @@ namespace Framework.Unit
         public int X_Position { get; set; }
         public int Y_Position { get; set; }
 
-        public int CurrentHealthPoints
-        {
-            get { return CurrentHealthPoints; }
-            set { CurrentHealthPoints = value; }
-        }
+        public int CurrentHealthPoints { get; set; }
 
         public int MaxHealthPoints
         {
@@ -281,11 +254,7 @@ namespace Framework.Unit
         public int X_Position { get; set; }
         public int Y_Position { get; set; }
 
-        public int CurrentHealthPoints
-        {
-            get { return CurrentHealthPoints; }
-            set { CurrentHealthPoints = value; }
-        }
+        public int CurrentHealthPoints { get; set; }
 
         public int MaxHealthPoints
         {
@@ -335,11 +304,7 @@ namespace Framework.Unit
         public int X_Position { get; set; }
         public int Y_Position { get; set; }
 
-        public int CurrentHealthPoints
-        {
-            get { return CurrentHealthPoints; }
-            set { CurrentHealthPoints = value; }
-        }
+        public int CurrentHealthPoints { get; set; }
 
         public int MaxHealthPoints
         {
@@ -389,11 +354,7 @@ namespace Framework.Unit
         public int X_Position { get; set; }
         public int Y_Position { get; set; }
 
-        public int CurrentHealthPoints
-        {
-            get { return CurrentHealthPoints;    }
-            set { CurrentHealthPoints = value; }
-        }
+        public int CurrentHealthPoints { get; set; }
 
         public int MaxHealthPoints
         {

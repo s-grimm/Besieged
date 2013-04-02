@@ -17,6 +17,7 @@ using BesiegedClient.Engine.State;
 using System.Windows.Media.Imaging;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using System.Windows.Input;
 
 namespace BesiegedClient
 {
@@ -47,7 +48,7 @@ namespace BesiegedClient
                 Application.Current.MainWindow.Width = ClientSettings.Default.Width + 15;
                 Application.Current.MainWindow.Height = ClientSettings.Default.Height + 38;
             }
-
+            ClientGameEngine.Get().m_CurrentWindow = this;
             ClientGameEngine.Get().SetGameCanvas(cvsGameWindow);
             ClientGameEngine.Get().ChangeState(SplashScreenLogoState.Get());
 
