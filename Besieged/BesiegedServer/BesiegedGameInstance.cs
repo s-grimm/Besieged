@@ -79,9 +79,11 @@ namespace BesiegedServer
             m_GameMachine.Configure(State.GameStarted)
                 .OnEntry(x =>
                 {
-                    //shane - instantiate gamestate here
-                    GenericClientMessage start = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.StartGame };
-                    NotifyAllPlayers(start.ToXml());
+                    GameState = new GameState(Players.Select(p => p.ClientId).ToList());
+                    AggregateMessage agg = new AggregateMessage();
+                    agg.MessageList.Add(new ClientGameStateMessage() { State = GameState });
+                    agg.MessageList.Add(new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.StartGame });
+                    NotifyAllPlayers(agg.ToXml());
                 })
                 .Ignore(Trigger.PlayerNotReady);
         }

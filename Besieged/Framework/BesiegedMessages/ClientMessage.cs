@@ -33,6 +33,11 @@ namespace Framework.BesiegedMessages
         public ClientMessage.ClientMessageEnum MessageEnum { get; set; }
     }
 
+    public class ClientGameStateMessage : ClientMessage
+    {
+        public GameState State { get; set; }
+    }
+
     public class ClientChatMessage : ClientMessage
     {
         public string Contents { get; set; }

@@ -1,4 +1,5 @@
-﻿using Framework.Map;
+﻿using System.Linq;
+using Framework.Map;
 using Framework.Unit;
 using System;
 using System.Collections.Generic;
@@ -15,29 +16,28 @@ namespace BesiegedClient.Engine.State.InGameEngine.State
         private DrawUnitState()
         {
         }
-        
-        private double _tileWidth = 50;
-        private double _tileHeight = 50;
+
+        private const double TileWidth = 50;
+        private const double TileHeight = 50;
         private List<Image> _units = new List<Image>();
 
         public void Initialize()
         {
             //throw new NotImplementedException();
-            GameMap map = InGameEngine.Get().GameBoard;
-            List<IUnit> units = InGameEngine.Get().Units;
-
+            GameMap map = InGameEngine.Get().Board.GameBoard;
+            List<IUnit> units = InGameEngine.Get().Board.Units;
 
             foreach (IUnit unit in units)
             {
                 var sprite = unit.GetSprite();
                 Image rect = Utilities.Rendering.GetImageForUnit(sprite.ToString());
-                rect.Width = _tileWidth;
-                rect.Height = _tileHeight;
+                rect.Width = TileWidth;
+                rect.Height = TileHeight;
 
 
 
-                Canvas.SetLeft(rect, unit.X_Position * _tileWidth);
-                Canvas.SetTop(rect, unit.Y_Position * _tileHeight);
+                Canvas.SetLeft(rect, unit.X_Position * TileWidth);
+                Canvas.SetTop(rect, unit.Y_Position * TileHeight);
                 Canvas.SetZIndex(rect, 15);
                 _units.Add(rect);
             }
@@ -59,12 +59,9 @@ namespace BesiegedClient.Engine.State.InGameEngine.State
         public void Dispose()
         {
             Canvas target = InGameEngine.Get().GameCanvas;
-            foreach (Image r in _units)
+            foreach (Image r in _units.Where(r => target.Children.Contains(r)))
             {
-                if (target.Children.Contains(r))
-                {
-                    target.Children.Remove(r);
-                }
+                target.Children.Remove(r);
             }
         }
 
@@ -82,7 +79,7 @@ namespace BesiegedClient.Engine.State.InGameEngine.State
             catch (Exception ex)
             {
                 // error handling
-                throw ex;
+                throw;
             }
         }
     }

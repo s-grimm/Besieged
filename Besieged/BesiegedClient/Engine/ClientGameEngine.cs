@@ -18,6 +18,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using BesiegedClient.Engine.State.InGameEngine;
 
 namespace BesiegedClient.Engine
 {
@@ -62,18 +63,12 @@ namespace BesiegedClient.Engine
             {
                 if (!to)
                 {
-                    Action postRender = () =>
-                    {
-                        RenderMessageDialog.RenderMessage("Unable to establish connection to server");
-                    };
+                    Action postRender = () => RenderMessageDialog.RenderMessage("Unable to establish connection to server");
                     ChangeState(m_PreviousGameState, postRender);
                 }
                 else
                 {
-                    Task.Factory.StartNew(() =>
-                    {
-                        ChangeState(MultiplayerMenuState.Get());
-                    }, CancellationToken.None, TaskCreationOptions.None, GlobalResources.m_TaskScheduler);
+                    Task.Factory.StartNew(() => ChangeState(MultiplayerMenuState.Get()), CancellationToken.None, TaskCreationOptions.None, GlobalResources.m_TaskScheduler);
                 }
             };
 
@@ -81,10 +76,7 @@ namespace BesiegedClient.Engine
             m_DuplexChannelFactory = new DuplexChannelFactory<IBesiegedServer>(m_ClientCallback, m_TcpBinding, endpointAddress);
             m_BesiegedServer = m_DuplexChannelFactory.CreateChannel();
 
-            m_DuplexChannelFactory.Faulted += (s, ev) =>
-            {
-                MessageBox.Show("Its faulted");
-            };
+            m_DuplexChannelFactory.Faulted += (s, ev) => MessageBox.Show("Its faulted");
 
             var MessageSubject = new Subject<BesiegedMessage>();
 
@@ -209,6 +201,18 @@ namespace BesiegedClient.Engine
                             RenderMessageDialog.RenderMessage((message as ErrorDialogMessage).Contents);
                         };
                         ChangeState(m_PreviousGameState, action);
+                    }
+                    else if (message is ClientGameStateMessage)
+                    {
+                        ClientGameStateMessage mem = message as ClientGameStateMessage;
+                        Action action = () =>
+                        {
+                            if (mem.State != null)
+                            {
+                                InGameEngine.Get().Board = mem.State;
+                            }
+                        };
+                        ExecuteOnUIThread(action);
                     }
                 }); 
         }
