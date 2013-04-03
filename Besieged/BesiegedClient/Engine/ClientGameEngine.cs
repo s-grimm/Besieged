@@ -104,11 +104,9 @@ namespace BesiegedClient.Engine
                     switch (genericMessage.MessageEnum)
                     {
                         case ClientMessage.ClientMessageEnum.ConnectSuccessful:
-                            {
-                                m_ClientId = genericMessage.ClientId;
-                                IsServerConnected.Value = true;
-                                break;
-                            }
+                            m_ClientId = genericMessage.ClientId;
+                            IsServerConnected.Value = true;
+                            break;
                         case ClientMessage.ClientMessageEnum.AllPlayersReady:
                             AllPlayersReady.Value = true;
                             break;
