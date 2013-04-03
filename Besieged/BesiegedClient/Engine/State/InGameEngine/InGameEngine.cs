@@ -157,26 +157,34 @@ namespace BesiegedClient.Engine.State.InGameEngine
                     //check bounds on unit
 
                     int movementRange = _selectedUnit.Movement;
-                    int totalMovedY = nearestY / 50 - _yOriginal / 50;
-                    int totalMovedX = nearestX / 50 - _xOriginal / 50;
-                    if (totalMovedY < 0) totalMovedY *= -1;
-                    if (totalMovedX < 0) totalMovedX *= -1;
 
-                    if (totalMovedX + totalMovedY > movementRange 
-                        || !Board.GameBoard.Tiles[nearestY / 50][nearestX / 50].IsPassable 
-                        || Board.Units.Any(unit => unit.X_Position == (nearestX / 50) && unit.Y_Position == (nearestY / 50))) //there is a unit here already OR the tile is impassable, return it to its original position
+                    if (!Board.GameBoard.Tiles[nearestY/50][nearestX/50].IsPassable //the tile is impassable
+                        || Board.Units.Any(unit => unit.X_Position == (nearestX/50) && unit.Y_Position == (nearestY/50)))
+                        //there is a unit here already
                     {
-                        Canvas.SetLeft(_source, _xOriginal );
+                        Canvas.SetLeft(_source, _xOriginal);
                         Canvas.SetTop(_source, _yOriginal);
                     }
                     else
                     {
-                        // update unit with its new place
-                        _selectedUnit.Y_Position = nearestY / 50;
-                        _selectedUnit.X_Position = nearestX / 50;
 
-                        Canvas.SetLeft(_source, nearestX);
-                        Canvas.SetTop(_source, nearestY);
+                        var path = PathFinder.FindPath(_xOriginal/50, _yOriginal/50, nearestX/50, nearestY/50);
+                        //tuples in path are y,x not x,y
+                        if (path == null //no path 
+                            || path.TotalCost > movementRange) //it costs more than your movement range to move here 
+                        {
+                            Canvas.SetLeft(_source, _xOriginal);
+                            Canvas.SetTop(_source, _yOriginal);
+                        }
+                        else
+                        {
+                            // update unit with its new place
+                            _selectedUnit.Y_Position = nearestY/50;
+                            _selectedUnit.X_Position = nearestX/50;
+
+                            Canvas.SetLeft(_source, nearestX);
+                            Canvas.SetTop(_source, nearestY);
+                        }
                     }
                     _selectedUnit = null;
                 }
