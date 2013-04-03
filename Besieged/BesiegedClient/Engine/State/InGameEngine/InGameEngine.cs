@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using BesiegedClient.Pathing;
 
 namespace BesiegedClient.Engine.State.InGameEngine
 {
@@ -18,7 +19,7 @@ namespace BesiegedClient.Engine.State.InGameEngine
     {
         private IInGameState m_CurrentGameState;
         private IInGameState m_PreviousGameState;
-
+        private PathFinder _pathFinder;
         private static InGameEngine m_Instance = null;
 
         public Canvas GameCanvas { get; private set; } //what to draw on
@@ -55,7 +56,7 @@ namespace BesiegedClient.Engine.State.InGameEngine
             autoScroll = new AutoScroll(GameCanvas, zoom);
 
             #endregion "DrawCanvas"
-
+            _pathFinder = new PathFinder();
         }
 
         public static InGameEngine Get()
