@@ -64,6 +64,7 @@ namespace BesiegedServer
                 {
                     GenericClientMessage waiting = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.PlayerNotReady };
                     LookupPlayerById(m_GameCreatorClientId).Callback.SendMessage(waiting.ToXml());
+
                 })
                 .Ignore(Trigger.PlayerNotReady)
                 .Ignore(Trigger.CreatorPressedStart);
@@ -73,6 +74,7 @@ namespace BesiegedServer
                     {
                         GenericClientMessage ready = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.AllPlayersReady };
                         LookupPlayerById(m_GameCreatorClientId).Callback.SendMessage(ready.ToXml());
+
                     })
                 .Permit(Trigger.PlayerNotReady, State.WaitingForPlayers)
                 .Permit(Trigger.CreatorPressedStart, State.GameStarted);
@@ -104,9 +106,6 @@ namespace BesiegedServer
                     var genericMessage = message as GenericGameMessage;
                     switch (genericMessage.MessageEnum)
                     {
-                        case GameMessage.GameMessageEnum.PlayerReady:
-                            LookupPlayerById(message.ClientId).IsReady.Value = true;
-                            break;
                         case GameMessage.GameMessageEnum.PlayerNotReady:
                             LookupPlayerById(message.ClientId).IsReady.Value = false;
                             break;

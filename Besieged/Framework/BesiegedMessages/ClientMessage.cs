@@ -11,12 +11,12 @@ namespace Framework.BesiegedMessages
     {
         public enum ClientMessageEnum
         {
-            [XmlEnum(Name = "ConnectSuccessful")]
-            ConnectSuccessful,
             [XmlEnum(Name = "AllPlayersReady")]
             AllPlayersReady,
             [XmlEnum(Name = "PlayerNotReady")]
             PlayerNotReady,
+            [XmlEnum(Name = "ConnectSuccessful")]
+            ConnectSuccessful,
             [XmlEnum(Name = "StartGame")]
             StartGame,
             [XmlEnum(Name = "GameDisbanded")]
@@ -75,7 +75,7 @@ namespace Framework.BesiegedMessages
             HasPassword = false;
         }
 
-        public GameInfoMessage(string gameId, string name,  string capacity, bool isGameFull)
+        public GameInfoMessage(string gameId, string name, string capacity, bool isGameFull)
         {
             GameId = gameId;
             Name = name;
