@@ -247,7 +247,7 @@ namespace BesiegedServer
         {
             foreach (Player player in Players)
             {
-                player.Callback.SendMessage(message);
+                player.Callback.SendMessage(message); //timeout here
             }
         }
 
