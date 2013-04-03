@@ -18,6 +18,7 @@ namespace Framework.Unit
         int Cost { get;  }
         int Movement { get;  }
         string Description { get; }
+        string Owner { get; set; }
         object GetSprite();
     }
 }
