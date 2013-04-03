@@ -13,10 +13,11 @@ using System.Reactive.Concurrency;
 using Framework.Utilities.Xml;
 using Framework.ServiceContracts;
 using Framework.BesiegedMessages;
+using Utilities;
 
 namespace BesiegedServer
 {
-    public class BesiegedGameInstance
+    public class BesiegedGameInstance : IDisposable
     {
         public ConcurrentBag<Player> Players { get; set; }
         public string GameId { get; set; }
@@ -28,24 +29,15 @@ namespace BesiegedServer
         public string Password { get; set; }
         public Stack<PlayerColor.PlayerColorEnum> ColorPool { get; set; }
 
+        private IDisposable m_GenericGameMessageSubscriber { get; set; }
+        private IDisposable m_GameMessageSubscriber { get; set; }
+
         enum State { WaitingForPlayers, AllPlayersReady, GameStarted };
         enum Trigger { AllPlayersReady, PlayerNotReady, CreatorPressedStart };
 
         StateMachine<State, Trigger> m_GameMachine;
         State m_CurrentState = State.WaitingForPlayers;
         
-        //public BesiegedGameInstance()
-        //{
-        //    Players = new ConcurrentBag<Player>();
-        //    MessageQueue = new BlockingCollection<Command>();
-        //    ColorPool = PlayerColor.GetColors();
-        //    IsGameInstanceFull = false;
-        //    MaxPlayers = 2;
-        //    Password = "";
-
-        //    ConfigureMachine();
-        //}
-
         public BesiegedGameInstance(string gameId, string name, int maxPlayers, string password, string creatorId)
         {
             GameId = gameId;
@@ -90,16 +82,20 @@ namespace BesiegedServer
             m_GameMachine.Configure(State.GameStarted)
                 .OnEntry(x =>
                 {
-                    //shane - instantiate gamestate here
-                    GenericClientMessage start = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.StartGame };
-                    NotifyAllPlayers(start.ToXml());
+                    GameState = new GameState(Players.Select(p => p.ClientId).ToList());
+                    ConsoleLogger.Push(String.Format("Game {0} has been started", GameId));
+                    NotifyAllPlayers(new GenericClientMessage(){ MessageEnum = ClientMessage.ClientMessageEnum.TransitionToLoadingState}.ToXml());
+                    ClientGameStateMessage msg1 = new ClientGameStateMessage() { State = GameState };
+                    GenericClientMessage msg2 = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.StartGame };
+                    NotifyAllPlayers(msg1.ToXml());
+                    NotifyAllPlayers(msg2.ToXml());
                 })
                 .Ignore(Trigger.PlayerNotReady);
         }
 
         private void ProcessMessages()
         {
-            IDisposable genericGameMessageSubscriber = BesiegedServer.MessageSubject
+            m_GenericGameMessageSubscriber = BesiegedServer.MessageSubject
                 .Where(message => message is GenericGameMessage && message.GameId == GameId)
                 .Subscribe(message =>
                 {
@@ -112,14 +108,15 @@ namespace BesiegedServer
                         case GameMessage.GameMessageEnum.Start:
                             m_GameMachine.Fire(Trigger.CreatorPressedStart);
                             break;
-                        case GameMessage.GameMessageEnum.PlayerJoin:
+                        case GameMessage.GameMessageEnum.PlayerLeft:
+                            RemovePlayer(message.ClientId);
                             break;
                         default:
                             break;
                     }
                 });
 
-            IDisposable gameMessageSubscriber = BesiegedServer.MessageSubject
+            m_GameMessageSubscriber = BesiegedServer.MessageSubject
                 .Where(message => message is GameMessage && !(message is GenericGameMessage) && message.GameId == GameId)
                 .Subscribe(message =>
                 {
@@ -150,6 +147,20 @@ namespace BesiegedServer
             if (Players.All(p => p.IsReady.Value))
             {
                 m_GameMachine.Fire(Trigger.AllPlayersReady);
+            }
+        }
+
+        public void RemovePlayer(string clientId)
+        {
+            if (clientId == m_GameCreatorClientId)
+            {
+                GenericClientMessage disbanded = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.GameDisbanded };
+                NotifyAllPlayers(disbanded.ToXml());
+                BesiegedServer.DisbandGame(GameId);
+            }
+            else
+            {
+                // we probably need to reconfigure here especially if we're already in the GameStarte state
             }
         }
 
@@ -237,8 +248,14 @@ namespace BesiegedServer
         {
             foreach (Player player in Players)
             {
-                player.Callback.SendMessage(message);
+                player.Callback.SendMessage(message); //timeout here
             }
+        }
+
+        public void Dispose()
+        {
+            m_GameMessageSubscriber.Dispose();
+            m_GenericGameMessageSubscriber.Dispose();
         }
     }
 }

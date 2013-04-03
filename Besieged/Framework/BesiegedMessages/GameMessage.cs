@@ -16,8 +16,8 @@ namespace Framework.BesiegedMessages
             PlayerNotReady,
             [XmlEnum(Name = "Start")]
             Start,
-            [XmlEnum(Name = "PlayerJoin")]
-            PlayerJoin
+            [XmlEnum(Name = "PlayerLeft")]
+            PlayerLeft,
         };
     }
 

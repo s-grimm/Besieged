@@ -110,58 +110,53 @@ namespace BesiegedClient.Engine.State
                 Image img = sender as Image;
                 string selected = img.Name;
 
-                if (selected == "NotReady")
+                switch (selected)
                 {
-                    GenericGameMessage notReady = new GenericGameMessage() { MessageEnum = GameMessage.GameMessageEnum.PlayerNotReady };
-                    ClientGameEngine.Get().SendMessageToServer(notReady);
-                    m_ReadyImage.Visibility = Visibility.Visible;
-                    m_ReadyImage.IsEnabled = true;
-                    m_NotReadyImage.Visibility = Visibility.Hidden;
-                    m_NotReadyImage.IsEnabled = false;
-                }
+                    case "NotReady":
+                        {
+                            GenericGameMessage notReady = new GenericGameMessage() { MessageEnum = GameMessage.GameMessageEnum.PlayerNotReady };
+                            ClientGameEngine.Get().SendMessageToServer(notReady);
+                            m_ReadyImage.Visibility = Visibility.Visible;
+                            m_ReadyImage.IsEnabled = true;
+                            m_NotReadyImage.Visibility = Visibility.Hidden;
+                            m_NotReadyImage.IsEnabled = false;
 
-                else if (selected == "Ready")
-                {
+                            m_LeaveDisabledImage.Visibility = Visibility.Hidden;
+                            m_LeaveDisabledImage.IsEnabled = false;
+                            m_LeaveEnabledImage.Visibility = Visibility.Visible;
+                            m_LeaveEnabledImage.IsEnabled = true;
+                        }
+                        break;
+                    case "Ready":
+                        {
                     ClientGameEngine.Get().SendMessageToServer(m_PlayerReadyMessage);
 
-                    m_ReadyImage.Visibility = Visibility.Hidden;
-                    m_ReadyImage.IsEnabled = false;
-                    m_NotReadyImage.Visibility = Visibility.Visible;
-                    m_NotReadyImage.IsEnabled = true;
+                            m_ReadyImage.Visibility = Visibility.Hidden;
+                            m_ReadyImage.IsEnabled = false;
+                            m_NotReadyImage.Visibility = Visibility.Visible;
+                            m_NotReadyImage.IsEnabled = true;
+
+                            m_LeaveEnabledImage.Visibility = Visibility.Hidden;
+                            m_LeaveEnabledImage.IsEnabled = false;
+                            m_LeaveDisabledImage.Visibility = Visibility.Visible;
+                            m_LeaveDisabledImage.IsEnabled = true;
+                            
+                        }
+                        break;
+                    case "StartEnabled":
+                        {
+                            GenericGameMessage start = new GenericGameMessage() { MessageEnum = GameMessage.GameMessageEnum.Start };
+                            ClientGameEngine.Get().SendMessageToServer(start);
+                        }
+                        break;
+                    case "LeaveEnabled":
+                        {
+                            GenericGameMessage leave = new GenericGameMessage() { MessageEnum = GameMessage.GameMessageEnum.PlayerLeft };
+                            ClientGameEngine.Get().SendMessageToServer(leave);
+                        }
+                        break;
                 }
 
-                else if (selected == "StartEnabled")
-                {
-                    GenericGameMessage start = new GenericGameMessage() { MessageEnum = GameMessage.GameMessageEnum.Start };
-                    ClientGameEngine.Get().SendMessageToServer(start);
-                }
-
-                //else if (selected == "JoinGame")
-                //{
-                //    if (m_SelectedGame == null)
-                //    {
-                //        RenderMessageDialog.RenderMessage("You need to select a game to join!");
-                //    }
-                //    else
-                //    {
-                //        if (m_SelectedGame.HasPassword)
-                //        {
-                //            RenderMessageDialog.RenderInput("Please enter the password: ", (se, ev) =>
-                //            {
-                //                if (se != null)
-                //                {
-                //                    CommandJoinGame commandJoinGame = new CommandJoinGame(m_SelectedGame.GameId, se as string);
-                //                    ClientGameEngine.Get().SendMessageToServer(commandJoinGame);
-                //                }
-                //            });
-                //        }
-                //        else
-                //        {
-                //            CommandJoinGame commandJoinGame = new CommandJoinGame(m_SelectedGame.GameId, string.Empty);
-                //            ClientGameEngine.Get().SendMessageToServer(commandJoinGame);
-                //        }
-                //    }
-                //}
                 //else if (selected == "MainMenu")
                 //{
                 //    ClientGameEngine.Get().ChangeState(MainMenuState.Get());
@@ -256,10 +251,7 @@ namespace BesiegedClient.Engine.State
                 m_ChatMessagesListBox.Opacity = 0.75;
                 m_ChatMessagesListBox.FontFamily = new FontFamily("Papyrus");
                 m_ChatMessagesListBox.FontSize = 14;
-                ClientGameEngine.Get().ChatMessageCollection.CollectionChanged += (s, ev) =>
-                {
-                    m_ChatMessagesListBox.ScrollIntoView(ev.NewItems[0]);
-                };
+                ClientGameEngine.Get().ChatMessageCollection.CollectionChanged += (s, ev) => m_ChatMessagesListBox.ScrollIntoView(ev.NewItems[0]);
 
                 //StartEnabled
                 bitmapImage = new BitmapImage(new Uri(UIComponentPath + "Start.png", UriKind.RelativeOrAbsolute));
@@ -296,10 +288,10 @@ namespace BesiegedClient.Engine.State
                 m_LeaveEnabledImage.Height = bitmapImage.PixelHeight;
                 m_LeaveEnabledImage.Visibility = System.Windows.Visibility.Visible;
                 m_LeaveEnabledImage.Name = "LeaveEnabled";
-                //m_LeaveEnabledImage.MouseEnter += MenuOptionHover;
-                //m_LeaveEnabledImage.MouseLeave += MenuOptionHoverLost;
-                //m_LeaveEnabledImage.MouseDown += MenuOptionMouseDown;
-                //m_LeaveEnabledImage.MouseUp += MenuOptionMouseUp;
+                m_LeaveEnabledImage.MouseEnter += MenuOptionHover;
+                m_LeaveEnabledImage.MouseLeave += MenuOptionHoverLost;
+                m_LeaveEnabledImage.MouseDown += MenuOptionMouseDown;
+                m_LeaveEnabledImage.MouseUp += MenuOptionMouseUp;
 
                 //LeaveDisabled
                 bitmapImage = new BitmapImage(new Uri(UIComponentPath + "LeaveFade.png", UriKind.RelativeOrAbsolute));

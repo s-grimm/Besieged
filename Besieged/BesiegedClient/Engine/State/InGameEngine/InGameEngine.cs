@@ -1,4 +1,5 @@
 ﻿using BesiegedClient.Engine.State.InGameEngine.State;
+using Framework;
 using Framework.Controls;
 using Framework.Map;
 using Framework.Unit;
@@ -34,9 +35,7 @@ namespace BesiegedClient.Engine.State.InGameEngine
 
         #endregion "Virtual Canvas"
 
-        public GameMap GameBoard { get; set; }
-
-        public List<IUnit> Units { get; set; }
+        public GameState Board { get; set; }
 
         private InGameEngine()
         {
@@ -57,31 +56,11 @@ namespace BesiegedClient.Engine.State.InGameEngine
 
             #endregion "DrawCanvas"
 
-            //Hack to get a map for Shane to use - replace this with the REAL map later
-            GameBoard = new GameMap();
-
-            //unit shit
-            Units = new List<IUnit>();
-
-            BeastUnitFactory bFac = new BeastUnitFactory();
-
-            //place a couple of units for testing purposes
-            for (int i = 4; i <= 12; i += 4)
-            {
-                IUnit l = bFac.GetBasicInfantry();
-                l.X_Position = i;
-                l.Y_Position = i;
-                Units.Add(l);
-            }
         }
 
         public static InGameEngine Get()
         {
-            if (m_Instance == null)
-            {
-                m_Instance = new InGameEngine();
-            }
-            return m_Instance;
+            return m_Instance ?? (m_Instance = new InGameEngine());
         }
 
         public void ChangeState(IInGameState gameState)
@@ -130,7 +109,7 @@ namespace BesiegedClient.Engine.State.InGameEngine
             y_shape = Canvas.GetTop(source);
             y_original = (int)y_shape / 50;
             x_original = (int)x_shape / 50;
-            selectedUnit = Units.Where(x => x.X_Position == x_original && x.Y_Position == y_original).FirstOrDefault();
+            selectedUnit = Board.Units.FirstOrDefault(x => x.X_Position == x_original && x.Y_Position == y_original);
 
             e.Handled = true;
 
@@ -141,14 +120,12 @@ namespace BesiegedClient.Engine.State.InGameEngine
 
         public void unit_MouseMove(object sender, MouseEventArgs e)
         {
-            if (captured && selectedUnit != null)
-            {
-                double x = e.GetPosition(ClientGameEngine.Get().Canvas).X;
-                double y = e.GetPosition(ClientGameEngine.Get().Canvas).Y;
-                Canvas.SetLeft(source, x + VirtualGameCanvas.HorizontalOffset);
-                Canvas.SetTop(source, y + VirtualGameCanvas.VerticalOffset);
-                e.Handled = true;
-            }
+            if (!captured || selectedUnit == null) return;
+            double x = e.GetPosition(ClientGameEngine.Get().Canvas).X;
+            double y = e.GetPosition(ClientGameEngine.Get().Canvas).Y;
+            Canvas.SetLeft(source, x + VirtualGameCanvas.HorizontalOffset);
+            Canvas.SetTop(source, y + VirtualGameCanvas.VerticalOffset);
+            e.Handled = true;
         }
 
         public void unit_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -160,7 +137,7 @@ namespace BesiegedClient.Engine.State.InGameEngine
                     //snap to closest tile
                     double x = e.GetPosition(ClientGameEngine.Get().Canvas).X + VirtualGameCanvas.HorizontalOffset;
                     double y = e.GetPosition(ClientGameEngine.Get().Canvas).Y + VirtualGameCanvas.VerticalOffset;
-                    int factor = 50;
+                    const int factor = 50;
                     int nearestX = (int)Math.Round((x / (double)factor)) * factor;
                     int nearestY = (int)Math.Round((y / (double)factor)) * factor;
 
@@ -172,7 +149,7 @@ namespace BesiegedClient.Engine.State.InGameEngine
                     if (totalMovedY < 0) totalMovedY *= -1;
                     if (totalMovedX < 0) totalMovedX *= -1;
 
-                    if (totalMovedX + totalMovedY > movementRange || !GameBoard.Tiles[nearestY / 50][nearestX / 50].IsPassable || Units.Any(unit => unit.X_Position == nearestX / 50 && unit.Y_Position == nearestY / 50)) //there is a unit here already OR the tile is impassable, return it to its original position
+                    if (totalMovedX + totalMovedY > movementRange || !Board.GameBoard.Tiles[nearestY / 50][nearestX / 50].IsPassable || Board.Units.Any(unit => unit.X_Position == nearestX / 50 && unit.Y_Position == nearestY / 50)) //there is a unit here already OR the tile is impassable, return it to its original position
                     {
                         Canvas.SetLeft(source, x_original * 50);
                         Canvas.SetTop(source, y_original * 50);
