@@ -156,6 +156,12 @@ namespace BesiegedClient.Engine
                             Action loadingAction = () => ClientGameEngine.Get().ChangeState(LoadingState.Get());
                             ExecuteOnUIThread(loadingAction);
                             break;
+                        case ClientMessage.ClientMessageEnum.ActiveTurn:
+                            InGameEngine.Get().ActivateTurn();
+                            break;
+                        case ClientMessage.ClientMessageEnum.WaitingForTurn:
+                            InGameEngine.Get().DeActivateTurn();
+                            break;
                         default:
                             throw new Exception("Unhandled GenericClientMessage was received: " + genericMessage.MessageEnum.ToString());
                     }

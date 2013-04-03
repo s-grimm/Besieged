@@ -30,11 +30,13 @@ namespace BesiegedServer
         public string Password { get; set; }
         public Stack<PlayerColor.PlayerColorEnum> ColorPool { get; set; }
 
+        private Queue<Player> m_PlayerTurnOrder = new Queue<Player>();
+        private Player m_CurrentPlayer;
         private IDisposable m_GenericGameMessageSubscriber { get; set; }
         private IDisposable m_GameMessageSubscriber { get; set; }
 
-        enum State { WaitingForPlayers, AllPlayersReady, GameStarted };
-        enum Trigger { AllPlayersReady, PlayerNotReady, CreatorPressedStart };
+        enum State { WaitingForPlayers, AllPlayersReady, GameStarted, PlayerTurn, Reconfigure };
+        enum Trigger { AllPlayersReady, PlayerNotReady, CreatorPressedStart, GameStarted, PlayerLeft, PlayerTurn };
 
         StateMachine<State, Trigger> m_GameMachine;
         State m_CurrentState = State.WaitingForPlayers;
@@ -72,11 +74,11 @@ namespace BesiegedServer
 
             m_GameMachine.Configure(State.AllPlayersReady)
                 .OnEntry(x => 
-                    {
-                        GenericClientMessage ready = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.AllPlayersReady };
-                        LookupPlayerById(m_GameCreatorClientId).Callback.SendMessage(ready.ToXml());
+                {
+                    GenericClientMessage ready = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.AllPlayersReady };
+                    LookupPlayerById(m_GameCreatorClientId).Callback.SendMessage(ready.ToXml());
 
-                    })
+                })
                 .Permit(Trigger.PlayerNotReady, State.WaitingForPlayers)
                 .Permit(Trigger.CreatorPressedStart, State.GameStarted);
 
@@ -87,6 +89,7 @@ namespace BesiegedServer
                     foreach (Player player in Players)
                     {
                         PlayerInfos.Add(new KeyValuePair<string, Army.ArmyTypeEnum>(player.ClientId, player.ArmyType));
+                        m_PlayerTurnOrder.Enqueue(player);
                     }
                     GameState = new GameState(PlayerInfos);
                     
@@ -98,8 +101,34 @@ namespace BesiegedServer
                     aggregate.MessageList.Add(gamestate);
                     aggregate.MessageList.Add(start);
                     NotifyAllPlayers(aggregate.ToXml());
+                    m_GameMachine.Fire(Trigger.GameStarted);
                 })
+                .Permit(Trigger.GameStarted, State.PlayerTurn)
                 .Ignore(Trigger.PlayerNotReady);
+
+            m_GameMachine.Configure(State.PlayerTurn)
+                .PermitReentry(Trigger.PlayerTurn)
+                .Permit(Trigger.PlayerLeft, State.Reconfigure)
+                .OnEntry(x =>
+                {
+                    // notify the current player that its their turn
+                    m_CurrentPlayer = m_PlayerTurnOrder.Dequeue();
+                    m_CurrentPlayer.Callback.SendMessage((new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.ActiveTurn }).ToXml());
+                    // notify all other players that they have to wait
+                    foreach (Player player in m_PlayerTurnOrder)
+                    {
+                        player.Callback.SendMessage((new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.WaitingForTurn }).ToXml());
+                    }
+                    // add the current player back on the queue
+                    m_PlayerTurnOrder.Enqueue(m_CurrentPlayer);
+                });
+
+            m_GameMachine.Configure(State.Reconfigure)
+                .OnEntry(x =>
+                {
+
+                })
+                .Permit(Trigger.PlayerTurn, State.PlayerTurn);
         }
 
         private void ProcessMessages()
@@ -176,7 +205,7 @@ namespace BesiegedServer
             }
             else
             {
-                // we probably need to reconfigure here especially if we're already in the GameStarte state
+                m_GameMachine.Fire(Trigger.PlayerLeft);
             }
         }
 
