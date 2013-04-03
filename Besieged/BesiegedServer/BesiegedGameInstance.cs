@@ -13,6 +13,7 @@ using System.Reactive.Concurrency;
 using Framework.Utilities.Xml;
 using Framework.ServiceContracts;
 using Framework.BesiegedMessages;
+using Utilities;
 
 namespace BesiegedServer
 {
@@ -79,9 +80,13 @@ namespace BesiegedServer
             m_GameMachine.Configure(State.GameStarted)
                 .OnEntry(x =>
                 {
-                    //shane - instantiate gamestate here
-                    GenericClientMessage start = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.StartGame };
-                    NotifyAllPlayers(start.ToXml());
+                    GameState = new GameState(Players.Select(p => p.ClientId).ToList());
+                    ConsoleLogger.Push(String.Format("Game {0} has been started", GameId));
+                    NotifyAllPlayers(new GenericClientMessage(){ MessageEnum = ClientMessage.ClientMessageEnum.TransitionToLoadingState}.ToXml());
+                    ClientGameStateMessage msg1 = new ClientGameStateMessage() { State = GameState };
+                    GenericClientMessage msg2 = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.StartGame };
+                    NotifyAllPlayers(msg1.ToXml());
+                    NotifyAllPlayers(msg2.ToXml());
                 })
                 .Ignore(Trigger.PlayerNotReady);
         }
@@ -244,7 +249,7 @@ namespace BesiegedServer
         {
             foreach (Player player in Players)
             {
-                player.Callback.SendMessage(message);
+                player.Callback.SendMessage(message); //timeout here
             }
         }
 
