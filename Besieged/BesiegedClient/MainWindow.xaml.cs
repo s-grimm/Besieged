@@ -1,5 +1,4 @@
-﻿using Framework.Commands;
-using Framework.ServiceContracts;
+﻿using Framework.ServiceContracts;
 using Framework.Utilities.Xml;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using BesiegedClient.Rendering;
 using System.Collections.ObjectModel;
 using BesiegedClient.Engine;
 using BesiegedClient.Engine.State;
@@ -24,7 +22,6 @@ namespace BesiegedClient
     public class Dimensions
     {
         public int Width { get; set; }
-
         public int Height { get; set; }
     }
 
@@ -33,8 +30,6 @@ namespace BesiegedClient
     /// </summary>
     public partial class MainWindow : Window
     {
-        //private app_code.Client m_Client = new app_code.Client();
-
         public MainWindow()
         {
             InitializeComponent();

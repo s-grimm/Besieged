@@ -1,7 +1,6 @@
 ﻿using BesiegedClient.Engine.Dialog;
 using BesiegedClient.Engine.State;
-using BesiegedClient.Rendering;
-using Framework.Commands;
+using Framework.BesiegedMessages;
 using Framework.ServiceContracts;
 using Framework.Utilities;
 using Framework.Utilities.Xml;
@@ -9,6 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive.Linq;
+using System.Reactive.PlatformServices;
+using System.Reactive.Concurrency;
+using System.Reactive.Subjects;
 using System.ServiceModel;
 using System.Text;
 using System.Threading;
@@ -36,8 +39,8 @@ namespace BesiegedClient.Engine
         public Canvas Canvas { get; set; }
         public MonitoredValue<bool> IsServerConnected { get; set; }
         public MonitoredValue<bool> AllPlayersReady { get; set; }
-        public ObservableCollection<CommandNotifyGame> GamesCollection { get; set; }
-        public ObservableCollection<PlayerChangedInfo> PlayerCollection { get; set; }
+        public ObservableCollection<GameInfoMessage> GamesCollection { get; set; }
+        public ObservableCollection<PlayerInfoMessage> PlayerCollection { get; set; }
         public ObservableCollection<string> ChatMessageCollection { get; set; }
         public bool IsGameCreator { get; set; }
 
@@ -49,8 +52,8 @@ namespace BesiegedClient.Engine
             m_TcpBinding.SendTimeout = new TimeSpan(0, 0, 10);
             m_TcpBinding.ReceiveTimeout = new TimeSpan(0, 0, 10);
 
-            GamesCollection = new ObservableCollection<CommandNotifyGame>();
-            PlayerCollection = new ObservableCollection<PlayerChangedInfo>();
+            GamesCollection = new ObservableCollection<GameInfoMessage>();
+            PlayerCollection = new ObservableCollection<PlayerInfoMessage>();
             ChatMessageCollection = new ObservableCollection<string>();
 
             AllPlayersReady = new MonitoredValue<bool>(false);
@@ -83,99 +86,101 @@ namespace BesiegedClient.Engine
                 MessageBox.Show("Its faulted");
             };
 
-            Task.Factory.StartNew(() =>
-            {
-                while (true)
-                {
-                    Command command = m_ClientCallback.MessageQueue.Take();
-                    ProcessMessage(command);
-                }
-            }, TaskCreationOptions.LongRunning);
-        }
+            var MessageSubject = new Subject<BesiegedMessage>();
 
-        private void ProcessMessage(Command command)
-        {
-            if (command is CommandConnectionSuccessful)
-            {
-                CommandConnectionSuccessful commandConnectionSuccessful = command as CommandConnectionSuccessful;
-                m_ClientId = commandConnectionSuccessful.ClientId;
-                IsServerConnected.Value = true;
-            }
+            var messagePublisher = m_ClientCallback.MessageQueue
+                     .GetConsumingEnumerable()
+                     .ToObservable(TaskPoolScheduler.Default)
+                     .Subscribe(MessageSubject);
 
-            else if (command is CommandNotifyGame)
-            {
-                CommandNotifyGame commandNotifyGame = command as CommandNotifyGame;
-                CommandNotifyGame game = GamesCollection.Where(x => x.GameId == commandNotifyGame.GameId).FirstOrDefault();
-                Action action = () =>
+            //var messagePublisher = observableMessages.Publish();
+
+            // All generic client messages are handled here
+            var genericServerMessageSubscriber = MessageSubject
+                .Where(message => message is GenericClientMessage)
+                .Subscribe(message =>
                 {
-                    if (game != null)
+                    var genericMessage = message as GenericClientMessage;
+                    switch (genericMessage.MessageEnum)
                     {
-                        GamesCollection.Remove(game);
+                        case ClientMessage.ClientMessageEnum.ConnectSuccessful:
+                            {
+                                m_ClientId = genericMessage.ClientId;
+                                IsServerConnected.Value = true;
+                                break;
+                            }
+                        case ClientMessage.ClientMessageEnum.AllPlayersReady:
+                            AllPlayersReady.Value = true;
+                            break;
+                        case ClientMessage.ClientMessageEnum.PlayerNotReady:
+                            AllPlayersReady.Value = false;
+                            break;
+                        case ClientMessage.ClientMessageEnum.StartGame:
+                            ChangeState(PlayingGameState.Get());
+                            break;
+                        default:
+                            throw new Exception("Unhandled GenericClientMessage was received: " + genericMessage.MessageEnum.ToString());
                     }
-                    GamesCollection.Add(commandNotifyGame);
-                };
-                ExecuteOnUIThread(action);
-            }
+                });
 
-            else if (command is PlayerGameInfo)
-            {
-                PlayerGameInfo playerGameInfo = command as PlayerGameInfo;
-                m_GameId = playerGameInfo.GameId;
-                if (playerGameInfo.IsCreator)
+            // All server messages are handled here
+            var m_ServerMessageSubscriber = MessageSubject
+                .Where(message => message is ClientMessage && !(message is GenericClientMessage))
+                .Subscribe(message =>
                 {
-                    IsGameCreator = true;
-                }
-                ChangeState(PregameLobbyState.Get());
-            }
-
-            else if (command is PlayerChangedInfo)
-            {
-                PlayerChangedInfo playerChangedInfo = command as PlayerChangedInfo;
-                PlayerChangedInfo player = PlayerCollection.Where(x => x.ClientId == playerChangedInfo.ClientId).FirstOrDefault();
-                Action action = () =>
-                {
-                    if (player != null)
+                    if (message is ClientChatMessage)
                     {
-                        PlayerCollection.Remove(player);
+                        Action action = () => ChatMessageCollection.Add((message as ClientChatMessage).Contents);
+                        ExecuteOnUIThread(action);
                     }
-                    PlayerCollection.Add(playerChangedInfo);
-                };
-                ExecuteOnUIThread(action);
-            }
 
-            else if (command is CommandChatMessage)
-            {
-                CommandChatMessage commandChatMessage = command as CommandChatMessage;
-                Action action = () => ChatMessageCollection.Add(commandChatMessage.Contents);
-                ExecuteOnUIThread(action);
-            }
-
-            else if (command is StartGame)
-            {
-                ChangeState(PlayingGameState.Get());
-            }
-
-            else if (command is AllAreReady)
-            {
-                AllPlayersReady.Value = true;
-            }
-
-            else if (command is WaitingForPlayer)
-            {
-                AllPlayersReady.Value = false;
-            }
-
-            else if (command is CommandServerError)
-            {
-                CommandServerError commandServerError = command as CommandServerError;
-                
-                    Action postRender = () =>
+                    else if (message is PlayerInfoMessage)
                     {
-                        RenderMessageDialog.RenderMessage(commandServerError.ErrorMessage);
-                    };
-                    ChangeState(m_PreviousGameState, postRender);
-                
-            }
+                        PlayerInfoMessage player = PlayerCollection.Where(x => x.ClientId == (message as PlayerInfoMessage).ClientId).FirstOrDefault();
+                        Action action = () =>
+                        {
+                            if (player != null)
+                            {
+                                PlayerCollection.Remove(player);
+                            }
+                            PlayerCollection.Add(message as PlayerInfoMessage);
+                        };
+                        ExecuteOnUIThread(action);
+                    }
+
+                    else if (message is PlayerGameInfoMessage)
+                    {
+                        m_GameId = (message as PlayerGameInfoMessage).GameId;
+                        if ((message as PlayerGameInfoMessage).IsCreator)
+                        {
+                            IsGameCreator = true;
+                        }
+                        ChangeState(PregameLobbyState.Get());
+                    }
+
+                    else if (message is GameInfoMessage)
+                    {
+                        GameInfoMessage game = GamesCollection.Where(x => x.GameId == (message as GameInfoMessage).GameId).FirstOrDefault();
+                        Action action = () =>
+                        {
+                            if (game != null)
+                            {
+                                GamesCollection.Remove(game);
+                            }
+                            GamesCollection.Add(message as GameInfoMessage);
+                        };
+                        ExecuteOnUIThread(action);
+                    }
+
+                    else if (message is ErrorDialogMessage)
+                    {
+                        Action action = () =>
+                        {
+                            RenderMessageDialog.RenderMessage((message as ErrorDialogMessage).Contents);
+                        };
+                        ChangeState(m_PreviousGameState, action);
+                    }
+                }); 
         }
         
         public static ClientGameEngine Get()
@@ -228,19 +233,16 @@ namespace BesiegedClient.Engine
             }, CancellationToken.None, TaskCreationOptions.None, GlobalResources.m_TaskScheduler);
         }
 
-        public void SendMessageToServer(Command command)
+        public void SendMessageToServer(BesiegedMessage message)
         {
             Task.Factory.StartNew(() =>
             {
-                command.ClientId = m_ClientId;
-                if (!(command is CommandJoinGame))
-                {
-                    command.GameId = m_GameId;
-                }
-                string serializedCommand = command.ToXml();
+                message.ClientId = m_ClientId;
+                message.GameId = message.GameId == null ? m_GameId : message.GameId;
+                string serializedCommand = message.ToXml();
                 try
                 {
-                    m_BesiegedServer.SendCommand(serializedCommand);
+                    m_BesiegedServer.SendMessage(serializedCommand);
                 }
                 catch (Exception)
                 {

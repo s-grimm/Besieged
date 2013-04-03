@@ -1,4 +1,4 @@
-﻿using Framework.Commands;
+﻿
 using Framework.ServiceContracts;
 using Framework.Utilities.Xml;
 using System;
@@ -47,7 +47,7 @@ namespace TestClient
             Task.Factory.StartNew(() =>
             {
                 CommandConnect commandConnect = new CommandConnect();
-                m_BesiegedServer.SendCommand(commandConnect.ToXml());
+                m_BesiegedServer.SendMessage(commandConnect.ToXml());
             });
 
             Task.Factory.StartNew(() =>
@@ -129,7 +129,7 @@ namespace TestClient
 
         private void SendMessageToServer(string command)
         {
-            Task.Factory.StartNew(() => m_BesiegedServer.SendCommand(command));
+            Task.Factory.StartNew(() => m_BesiegedServer.SendMessage(command));
         }
 
         private void btnJoin_Click(object sender, RoutedEventArgs e)

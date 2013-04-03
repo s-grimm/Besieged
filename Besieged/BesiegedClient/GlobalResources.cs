@@ -1,5 +1,4 @@
-﻿using Framework.Commands;
-using Framework.ServiceContracts;
+﻿using Framework.ServiceContracts;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,7 +11,6 @@ namespace BesiegedClient
 {
     public static class GlobalResources
     {
-        public static ObservableCollection<CommandNotifyGame> GameLobbyCollection { get; set; }
         public static ObservableCollection<string> GameSpecificChatMessages { get; set; }
         public static Canvas GameWindow { get; set; }
         public static IBesiegedServer BesiegedServer { get; set; }
@@ -38,13 +36,12 @@ namespace BesiegedClient
 
         static GlobalResources()
         {
-            GameLobbyCollection = new ObservableCollection<CommandNotifyGame>();
             GameSpecificChatMessages = new ObservableCollection<string>();
         }
 
         public static void SendMessageToServer(string command)
         {
-            Task.Factory.StartNew(() => BesiegedServer.SendCommand(command));
+            Task.Factory.StartNew(() => BesiegedServer.SendMessage(command));
         }
     }
 }

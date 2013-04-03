@@ -1,4 +1,4 @@
-﻿using Framework.Commands;
+﻿using Framework.BesiegedMessages;
 using Framework.ServiceContracts;
 using Framework.Utilities.Xml;
 using System;
@@ -13,21 +13,20 @@ namespace BesiegedServer
 {
     public class ServerClient : IClient
     {
-        public BlockingCollection<Command> MessageQueue = new BlockingCollection<Command>();
+        public BlockingCollection<BesiegedMessage> MessageQueue = new BlockingCollection<BesiegedMessage>();
 
-        public void Notify(string serializedMessage)
+        public void SendMessage(string serializedMessage)
         {
             try
             {
-                Command command = serializedMessage.FromXml<Command>();
-                if (command is CommandAggregate)
+                BesiegedMessage message = serializedMessage.FromXml<BesiegedMessage>();
+                if (message is AggregateMessage)
                 {
-                    CommandAggregate commandAggregate = command as CommandAggregate;
-                    commandAggregate.Commands.ForEach(x => MessageQueue.Add(x));
+                    (message as AggregateMessage).MessageList.ForEach(x => MessageQueue.Add(x));
                 }
                 else
                 {
-                    MessageQueue.Add(command);
+                    MessageQueue.Add(message);
                 }
             }
             catch (Exception ex)

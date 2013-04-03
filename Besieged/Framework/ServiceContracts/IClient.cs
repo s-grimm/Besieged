@@ -10,6 +10,6 @@ namespace Framework.ServiceContracts
     public interface IClient
     {
         [OperationContract(IsOneWay = true)]
-        void Notify(string message);
+        void SendMessage(string message);
     }
 }

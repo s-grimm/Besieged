@@ -11,6 +11,6 @@ namespace Framework.ServiceContracts
     public interface IBesiegedServer
     {
         [OperationContract]
-        void SendCommand(string serializedCommand);
+        void SendMessage(string serializedCommand);
     }
 }

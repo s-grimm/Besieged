@@ -39,6 +39,18 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Reactive.Core">
+      <HintPath>..\packages\Rx-Core.2.1.30214.0\lib\Net45\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces">
+      <HintPath>..\packages\Rx-Interfaces.2.1.30214.0\lib\Net45\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq">
+      <HintPath>..\packages\Rx-Linq.2.1.30214.0\lib\Net45\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices">
+      <HintPath>..\packages\Rx-PlatformServices.2.1.30214.0\lib\Net45\System.Reactive.PlatformServices.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml" />
@@ -84,10 +96,8 @@
     <Compile Include="Engine\State\PregameLobbyState.cs" />
     <Compile Include="Engine\State\SplashScreenLogoState.cs" />
     <Compile Include="GlobalResources.cs" />
-    <Compile Include="Rendering\RenderGameWindow.cs" />
     <Compile Include="Engine\Utilities\Rendering.cs" />
     <Compile Include="Engine\Dialog\RenderMessageDialog.cs" />
-    <Compile Include="Rendering\RenderPreGame.cs" />
     <Page Include="Control\Block.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -133,6 +143,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>ClientSettings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -152,10 +163,6 @@
     <None Include="resources\UI\PSDLayout\XloseDialog.psd" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BesiegedClientLogic\BesiegedClientLogic.csproj">
-      <Project>{1715ca01-f329-4907-b73e-eb23c2084d71}</Project>
-      <Name>BesiegedClientLogic</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Framework\Framework.csproj">
       <Project>{2a865366-3f9c-4274-8890-6bb49ee99a54}</Project>
       <Name>Framework</Name>

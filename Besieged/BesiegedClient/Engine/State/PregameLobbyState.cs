@@ -1,4 +1,4 @@
-﻿using Framework.Commands;
+﻿using Framework.BesiegedMessages;
 using Framework.Utilities.Xml;
 using System;
 using System.Collections.Generic;
@@ -105,8 +105,8 @@ namespace BesiegedClient.Engine.State
 
                 if (selected == "NotReady")
                 {
-                    PlayerNotReady playerNotReady = new PlayerNotReady();
-                    ClientGameEngine.Get().SendMessageToServer(playerNotReady);
+                    GenericGameMessage notReady = new GenericGameMessage() { MessageEnum = GameMessage.GameMessageEnum.PlayerNotReady };
+                    ClientGameEngine.Get().SendMessageToServer(notReady);
 
                     m_ReadyImage.Visibility = Visibility.Visible;
                     m_ReadyImage.IsEnabled = true;
@@ -116,8 +116,8 @@ namespace BesiegedClient.Engine.State
 
                 else if (selected == "Ready")
                 {
-                    PlayerReady playerReady = new PlayerReady();
-                    ClientGameEngine.Get().SendMessageToServer(playerReady);
+                    GenericGameMessage ready = new GenericGameMessage() { MessageEnum = GameMessage.GameMessageEnum.PlayerReady };
+                    ClientGameEngine.Get().SendMessageToServer(ready);
 
                     m_ReadyImage.Visibility = Visibility.Hidden;
                     m_ReadyImage.IsEnabled = false;
@@ -127,7 +127,7 @@ namespace BesiegedClient.Engine.State
 
                 else if (selected == "StartEnabled")
                 {
-                    StartGame start = new StartGame();
+                    GenericGameMessage start = new GenericGameMessage() { MessageEnum = GameMessage.GameMessageEnum.Start };
                     ClientGameEngine.Get().SendMessageToServer(start);
                 }
 
@@ -223,9 +223,9 @@ namespace BesiegedClient.Engine.State
                     {
                         if (m_ChatMessageBox.Text.Trim() != string.Empty)
                         {
-                            CommandChatMessage commandChatMessage = new CommandChatMessage(m_ChatMessageBox.Text.Trim());
+                            GameChatMessage chat = new GameChatMessage() { Contents = m_ChatMessageBox.Text.Trim() };
                             m_ChatMessageBox.Text = "";
-                            ClientGameEngine.Get().SendMessageToServer(commandChatMessage);
+                            ClientGameEngine.Get().SendMessageToServer(chat);
                         }
                     }
                 };
@@ -239,9 +239,9 @@ namespace BesiegedClient.Engine.State
                 {
                     if (m_ChatMessageBox.Text.Trim() != string.Empty)
                     {
-                        CommandChatMessage commandChatMessage = new CommandChatMessage(m_ChatMessageBox.Text.Trim());
+                        GameChatMessage chat = new GameChatMessage() { Contents = m_ChatMessageBox.Text.Trim() };
                         m_ChatMessageBox.Text = "";
-                        ClientGameEngine.Get().SendMessageToServer(commandChatMessage);
+                        ClientGameEngine.Get().SendMessageToServer(chat);
                     }
                 };
                 
