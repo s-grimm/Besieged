@@ -88,6 +88,7 @@ namespace BesiegedServer
             m_GameMachine.Configure(State.GameStarted)
                 .OnEntry(x =>
                 {
+                    //shane - instantiate gamestate here
                     GenericClientMessage start = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.StartGame };
                     NotifyAllPlayers(start.ToXml());
                 })
