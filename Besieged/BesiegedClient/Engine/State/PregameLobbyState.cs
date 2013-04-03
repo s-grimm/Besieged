@@ -253,8 +253,7 @@ namespace BesiegedClient.Engine.State
                 m_ChatMessagesListBox.FontSize = 14;
                 ClientGameEngine.Get().ChatMessageCollection.CollectionChanged += (s, ev) =>
                 {
-                    m_ChatMessagesListBox.SelectedIndex = m_ChatMessagesListBox.Items.Count - 1;
-                    m_ChatMessagesListBox.ScrollIntoView(m_ChatMessagesListBox.SelectedItem);
+                    m_ChatMessagesListBox.ScrollIntoView(ev.NewItems[0]);
                 };
 
                 //StartEnabled
