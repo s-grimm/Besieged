@@ -35,8 +35,8 @@ namespace BesiegedServer
         private IDisposable m_GenericGameMessageSubscriber { get; set; }
         private IDisposable m_GameMessageSubscriber { get; set; }
 
-        enum State { WaitingForPlayers, AllPlayersReady, GameStarted, PlayerTurn };
-        enum Trigger { AllPlayersReady, PlayerNotReady, CreatorPressedStart, GameStarted };
+        enum State { WaitingForPlayers, AllPlayersReady, GameStarted, PlayerTurn, Reconfigure };
+        enum Trigger { AllPlayersReady, PlayerNotReady, CreatorPressedStart, GameStarted, PlayerLeft };
 
         StateMachine<State, Trigger> m_GameMachine;
         State m_CurrentState = State.WaitingForPlayers;
@@ -74,11 +74,11 @@ namespace BesiegedServer
 
             m_GameMachine.Configure(State.AllPlayersReady)
                 .OnEntry(x => 
-                    {
-                        GenericClientMessage ready = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.AllPlayersReady };
-                        LookupPlayerById(m_GameCreatorClientId).Callback.SendMessage(ready.ToXml());
+                {
+                    GenericClientMessage ready = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.AllPlayersReady };
+                    LookupPlayerById(m_GameCreatorClientId).Callback.SendMessage(ready.ToXml());
 
-                    })
+                })
                 .Permit(Trigger.PlayerNotReady, State.WaitingForPlayers)
                 .Permit(Trigger.CreatorPressedStart, State.GameStarted);
 
@@ -102,11 +102,13 @@ namespace BesiegedServer
                     aggregate.MessageList.Add(start);
                     NotifyAllPlayers(aggregate.ToXml());
 
-                    
+                    m_GameMachine.Fire(Trigger.GameStarted);
                 })
                 .Ignore(Trigger.PlayerNotReady);
 
             m_GameMachine.Configure(State.PlayerTurn)
+                .Permit(Trigger.GameStarted, State.PlayerTurn)
+                .Permit(Trigger.PlayerLeft, State.Reconfigure)
                 .OnEntry(x =>
                 {
                     // notify the current player that its their turn
@@ -196,7 +198,7 @@ namespace BesiegedServer
             }
             else
             {
-                // we probably need to reconfigure here especially if we're already in the GameStarte state
+                m_GameMachine.Fire(Trigger.PlayerLeft);
             }
         }
 
