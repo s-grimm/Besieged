@@ -83,10 +83,10 @@ namespace BesiegedServer
                         JoinGameMessage join = new JoinGameMessage() { ClientId = message.ClientId, Password = gameMessage.Password, GameId = gameId };  // add the client that requested the new game to the game instance
                         m_MessageQueue.Add(join);
 
-                        string capacity = string.Format("{0}/{1} players", gameInstance.Players.Count, gameInstance.MaxPlayers);   // notify all connect clients of the updated game instance
-                        GameInfoMessage gameInfo = new GameInfoMessage(gameInstance.GameId, gameInstance.Name, capacity, gameInstance.IsGameInstanceFull, gameInstance.Password != string.Empty ? true : false);
+                        //string capacity = string.Format("{0}/{1} players", gameInstance.Players.Count, gameInstance.MaxPlayers);   // notify all connect clients of the updated game instance
+                        //GameInfoMessage gameInfo = new GameInfoMessage(gameInstance.GameId, gameInstance.Name, capacity, gameInstance.IsGameInstanceFull, gameInstance.Password != string.Empty ? true : false);
                         ConsoleLogger.Push(string.Format("{0} has created a new game called: {1}", m_ConnectedClients[message.ClientId].Name, gameInstance.Name));
-                        NotifyAllConnectedClients(gameInfo.ToXml()); 
+                        //NotifyAllConnectedClients(gameInfo.ToXml()); 
                     }
                 });
 
