@@ -82,11 +82,15 @@ namespace BesiegedServer
                 {
                     GameState = new GameState(Players.Select(p => p.ClientId).ToList());
                     ConsoleLogger.Push(String.Format("Game {0} has been started", GameId));
+                    // switch all the players to loading
                     NotifyAllPlayers(new GenericClientMessage(){ MessageEnum = ClientMessage.ClientMessageEnum.TransitionToLoadingState}.ToXml());
-                    ClientGameStateMessage msg1 = new ClientGameStateMessage() { State = GameState };
-                    GenericClientMessage msg2 = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.StartGame };
-                    NotifyAllPlayers(msg1.ToXml());
-                    NotifyAllPlayers(msg2.ToXml());
+                    
+                    ClientGameStateMessage gamestate = new ClientGameStateMessage() { State = GameState };
+                    GenericClientMessage start = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.StartGame };
+                    AggregateMessage aggregate = new AggregateMessage();
+                    aggregate.MessageList.Add(gamestate);
+                    aggregate.MessageList.Add(start);
+                    NotifyAllPlayers(aggregate.ToXml());
                 })
                 .Ignore(Trigger.PlayerNotReady);
         }
