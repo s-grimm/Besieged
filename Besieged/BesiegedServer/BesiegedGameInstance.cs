@@ -80,10 +80,11 @@ namespace BesiegedServer
                 .OnEntry(x =>
                 {
                     GameState = new GameState(Players.Select(p => p.ClientId).ToList());
-                    AggregateMessage agg = new AggregateMessage();
-                    agg.MessageList.Add(new ClientGameStateMessage() { State = GameState });
-                    agg.MessageList.Add(new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.StartGame });
-                    NotifyAllPlayers(agg.ToXml());
+                   
+                    ClientGameStateMessage msg1 = new ClientGameStateMessage() { State = GameState };
+                    GenericClientMessage msg2 = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.StartGame };
+                    NotifyAllPlayers(msg1.ToXml());
+                    NotifyAllPlayers(msg2.ToXml());
                 })
                 .Ignore(Trigger.PlayerNotReady);
         }

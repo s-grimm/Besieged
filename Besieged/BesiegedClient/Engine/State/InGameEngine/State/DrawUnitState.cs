@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Framework.Map;
+using Framework.Sprite;
 using Framework.Unit;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace BesiegedClient.Engine.State.InGameEngine.State
         {
             //throw new NotImplementedException();
             GameMap map = InGameEngine.Get().Board.GameBoard;
-            List<IUnit> units = InGameEngine.Get().Board.Units;
+            List<BaseUnit> units = InGameEngine.Get().Board.Units;
 
             foreach (IUnit unit in units)
             {

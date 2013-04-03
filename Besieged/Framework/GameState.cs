@@ -1,4 +1,5 @@
 ﻿using Framework.Map;
+using Framework.Sprite;
 using Framework.Unit;
 using Framework.Utilities;
 using System;
@@ -9,7 +10,7 @@ namespace Framework
 {
     public class GameState
     {
-        public List<IUnit> Units { get; set; }
+        public List<BaseUnit> Units { get; set; }
 
         public GameMap GameBoard { get; set; }
 
@@ -17,14 +18,14 @@ namespace Framework
 
         private GameState()
         {
-            Units = new List<IUnit>();
+            Units = new List<BaseUnit>();
             GameBoard = new GameMap();
             GamePlayers = new List<GamePlayer>();
         }
 
         public GameState(IReadOnlyCollection<string> playerIDs)
         {
-            Units = new List<IUnit>();
+            Units = new List<BaseUnit>();
             GameBoard = new GameMap();
             GamePlayers = new List<GamePlayer>();
 
@@ -42,13 +43,13 @@ namespace Framework
 
                 switch (raceNum)
                 {
-                    case 0:
-                        factory = new AllianceUnitFactory();
-                        break;
+                    //case 0:
+                    //    factory = new AllianceUnitFactory();
+                    //    break;
 
-                    case 1:
-                        factory = new BeastUnitFactory();
-                        break;
+                    //case 1:
+                    //    factory = new BeastUnitFactory();
+                    //    break;
 
                     default:
                         factory = new UndeadUnitFactory();
@@ -131,7 +132,7 @@ namespace Framework
                     tUnit.X_Position = x;
                     tUnit.Y_Position = y;
 
-                    Units.Add(tUnit);
+                    Units.Add((BaseUnit)tUnit);
 
                     y += y_movement;
                 }

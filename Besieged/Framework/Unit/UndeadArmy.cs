@@ -2,396 +2,396 @@
 
 namespace Framework.Unit
 {
-    public class Skeleton : DrawableObject, IUnit
+    public class Skeleton : BaseUnit
     {
-        public string Owner { get; set; }
+        public override string Owner { get; set; }
 
-        public int X_Position { get; set; }
+        public override int  X_Position { get; set; }
 
-        public int Y_Position { get; set; }
+        public override int  Y_Position { get; set; }
 
-        public int CurrentHealthPoints { get; set; }
+        public override int  CurrentHealthPoints { get; set; }
 
-        public int MaxHealthPoints
+        public override int  MaxHealthPoints
         {
             get { return 2; }
         }
 
-        public int Initiative
+        public override int  Initiative
         {
             get { return 2; }
         }
 
-        public int Skill
+        public override int  Skill
         {
             get { return 2; }
         }
 
-        public int Range
+        public override int  Range
         {
             get { return 1; }
         }
 
-        public int Cost
+        public override int  Cost
         {
             get { return 1; }
         }
 
-        public int Movement
+        public override int  Movement
         {
             get { return 4; }
         }
 
-        public string Description
+        public override string Description
         {
             get { return "Skeleton"; }
         }
     }
 
-    public class SkeletonCaptain : DrawableObject, IUnit
+    public class SkeletonCaptain : BaseUnit
     {
-        public string Owner { get; set; }
+        public override string Owner { get; set; }
 
-        public int X_Position { get; set; }
+        public override int  X_Position { get; set; }
 
-        public int Y_Position { get; set; }
+        public override int  Y_Position { get; set; }
 
-        public int CurrentHealthPoints { get; set; }
+        public override int  CurrentHealthPoints { get; set; }
 
-        public int MaxHealthPoints
+        public override int  MaxHealthPoints
         {
             get { return 5; }
         }
 
-        public int Initiative
+        public override int  Initiative
         {
             get { return 3; }
         }
 
-        public int Skill
+        public override int  Skill
         {
             get { return 3; }
         }
 
-        public int Range
+        public override int  Range
         {
             get { return 1; }
         }
 
-        public int Cost
+        public override int  Cost
         {
             get { return 3; }
         }
 
-        public int Movement
+        public override int  Movement
         {
             get { return 4; }
         }
 
-        public string Description
+        public override string Description
         {
             get { return "Skeleton Captain"; }
         }
     }
 
-    public class Orc : DrawableObject, IUnit
+    public class Orc : BaseUnit
     {
-        public string Owner { get; set; }
+        public override string Owner { get; set; }
 
-        public int X_Position { get; set; }
+        public override int  X_Position { get; set; }
 
-        public int Y_Position { get; set; }
+        public override int  Y_Position { get; set; }
 
-        public int CurrentHealthPoints { get; set; }
+        public override int  CurrentHealthPoints { get; set; }
 
-        public int MaxHealthPoints
+        public override int  MaxHealthPoints
         {
             get { return 5; }
         }
 
-        public int Initiative
+        public override int  Initiative
         {
             get { return 3; }
         }
 
-        public int Skill
+        public override int  Skill
         {
             get { return 2; }
         }
 
-        public int Range
+        public override int  Range
         {
             get { return 3; }
         }
 
-        public int Cost
+        public override int  Cost
         {
             get { return 4; }
         }
 
-        public int Movement
+        public override int  Movement
         {
             get { return 4; }
         }
 
-        public string Description
+        public override string Description
         {
             get { return "Orc"; }
         }
     }
 
-    public class OrcChief : DrawableObject, IUnit
+    public class OrcChief : BaseUnit
     {
-        public string Owner { get; set; }
+        public override string Owner { get; set; }
 
-        public int X_Position { get; set; }
+        public override int  X_Position { get; set; }
 
-        public int Y_Position { get; set; }
+        public override int  Y_Position { get; set; }
 
-        public int CurrentHealthPoints { get; set; }
+        public override int  CurrentHealthPoints { get; set; }
 
-        public int MaxHealthPoints
+        public override int  MaxHealthPoints
         {
             get { return 8; }
         }
 
-        public int Initiative
+        public override int  Initiative
         {
             get { return 3; }
         }
 
-        public int Skill
+        public override int  Skill
         {
             get { return 3; }
         }
 
-        public int Range
+        public override int  Range
         {
             get { return 4; }
         }
 
-        public int Cost
+        public override int  Cost
         {
             get { return 8; }
         }
 
-        public int Movement
+        public override int  Movement
         {
             get { return 4; }
         }
 
-        public string Description
+        public override string Description
         {
             get { return "Orc Chief"; }
         }
     }
 
-    public class WolfRider : DrawableObject, IUnit
+    public class WolfRider : BaseUnit
     {
-        public string Owner { get; set; }
+        public override string Owner { get; set; }
 
-        public int X_Position { get; set; }
+        public override int  X_Position { get; set; }
 
-        public int Y_Position { get; set; }
+        public override int  Y_Position { get; set; }
 
-        public int CurrentHealthPoints { get; set; }
+        public override int  CurrentHealthPoints { get; set; }
 
-        public int MaxHealthPoints
+        public override int  MaxHealthPoints
         {
             get { return 5; }
         }
 
-        public int Initiative
+        public override int  Initiative
         {
             get { return 3; }
         }
 
-        public int Skill
+        public override int  Skill
         {
             get { return 4; }
         }
 
-        public int Range
+        public override int  Range
         {
             get { return 1; }
         }
 
-        public int Cost
+        public override int  Cost
         {
             get { return 5; }
         }
 
-        public int Movement
+        public override int  Movement
         {
             get { return 8; }
         }
 
-        public string Description
+        public override string Description
         {
             get { return "Wolf Rider"; }
         }
     }
 
-    public class WolfLord : DrawableObject, IUnit
+    public class WolfLord : BaseUnit
     {
-        public string Owner { get; set; }
+        public override string Owner { get; set; }
 
-        public int X_Position { get; set; }
+        public override int  X_Position { get; set; }
 
-        public int Y_Position { get; set; }
+        public override int  Y_Position { get; set; }
 
-        public int CurrentHealthPoints { get; set; }
+        public override int  CurrentHealthPoints { get; set; }
 
-        public int MaxHealthPoints
+        public override int  MaxHealthPoints
         {
             get { return 8; }
         }
 
-        public int Initiative
+        public override int  Initiative
         {
             get { return 4; }
         }
 
-        public int Skill
+        public override int  Skill
         {
             get { return 5; }
         }
 
-        public int Range
+        public override int  Range
         {
             get { return 1; }
         }
 
-        public int Cost
+        public override int  Cost
         {
             get { return 10; }
         }
 
-        public int Movement
+        public override int  Movement
         {
             get { return 8; }
         }
 
-        public string Description
+        public override string Description
         {
             get { return "Wolf Lord"; }
         }
     }
 
-    public class Vampire : DrawableObject, IUnit
+    public class Vampire : BaseUnit
     {
-        public string Owner { get; set; }
+        public override string Owner { get; set; }
 
-        public int X_Position { get; set; }
+        public override int  X_Position { get; set; }
 
-        public int Y_Position { get; set; }
+        public override int  Y_Position { get; set; }
 
-        public int CurrentHealthPoints { get; set; }
+        public override int  CurrentHealthPoints { get; set; }
 
-        public int MaxHealthPoints
+        public override int  MaxHealthPoints
         {
             get { return 4; }
         }
 
-        public int Initiative
+        public override int  Initiative
         {
             get { return 1; }
         }
 
-        public int Skill
+        public override int  Skill
         {
             get { return 3; }
         }
 
-        public int Range
+        public override int  Range
         {
             get { return 3; }
         }
 
-        public int Cost
+        public override int  Cost
         {
             get { return 5; }
         }
 
-        public int Movement
+        public override int  Movement
         {
             get { return 6; }
         }
 
-        public string Description
+        public override string Description
         {
             get { return "Vampire"; }
         }
     }
 
-    public class VampireCount : DrawableObject, IUnit
+    public class VampireCount : BaseUnit
     {
-        public string Owner { get; set; }
+        public override string Owner { get; set; }
 
-        public int X_Position { get; set; }
+        public override int  X_Position { get; set; }
 
-        public int Y_Position { get; set; }
+        public override int  Y_Position { get; set; }
 
-        public int CurrentHealthPoints { get; set; }
+        public override int  CurrentHealthPoints { get; set; }
 
-        public int MaxHealthPoints
+        public override int  MaxHealthPoints
         {
             get { return 8; }
         }
 
-        public int Initiative
+        public override int  Initiative
         {
             get { return 3; }
         }
 
-        public int Skill
+        public override int  Skill
         {
             get { return 4; }
         }
 
-        public int Range
+        public override int  Range
         {
             get { return 5; }
         }
 
-        public int Cost
+        public override int  Cost
         {
             get { return 10; }
         }
 
-        public int Movement
+        public override int  Movement
         {
             get { return 8; }
         }
 
-        public string Description
+        public override string Description
         {
             get { return "Vampire Count"; }
         }
     }
 
-    public class UndeadCastle : DrawableObject, IUnit
+    public class UndeadCastle : BaseUnit
     {
-        public string Owner { get; set; }
+        public override string Owner { get; set; }
 
-        public int X_Position { get; set; }
+        public override int  X_Position { get; set; }
 
-        public int Y_Position { get; set; }
+        public override int  Y_Position { get; set; }
 
-        public int CurrentHealthPoints { get; set; }
+        public override int  CurrentHealthPoints { get; set; }
 
-        public int MaxHealthPoints { get { return 25; } }
+        public override int  MaxHealthPoints { get { return 25; } }
 
-        public int Initiative { get { return 0; } }
+        public override int  Initiative { get { return 0; } }
 
-        public int Skill { get { return 0; } }
+        public override int  Skill { get { return 0; } }
 
-        public int Range { get { return 0; } }
+        public override int  Range { get { return 0; } }
 
-        public int Cost { get { return 0; } }
+        public override int  Cost { get { return 0; } }
 
-        public int Movement { get { return 0; } }
+        public override int  Movement { get { return 0; } }
 
-        public string Description { get { return "Undead Castle"; } }
+        public override string Description { get { return "Undead Castle"; } }
     }
 }
