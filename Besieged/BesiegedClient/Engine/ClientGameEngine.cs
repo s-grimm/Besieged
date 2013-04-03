@@ -134,6 +134,7 @@ namespace BesiegedClient.Engine
                                 ChangeState(MultiplayerMenuState.Get(), disbandedAction);
                             }
                             IsGameCreator = false;
+                            ResetLobby();
                             break;
                         case ClientMessage.ClientMessageEnum.GameNotFound:
                             Action notFoundAction = () =>
@@ -170,6 +171,7 @@ namespace BesiegedClient.Engine
                             break;
                         case ClientMessage.ClientMessageEnum.TransitionToMultiplayerMenuState:
                             IsGameCreator = false;
+                            ResetLobby();
                             Action multiplayerAction = () => ClientGameEngine.Get().ChangeState(MultiplayerMenuState.Get());
                             ExecuteOnUIThread(multiplayerAction);
                             break;
@@ -240,6 +242,7 @@ namespace BesiegedClient.Engine
                             RenderMessageDialog.RenderMessage((message as ErrorDialogMessage).Contents);
                         };
                         ChangeState(m_PreviousGameState, action);
+                        ResetLobby();
                     }
                     else if (message is ClientGameStateMessage)
                     {
@@ -322,6 +325,16 @@ namespace BesiegedClient.Engine
                     IsServerConnected.Value = false;
                 }
             });
+        }
+
+        public void ResetLobby()
+        {
+            Action clear = () =>
+            {
+                PlayerCollection.Clear();
+                ChatMessageCollection.Clear();
+            };
+            ExecuteOnUIThread(clear);
         }
     }
 }

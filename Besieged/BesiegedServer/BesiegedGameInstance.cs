@@ -20,7 +20,7 @@ namespace BesiegedServer
 {
     public class BesiegedGameInstance : IDisposable
     {
-        public ConcurrentBag<Player> Players { get; set; }
+        public List<Player> Players { get; set; }
         public string GameId { get; set; }
         public string Name { get; set; }
         public int MaxPlayers { get; set; }
@@ -47,7 +47,7 @@ namespace BesiegedServer
             Name = name;
             MaxPlayers = maxPlayers;
             m_GameCreatorClientId = creatorId;
-            Players = new ConcurrentBag<Player>();
+            Players = new List<Player>();
             ColorPool = PlayerColor.GetColors();
             IsGameInstanceFull = false;
             Password = password;
@@ -67,7 +67,6 @@ namespace BesiegedServer
                 {
                     GenericClientMessage waiting = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.PlayerNotReady };
                     LookupPlayerById(m_GameCreatorClientId).Callback.SendMessage(waiting.ToXml());
-
                 })
                 .OnEntryFrom(Trigger.PlayerLeft, x =>
                 {
@@ -168,6 +167,7 @@ namespace BesiegedServer
                             break;
                         case GameMessage.GameMessageEnum.PlayerLeft:
                             RemovePlayer(message.ClientId);
+                            ConsoleLogger.Push(string.Format("Leave game command received from {0} Client Id {1} in game {2}", LookupPlayerName(message.ClientId), message.ClientId, Name));
                             break;
                         default:
                             break;
@@ -225,19 +225,20 @@ namespace BesiegedServer
             }
             else
             {
-                Player removedPlayer = Players.FirstOrDefault(x => x.ClientId == clientId);
-                Players.TryTake(out removedPlayer);
+                Player player = Players.FirstOrDefault(x => x.ClientId == clientId);
+                Players.Remove(player);
+                ConsoleLogger.Push(string.Format("{0} with ClientId {1} has left game {2}", player.Name, player.ClientId, Name));
                 
                 AggregateMessage aggregate = new AggregateMessage();
-                GenericClientMessage remove = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.RemovePlayer, ClientId = removedPlayer.ClientId };
-                ClientChatMessage chatMessage = new ClientChatMessage() { Contents = string.Format("* {0} has left the game *", removedPlayer.Name) };
+                GenericClientMessage remove = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.RemovePlayer, ClientId = player.ClientId };
+                ClientChatMessage chatMessage = new ClientChatMessage() { Contents = string.Format("* {0} has left the game *", player.Name) };
                 aggregate.MessageList.Add(remove);
                 aggregate.MessageList.Add(chatMessage);
                 NotifyAllPlayers(aggregate.ToXml());
                 
-                ColorPool.Push(removedPlayer.PlayerColor);
-                removedPlayer.Callback.SendMessage((new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.TransitionToMultiplayerMenuState }).ToXml());
-                removedPlayer = null;
+                ColorPool.Push(player.PlayerColor);
+                player.Callback.SendMessage((new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.TransitionToMultiplayerMenuState }).ToXml());
+                player = null;
                 m_GameMachine.Fire(Trigger.PlayerLeft);
             }
         }
@@ -246,6 +247,7 @@ namespace BesiegedServer
         {
             Player player = new Player(client.Name, client.ClientId, client.Callback, ColorPool.Pop());
             Players.Add(player);
+            ConsoleLogger.Push(string.Format("{0} with ClientId {1} has joined game {2}", player.Name, player.ClientId, Name));
             SendUpdatedGameInfo();
             player.IsReady.ValueChanged += (from, to) =>
             {
