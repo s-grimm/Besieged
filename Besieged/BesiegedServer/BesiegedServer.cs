@@ -168,7 +168,7 @@ namespace BesiegedServer
             }
         }
 
-        public void NotifyAllConnectedClients(string command)
+        public static void NotifyAllConnectedClients(string command)
         {
             try
             {
@@ -193,6 +193,9 @@ namespace BesiegedServer
             {
                 BesiegedGameInstance removedGame;
                 m_Games.TryRemove(gameId, out removedGame);
+                GenericClientMessage remove = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.RemoveGame, GameId = removedGame.GameId };
+                NotifyAllConnectedClients(remove.ToXml());
+                ConsoleLogger.Push(string.Format("Game disbanded: {0}", removedGame.Name));
                 removedGame.Dispose();
             }
         }

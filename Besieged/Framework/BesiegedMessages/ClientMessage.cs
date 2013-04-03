@@ -23,6 +23,8 @@ namespace Framework.BesiegedMessages
             GameDisbanded,
             [XmlEnum(Name = "GameNotFound")]
             GameNotFound,
+            [XmlEnum(Name = "RemoveGame")]
+            RemoveGame,
         };
     }
 

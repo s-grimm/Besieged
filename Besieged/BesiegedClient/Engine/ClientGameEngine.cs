@@ -137,12 +137,23 @@ namespace BesiegedClient.Engine
                             };
                             ChangeState(MultiplayerMenuState.Get(), notFoundAction);
                             break;
+                        case ClientMessage.ClientMessageEnum.RemoveGame:
+                            Action removeAction = () =>
+                            {
+                                var game = GamesCollection.FirstOrDefault(x => x.GameId == message.GameId);
+                                if (game != null)
+                                {
+                                    GamesCollection.Remove(game);
+                                }
+                            };
+                            ExecuteOnUIThread(removeAction);
+                            break;
                         default:
                             throw new Exception("Unhandled GenericClientMessage was received: " + genericMessage.MessageEnum.ToString());
                     }
                 });
 
-            // All server messages are handled here
+            // All other server messages are handled here
             var m_ServerMessageSubscriber = MessageSubject
                 .Where(message => message is ClientMessage && !(message is GenericClientMessage))
                 .Subscribe(message =>
