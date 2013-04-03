@@ -1,6 +1,5 @@
 ﻿using BesiegedClient.Engine.Dialog;
 using Framework.BesiegedMessages;
-using Framework.Commands;
 using Framework.Utilities.Xml;
 using System;
 using System.Collections.Generic;

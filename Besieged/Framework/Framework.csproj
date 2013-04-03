@@ -50,7 +50,6 @@
     <Compile Include="BesiegedMessages\ClientMessage.cs" />
     <Compile Include="BesiegedMessages\GameMessage.cs" />
     <Compile Include="BesiegedMessages\ServerMessage.cs" />
-    <Compile Include="Commands\GameSpecificCommand.cs" />
     <Compile Include="Map\GameMap.cs" />
     <Compile Include="Map\Tile\ArcticTileFactory.cs">
       <SubType>Code</SubType>
@@ -88,7 +87,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Map\Tile\WetlandTileset.cs" />
-    <Compile Include="Commands\Command.cs" />
     <Compile Include="GameState.cs" />
     <Compile Include="PlayerColor.cs" />
     <Compile Include="ServiceContracts\IClient.cs" />

@@ -1,5 +1,4 @@
 ﻿using Framework;
-using Framework.Commands;
 using System;
 using Stateless;
 using System.Collections.Generic;
@@ -20,7 +19,6 @@ namespace BesiegedServer
     public class BesiegedGameInstance
     {
         public ConcurrentBag<Player> Players { get; set; }
-        public BlockingCollection<Command> MessageQueue { get; set; }
         public string GameId { get; set; }
         public string Name { get; set; }
         public int MaxPlayers { get; set; }
@@ -55,7 +53,6 @@ namespace BesiegedServer
             MaxPlayers = maxPlayers;
             m_GameCreatorClientId = creatorId;
             Players = new ConcurrentBag<Player>();
-            MessageQueue = new BlockingCollection<Command>();
             ColorPool = PlayerColor.GetColors();
             IsGameInstanceFull = false;
             Password = password;
@@ -73,7 +70,7 @@ namespace BesiegedServer
                 .Permit(Trigger.AllPlayersReady, State.AllPlayersReady)
                 .OnEntryFrom(Trigger.PlayerNotReady, x =>
                 {
-                    WaitingForPlayer waiting = new WaitingForPlayer();
+                    GenericClientMessage waiting = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.PlayerNotReady };
                     LookupPlayerById(m_GameCreatorClientId).Callback.SendMessage(waiting.ToXml());
                 })
                 .Ignore(Trigger.PlayerNotReady)
@@ -82,7 +79,7 @@ namespace BesiegedServer
             m_GameMachine.Configure(State.AllPlayersReady)
                 .OnEntry(x => 
                     {
-                        AllAreReady ready = new AllAreReady();
+                        GenericClientMessage ready = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.AllPlayersReady };
                         LookupPlayerById(m_GameCreatorClientId).Callback.SendMessage(ready.ToXml());
                     })
                 .Permit(Trigger.PlayerNotReady, State.WaitingForPlayers)
@@ -91,7 +88,7 @@ namespace BesiegedServer
             m_GameMachine.Configure(State.GameStarted)
                 .OnEntry(x =>
                 {
-                    StartGame start = new StartGame();
+                    GenericClientMessage start = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.StartGame };
                     NotifyAllPlayers(start.ToXml());
                 })
                 .Ignore(Trigger.PlayerNotReady);
@@ -99,7 +96,7 @@ namespace BesiegedServer
 
         private void ProcessMessages()
         {
-            IDisposable genericGameMessageSubscriber = BesiegedServer.MessagePublisher
+            IDisposable genericGameMessageSubscriber = BesiegedServer.MessageSubject
                 .Where(message => message is GenericGameMessage && message.GameId == GameId)
                 .Subscribe(message =>
                 {
@@ -122,11 +119,29 @@ namespace BesiegedServer
                     }
                 });
 
-            IDisposable gameMessageSubscriber = BesiegedServer.MessagePublisher
-                .Where(message => message is GameMessage && !(message is GameMessage))
+            IDisposable gameMessageSubscriber = BesiegedServer.MessageSubject
+                .Where(message => message is GameMessage && !(message is GameMessage) && message.GameId == GameId)
                 .Subscribe(message =>
                 {
-                    // do stuff with server bound messages here
+                    if (message is GameChatMessage)
+                    {
+                        string chatMessage = string.Format("{0}: {1}", LookupPlayerName(message.ClientId), (message as GameChatMessage).Contents);
+                        ClientChatMessage clientChat = new ClientChatMessage() { Contents = chatMessage };
+                        NotifyAllPlayers(clientChat.ToXml());
+                    }
+
+                    else if (message is JoinGameMessage)
+                    {
+                        if ((message as JoinGameMessage).Password == Password)
+                        {
+                            AddPlayer(BesiegedServer.GetConnectedClientById(message.ClientId));
+                        }
+                        else
+                        {
+                            ErrorDialogMessage error = new ErrorDialogMessage() { Contents = "Incorrect Password!" };
+                            BesiegedServer.GetConnectedClientById(message.ClientId).Callback.SendMessage(error.ToXml());
+                        }
+                    }
                 });
         }
 
@@ -138,22 +153,13 @@ namespace BesiegedServer
             }
         }
 
-        private void Transition(string message)
-        {
-            CommandChatMessage chat = new CommandChatMessage()
-            {
-                Contents = message
-            };
-            NotifyAllPlayers(chat.ToXml());
-        }
-
         public void AddPlayer(ConnectedClient client)
         {
             Player player = new Player(client.Name, client.ClientId, client.Callback, ColorPool.Pop());
             Players.Add(player);
             player.IsReady.ValueChanged += (from, to) =>
             {
-                PlayerChangedInfo playerChanged = new PlayerChangedInfo()
+                PlayerInfoMessage playerInfo = new PlayerInfoMessage()
                 {
                     ClientId = player.ClientId,
                     Name = player.Name,
@@ -161,7 +167,7 @@ namespace BesiegedServer
                     IsReady = to
                 };
 
-                NotifyAllPlayers(playerChanged.ToXml());
+                NotifyAllPlayers(playerInfo.ToXml());
                 
                 if (to)
                 {
@@ -173,35 +179,31 @@ namespace BesiegedServer
                 }
             };
 
-            CommandAggregate aggregate = new CommandAggregate();
+            AggregateMessage aggregate = new AggregateMessage();
 
-            PlayerGameInfo playerGameInfo = new PlayerGameInfo()
+            PlayerGameInfoMessage playerGameInfo = new PlayerGameInfoMessage()
             {
                 GameId = this.GameId,
-                Color = player.PlayerColor,
                 IsCreator = (Players.Count == 1) ? true : false
             };
-            if (Players.Count == 0)
-            {
-                playerGameInfo.IsCreator = true;
-            }
 
-            aggregate.Commands.Add(playerGameInfo);
+            aggregate.MessageList.Add(playerGameInfo);
 
-            PlayerChangedInfo playerChangedInfo = new PlayerChangedInfo()
+            PlayerInfoMessage playerInfoMessage = new PlayerInfoMessage()
             {
                 ClientId = player.ClientId,
                 Name = player.Name,
-                Color = player.PlayerColor
+                Color = player.PlayerColor,
+                IsReady = false
             };
 
             foreach (Player p in Players)
             {
                 if (p.ClientId != player.ClientId)
                 {
-                    p.Callback.SendMessage(playerChangedInfo.ToXml());
+                    p.Callback.SendMessage(playerInfoMessage.ToXml());
                 }
-                aggregate.Commands.Add(new PlayerChangedInfo()
+                aggregate.MessageList.Add(new PlayerInfoMessage()
                 {
                     ClientId = p.ClientId,
                     Name = p.Name,
@@ -210,17 +212,6 @@ namespace BesiegedServer
                 });
             }
             player.Callback.SendMessage(aggregate.ToXml());
-        }
-
-        public void ProcessMessage(Command command)
-        {
-            if (command is CommandChatMessage)
-            {
-                CommandChatMessage commandChatMessage = command as CommandChatMessage;
-                string message = string.Format("{0}: {1}", LookupPlayerName(commandChatMessage.ClientId), commandChatMessage.Contents);
-                commandChatMessage.Contents = message;
-                NotifyAllPlayers(commandChatMessage.ToXml());
-            }
         }
 
         public string LookupPlayerName(string clientId)

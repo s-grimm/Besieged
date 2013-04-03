@@ -96,10 +96,8 @@
     <Compile Include="Engine\State\PregameLobbyState.cs" />
     <Compile Include="Engine\State\SplashScreenLogoState.cs" />
     <Compile Include="GlobalResources.cs" />
-    <Compile Include="Rendering\RenderGameWindow.cs" />
     <Compile Include="Engine\Utilities\Rendering.cs" />
     <Compile Include="Engine\Dialog\RenderMessageDialog.cs" />
-    <Compile Include="Rendering\RenderPreGame.cs" />
     <Page Include="Control\Block.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

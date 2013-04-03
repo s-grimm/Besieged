@@ -1,8 +1,6 @@
 ﻿using BesiegedClient.Engine.Dialog;
 using BesiegedClient.Engine.State;
-using BesiegedClient.Rendering;
 using Framework.BesiegedMessages;
-using Framework.Commands;
 using Framework.ServiceContracts;
 using Framework.Utilities;
 using Framework.Utilities.Xml;
@@ -13,6 +11,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.PlatformServices;
 using System.Reactive.Concurrency;
+using System.Reactive.Subjects;
 using System.ServiceModel;
 using System.Text;
 using System.Threading;
@@ -87,19 +86,24 @@ namespace BesiegedClient.Engine
                 MessageBox.Show("Its faulted");
             };
 
-            var m_MessagePublisher = m_ClientCallback.MessageQueue
+            var MessageSubject = new Subject<BesiegedMessage>();
+
+            var messagePublisher = m_ClientCallback.MessageQueue
                      .GetConsumingEnumerable()
-                     .ToObservable(TaskPoolScheduler.Default);
+                     .ToObservable(TaskPoolScheduler.Default)
+                     .Subscribe(MessageSubject);
+
+            //var messagePublisher = observableMessages.Publish();
 
             // All generic client messages are handled here
-            var genericServerMessageSubscriber = m_MessagePublisher
+            var genericServerMessageSubscriber = MessageSubject
                 .Where(message => message is GenericClientMessage)
                 .Subscribe(message =>
                 {
                     var genericMessage = message as GenericClientMessage;
                     switch (genericMessage.MessageEnum)
                     {
-                        case ClientMessage.ClientMessageEnum.JoinSuccessful:
+                        case ClientMessage.ClientMessageEnum.ConnectSuccessful:
                             {
                                 m_ClientId = genericMessage.ClientId;
                                 IsServerConnected.Value = true;
@@ -120,7 +124,7 @@ namespace BesiegedClient.Engine
                 });
 
             // All server messages are handled here
-            var m_ServerMessageSubscriber = m_MessagePublisher
+            var m_ServerMessageSubscriber = MessageSubject
                 .Where(message => message is ClientMessage && !(message is GenericClientMessage))
                 .Subscribe(message =>
                 {

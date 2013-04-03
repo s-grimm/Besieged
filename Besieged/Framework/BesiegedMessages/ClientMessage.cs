@@ -11,8 +11,8 @@ namespace Framework.BesiegedMessages
     {
         public enum ClientMessageEnum
         {
-            [XmlEnum(Name = "JoinSuccessful")]
-            JoinSuccessful,
+            [XmlEnum(Name = "ConnectSuccessful")]
+            ConnectSuccessful,
             [XmlEnum(Name = "AllPlayersReady")]
             AllPlayersReady,
             [XmlEnum(Name = "PlayerNotReady")]
@@ -36,12 +36,18 @@ namespace Framework.BesiegedMessages
     {
         public PlayerColor.PlayerColorEnum Color { get; set; }
         public bool IsReady { get; set; }
+        public string Name { get; set; }
         public bool IsCreator { get; set; }
     }
 
     public class PlayerGameInfoMessage : ClientMessage
     {
         public bool IsCreator { get; set; }
+    }
+
+    public class ErrorDialogMessage : ClientMessage
+    {
+        public string Contents { get; set; }
     }
 
     public class GameInfoMessage : ClientMessage

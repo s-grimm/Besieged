@@ -1,5 +1,4 @@
-﻿using Framework.Commands;
-using Framework.ServiceContracts;
+﻿using Framework.ServiceContracts;
 using Framework.Utilities.Xml;
 using System;
 using System.ServiceModel;
@@ -11,13 +10,13 @@ using Framework.BesiegedMessages;
 using System.Reactive.Linq;
 using System.Reactive.PlatformServices;
 using System.Reactive.Concurrency;
+using System.Reactive.Subjects;
 namespace BesiegedServer
 {
     internal class Program
     {
         private static ServerClient m_ServerClient;
         private static IBesiegedServer m_BesiegedServer;
-        private static IObservable<BesiegedMessage> m_MessagePublisher;
 
         private static void Main(string[] args)
         {
@@ -40,13 +39,16 @@ namespace BesiegedServer
                     var startServer = new GenericServerMessage() { MessageEnum = ServerMessage.ServerMessageEnum.StartServer };
                     m_BesiegedServer.SendMessage(startServer.ToXml());
                 });
+                
+                var subject = new Subject<BesiegedMessage>();
 
-                m_MessagePublisher = m_ServerClient.MessageQueue
+                var messagePublisher = m_ServerClient.MessageQueue
                     .GetConsumingEnumerable()
-                    .ToObservable(TaskPoolScheduler.Default);
+                    .ToObservable(TaskPoolScheduler.Default)
+                    .Subscribe(subject);
 
                 // All generic server messages are handled here
-                var genericServerMessageSubscriber = m_MessagePublisher
+                var genericServerMessageSubscriber = subject
                     .Where(message => message is GenericServerMessage)
                     .Subscribe(message =>
                     {
@@ -65,7 +67,7 @@ namespace BesiegedServer
                     });
 
                 // All server messages are handled here
-                var m_ServerMessageSubscriber = m_MessagePublisher
+                var m_ServerMessageSubscriber = subject
                     .Where(message => message is ServerMessage && !(message is GenericServerMessage))
                     .Subscribe(message =>
                     {
