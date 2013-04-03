@@ -36,6 +36,13 @@ namespace BesiegedClient.Engine.State
         private GridViewColumn m_NameColumn;
         private GridViewColumn m_ReadyColumn;
         private ListBox m_ChatMessagesListBox;
+        //need images
+        private Button m_UndeadArmyButton;
+        private Button m_AllianceArmyButton;
+        private Button m_BeastArmyButton;
+        private Label m_CurrentArmyLabel;
+        private PlayerReadyMessage m_PlayerReadyMessage;
+
 
         private ImageBrush m_BackgroundBrush;
         
@@ -109,7 +116,6 @@ namespace BesiegedClient.Engine.State
                         {
                             GenericGameMessage notReady = new GenericGameMessage() { MessageEnum = GameMessage.GameMessageEnum.PlayerNotReady };
                             ClientGameEngine.Get().SendMessageToServer(notReady);
-
                             m_ReadyImage.Visibility = Visibility.Visible;
                             m_ReadyImage.IsEnabled = true;
                             m_NotReadyImage.Visibility = Visibility.Hidden;
@@ -123,8 +129,7 @@ namespace BesiegedClient.Engine.State
                         break;
                     case "Ready":
                         {
-                            GenericGameMessage ready = new GenericGameMessage() { MessageEnum = GameMessage.GameMessageEnum.PlayerReady };
-                            ClientGameEngine.Get().SendMessageToServer(ready);
+                    ClientGameEngine.Get().SendMessageToServer(m_PlayerReadyMessage);
 
                             m_ReadyImage.Visibility = Visibility.Hidden;
                             m_ReadyImage.IsEnabled = false;
@@ -307,7 +312,7 @@ namespace BesiegedClient.Engine.State
                 m_ReadyImage.Source = bitmapImage;
                 m_ReadyImage.Width = bitmapImage.PixelWidth;
                 m_ReadyImage.Height = bitmapImage.PixelHeight;
-                m_ReadyImage.Visibility = System.Windows.Visibility.Visible;
+                m_ReadyImage.Visibility = System.Windows.Visibility.Hidden;
                 m_ReadyImage.Name = "Ready";
                 m_ReadyImage.MouseEnter += MenuOptionHover;
                 m_ReadyImage.MouseLeave += MenuOptionHoverLost;
@@ -352,6 +357,63 @@ namespace BesiegedClient.Engine.State
                 m_ChatMessagesListBox.Opacity = 0.75;
                 m_ChatMessagesListBox.FontFamily = new FontFamily("Papyrus");
                 m_ChatMessagesListBox.FontSize = 14;
+
+
+                //Army selection buttons
+                //Undead Army
+                m_UndeadArmyButton = new Button();
+                m_UndeadArmyButton.FontFamily = new FontFamily("Papyrus");
+                m_UndeadArmyButton.FontSize = 18;
+                m_UndeadArmyButton.Content = "Undead Army";
+                m_UndeadArmyButton.Click += (s, ev) =>
+                {
+                    m_CurrentArmyLabel.Content = "Undead Selected";
+                    if (!m_NotReadyImage.IsVisible)
+                    {
+                        m_NotReadyImage.Visibility = Visibility.Hidden;
+                        m_ReadyImage.Visibility = Visibility.Visible;
+                    }
+                    m_PlayerReadyMessage.ArmyType = Framework.Unit.Army.ArmyTypeEnum.Undead;
+                };
+
+                //Alliance Army
+                m_AllianceArmyButton = new Button();
+                m_AllianceArmyButton.FontFamily = new FontFamily("Papyrus");
+                m_AllianceArmyButton.FontSize = 18;
+                m_AllianceArmyButton.Content = "Alliance Army";
+                m_AllianceArmyButton.Click += (s, ev) =>
+                {
+                    m_CurrentArmyLabel.Content = "Alliance Selected";
+                    if (!m_NotReadyImage.IsVisible)
+                    {
+                        m_NotReadyImage.Visibility = Visibility.Hidden;
+                        m_ReadyImage.Visibility = Visibility.Visible;
+                    }
+                    m_PlayerReadyMessage.ArmyType = Framework.Unit.Army.ArmyTypeEnum.Alliance;
+                };
+
+                //Beast Army
+                m_BeastArmyButton = new Button();
+                m_BeastArmyButton.FontFamily = new FontFamily("Papyrus");
+                m_BeastArmyButton.FontSize = 18;
+                m_BeastArmyButton.Content = "Beast Army";
+                m_BeastArmyButton.Click += (s, ev) =>
+                {
+                    m_CurrentArmyLabel.Content = "Beasts Selected";
+                    if (!m_NotReadyImage.IsVisible)
+                    {
+                        m_NotReadyImage.Visibility = Visibility.Hidden;
+                        m_ReadyImage.Visibility = Visibility.Visible;
+                    }
+                    m_PlayerReadyMessage.ArmyType = Framework.Unit.Army.ArmyTypeEnum.Beast;
+                };
+
+                //Placeholder Army selected label
+                m_CurrentArmyLabel = new Label();
+                m_CurrentArmyLabel.Content = "No Army Selected";
+
+                m_PlayerReadyMessage = new PlayerReadyMessage();
+
             }
             catch (Exception ex)
             {
@@ -436,6 +498,35 @@ namespace BesiegedClient.Engine.State
             m_NameColumn.Width = m_PlayerListView.Width * 0.70;
             m_ReadyColumn.Width = m_PlayerListView.Width * 0.28;
             ClientGameEngine.Get().Canvas.Children.Add(m_PlayerListView);
+
+            //undead army button
+            Canvas.SetBottom(m_UndeadArmyButton, dimensions.Height * 0.825);
+            Canvas.SetLeft(m_UndeadArmyButton, dimensions.Width * 0.3775);
+            m_UndeadArmyButton.Height = dimensions.Height * 0.05;
+            m_UndeadArmyButton.Width = dimensions.Width * 0.20;
+            ClientGameEngine.Get().Canvas.Children.Add(m_UndeadArmyButton);
+
+            //undead army button
+            Canvas.SetBottom(m_AllianceArmyButton, dimensions.Height * 0.725);
+            Canvas.SetLeft(m_AllianceArmyButton, dimensions.Width * 0.3775);
+            m_AllianceArmyButton.Height = dimensions.Height * 0.05;
+            m_AllianceArmyButton.Width = dimensions.Width * 0.20;
+            ClientGameEngine.Get().Canvas.Children.Add(m_AllianceArmyButton);
+
+            //undead army button
+            Canvas.SetBottom(m_BeastArmyButton, dimensions.Height * 0.625);
+            Canvas.SetLeft(m_BeastArmyButton, dimensions.Width * 0.3775);
+            m_BeastArmyButton.Height = dimensions.Height * 0.05;
+            m_BeastArmyButton.Width = dimensions.Width * 0.20;
+            ClientGameEngine.Get().Canvas.Children.Add(m_BeastArmyButton);
+
+            //Placeholder label
+            Canvas.SetBottom(m_CurrentArmyLabel, dimensions.Height * 0.950);
+            Canvas.SetLeft(m_CurrentArmyLabel, dimensions.Width * 0.3275);
+            m_CurrentArmyLabel.Height = dimensions.Height * 0.05;
+            m_CurrentArmyLabel.Width = dimensions.Width * 0.30;
+            ClientGameEngine.Get().Canvas.Children.Add(m_CurrentArmyLabel);
+
         }
     }
 }

@@ -22,40 +22,21 @@ namespace Framework
             GamePlayers = new List<GamePlayer>();
         }
 
-        public GameState(IReadOnlyCollection<string> playerIDs)
+        public GameState(List<KeyValuePair<string, Army.ArmyTypeEnum>> playerInfos)
         {
             Units = new List<BaseUnit>();
             GameBoard = new GameMap();
             GamePlayers = new List<GamePlayer>();
 
             Random random = new Random();
-            int[] values = Enumerable.Range(1, playerIDs.Count).ToArray();
+            int[] values = Enumerable.Range(1, playerInfos.Count).ToArray();
             values.ArrayShuffle();
             int i = 0;
-            foreach (string player in playerIDs)
+            foreach (var info in playerInfos)
             {
-                GamePlayer tplayer = new GamePlayer(player);
-
-                int raceNum = random.Next(0, 3);
-
-                IUnitFactory factory;
-
-                if (raceNum > 0 && raceNum < 4) //1-3
-                {
-                    factory = new AllianceUnitFactory();
-                }
-                else if (raceNum > 3 && raceNum < 7)//4-6
-                {
-                    factory = new BeastUnitFactory();
-                }
-                else//7-9
-                {
-                    factory = new UndeadUnitFactory();
-                }
-
-                tplayer.Factory = factory;
-                GamePlayers.Add(tplayer);
-                SetupInitialUnits(player, values[i++]);
+                GamePlayer player = new GamePlayer(info.Key, info.Value);
+                GamePlayers.Add(player);
+                SetupInitialUnits(player.PlayerID, values[i++]);
             }
         }
 

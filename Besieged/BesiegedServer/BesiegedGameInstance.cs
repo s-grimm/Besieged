@@ -1,4 +1,5 @@
 ﻿using Framework;
+using Framework.Unit;
 using System;
 using Stateless;
 using System.Collections.Generic;
@@ -64,6 +65,7 @@ namespace BesiegedServer
                 {
                     GenericClientMessage waiting = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.PlayerNotReady };
                     LookupPlayerById(m_GameCreatorClientId).Callback.SendMessage(waiting.ToXml());
+
                 })
                 .Ignore(Trigger.PlayerNotReady)
                 .Ignore(Trigger.CreatorPressedStart);
@@ -73,6 +75,7 @@ namespace BesiegedServer
                     {
                         GenericClientMessage ready = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.AllPlayersReady };
                         LookupPlayerById(m_GameCreatorClientId).Callback.SendMessage(ready.ToXml());
+
                     })
                 .Permit(Trigger.PlayerNotReady, State.WaitingForPlayers)
                 .Permit(Trigger.CreatorPressedStart, State.GameStarted);
@@ -80,13 +83,21 @@ namespace BesiegedServer
             m_GameMachine.Configure(State.GameStarted)
                 .OnEntry(x =>
                 {
-                    GameState = new GameState(Players.Select(p => p.ClientId).ToList());
-                    ConsoleLogger.Push(String.Format("Game {0} has been started", GameId));
-                    NotifyAllPlayers(new GenericClientMessage(){ MessageEnum = ClientMessage.ClientMessageEnum.TransitionToLoadingState}.ToXml());
-                    ClientGameStateMessage msg1 = new ClientGameStateMessage() { State = GameState };
-                    GenericClientMessage msg2 = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.StartGame };
-                    NotifyAllPlayers(msg1.ToXml());
-                    NotifyAllPlayers(msg2.ToXml());
+                    List<KeyValuePair<string, Army.ArmyTypeEnum>> PlayerInfos = new List<KeyValuePair<string, Army.ArmyTypeEnum>>();
+                    foreach (Player player in Players)
+                    {
+                        PlayerInfos.Add(new KeyValuePair<string, Army.ArmyTypeEnum>(player.ClientId, player.ArmyType));
+                    }
+                    GameState = new GameState(PlayerInfos);
+                    
+                    ConsoleLogger.Push(String.Format("Game {0} has been started", Name));
+                    NotifyAllPlayers(new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.TransitionToLoadingState }.ToXml()); // switch all the players to loading while we send the gamestate
+                    ClientGameStateMessage gamestate = new ClientGameStateMessage() { State = GameState };
+                    GenericClientMessage start = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.StartGame };
+                    AggregateMessage aggregate = new AggregateMessage();
+                    aggregate.MessageList.Add(gamestate);
+                    aggregate.MessageList.Add(start);
+                    NotifyAllPlayers(aggregate.ToXml());
                 })
                 .Ignore(Trigger.PlayerNotReady);
         }
@@ -100,9 +111,6 @@ namespace BesiegedServer
                     var genericMessage = message as GenericGameMessage;
                     switch (genericMessage.MessageEnum)
                     {
-                        case GameMessage.GameMessageEnum.PlayerReady:
-                            LookupPlayerById(message.ClientId).IsReady.Value = true;
-                            break;
                         case GameMessage.GameMessageEnum.PlayerNotReady:
                             LookupPlayerById(message.ClientId).IsReady.Value = false;
                             break;
@@ -139,6 +147,13 @@ namespace BesiegedServer
                             ErrorDialogMessage error = new ErrorDialogMessage() { Contents = "Incorrect Password!" };
                             BesiegedServer.GetConnectedClientById(message.ClientId).Callback.SendMessage(error.ToXml());
                         }
+                    }
+
+                    else if (message is PlayerReadyMessage)
+                    {
+                        var player = LookupPlayerById(message.ClientId);
+                        player.IsReady.Value = true;
+                        player.ArmyType = (message as PlayerReadyMessage).ArmyType;
                     }
                 });
         }

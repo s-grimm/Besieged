@@ -116,6 +116,7 @@ namespace BesiegedClient.Engine
                         case ClientMessage.ClientMessageEnum.PlayerNotReady:
                             AllPlayersReady.Value = false;
                             break;
+
                         case ClientMessage.ClientMessageEnum.StartGame:
                             ChangeState(PlayingGameState.Get());
                             break;
