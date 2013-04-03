@@ -133,6 +133,7 @@ namespace BesiegedClient.Engine
                                 };
                                 ChangeState(MultiplayerMenuState.Get(), disbandedAction);
                             }
+                            IsGameCreator = false;
                             break;
                         case ClientMessage.ClientMessageEnum.GameNotFound:
                             Action notFoundAction = () =>
@@ -142,7 +143,7 @@ namespace BesiegedClient.Engine
                             ChangeState(MultiplayerMenuState.Get(), notFoundAction);
                             break;
                         case ClientMessage.ClientMessageEnum.RemoveGame:
-                            Action removeAction = () =>
+                            Action removeGameAction = () =>
                             {
                                 var game = GamesCollection.FirstOrDefault(x => x.GameId == message.GameId);
                                 if (game != null)
@@ -150,11 +151,27 @@ namespace BesiegedClient.Engine
                                     GamesCollection.Remove(game);
                                 }
                             };
-                            ExecuteOnUIThread(removeAction);
+                            ExecuteOnUIThread(removeGameAction);
+                            break;
+                        case ClientMessage.ClientMessageEnum.RemovePlayer:
+                            Action removePlayerAction = () =>
+                            {
+                                var player = PlayerCollection.FirstOrDefault(x => x.ClientId == message.ClientId);
+                                if (player != null)
+                                {
+                                    PlayerCollection.Remove(player);
+                                }
+                            };
+                            ExecuteOnUIThread(removePlayerAction);
                             break;
                         case ClientMessage.ClientMessageEnum.TransitionToLoadingState:
                             Action loadingAction = () => ClientGameEngine.Get().ChangeState(LoadingState.Get());
                             ExecuteOnUIThread(loadingAction);
+                            break;
+                        case ClientMessage.ClientMessageEnum.TransitionToMultiplayerMenuState:
+                            IsGameCreator = false;
+                            Action multiplayerAction = () => ClientGameEngine.Get().ChangeState(MultiplayerMenuState.Get());
+                            ExecuteOnUIThread(multiplayerAction);
                             break;
                         case ClientMessage.ClientMessageEnum.ActiveTurn:
                             InGameEngine.Get().ActivateTurn();

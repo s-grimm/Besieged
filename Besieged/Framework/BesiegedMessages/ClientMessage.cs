@@ -25,8 +25,12 @@ namespace Framework.BesiegedMessages
             GameNotFound,
             [XmlEnum(Name = "RemoveGame")]
             RemoveGame,
+            [XmlEnum(Name = "RemovePlayer")]
+            RemovePlayer,
             [XmlEnum(Name="TransitionToLoadingState")]
             TransitionToLoadingState,
+            [XmlEnum(Name = "TransitionToMultiplayerMenuState")]
+            TransitionToMultiplayerMenuState,
             [XmlEnum(Name = "ActiveTurn")]
             ActiveTurn,
             [XmlEnum(Name = "WaitingForTurn")]
