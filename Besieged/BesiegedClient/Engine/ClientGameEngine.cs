@@ -116,6 +116,27 @@ namespace BesiegedClient.Engine
                         case ClientMessage.ClientMessageEnum.StartGame:
                             ChangeState(PlayingGameState.Get());
                             break;
+                        case ClientMessage.ClientMessageEnum.GameDisbanded:
+                            if (IsGameCreator)
+                            {
+                                ChangeState(MultiplayerMenuState.Get());
+                            }
+                            else
+                            {
+                                Action disbandedAction = () =>
+                                {
+                                    RenderMessageDialog.RenderMessage("The game creator has disbanded the game");
+                                };
+                                ChangeState(MultiplayerMenuState.Get(), disbandedAction);
+                            }
+                            break;
+                        case ClientMessage.ClientMessageEnum.GameNotFound:
+                            Action notFoundAction = () =>
+                            {
+                                RenderMessageDialog.RenderMessage("The game you are trying to reach was not found");
+                            };
+                            ChangeState(MultiplayerMenuState.Get(), notFoundAction);
+                            break;
                         default:
                             throw new Exception("Unhandled GenericClientMessage was received: " + genericMessage.MessageEnum.ToString());
                     }

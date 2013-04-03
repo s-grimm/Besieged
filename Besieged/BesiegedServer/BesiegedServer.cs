@@ -21,7 +21,7 @@ namespace BesiegedServer
     public class BesiegedServer : IBesiegedServer
     {
         private static ConcurrentDictionary<string, ConnectedClient> m_ConnectedClients = new ConcurrentDictionary<string, ConnectedClient>();  // global hook for all clients
-        private ConcurrentDictionary<string, BesiegedGameInstance> m_Games = new ConcurrentDictionary<string, BesiegedGameInstance>();
+        private static ConcurrentDictionary<string, BesiegedGameInstance> m_Games = new ConcurrentDictionary<string, BesiegedGameInstance>();
         private MonitoredValue<bool> m_IsServerInitialized;
         private IClient m_ServerCallback;
 
@@ -30,6 +30,7 @@ namespace BesiegedServer
         public static IConnectableObservable<BesiegedMessage> MessagePublisher;
         private IDisposable m_GenericServerMessageSubscriber;  // subscribes to generic messages that are only bound for the server
         private IDisposable m_ServerMessageSubscriber;  // subscribes to messages that are only bound for the server
+        private IDisposable m_BadGameMessageSubscriber;
         public static Subject<BesiegedMessage> MessageSubject;
 
         public BesiegedServer()
@@ -87,6 +88,15 @@ namespace BesiegedServer
                         ConsoleLogger.Push(string.Format("{0} has created a new game called: {1}", m_ConnectedClients[message.ClientId].Name, gameInstance.Name));
                         NotifyAllConnectedClients(gameInfo.ToXml()); 
                     }
+                });
+
+            // Game messages that are no longer valid are handled here
+            m_BadGameMessageSubscriber = MessageSubject
+                .Where(message => message is GameMessage && !m_Games.ContainsKey(message.GameId))
+                .Subscribe(message =>
+                {
+                    GenericClientMessage notFound = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.GameNotFound };
+                    m_ConnectedClients[message.ClientId].Callback.SendMessage(notFound.ToXml());
                 });
         }
 
@@ -174,6 +184,16 @@ namespace BesiegedServer
             {
                 ErrorLogger.Push(ex);
                 // error handling
+            }
+        }
+
+        public static void DisbandGame(string gameId)
+        {
+            if (m_Games.ContainsKey(gameId))
+            {
+                BesiegedGameInstance removedGame;
+                m_Games.TryRemove(gameId, out removedGame);
+                removedGame.Dispose();
             }
         }
     }

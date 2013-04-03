@@ -19,6 +19,10 @@ namespace Framework.BesiegedMessages
             PlayerNotReady,
             [XmlEnum(Name = "StartGame")]
             StartGame,
+            [XmlEnum(Name = "GameDisbanded")]
+            GameDisbanded,
+            [XmlEnum(Name = "GameNotFound")]
+            GameNotFound,
         };
     }
 
