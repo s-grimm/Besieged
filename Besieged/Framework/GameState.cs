@@ -1,5 +1,4 @@
 ﻿using Framework.Map;
-using Framework.Sprite;
 using Framework.Unit;
 using Framework.Utilities;
 using System;
@@ -41,20 +40,19 @@ namespace Framework
 
                 IUnitFactory factory;
 
-                switch (raceNum)
+                if (raceNum > 0 && raceNum < 4) //1-3
                 {
-                    //case 0:
-                    //    factory = new AllianceUnitFactory();
-                    //    break;
-
-                    //case 1:
-                    //    factory = new BeastUnitFactory();
-                    //    break;
-
-                    default:
-                        factory = new UndeadUnitFactory();
-                        break;
+                    factory = new AllianceUnitFactory();
                 }
+                else if (raceNum > 3 && raceNum < 7)//4-6
+                {
+                    factory = new BeastUnitFactory();
+                }
+                else//7-9
+                {
+                    factory = new UndeadUnitFactory();
+                }
+
                 tplayer.Factory = factory;
                 GamePlayers.Add(tplayer);
                 SetupInitialUnits(player, values[i++]);
@@ -110,6 +108,7 @@ namespace Framework
                     break;
 
                 default:
+
                     //should never hit this line
                     x_movement = 1;
                     x_start = 6;
@@ -122,10 +121,10 @@ namespace Framework
             GamePlayer player = GamePlayers.First(p => p.PlayerID == playerID);
             IUnitFactory factory = player.Factory;
             int x = x_start;
-            for (int i = 0; i < 4; i ++)
+            for (int i = 0; i < 4; i++)
             {
                 int y = y_start;
-                for (int j = 0; j < 4; j ++)
+                for (int j = 0; j < 4; j++)
                 {
                     IUnit tUnit = factory.GetBasicInfantry();
                     tUnit.Owner = playerID;

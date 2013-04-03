@@ -1,43 +1,41 @@
-﻿using Framework.Sprite;
-
-namespace Framework.Unit
+﻿namespace Framework.Unit
 {
     public class Skeleton : BaseUnit
     {
         public override string Owner { get; set; }
 
-        public override int  X_Position { get; set; }
+        public override int X_Position { get; set; }
 
-        public override int  Y_Position { get; set; }
+        public override int Y_Position { get; set; }
 
-        public override int  CurrentHealthPoints { get; set; }
+        public override int CurrentHealthPoints { get; set; }
 
-        public override int  MaxHealthPoints
+        public override int MaxHealthPoints
         {
             get { return 2; }
         }
 
-        public override int  Initiative
+        public override int Initiative
         {
             get { return 2; }
         }
 
-        public override int  Skill
+        public override int Skill
         {
             get { return 2; }
         }
 
-        public override int  Range
+        public override int Range
         {
             get { return 1; }
         }
 
-        public override int  Cost
+        public override int Cost
         {
             get { return 1; }
         }
 
-        public override int  Movement
+        public override int Movement
         {
             get { return 4; }
         }
@@ -52,38 +50,38 @@ namespace Framework.Unit
     {
         public override string Owner { get; set; }
 
-        public override int  X_Position { get; set; }
+        public override int X_Position { get; set; }
 
-        public override int  Y_Position { get; set; }
+        public override int Y_Position { get; set; }
 
-        public override int  CurrentHealthPoints { get; set; }
+        public override int CurrentHealthPoints { get; set; }
 
-        public override int  MaxHealthPoints
+        public override int MaxHealthPoints
         {
             get { return 5; }
         }
 
-        public override int  Initiative
+        public override int Initiative
         {
             get { return 3; }
         }
 
-        public override int  Skill
+        public override int Skill
         {
             get { return 3; }
         }
 
-        public override int  Range
+        public override int Range
         {
             get { return 1; }
         }
 
-        public override int  Cost
+        public override int Cost
         {
             get { return 3; }
         }
 
-        public override int  Movement
+        public override int Movement
         {
             get { return 4; }
         }
@@ -98,38 +96,38 @@ namespace Framework.Unit
     {
         public override string Owner { get; set; }
 
-        public override int  X_Position { get; set; }
+        public override int X_Position { get; set; }
 
-        public override int  Y_Position { get; set; }
+        public override int Y_Position { get; set; }
 
-        public override int  CurrentHealthPoints { get; set; }
+        public override int CurrentHealthPoints { get; set; }
 
-        public override int  MaxHealthPoints
+        public override int MaxHealthPoints
         {
             get { return 5; }
         }
 
-        public override int  Initiative
+        public override int Initiative
         {
             get { return 3; }
         }
 
-        public override int  Skill
+        public override int Skill
         {
             get { return 2; }
         }
 
-        public override int  Range
+        public override int Range
         {
             get { return 3; }
         }
 
-        public override int  Cost
+        public override int Cost
         {
             get { return 4; }
         }
 
-        public override int  Movement
+        public override int Movement
         {
             get { return 4; }
         }
@@ -144,38 +142,38 @@ namespace Framework.Unit
     {
         public override string Owner { get; set; }
 
-        public override int  X_Position { get; set; }
+        public override int X_Position { get; set; }
 
-        public override int  Y_Position { get; set; }
+        public override int Y_Position { get; set; }
 
-        public override int  CurrentHealthPoints { get; set; }
+        public override int CurrentHealthPoints { get; set; }
 
-        public override int  MaxHealthPoints
+        public override int MaxHealthPoints
         {
             get { return 8; }
         }
 
-        public override int  Initiative
+        public override int Initiative
         {
             get { return 3; }
         }
 
-        public override int  Skill
+        public override int Skill
         {
             get { return 3; }
         }
 
-        public override int  Range
+        public override int Range
         {
             get { return 4; }
         }
 
-        public override int  Cost
+        public override int Cost
         {
             get { return 8; }
         }
 
-        public override int  Movement
+        public override int Movement
         {
             get { return 4; }
         }
@@ -190,38 +188,38 @@ namespace Framework.Unit
     {
         public override string Owner { get; set; }
 
-        public override int  X_Position { get; set; }
+        public override int X_Position { get; set; }
 
-        public override int  Y_Position { get; set; }
+        public override int Y_Position { get; set; }
 
-        public override int  CurrentHealthPoints { get; set; }
+        public override int CurrentHealthPoints { get; set; }
 
-        public override int  MaxHealthPoints
+        public override int MaxHealthPoints
         {
             get { return 5; }
         }
 
-        public override int  Initiative
+        public override int Initiative
         {
             get { return 3; }
         }
 
-        public override int  Skill
+        public override int Skill
         {
             get { return 4; }
         }
 
-        public override int  Range
+        public override int Range
         {
             get { return 1; }
         }
 
-        public override int  Cost
+        public override int Cost
         {
             get { return 5; }
         }
 
-        public override int  Movement
+        public override int Movement
         {
             get { return 8; }
         }
@@ -236,38 +234,38 @@ namespace Framework.Unit
     {
         public override string Owner { get; set; }
 
-        public override int  X_Position { get; set; }
+        public override int X_Position { get; set; }
 
-        public override int  Y_Position { get; set; }
+        public override int Y_Position { get; set; }
 
-        public override int  CurrentHealthPoints { get; set; }
+        public override int CurrentHealthPoints { get; set; }
 
-        public override int  MaxHealthPoints
+        public override int MaxHealthPoints
         {
             get { return 8; }
         }
 
-        public override int  Initiative
+        public override int Initiative
         {
             get { return 4; }
         }
 
-        public override int  Skill
+        public override int Skill
         {
             get { return 5; }
         }
 
-        public override int  Range
+        public override int Range
         {
             get { return 1; }
         }
 
-        public override int  Cost
+        public override int Cost
         {
             get { return 10; }
         }
 
-        public override int  Movement
+        public override int Movement
         {
             get { return 8; }
         }
@@ -282,38 +280,38 @@ namespace Framework.Unit
     {
         public override string Owner { get; set; }
 
-        public override int  X_Position { get; set; }
+        public override int X_Position { get; set; }
 
-        public override int  Y_Position { get; set; }
+        public override int Y_Position { get; set; }
 
-        public override int  CurrentHealthPoints { get; set; }
+        public override int CurrentHealthPoints { get; set; }
 
-        public override int  MaxHealthPoints
+        public override int MaxHealthPoints
         {
             get { return 4; }
         }
 
-        public override int  Initiative
+        public override int Initiative
         {
             get { return 1; }
         }
 
-        public override int  Skill
+        public override int Skill
         {
             get { return 3; }
         }
 
-        public override int  Range
+        public override int Range
         {
             get { return 3; }
         }
 
-        public override int  Cost
+        public override int Cost
         {
             get { return 5; }
         }
 
-        public override int  Movement
+        public override int Movement
         {
             get { return 6; }
         }
@@ -328,38 +326,38 @@ namespace Framework.Unit
     {
         public override string Owner { get; set; }
 
-        public override int  X_Position { get; set; }
+        public override int X_Position { get; set; }
 
-        public override int  Y_Position { get; set; }
+        public override int Y_Position { get; set; }
 
-        public override int  CurrentHealthPoints { get; set; }
+        public override int CurrentHealthPoints { get; set; }
 
-        public override int  MaxHealthPoints
+        public override int MaxHealthPoints
         {
             get { return 8; }
         }
 
-        public override int  Initiative
+        public override int Initiative
         {
             get { return 3; }
         }
 
-        public override int  Skill
+        public override int Skill
         {
             get { return 4; }
         }
 
-        public override int  Range
+        public override int Range
         {
             get { return 5; }
         }
 
-        public override int  Cost
+        public override int Cost
         {
             get { return 10; }
         }
 
-        public override int  Movement
+        public override int Movement
         {
             get { return 8; }
         }
@@ -374,23 +372,23 @@ namespace Framework.Unit
     {
         public override string Owner { get; set; }
 
-        public override int  X_Position { get; set; }
+        public override int X_Position { get; set; }
 
-        public override int  Y_Position { get; set; }
+        public override int Y_Position { get; set; }
 
-        public override int  CurrentHealthPoints { get; set; }
+        public override int CurrentHealthPoints { get; set; }
 
-        public override int  MaxHealthPoints { get { return 25; } }
+        public override int MaxHealthPoints { get { return 25; } }
 
-        public override int  Initiative { get { return 0; } }
+        public override int Initiative { get { return 0; } }
 
-        public override int  Skill { get { return 0; } }
+        public override int Skill { get { return 0; } }
 
-        public override int  Range { get { return 0; } }
+        public override int Range { get { return 0; } }
 
-        public override int  Cost { get { return 0; } }
+        public override int Cost { get { return 0; } }
 
-        public override int  Movement { get { return 0; } }
+        public override int Movement { get { return 0; } }
 
         public override string Description { get { return "Undead Castle"; } }
     }
