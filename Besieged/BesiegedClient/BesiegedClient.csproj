@@ -163,10 +163,6 @@
     <None Include="resources\UI\PSDLayout\XloseDialog.psd" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BesiegedClientLogic\BesiegedClientLogic.csproj">
-      <Project>{1715ca01-f329-4907-b73e-eb23c2084d71}</Project>
-      <Name>BesiegedClientLogic</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Framework\Framework.csproj">
       <Project>{2a865366-3f9c-4274-8890-6bb49ee99a54}</Project>
       <Name>Framework</Name>
