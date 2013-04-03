@@ -92,6 +92,35 @@ namespace BesiegedClient.Pathing
             }
             return null;
         }
+
+        public static IEnumerable<Tuple<int, int>> FindRange(int x, int y, int distance)
+        {
+            Tuple<int, int> start = new Tuple<int, int>(y, x);
+
+            var closed = new HashSet<Tuple<int, int>>();
+            var queue = new PriorityQueue<double, Path<Tuple<int, int>>>();
+            
+            queue.Enqueue(0, new Path<Tuple<int, int>>(start));
+
+            while (!queue.IsEmpty)
+            {
+                var path = queue.Dequeue();
+                if (closed.Contains(path.LastStep))
+                    continue;
+
+                closed.Add(path.LastStep);
+                foreach (var n in GetNeighbours(path.LastStep.Item2, path.LastStep.Item1))
+                {
+                    var newPath = path.AddStep(n, 1);
+                    if (newPath.TotalCost <= distance)
+                    {
+                        queue.Enqueue(newPath.TotalCost, newPath);
+                    }
+                }
+            }
+
+            return closed;
+        }
     }
 
     public sealed class Path<T> : IEnumerable<T>

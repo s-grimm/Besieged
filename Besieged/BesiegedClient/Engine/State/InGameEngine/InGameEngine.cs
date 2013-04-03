@@ -57,6 +57,8 @@ namespace BesiegedClient.Engine.State.InGameEngine
 
             #endregion "DrawCanvas"
             _pathFinder = new PathFinder();
+            //kickstart
+            DrawUnitMovementRangeState.Get();
         }
 
         public static InGameEngine Get()
@@ -117,6 +119,10 @@ namespace BesiegedClient.Engine.State.InGameEngine
                 _selectedUnit = null;
                 return;
             }
+            if (_selectedUnit == null) return;
+            //overlay the units movement ability
+            DrawUnitMovementRangeState.OverlayTiles = PathFinder.FindRange(_xOriginal / 50, _yOriginal / 50, _selectedUnit.Movement);
+            InGameEngine.Get().ChangeState(DrawUnitMovementRangeState.Get());
             _preventAction = false;
             captured = true;
             _preventAction = false;
@@ -187,6 +193,8 @@ namespace BesiegedClient.Engine.State.InGameEngine
                         }
                     }
                     _selectedUnit = null;
+                    if(m_CurrentGameState != WaitingState.Get())
+                        InGameEngine.Get().ChangeState(WaitingState.Get());
                 }
                 _preventAction = false;
             }

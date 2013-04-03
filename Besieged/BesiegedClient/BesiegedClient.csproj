@@ -85,9 +85,11 @@
     </Compile>
     <Compile Include="Engine\State\IGameState.cs" />
     <Compile Include="Engine\State\InGameEngine\InGameEngine.cs" />
+    <Compile Include="Engine\State\InGameEngine\State\DrawUnitMovementRangeState.cs" />
     <Compile Include="Engine\State\InGameEngine\State\DrawUnitState.cs" />
     <Compile Include="Engine\State\InGameEngine\State\IInGameState.cs" />
     <Compile Include="Engine\State\InGameEngine\State\InGameSetupState.cs" />
+    <Compile Include="Engine\State\InGameEngine\State\WaitingState.cs" />
     <Compile Include="Engine\State\PlayingGameState.cs" />
     <Compile Include="Engine\State\LoadingState.cs" />
     <Compile Include="Engine\State\MainMenuState.cs" />

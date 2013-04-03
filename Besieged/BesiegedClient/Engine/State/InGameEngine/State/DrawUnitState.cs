@@ -59,11 +59,11 @@ namespace BesiegedClient.Engine.State.InGameEngine.State
 
         public void Dispose()
         {
-            Canvas target = InGameEngine.Get().GameCanvas;
-            foreach (Image r in _units.Where(r => target.Children.Contains(r)))
-            {
-                target.Children.Remove(r);
-            }
+            //Canvas target = InGameEngine.Get().GameCanvas;
+            //foreach (Image r in _units.Where(r => target.Children.Contains(r)))
+            //{
+            //    target.Children.Remove(r);
+            //}
         }
 
         public static IInGameState Get()
