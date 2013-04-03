@@ -254,6 +254,7 @@ namespace BesiegedClient.Engine.State
                 ClientGameEngine.Get().ChatMessageCollection.CollectionChanged += (s, ev) =>
                 {
                     m_ChatMessagesListBox.SelectedIndex = m_ChatMessagesListBox.Items.Count - 1;
+                    m_ChatMessagesListBox.ScrollIntoView(m_ChatMessagesListBox.SelectedItem);
                 };
 
                 //StartEnabled
