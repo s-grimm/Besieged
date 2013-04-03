@@ -16,7 +16,7 @@ using Framework.BesiegedMessages;
 
 namespace BesiegedServer
 {
-    public class BesiegedGameInstance
+    public class BesiegedGameInstance : IDisposable
     {
         public ConcurrentBag<Player> Players { get; set; }
         public string GameId { get; set; }
@@ -28,24 +28,15 @@ namespace BesiegedServer
         public string Password { get; set; }
         public Stack<PlayerColor.PlayerColorEnum> ColorPool { get; set; }
 
+        private IDisposable m_GenericGameMessageSubscriber { get; set; }
+        private IDisposable m_GameMessageSubscriber { get; set; }
+
         enum State { WaitingForPlayers, AllPlayersReady, GameStarted };
         enum Trigger { AllPlayersReady, PlayerNotReady, CreatorPressedStart };
 
         StateMachine<State, Trigger> m_GameMachine;
         State m_CurrentState = State.WaitingForPlayers;
         
-        //public BesiegedGameInstance()
-        //{
-        //    Players = new ConcurrentBag<Player>();
-        //    MessageQueue = new BlockingCollection<Command>();
-        //    ColorPool = PlayerColor.GetColors();
-        //    IsGameInstanceFull = false;
-        //    MaxPlayers = 2;
-        //    Password = "";
-
-        //    ConfigureMachine();
-        //}
-
         public BesiegedGameInstance(string gameId, string name, int maxPlayers, string password, string creatorId)
         {
             GameId = gameId;
@@ -97,7 +88,7 @@ namespace BesiegedServer
 
         private void ProcessMessages()
         {
-            IDisposable genericGameMessageSubscriber = BesiegedServer.MessageSubject
+            m_GenericGameMessageSubscriber = BesiegedServer.MessageSubject
                 .Where(message => message is GenericGameMessage && message.GameId == GameId)
                 .Subscribe(message =>
                 {
@@ -113,14 +104,15 @@ namespace BesiegedServer
                         case GameMessage.GameMessageEnum.Start:
                             m_GameMachine.Fire(Trigger.CreatorPressedStart);
                             break;
-                        case GameMessage.GameMessageEnum.PlayerJoin:
+                        case GameMessage.GameMessageEnum.PlayerLeft:
+                            RemovePlayer(message.ClientId);
                             break;
                         default:
                             break;
                     }
                 });
 
-            IDisposable gameMessageSubscriber = BesiegedServer.MessageSubject
+            m_GameMessageSubscriber = BesiegedServer.MessageSubject
                 .Where(message => message is GameMessage && !(message is GenericGameMessage) && message.GameId == GameId)
                 .Subscribe(message =>
                 {
@@ -151,6 +143,20 @@ namespace BesiegedServer
             if (Players.All(p => p.IsReady.Value))
             {
                 m_GameMachine.Fire(Trigger.AllPlayersReady);
+            }
+        }
+
+        public void RemovePlayer(string clientId)
+        {
+            if (clientId == m_GameCreatorClientId)
+            {
+                GenericClientMessage disbanded = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.GameDisbanded };
+                NotifyAllPlayers(disbanded.ToXml());
+                BesiegedServer.DisbandGame(GameId);
+            }
+            else
+            {
+                // we probably need to reconfigure here especially if we're already in the GameStarte state
             }
         }
 
@@ -240,6 +246,12 @@ namespace BesiegedServer
             {
                 player.Callback.SendMessage(message);
             }
+        }
+
+        public void Dispose()
+        {
+            m_GameMessageSubscriber.Dispose();
+            m_GenericGameMessageSubscriber.Dispose();
         }
     }
 }

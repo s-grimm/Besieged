@@ -131,32 +131,12 @@ namespace BesiegedClient.Engine.State
                     ClientGameEngine.Get().SendMessageToServer(start);
                 }
 
-                //else if (selected == "JoinGame")
-                //{
-                //    if (m_SelectedGame == null)
-                //    {
-                //        RenderMessageDialog.RenderMessage("You need to select a game to join!");
-                //    }
-                //    else
-                //    {
-                //        if (m_SelectedGame.HasPassword)
-                //        {
-                //            RenderMessageDialog.RenderInput("Please enter the password: ", (se, ev) =>
-                //            {
-                //                if (se != null)
-                //                {
-                //                    CommandJoinGame commandJoinGame = new CommandJoinGame(m_SelectedGame.GameId, se as string);
-                //                    ClientGameEngine.Get().SendMessageToServer(commandJoinGame);
-                //                }
-                //            });
-                //        }
-                //        else
-                //        {
-                //            CommandJoinGame commandJoinGame = new CommandJoinGame(m_SelectedGame.GameId, string.Empty);
-                //            ClientGameEngine.Get().SendMessageToServer(commandJoinGame);
-                //        }
-                //    }
-                //}
+                else if (selected == "LeaveEnabled")
+                {
+                    GenericGameMessage leave = new GenericGameMessage() { MessageEnum = GameMessage.GameMessageEnum.PlayerLeft };
+                    ClientGameEngine.Get().SendMessageToServer(leave);
+                }
+
                 //else if (selected == "MainMenu")
                 //{
                 //    ClientGameEngine.Get().ChangeState(MainMenuState.Get());
@@ -291,10 +271,10 @@ namespace BesiegedClient.Engine.State
                 m_LeaveEnabledImage.Height = bitmapImage.PixelHeight;
                 m_LeaveEnabledImage.Visibility = System.Windows.Visibility.Visible;
                 m_LeaveEnabledImage.Name = "LeaveEnabled";
-                //m_LeaveEnabledImage.MouseEnter += MenuOptionHover;
-                //m_LeaveEnabledImage.MouseLeave += MenuOptionHoverLost;
-                //m_LeaveEnabledImage.MouseDown += MenuOptionMouseDown;
-                //m_LeaveEnabledImage.MouseUp += MenuOptionMouseUp;
+                m_LeaveEnabledImage.MouseEnter += MenuOptionHover;
+                m_LeaveEnabledImage.MouseLeave += MenuOptionHoverLost;
+                m_LeaveEnabledImage.MouseDown += MenuOptionMouseDown;
+                m_LeaveEnabledImage.MouseUp += MenuOptionMouseUp;
 
                 //LeaveDisabled
                 bitmapImage = new BitmapImage(new Uri(UIComponentPath + "LeaveFade.png", UriKind.RelativeOrAbsolute));

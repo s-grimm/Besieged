@@ -104,11 +104,9 @@ namespace BesiegedClient.Engine
                     switch (genericMessage.MessageEnum)
                     {
                         case ClientMessage.ClientMessageEnum.ConnectSuccessful:
-                            {
-                                m_ClientId = genericMessage.ClientId;
-                                IsServerConnected.Value = true;
-                                break;
-                            }
+                            m_ClientId = genericMessage.ClientId;
+                            IsServerConnected.Value = true;
+                            break;
                         case ClientMessage.ClientMessageEnum.AllPlayersReady:
                             AllPlayersReady.Value = true;
                             break;
@@ -118,12 +116,44 @@ namespace BesiegedClient.Engine
                         case ClientMessage.ClientMessageEnum.StartGame:
                             ChangeState(PlayingGameState.Get());
                             break;
+                        case ClientMessage.ClientMessageEnum.GameDisbanded:
+                            if (IsGameCreator)
+                            {
+                                ChangeState(MultiplayerMenuState.Get());
+                            }
+                            else
+                            {
+                                Action disbandedAction = () =>
+                                {
+                                    RenderMessageDialog.RenderMessage("The game creator has disbanded the game");
+                                };
+                                ChangeState(MultiplayerMenuState.Get(), disbandedAction);
+                            }
+                            break;
+                        case ClientMessage.ClientMessageEnum.GameNotFound:
+                            Action notFoundAction = () =>
+                            {
+                                RenderMessageDialog.RenderMessage("The game you are trying to reach was not found");
+                            };
+                            ChangeState(MultiplayerMenuState.Get(), notFoundAction);
+                            break;
+                        case ClientMessage.ClientMessageEnum.RemoveGame:
+                            Action removeAction = () =>
+                            {
+                                var game = GamesCollection.FirstOrDefault(x => x.GameId == message.GameId);
+                                if (game != null)
+                                {
+                                    GamesCollection.Remove(game);
+                                }
+                            };
+                            ExecuteOnUIThread(removeAction);
+                            break;
                         default:
                             throw new Exception("Unhandled GenericClientMessage was received: " + genericMessage.MessageEnum.ToString());
                     }
                 });
 
-            // All server messages are handled here
+            // All other server messages are handled here
             var m_ServerMessageSubscriber = MessageSubject
                 .Where(message => message is ClientMessage && !(message is GenericClientMessage))
                 .Subscribe(message =>
