@@ -41,6 +41,7 @@ namespace BesiegedClient.Engine.State
         private Button m_AllianceArmyButton;
         private Button m_BeastArmyButton;
         private Label m_CurrentArmyLabel;
+        private PlayerReadyMessage m_PlayerReadyMessage;
 
 
         private ImageBrush m_BackgroundBrush;
@@ -111,8 +112,7 @@ namespace BesiegedClient.Engine.State
 
                 if (selected == "NotReady")
                 {
-                    GenericGameMessage notReady = new GenericGameMessage() { MessageEnum = GameMessage.GameMessageEnum.PlayerNotReady };
-                    ClientGameEngine.Get().SendMessageToServer(notReady);
+                    
 
                     m_ReadyImage.Visibility = Visibility.Visible;
                     m_ReadyImage.IsEnabled = true;
@@ -122,8 +122,7 @@ namespace BesiegedClient.Engine.State
 
                 else if (selected == "Ready")
                 {
-                    GenericGameMessage ready = new GenericGameMessage() { MessageEnum = GameMessage.GameMessageEnum.PlayerReady };
-                    ClientGameEngine.Get().SendMessageToServer(ready);
+                    ClientGameEngine.Get().SendMessageToServer(m_PlayerReadyMessage);
 
                     m_ReadyImage.Visibility = Visibility.Hidden;
                     m_ReadyImage.IsEnabled = false;
@@ -379,6 +378,7 @@ namespace BesiegedClient.Engine.State
                     m_CurrentArmyLabel.Content = "Undead Selected";
                     m_NotReadyImage.Visibility = Visibility.Hidden;
                     m_ReadyImage.Visibility = Visibility.Visible;
+                    m_PlayerReadyMessage.ArmyType = Framework.Unit.Army.ArmyTypeEnum.Undead;
                 };
 
                 //Alliance Army
@@ -391,7 +391,7 @@ namespace BesiegedClient.Engine.State
                     m_CurrentArmyLabel.Content = "Alliance Selected";
                     m_NotReadyImage.Visibility = Visibility.Hidden;
                     m_ReadyImage.Visibility = Visibility.Visible;
-
+                    m_PlayerReadyMessage.ArmyType = Framework.Unit.Army.ArmyTypeEnum.Alliance;
                 };
 
                 //Beast Army
@@ -404,11 +404,14 @@ namespace BesiegedClient.Engine.State
                     m_CurrentArmyLabel.Content = "Beasts Selected";
                     m_NotReadyImage.Visibility = Visibility.Hidden;
                     m_ReadyImage.Visibility = Visibility.Visible;
+                    m_PlayerReadyMessage.ArmyType = Framework.Unit.Army.ArmyTypeEnum.Beast;
                 };
 
                 //Placeholder Army selected label
                 m_CurrentArmyLabel = new Label();
                 m_CurrentArmyLabel.Content = "No Army Selected";
+
+                m_PlayerReadyMessage = new PlayerReadyMessage();
 
             }
             catch (Exception ex)

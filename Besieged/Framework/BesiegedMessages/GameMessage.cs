@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using Framework.Unit;
 
 namespace Framework.BesiegedMessages
 {
@@ -35,5 +36,11 @@ namespace Framework.BesiegedMessages
     public class GameChatMessage : GameMessage
     {
         public string Contents { get; set; }
+    }
+
+
+    public class PlayerReadyMessage : GameMessage
+    {
+        public Army.ArmyTypeEnum ArmyType { get; set; }
     }
 }

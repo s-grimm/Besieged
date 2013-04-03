@@ -109,12 +109,6 @@ namespace BesiegedClient.Engine
                                 IsServerConnected.Value = true;
                                 break;
                             }
-                        case ClientMessage.ClientMessageEnum.AllPlayersReady:
-                            AllPlayersReady.Value = true;
-                            break;
-                        case ClientMessage.ClientMessageEnum.PlayerNotReady:
-                            AllPlayersReady.Value = false;
-                            break;
                         case ClientMessage.ClientMessageEnum.StartGame:
                             ChangeState(PlayingGameState.Get());
                             break;
