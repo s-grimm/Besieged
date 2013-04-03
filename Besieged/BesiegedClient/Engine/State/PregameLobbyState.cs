@@ -251,6 +251,10 @@ namespace BesiegedClient.Engine.State
                 m_ChatMessagesListBox.Opacity = 0.75;
                 m_ChatMessagesListBox.FontFamily = new FontFamily("Papyrus");
                 m_ChatMessagesListBox.FontSize = 14;
+                ClientGameEngine.Get().ChatMessageCollection.CollectionChanged += (s, ev) =>
+                {
+                    m_ChatMessagesListBox.SelectedIndex = m_ChatMessagesListBox.Items.Count - 1;
+                };
 
                 //StartEnabled
                 bitmapImage = new BitmapImage(new Uri(UIComponentPath + "Start.png", UriKind.RelativeOrAbsolute));
