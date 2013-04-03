@@ -22,7 +22,7 @@ namespace BesiegedClient.Engine.State.InGameEngine
         private static InGameEngine m_Instance = null;
 
         public Canvas GameCanvas { get; private set; } //what to draw on
-
+        public IUnit SelectedUnit { get; set; }
         //the following is ALL Virtual Canvas code
 
         #region "Virtual Canvas"
@@ -94,45 +94,57 @@ namespace BesiegedClient.Engine.State.InGameEngine
 
         //unit movement shit
         private bool captured = false;
-
-        private double x_shape, y_shape;
-        private int x_original, y_original;
-        private UIElement source = null;
-        private IUnit selectedUnit = null;
+        private bool _preventAction = false;
+        private double _xShape, _yShape;
+        private int _xOriginal, _yOriginal;
+        private UIElement _source = null;
+        private IUnit _selectedUnit = null;
 
         public void unit_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            source = (UIElement)sender;
-            Mouse.Capture(source);
+            
+            _source = (UIElement)sender;
+            Mouse.Capture(_source);
+            _xShape = Canvas.GetLeft(_source);
+            _yShape = Canvas.GetTop(_source);
+            _yOriginal = (int)_yShape;
+            _xOriginal = (int) _xShape;
+            _selectedUnit = Board.Units.FirstOrDefault(x => x.X_Position == _xOriginal / 50 && x.Y_Position == _yOriginal / 50);
+            SelectedUnit = _selectedUnit;
+            if (_preventAction)
+            {
+                _selectedUnit = null;
+                return;
+            }
+            _preventAction = false;
             captured = true;
-            x_shape = Canvas.GetLeft(source);
-            y_shape = Canvas.GetTop(source);
-            y_original = (int)y_shape / 50;
-            x_original = (int)x_shape / 50;
-            selectedUnit = Board.Units.FirstOrDefault(x => x.X_Position == x_original && x.Y_Position == y_original);
-
-            e.Handled = true;
-
-            ClientGameEngine.Get().m_CurrentWindow.Cursor = Cursors.Hand;
-
-            //this.ChangeState(UnitSelectedState);
+            _preventAction = false;
         }
 
         public void unit_MouseMove(object sender, MouseEventArgs e)
         {
-            if (!captured || selectedUnit == null) return;
+            if (_preventAction) return;
+            _preventAction = true;
+            if (!captured || _selectedUnit == null)
+            {
+                _preventAction = false;
+                return;
+            }
             double x = e.GetPosition(ClientGameEngine.Get().Canvas).X;
             double y = e.GetPosition(ClientGameEngine.Get().Canvas).Y;
-            Canvas.SetLeft(source, x + VirtualGameCanvas.HorizontalOffset);
-            Canvas.SetTop(source, y + VirtualGameCanvas.VerticalOffset);
+            Canvas.SetLeft(_source, x + VirtualGameCanvas.HorizontalOffset);
+            Canvas.SetTop(_source, y + VirtualGameCanvas.VerticalOffset);
             e.Handled = true;
+            _preventAction = false;
         }
 
         public void unit_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (captured)
+            if (captured )
             {
-                if (selectedUnit != null)
+                if (_preventAction) return;
+                _preventAction = true;
+                if (_selectedUnit != null)
                 {
                     //snap to closest tile
                     double x = e.GetPosition(ClientGameEngine.Get().Canvas).X + VirtualGameCanvas.HorizontalOffset;
@@ -143,33 +155,43 @@ namespace BesiegedClient.Engine.State.InGameEngine
 
                     //check bounds on unit
 
-                    int movementRange = selectedUnit.Movement;
-                    int totalMovedY = nearestY / 50 - y_original;
-                    int totalMovedX = nearestX / 50 - x_original;
+                    int movementRange = _selectedUnit.Movement;
+                    int totalMovedY = nearestY / 50 - _yOriginal / 50;
+                    int totalMovedX = nearestX / 50 - _xOriginal / 50;
                     if (totalMovedY < 0) totalMovedY *= -1;
                     if (totalMovedX < 0) totalMovedX *= -1;
 
-                    if (totalMovedX + totalMovedY > movementRange || !Board.GameBoard.Tiles[nearestY / 50][nearestX / 50].IsPassable || Board.Units.Any(unit => unit.X_Position == nearestX / 50 && unit.Y_Position == nearestY / 50)) //there is a unit here already OR the tile is impassable, return it to its original position
+                    if (totalMovedX + totalMovedY > movementRange 
+                        || !Board.GameBoard.Tiles[nearestY / 50][nearestX / 50].IsPassable 
+                        || Board.Units.Any(unit => unit.X_Position == (nearestX / 50) && unit.Y_Position == (nearestY / 50))) //there is a unit here already OR the tile is impassable, return it to its original position
                     {
-                        Canvas.SetLeft(source, x_original * 50);
-                        Canvas.SetTop(source, y_original * 50);
+                        Canvas.SetLeft(_source, _xOriginal );
+                        Canvas.SetTop(_source, _yOriginal);
                     }
                     else
                     {
                         // update unit with its new place
-                        selectedUnit.Y_Position = nearestY / 50;
-                        selectedUnit.X_Position = nearestX / 50;
+                        _selectedUnit.Y_Position = nearestY / 50;
+                        _selectedUnit.X_Position = nearestX / 50;
 
-                        Canvas.SetLeft(source, nearestX);
-                        Canvas.SetTop(source, nearestY);
+                        Canvas.SetLeft(_source, nearestX);
+                        Canvas.SetTop(_source, nearestY);
                     }
+                    _selectedUnit = null;
                 }
+                _preventAction = false;
             }
             Mouse.Capture(null);
             captured = false;
-            selectedUnit = null;
+        }
 
-            ClientGameEngine.Get().m_CurrentWindow.Cursor = Cursors.Arrow;
+        public void ActivateTurn()
+        {
+            _preventAction = false;
+        }
+        public void DeActivateTurn()
+        {
+            _preventAction = true;
         }
     }
 }
