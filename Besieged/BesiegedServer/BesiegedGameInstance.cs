@@ -36,7 +36,7 @@ namespace BesiegedServer
         private IDisposable m_GameMessageSubscriber { get; set; }
 
         enum State { WaitingForPlayers, AllPlayersReady, GameStarted, PlayerTurn, Reconfigure };
-        enum Trigger { AllPlayersReady, PlayerNotReady, CreatorPressedStart, GameStarted, PlayerLeft };
+        enum Trigger { AllPlayersReady, PlayerNotReady, CreatorPressedStart, GameStarted, PlayerLeft, PlayerTurn };
 
         StateMachine<State, Trigger> m_GameMachine;
         State m_CurrentState = State.WaitingForPlayers;
@@ -101,13 +101,13 @@ namespace BesiegedServer
                     aggregate.MessageList.Add(gamestate);
                     aggregate.MessageList.Add(start);
                     NotifyAllPlayers(aggregate.ToXml());
-
                     m_GameMachine.Fire(Trigger.GameStarted);
                 })
+                .Permit(Trigger.GameStarted, State.PlayerTurn)
                 .Ignore(Trigger.PlayerNotReady);
 
             m_GameMachine.Configure(State.PlayerTurn)
-                .Permit(Trigger.GameStarted, State.PlayerTurn)
+                .PermitReentry(Trigger.PlayerTurn)
                 .Permit(Trigger.PlayerLeft, State.Reconfigure)
                 .OnEntry(x =>
                 {
@@ -122,6 +122,13 @@ namespace BesiegedServer
                     // add the current player back on the queue
                     m_PlayerTurnOrder.Enqueue(m_CurrentPlayer);
                 });
+
+            m_GameMachine.Configure(State.Reconfigure)
+                .OnEntry(x =>
+                {
+
+                })
+                .Permit(Trigger.PlayerTurn, State.PlayerTurn);
         }
 
         private void ProcessMessages()
