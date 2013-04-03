@@ -350,7 +350,7 @@ namespace BesiegedClient.Engine.State
                 m_PlayerGridView.Columns.Add(m_NameColumn);
 
                 m_PlayerListView.View = m_PlayerGridView;
-                m_PlayerListView.ItemsSource = ClientGameEngine.Get().PlayerCollection;
+                m_PlayerListView.ItemsSource = ClientGameEngine.Get().PlayerCollection;         
 
 
                 // Chat messages

@@ -168,6 +168,9 @@ namespace BesiegedServer
         {
             Player player = new Player(client.Name, client.ClientId, client.Callback, ColorPool.Pop());
             Players.Add(player);
+            string capacity = string.Format("{0}/{1} players", Players.Count, MaxPlayers);
+            GameInfoMessage gameInfo = new GameInfoMessage(GameId, Name, capacity, false, Password != string.Empty ? true : false);
+            BesiegedServer.NotifyAllConnectedClients(gameInfo.ToXml());
             player.IsReady.ValueChanged += (from, to) =>
             {
                 PlayerInfoMessage playerInfo = new PlayerInfoMessage()
