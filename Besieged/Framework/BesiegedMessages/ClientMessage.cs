@@ -27,6 +27,10 @@ namespace Framework.BesiegedMessages
             RemoveGame,
             [XmlEnum(Name="TransitionToLoadingState")]
             TransitionToLoadingState,
+            [XmlEnum(Name = "ActiveTurn")]
+            ActiveTurn,
+            [XmlEnum(Name = "WaitingForTurn")]
+            WaitingForTurn,
         };
     }
 

@@ -30,11 +30,13 @@ namespace BesiegedServer
         public string Password { get; set; }
         public Stack<PlayerColor.PlayerColorEnum> ColorPool { get; set; }
 
+        private Queue<Player> m_PlayerTurnOrder = new Queue<Player>();
+        private Player m_CurrentPlayer;
         private IDisposable m_GenericGameMessageSubscriber { get; set; }
         private IDisposable m_GameMessageSubscriber { get; set; }
 
-        enum State { WaitingForPlayers, AllPlayersReady, GameStarted };
-        enum Trigger { AllPlayersReady, PlayerNotReady, CreatorPressedStart };
+        enum State { WaitingForPlayers, AllPlayersReady, GameStarted, PlayerTurn };
+        enum Trigger { AllPlayersReady, PlayerNotReady, CreatorPressedStart, GameStarted };
 
         StateMachine<State, Trigger> m_GameMachine;
         State m_CurrentState = State.WaitingForPlayers;
@@ -87,6 +89,7 @@ namespace BesiegedServer
                     foreach (Player player in Players)
                     {
                         PlayerInfos.Add(new KeyValuePair<string, Army.ArmyTypeEnum>(player.ClientId, player.ArmyType));
+                        m_PlayerTurnOrder.Enqueue(player);
                     }
                     GameState = new GameState(PlayerInfos);
                     
@@ -98,8 +101,25 @@ namespace BesiegedServer
                     aggregate.MessageList.Add(gamestate);
                     aggregate.MessageList.Add(start);
                     NotifyAllPlayers(aggregate.ToXml());
+
+                    
                 })
                 .Ignore(Trigger.PlayerNotReady);
+
+            m_GameMachine.Configure(State.PlayerTurn)
+                .OnEntry(x =>
+                {
+                    // notify the current player that its their turn
+                    m_CurrentPlayer = m_PlayerTurnOrder.Dequeue();
+                    m_CurrentPlayer.Callback.SendMessage((new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.ActiveTurn }).ToXml());
+                    // notify all other players that they have to wait
+                    foreach (Player player in m_PlayerTurnOrder)
+                    {
+                        player.Callback.SendMessage((new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.WaitingForTurn }).ToXml());
+                    }
+                    // add the current player back on the queue
+                    m_PlayerTurnOrder.Enqueue(m_CurrentPlayer);
+                });
         }
 
         private void ProcessMessages()
