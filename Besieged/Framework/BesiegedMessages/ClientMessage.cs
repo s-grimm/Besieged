@@ -19,12 +19,25 @@ namespace Framework.BesiegedMessages
             PlayerNotReady,
             [XmlEnum(Name = "StartGame")]
             StartGame,
+            [XmlEnum(Name = "GameDisbanded")]
+            GameDisbanded,
+            [XmlEnum(Name = "GameNotFound")]
+            GameNotFound,
+            [XmlEnum(Name = "RemoveGame")]
+            RemoveGame,
+            [XmlEnum(Name="TransitionToLoadingState")]
+            TransitionToLoadingState,
         };
     }
 
     public class GenericClientMessage : ClientMessage
     {
         public ClientMessage.ClientMessageEnum MessageEnum { get; set; }
+    }
+
+    public class ClientGameStateMessage : ClientMessage
+    {
+        public GameState State { get; set; }
     }
 
     public class ClientChatMessage : ClientMessage

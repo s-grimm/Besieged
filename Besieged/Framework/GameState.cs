@@ -1,30 +1,30 @@
-﻿using Framework.Unit;
+﻿using Framework.Map;
+using Framework.Unit;
+using Framework.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Framework.Utilities.Xml;
-using Framework.Map;
-using System.Collections.Concurrent;
-using Framework.Utilities;
+
 namespace Framework
 {
     public class GameState
     {
-        public List<IUnit> Units { get; set; }
+        public List<BaseUnit> Units { get; set; }
+
         public GameMap GameBoard { get; set; }
-        List<GamePlayer> GamePlayers { get; set; }
+
+        private List<GamePlayer> GamePlayers { get; set; }
+
         private GameState()
         {
-            Units = new List<IUnit>();
+            Units = new List<BaseUnit>();
             GameBoard = new GameMap();
             GamePlayers = new List<GamePlayer>();
         }
 
-        public GameState(List<string> playerIDs)
+        public GameState(IReadOnlyCollection<string> playerIDs)
         {
-            Units = new List<IUnit>();
+            Units = new List<BaseUnit>();
             GameBoard = new GameMap();
             GamePlayers = new List<GamePlayer>();
 
@@ -40,35 +40,103 @@ namespace Framework
 
                 IUnitFactory factory;
 
-                if (raceNum == 0)
+                if (raceNum > 0 && raceNum < 4) //1-3
                 {
                     factory = new AllianceUnitFactory();
                 }
-                else if (raceNum == 1)
+                else if (raceNum > 3 && raceNum < 7)//4-6
                 {
                     factory = new BeastUnitFactory();
                 }
-                else
+                else//7-9
                 {
                     factory = new UndeadUnitFactory();
                 }
+
                 tplayer.Factory = factory;
                 GamePlayers.Add(tplayer);
-                SetupInitialUnits(player,values[i++]);
-
+                SetupInitialUnits(player, values[i++]);
             }
-
         }
 
         public void SetupInitialUnits(string playerID, int corner)
         {
-            //corners (for default map ONLY)
+            //corners (for default map ONLY) 0-55
             /****************************
-             *  1) Upper Left   ( X 4    ,  Y 4  ) 
-             *  2) Lower Right  ( X 53   ,  Y 53 )
-             *  3) Upper Right  ( X 53   ,  Y 4  )
-             *  4) Lower Left   ( X 4    ,  Y 53 )
-             ****************************/
+             *  1) Upper Left   ( X 4    ,  Y 4  )
+             *  2) Lower Right  ( X 52   ,  Y 52 )
+             *  3) Upper Right  ( X 52   ,  Y 4  )
+             *  4) Lower Left   ( X 4    ,  Y 52 )
+             * Accounting for a 4x4 castle in the
+             * corner, you need to start placing
+             * units at X+-4 and Y+-4
+             * ****************************/
+
+            int x_movement, y_movement, x_start, y_start;
+            switch (corner)
+            {
+                case 1:
+                    x_movement = 1;
+                    x_start = 5;
+
+                    y_movement = 1;
+                    y_start = 5;
+                    break;
+
+                case 2:
+                    x_movement = -1;
+                    x_start = 51;
+
+                    y_movement = -1;
+                    y_start = 51;
+                    break;
+
+                case 3:
+                    x_movement = -1;
+                    x_start = 51;
+
+                    y_movement = 1;
+                    y_start = 6;
+                    break;
+
+                case 4:
+                    x_movement = 1;
+                    x_start = 6;
+
+                    y_movement = -1;
+                    y_start = 51;
+                    break;
+
+                default:
+
+                    //should never hit this line
+                    x_movement = 1;
+                    x_start = 6;
+
+                    y_movement = 1;
+                    y_start = 6;
+                    break;
+            }
+
+            GamePlayer player = GamePlayers.First(p => p.PlayerID == playerID);
+            IUnitFactory factory = player.Factory;
+            int x = x_start;
+            for (int i = 0; i < 4; i++)
+            {
+                int y = y_start;
+                for (int j = 0; j < 4; j++)
+                {
+                    IUnit tUnit = factory.GetBasicInfantry();
+                    tUnit.Owner = playerID;
+                    tUnit.X_Position = x;
+                    tUnit.Y_Position = y;
+
+                    Units.Add((BaseUnit)tUnit);
+
+                    y += y_movement;
+                }
+                x += x_movement;
+            }
         }
     }
 }

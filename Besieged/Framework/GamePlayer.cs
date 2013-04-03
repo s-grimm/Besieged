@@ -2,7 +2,7 @@
 {
     public class GamePlayer
     {
-        public Framework.Unit.IUnitFactory Factory { get; set; }
+        public Unit.IUnitFactory Factory { get; set; }
 
         public string PlayerID { get; private set; }
 

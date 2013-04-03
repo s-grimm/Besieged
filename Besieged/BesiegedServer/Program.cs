@@ -1,16 +1,15 @@
-﻿using Framework.ServiceContracts;
+﻿using Framework.BesiegedMessages;
+using Framework.ServiceContracts;
 using Framework.Utilities.Xml;
 using System;
+using System.Reactive.Concurrency;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.Threading.Tasks;
 using Utilities;
-using BesiegedServer.Maps;
-using Framework.BesiegedMessages;
-using System.Reactive.Linq;
-using System.Reactive.PlatformServices;
-using System.Reactive.Concurrency;
-using System.Reactive.Subjects;
+
 namespace BesiegedServer
 {
     internal class Program
@@ -23,15 +22,32 @@ namespace BesiegedServer
             ServiceHost svcHost = null;
             try
             {
+                NetTcpBinding binding = new NetTcpBinding(SecurityMode.None, true)
+                    {
+                        ReliableSession = { InactivityTimeout = new TimeSpan(0, 2, 0) },
+                        SendTimeout = new TimeSpan(0, 2, 0),
+                        ReceiveTimeout = new TimeSpan(0, 2, 0),
+                        OpenTimeout = new TimeSpan(0, 1, 0),
+                        CloseTimeout = new TimeSpan(0, 1, 0),
+                        MaxReceivedMessageSize = 2147483647,
+                        ReaderQuotas =
+                            {
+                                MaxArrayLength = 2147483647,
+                                MaxBytesPerRead = 2147483647,
+                                MaxStringContentLength = 2147483647,
+                                MaxDepth = 2147483647,
+                            },
+                    };
+
                 svcHost = new ServiceHost(typeof(BesiegedServer), new Uri("net.tcp://127.0.0.1:31337/BesiegedServer/"));
-                svcHost.AddServiceEndpoint(typeof(Framework.ServiceContracts.IBesiegedServer), new NetTcpBinding(SecurityMode.None), "BesiegedMessage");
+                svcHost.AddServiceEndpoint(typeof(Framework.ServiceContracts.IBesiegedServer), binding, "BesiegedMessage");
                 svcHost.Description.Behaviors.Add(new ServiceMetadataBehavior() { HttpGetEnabled = false });
                 svcHost.Open();
 
                 // Configure a client callback for the server itself to force start the process
                 m_ServerClient = new ServerClient();
                 EndpointAddress endpointAddress = new EndpointAddress("net.tcp://127.0.0.1:31337/BesiegedServer/BesiegedMessage");
-                DuplexChannelFactory<IBesiegedServer> duplexChannelFactory = new DuplexChannelFactory<IBesiegedServer>(m_ServerClient, new NetTcpBinding(SecurityMode.None), endpointAddress);
+                DuplexChannelFactory<IBesiegedServer> duplexChannelFactory = new DuplexChannelFactory<IBesiegedServer>(m_ServerClient, new NetTcpBinding(SecurityMode.None, true), endpointAddress);
                 m_BesiegedServer = duplexChannelFactory.CreateChannel();
 
                 Task.Factory.StartNew(() =>
@@ -39,7 +55,7 @@ namespace BesiegedServer
                     var startServer = new GenericServerMessage() { MessageEnum = ServerMessage.ServerMessageEnum.StartServer };
                     m_BesiegedServer.SendMessage(startServer.ToXml());
                 });
-                
+
                 var subject = new Subject<BesiegedMessage>();
 
                 var messagePublisher = m_ServerClient.MessageQueue
@@ -57,9 +73,11 @@ namespace BesiegedServer
                         {
                             case ServerMessage.ServerMessageEnum.StartServer:
                                 break;
+
                             case ServerMessage.ServerMessageEnum.ServerStarted:
                                 ConsoleLogger.Push("Server has started.");
                                 break;
+
                             default:
                                 ConsoleLogger.Push("Unhandled GenericServerMessage was received: " + genericMessage.MessageEnum.ToString());
                                 break;
@@ -72,7 +90,7 @@ namespace BesiegedServer
                     .Subscribe(message =>
                     {
                         // do stuff with server bound messages here
-                    }); 
+                    });
             }
             catch (Exception ex)
             {
