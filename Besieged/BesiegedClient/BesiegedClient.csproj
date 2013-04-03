@@ -85,6 +85,7 @@
     </Compile>
     <Compile Include="Engine\State\IGameState.cs" />
     <Compile Include="Engine\State\InGameEngine\InGameEngine.cs" />
+    <Compile Include="Engine\State\InGameEngine\State\DrawUnitMovedPathState.cs" />
     <Compile Include="Engine\State\InGameEngine\State\DrawUnitMovementRangeState.cs" />
     <Compile Include="Engine\State\InGameEngine\State\DrawUnitState.cs" />
     <Compile Include="Engine\State\InGameEngine\State\IInGameState.cs" />

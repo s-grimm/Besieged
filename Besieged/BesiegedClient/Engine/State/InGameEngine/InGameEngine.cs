@@ -184,17 +184,19 @@ namespace BesiegedClient.Engine.State.InGameEngine
                         }
                         else
                         {
+                            DrawUnitMovedPathState.OverlayTiles = path;
                             // update unit with its new place
                             _selectedUnit.Y_Position = nearestY/50;
                             _selectedUnit.X_Position = nearestX/50;
 
                             Canvas.SetLeft(_source, nearestX);
                             Canvas.SetTop(_source, nearestY);
+                            InGameEngine.Get().ChangeState(DrawUnitMovedPathState.Get());
                         }
                     }
                     _selectedUnit = null;
-                    if(m_CurrentGameState != WaitingState.Get())
-                        InGameEngine.Get().ChangeState(WaitingState.Get());
+                    //if(m_CurrentGameState != WaitingState.Get())
+                    //    InGameEngine.Get().ChangeState(WaitingState.Get());
                 }
                 _preventAction = false;
             }

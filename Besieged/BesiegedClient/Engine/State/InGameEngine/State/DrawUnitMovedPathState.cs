@@ -8,22 +8,22 @@ using System.Windows.Shapes;
 
 namespace BesiegedClient.Engine.State.InGameEngine.State
 {
-    public class DrawUnitMovementRangeState : IInGameState
+    public class DrawUnitMovedPathState : IInGameState
     {
-        private static DrawUnitMovementRangeState m_Instance = null;
+        private static DrawUnitMovedPathState m_Instance = null;
 
-        private List<Rectangle> _path;
+        private List<Rectangle> _overlay;
         private const double TileWidth = 50;
         private const double TileHeight = 50;
-        public static IEnumerable<Tuple<int, int>> OverlayTiles { get; set; } 
+        public static IEnumerable<Tuple<int, int>> OverlayTiles { get; set; }
 
-        private DrawUnitMovementRangeState()
+        private DrawUnitMovedPathState()
         {
         }
 
         public void Initialize()
         {
-            _path = new List<Rectangle>();
+            _overlay = new List<Rectangle>();
         }
 
         public void Render()
@@ -36,16 +36,16 @@ namespace BesiegedClient.Engine.State.InGameEngine.State
                     {
                         Width = TileWidth,
                         Height = TileHeight,
-                        Fill = Utilities.Rendering.BlueBrush,
+                        Fill = Utilities.Rendering.GreenBrush,
                         Opacity = 0.5
                     };
 
                 Canvas.SetTop(overlay, tile.Item1 * TileWidth);
                 Canvas.SetLeft(overlay, tile.Item2 * TileHeight);
-                _path.Add(overlay);
+                _overlay.Add(overlay);
             }
 
-            foreach (Rectangle r in _path)
+            foreach (Rectangle r in _overlay)
             {
                 InGameEngine.Get().GameCanvas.Children.Add(r);
             }
@@ -53,12 +53,12 @@ namespace BesiegedClient.Engine.State.InGameEngine.State
 
         public void Dispose()
         {
-            foreach (Rectangle r in _path.Where(r => InGameEngine.Get().GameCanvas.Children.Contains(r)))
+            foreach (Rectangle r in _overlay.Where(r => InGameEngine.Get().GameCanvas.Children.Contains(r)))
             {
                 InGameEngine.Get().GameCanvas.Children.Remove(r);
             }
 
-            _path.Clear();
+            _overlay.Clear();
         }
 
         public static IInGameState Get()
@@ -67,7 +67,7 @@ namespace BesiegedClient.Engine.State.InGameEngine.State
             {
                 if (m_Instance == null)
                 {
-                    m_Instance = new DrawUnitMovementRangeState();
+                    m_Instance = new DrawUnitMovedPathState();
                     m_Instance.Initialize();
                 }
                 return m_Instance;
