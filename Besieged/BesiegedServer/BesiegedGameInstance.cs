@@ -13,6 +13,7 @@ using System.Reactive.Concurrency;
 using Framework.Utilities.Xml;
 using Framework.ServiceContracts;
 using Framework.BesiegedMessages;
+using Utilities;
 
 namespace BesiegedServer
 {
@@ -80,7 +81,8 @@ namespace BesiegedServer
                 .OnEntry(x =>
                 {
                     GameState = new GameState(Players.Select(p => p.ClientId).ToList());
-                   
+                    ConsoleLogger.Push(String.Format("Game {0} has been started", GameId));
+                    NotifyAllPlayers(new GenericClientMessage(){ MessageEnum = ClientMessage.ClientMessageEnum.TransitionToLoadingState}.ToXml());
                     ClientGameStateMessage msg1 = new ClientGameStateMessage() { State = GameState };
                     GenericClientMessage msg2 = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.StartGame };
                     NotifyAllPlayers(msg1.ToXml());

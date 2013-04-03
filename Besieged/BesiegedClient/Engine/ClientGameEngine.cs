@@ -47,11 +47,22 @@ namespace BesiegedClient.Engine
 
         private ClientGameEngine() 
         {
-            m_TcpBinding = new NetTcpBinding(SecurityMode.None);
-            m_TcpBinding.OpenTimeout = new TimeSpan(0, 0, 10);
-            m_TcpBinding.CloseTimeout = new TimeSpan(0, 0, 10);
-            m_TcpBinding.SendTimeout = new TimeSpan(0, 0, 10);
-            m_TcpBinding.ReceiveTimeout = new TimeSpan(0, 0, 10);
+            m_TcpBinding = new NetTcpBinding(SecurityMode.None,true)
+                {
+                    ReliableSession = { InactivityTimeout = new TimeSpan(0, 2, 0) },
+                    SendTimeout = new TimeSpan(0, 2, 0),
+                    ReceiveTimeout = new TimeSpan(0, 2, 0),
+                    OpenTimeout = new TimeSpan(0, 1, 0),
+                    CloseTimeout = new TimeSpan(0, 1, 0),
+                    MaxReceivedMessageSize = 2147483647,
+                    ReaderQuotas =
+                    {
+                        MaxArrayLength = 2147483647,
+                        MaxBytesPerRead = 2147483647,
+                        MaxStringContentLength = 2147483647,
+                        MaxDepth = 2147483647,
+                    },
+                };
 
             GamesCollection = new ObservableCollection<GameInfoMessage>();
             PlayerCollection = new ObservableCollection<PlayerInfoMessage>();
@@ -139,6 +150,10 @@ namespace BesiegedClient.Engine
                                 }
                             };
                             ExecuteOnUIThread(removeAction);
+                            break;
+                        case ClientMessage.ClientMessageEnum.TransitionToLoadingState:
+                            Action loadingAction = () => ClientGameEngine.Get().ChangeState(LoadingState.Get());
+                            ExecuteOnUIThread(loadingAction);
                             break;
                         default:
                             throw new Exception("Unhandled GenericClientMessage was received: " + genericMessage.MessageEnum.ToString());

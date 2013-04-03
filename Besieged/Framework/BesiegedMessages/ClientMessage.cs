@@ -25,6 +25,8 @@ namespace Framework.BesiegedMessages
             GameNotFound,
             [XmlEnum(Name = "RemoveGame")]
             RemoveGame,
+            [XmlEnum(Name="TransitionToLoadingState")]
+            TransitionToLoadingState,
         };
     }
 
