@@ -70,7 +70,8 @@ namespace BesiegedServer
                 .Permit(Trigger.AllPlayersReady, State.AllPlayersReady)
                 .OnEntryFrom(Trigger.PlayerNotReady, x =>
                 {
-                    
+                    GenericClientMessage waiting = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.PlayerNotReady };
+                    LookupPlayerById(m_GameCreatorClientId).Callback.SendMessage(waiting.ToXml());
                 })
                 .Ignore(Trigger.PlayerNotReady)
                 .Ignore(Trigger.CreatorPressedStart);
@@ -78,7 +79,8 @@ namespace BesiegedServer
             m_GameMachine.Configure(State.AllPlayersReady)
                 .OnEntry(x => 
                     {
-
+                        GenericClientMessage ready = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.AllPlayersReady };
+                        LookupPlayerById(m_GameCreatorClientId).Callback.SendMessage(ready.ToXml());
                     })
                 .Permit(Trigger.PlayerNotReady, State.WaitingForPlayers)
                 .Permit(Trigger.CreatorPressedStart, State.GameStarted);
