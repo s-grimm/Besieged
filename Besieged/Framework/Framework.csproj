@@ -47,7 +47,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\GameSpecificCommand.cs" />
-    <Compile Include="GamePlayer.cs" />
     <Compile Include="Map\GameMap.cs" />
     <Compile Include="Map\Tile\ArcticTileFactory.cs">
       <SubType>Code</SubType>

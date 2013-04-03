@@ -70,7 +70,7 @@ namespace BesiegedServer
             ColorPool = PlayerColor.GetColors();
             IsGameInstanceFull = false;
             Password = password;
-            //GameState = new GameState(new List<string>() { "Shane", "Jesse", "Adam" });
+
             StartProcessingMessages();
         }
 
