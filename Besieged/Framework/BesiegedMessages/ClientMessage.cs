@@ -11,6 +11,10 @@ namespace Framework.BesiegedMessages
     {
         public enum ClientMessageEnum
         {
+            [XmlEnum(Name = "AllPlayersReady")]
+            AllPlayersReady,
+            [XmlEnum(Name = "PlayerNotReady")]
+            PlayerNotReady,
             [XmlEnum(Name = "ConnectSuccessful")]
             ConnectSuccessful,
             [XmlEnum(Name = "StartGame")]

@@ -112,8 +112,8 @@ namespace BesiegedClient.Engine.State
 
                 if (selected == "NotReady")
                 {
-                    
-
+                    GenericGameMessage notReady = new GenericGameMessage() { MessageEnum = GameMessage.GameMessageEnum.PlayerNotReady };
+                    ClientGameEngine.Get().SendMessageToServer(notReady);
                     m_ReadyImage.Visibility = Visibility.Visible;
                     m_ReadyImage.IsEnabled = true;
                     m_NotReadyImage.Visibility = Visibility.Hidden;
@@ -376,8 +376,11 @@ namespace BesiegedClient.Engine.State
                 m_UndeadArmyButton.Click += (s, ev) =>
                 {
                     m_CurrentArmyLabel.Content = "Undead Selected";
-                    m_NotReadyImage.Visibility = Visibility.Hidden;
-                    m_ReadyImage.Visibility = Visibility.Visible;
+                    if (!m_NotReadyImage.IsVisible)
+                    {
+                        m_NotReadyImage.Visibility = Visibility.Hidden;
+                        m_ReadyImage.Visibility = Visibility.Visible;
+                    }
                     m_PlayerReadyMessage.ArmyType = Framework.Unit.Army.ArmyTypeEnum.Undead;
                 };
 
@@ -389,8 +392,11 @@ namespace BesiegedClient.Engine.State
                 m_AllianceArmyButton.Click += (s, ev) =>
                 {
                     m_CurrentArmyLabel.Content = "Alliance Selected";
-                    m_NotReadyImage.Visibility = Visibility.Hidden;
-                    m_ReadyImage.Visibility = Visibility.Visible;
+                    if (!m_NotReadyImage.IsVisible)
+                    {
+                        m_NotReadyImage.Visibility = Visibility.Hidden;
+                        m_ReadyImage.Visibility = Visibility.Visible;
+                    }
                     m_PlayerReadyMessage.ArmyType = Framework.Unit.Army.ArmyTypeEnum.Alliance;
                 };
 
@@ -402,8 +408,11 @@ namespace BesiegedClient.Engine.State
                 m_BeastArmyButton.Click += (s, ev) =>
                 {
                     m_CurrentArmyLabel.Content = "Beasts Selected";
-                    m_NotReadyImage.Visibility = Visibility.Hidden;
-                    m_ReadyImage.Visibility = Visibility.Visible;
+                    if (!m_NotReadyImage.IsVisible)
+                    {
+                        m_NotReadyImage.Visibility = Visibility.Hidden;
+                        m_ReadyImage.Visibility = Visibility.Visible;
+                    }
                     m_PlayerReadyMessage.ArmyType = Framework.Unit.Army.ArmyTypeEnum.Beast;
                 };
 

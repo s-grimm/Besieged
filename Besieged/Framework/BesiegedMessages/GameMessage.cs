@@ -12,8 +12,6 @@ namespace Framework.BesiegedMessages
     {
         public enum GameMessageEnum
         {
-            [XmlEnum(Name = "PlayerReady")]
-            PlayerReady,
             [XmlEnum(Name = "PlayerNotReady")]
             PlayerNotReady,
             [XmlEnum(Name = "Start")]
