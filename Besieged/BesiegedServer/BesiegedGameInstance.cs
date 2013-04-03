@@ -120,7 +120,7 @@ namespace BesiegedServer
                 });
 
             IDisposable gameMessageSubscriber = BesiegedServer.MessageSubject
-                .Where(message => message is GameMessage && !(message is GameMessage) && message.GameId == GameId)
+                .Where(message => message is GameMessage && !(message is GenericGameMessage) && message.GameId == GameId)
                 .Subscribe(message =>
                 {
                     if (message is GameChatMessage)

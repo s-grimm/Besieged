@@ -26,7 +26,7 @@ namespace BesiegedServer
         private IClient m_ServerCallback;
 
         // Reactive stuff
-        private BlockingCollection<BesiegedMessage> m_MessageQueue = new BlockingCollection<BesiegedMessage>();
+        public static BlockingCollection<BesiegedMessage> m_MessageQueue = new BlockingCollection<BesiegedMessage>();
         public static IConnectableObservable<BesiegedMessage> MessagePublisher;
         private IDisposable m_GenericServerMessageSubscriber;  // subscribes to generic messages that are only bound for the server
         private IDisposable m_ServerMessageSubscriber;  // subscribes to messages that are only bound for the server

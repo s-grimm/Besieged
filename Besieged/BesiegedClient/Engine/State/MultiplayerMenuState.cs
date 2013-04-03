@@ -111,14 +111,14 @@ namespace BesiegedClient.Engine.State
                             {
                                 if (se != null)
                                 {
-                                    JoinGameMessage joinGame = new JoinGameMessage() { Password = se as string };
+                                    JoinGameMessage joinGame = new JoinGameMessage() { Password = se as string, GameId = m_SelectedGame.GameId };
                                     ClientGameEngine.Get().SendMessageToServer(joinGame);
                                 }
                             });
                         }
                         else
                         {
-                            JoinGameMessage joinGame = new JoinGameMessage() { Password = string.Empty };
+                            JoinGameMessage joinGame = new JoinGameMessage() { Password = string.Empty, GameId = m_SelectedGame.GameId };
                             ClientGameEngine.Get().SendMessageToServer(joinGame);
                         }
                     }

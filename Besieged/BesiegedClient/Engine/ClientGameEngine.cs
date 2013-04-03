@@ -171,6 +171,15 @@ namespace BesiegedClient.Engine
                         };
                         ExecuteOnUIThread(action);
                     }
+
+                    else if (message is ErrorDialogMessage)
+                    {
+                        Action action = () =>
+                        {
+                            RenderMessageDialog.RenderMessage((message as ErrorDialogMessage).Contents);
+                        };
+                        ChangeState(m_PreviousGameState, action);
+                    }
                 }); 
         }
         
@@ -229,6 +238,7 @@ namespace BesiegedClient.Engine
             Task.Factory.StartNew(() =>
             {
                 message.ClientId = m_ClientId;
+                message.GameId = message.GameId == null ? m_GameId : message.GameId;
                 string serializedCommand = message.ToXml();
                 try
                 {
