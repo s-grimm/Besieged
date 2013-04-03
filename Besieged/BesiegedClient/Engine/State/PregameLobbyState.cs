@@ -251,7 +251,14 @@ namespace BesiegedClient.Engine.State
                 m_ChatMessagesListBox.Opacity = 0.75;
                 m_ChatMessagesListBox.FontFamily = new FontFamily("Papyrus");
                 m_ChatMessagesListBox.FontSize = 14;
-                ClientGameEngine.Get().ChatMessageCollection.CollectionChanged += (s, ev) => m_ChatMessagesListBox.ScrollIntoView(ev.NewItems[0]);
+                ClientGameEngine.Get().ChatMessageCollection.CollectionChanged += (s, ev) => 
+                {
+                    if (ev.NewItems != null)
+                    {
+                        m_ChatMessagesListBox.ScrollIntoView(ev.NewItems[0]);
+                    }
+                };
+
 
                 //StartEnabled
                 bitmapImage = new BitmapImage(new Uri(UIComponentPath + "Start.png", UriKind.RelativeOrAbsolute));
@@ -427,6 +434,8 @@ namespace BesiegedClient.Engine.State
             Dimensions dimensions = ClientGameEngine.Get().ClientDimensions;
             m_MenuYOffset = dimensions.Height * 0.85;
             m_MenuXOffset = dimensions.Width * 0.15;
+
+            ClientGameEngine.Get().Canvas.Background = m_BackgroundBrush;   // set the background brush
 
             //chat text box
             Canvas.SetLeft(m_ChatMessageBox, dimensions.Width * 0.075);
