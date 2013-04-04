@@ -114,7 +114,7 @@ namespace BesiegedClient.Engine.State.InGameEngine
             _xOriginal = (int) _xShape;
             _selectedUnit = Board.Units.FirstOrDefault(x => x.X_Position == _xOriginal / 50 && x.Y_Position == _yOriginal / 50);
             SelectedUnit = _selectedUnit;
-            if (_preventAction)
+            if (_preventAction || _selectedUnit.Owner != ClientGameEngine.Get().ClientID)
             {
                 _selectedUnit = null;
                 return;

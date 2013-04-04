@@ -44,7 +44,7 @@ namespace BesiegedClient.Engine
         public ObservableCollection<PlayerInfoMessage> PlayerCollection { get; set; }
         public ObservableCollection<string> ChatMessageCollection { get; set; }
         public bool IsGameCreator { get; set; }
-
+        public string ClientID { get { return m_ClientId; } }
         private ClientGameEngine() 
         {
             m_TcpBinding = new NetTcpBinding(SecurityMode.None,true)
@@ -303,10 +303,7 @@ namespace BesiegedClient.Engine
 
         public void ExecuteOnUIThread(Action action)
         {
-            Task.Factory.StartNew(() =>
-            {
-                action.Invoke();
-            }, CancellationToken.None, TaskCreationOptions.None, GlobalResources.m_TaskScheduler);
+            Task.Factory.StartNew(action.Invoke, CancellationToken.None, TaskCreationOptions.None, GlobalResources.m_TaskScheduler);
         }
 
         public void SendMessageToServer(BesiegedMessage message)
@@ -314,7 +311,7 @@ namespace BesiegedClient.Engine
             Task.Factory.StartNew(() =>
             {
                 message.ClientId = m_ClientId;
-                message.GameId = message.GameId == null ? m_GameId : message.GameId;
+                message.GameId = message.GameId ?? m_GameId;
                 string serializedCommand = message.ToXml();
                 try
                 {
