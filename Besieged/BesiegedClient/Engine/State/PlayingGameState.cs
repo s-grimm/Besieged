@@ -49,7 +49,6 @@ namespace BesiegedClient.Engine.State
             ClientGameEngine.Get().m_CurrentWindow.WindowState = WindowState.Maximized;
             ClientGameEngine.Get().m_CurrentWindow.WindowStyle = WindowStyle.None;
             ClientGameEngine.Get().m_CurrentWindow.ResizeMode = ResizeMode.NoResize;
-            ClientGameEngine.Get().m_CurrentWindow.Topmost = true;
 
             ClientGameEngine.Get().Canvas.Width = (int)ClientGameEngine.Get().m_CurrentWindow.Width;
             ClientGameEngine.Get().Canvas.Height = (int)ClientGameEngine.Get().m_CurrentWindow.Height;
