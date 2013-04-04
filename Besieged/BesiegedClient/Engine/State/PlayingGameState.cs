@@ -7,6 +7,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using BesiegedClient.Engine.State.InGameEngine;
+using System.Windows.Media;
+using Framework.BesiegedMessages;
 
 namespace BesiegedClient.Engine.State
 {
@@ -19,6 +21,8 @@ namespace BesiegedClient.Engine.State
         private Image m_TopBar;
         private Image m_LeftCorner;
         private Image m_RightCorner;
+
+        private Button m_EndTurnButton;
 
         public static IGameState Get()
         {
@@ -42,6 +46,18 @@ namespace BesiegedClient.Engine.State
         public void Initialize()
         {
             InGameEngine.InGameEngine.Get();
+
+            m_EndTurnButton = new Button();
+            m_EndTurnButton.FontFamily = new FontFamily("Papyrus");
+            m_EndTurnButton.FontSize = 18;
+            m_EndTurnButton.Content = "End Turn";
+            m_EndTurnButton.Click += (s, ev) =>
+            {
+                if (InGameEngine.InGameEngine.Get().MoveList.Count > 0)
+                {
+                    ClientGameEngine.Get().SendMessageToServer((new EndMoveTurnMessage() { Moves = InGameEngine.InGameEngine.Get().MoveList }));
+                }
+            };
         }
 
         public void Render()
@@ -85,6 +101,14 @@ namespace BesiegedClient.Engine.State
             InGameEngine.InGameEngine.Get().ChangeState(InGameEngine.State.InGameSetupState.Get());
             //add the Virtual Canvas
             ClientGameEngine.Get().Canvas.Children.Add(InGameEngine.InGameEngine.Get().VirtualGameCanvas);
+            
+            Dimensions dimensions = ClientGameEngine.Get().ClientDimensions;
+
+            Canvas.SetBottom(m_EndTurnButton, dimensions.Height * 0.025);
+            Canvas.SetLeft(m_EndTurnButton, dimensions.Width * 0.8225);
+            m_EndTurnButton.Height = dimensions.Height * 0.05;
+            m_EndTurnButton.Width = dimensions.Width * 0.10;
+            ClientGameEngine.Get().Canvas.Children.Add(m_EndTurnButton);
         }
     }
 }

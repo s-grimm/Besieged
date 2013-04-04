@@ -207,6 +207,11 @@ namespace BesiegedServer
                         player.IsReady.Value = true;
                         player.ArmyType = (message as PlayerReadyMessage).ArmyType;
                     }
+
+                    else if (message is EndMoveTurnMessage)
+                    {
+                        ConsoleLogger.Push("We got an end turn message!");
+                    }
                 });
         }
 
