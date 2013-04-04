@@ -67,6 +67,7 @@
     <Compile Include="BesiegedServer.cs" />
     <Compile Include="ConnectedClient.cs" />
     <Compile Include="Maps\MapUtilities.cs" />
+    <Compile Include="Pathing\PathFinder.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Utilities\ConsoleLogger.cs" />
     <Compile Include="Utilities\ErrorLogger.cs" />

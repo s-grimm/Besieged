@@ -38,6 +38,8 @@ namespace BesiegedClient.Engine.State.InGameEngine
 
         public GameState Board { get; set; }
 
+        public List<Tuple<Tuple<int,int>,Tuple<int,int>>> TurnMoves { get; set; } 
+
         private InGameEngine()
         {
             #region "DrawCanvas"
@@ -57,6 +59,7 @@ namespace BesiegedClient.Engine.State.InGameEngine
 
             #endregion "DrawCanvas"
             _pathFinder = new PathFinder();
+            TurnMoves = new List<Tuple<Tuple<int, int>, Tuple<int, int>>>();
             //kickstart
             DrawUnitMovementRangeState.Get();
         }
@@ -187,9 +190,14 @@ namespace BesiegedClient.Engine.State.InGameEngine
                             _selectedUnit.MovementLeft -= path.TotalCost;
                             DrawUnitMovedPathState.OverlayTiles = path;
                             // update unit with its new place
+
+                            Tuple<int, int> currentPos = new Tuple<int, int>(_selectedUnit.Y_Position, _selectedUnit.X_Position);
+
                             _selectedUnit.Y_Position = nearestY/50;
                             _selectedUnit.X_Position = nearestX/50;
 
+                            Tuple<int, int> newPos = new Tuple<int, int>(_selectedUnit.Y_Position, _selectedUnit.X_Position);
+                            TurnMoves.Add(new Tuple<Tuple<int, int>, Tuple<int, int>>(currentPos,newPos));
                             Canvas.SetLeft(_source, nearestX);
                             Canvas.SetTop(_source, nearestY);
                             InGameEngine.Get().ChangeState(DrawUnitMovedPathState.Get());
@@ -211,6 +219,9 @@ namespace BesiegedClient.Engine.State.InGameEngine
             {
                 unit.MovementLeft = unit.Movement;
             }
+
+            TurnMoves = new List<Tuple<Tuple<int, int>, Tuple<int, int>>>();
+
             _preventAction = false;
         }
         public void DeActivateTurn()
