@@ -219,7 +219,7 @@ namespace BesiegedServer
                         });
 
 
-
+                        // Shane is a sexy beast
 
                         GameState.Units.ForEach(unit => {
                             unit.MovementLeft = unit.Movement;
