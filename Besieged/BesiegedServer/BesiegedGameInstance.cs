@@ -211,10 +211,34 @@ namespace BesiegedServer
                     else if (message is EndMoveTurnMessage)
                     {
                         // we need to validate all of the users moves against the server's gamestate to make sure they are valid
+                        EndMoveTurnMessage endMessage = message as EndMoveTurnMessage;
 
+                        List<UnitMove> InvalidMoves = new List<UnitMove>();
+                        endMessage.Moves.ForEach(move => {
+                            if (!ValidateMove(move)) InvalidMoves.Add(move);
+                        });
+
+
+
+
+                        GameState.Units.ForEach(unit => {
+                            unit.MovementLeft = unit.Movement;
+                        });
                     }
                 });
         }
+
+        private bool ValidateMove(UnitMove move)
+        {
+            BaseUnit selectedUnit = GameState.Units.FirstOrDefault(unit => unit.X_Position == move.StartCoordinate.XCoordinate && unit.Y_Position == move.StartCoordinate.YCoordinate);
+            if (selectedUnit == null) return false;
+
+            int totalMovementCost = pathFinder.FindPath(move.StartCoordinate.XCoordinate, move.StartCoordinate.YCoordinate, move.EndCoordinate.XCoordinate, move.EndCoordinate.YCoordinate);
+            if (totalMovementCost == -1 || totalMovementCost > selectedUnit.MovementLeft) return false;
+            selectedUnit.MovementLeft -= totalMovementCost;
+            return true;
+        }
+
 
         private void CheckIfAllAreReady()
         {
