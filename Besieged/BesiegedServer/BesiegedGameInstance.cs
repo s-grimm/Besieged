@@ -210,7 +210,8 @@ namespace BesiegedServer
 
                     else if (message is EndMoveTurnMessage)
                     {
-                        ConsoleLogger.Push("We got an end turn message!");
+                        // we need to validate all of the users moves against the server's gamestate to make sure they are valid
+
                     }
                 });
         }
