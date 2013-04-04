@@ -111,7 +111,7 @@ namespace Framework
                     tUnit.Owner = playerID;
                     tUnit.X_Position = x;
                     tUnit.Y_Position = y;
-
+                    tUnit.MovementLeft = tUnit.Movement;
                     Units.Add((BaseUnit)tUnit);
 
                     y += y_movement;
