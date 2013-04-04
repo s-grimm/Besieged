@@ -36,6 +36,10 @@ namespace Framework.BesiegedMessages
         public string Contents { get; set; }
     }
 
+    public class GameMoveList : GameMessage
+    {//list of tuples - Original <y,x>, New <y,x>
+        public List<Tuple<Tuple<int, int>, Tuple<int, int>>> GameMoves { get; set; }
+    }
 
     public class PlayerReadyMessage : GameMessage
     {

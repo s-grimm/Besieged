@@ -1,4 +1,5 @@
-﻿using Framework;
+﻿using BesiegedServer.Pathing;
+using Framework;
 using Framework.Unit;
 using System;
 using Stateless;
@@ -34,6 +35,8 @@ namespace BesiegedServer
         private Player m_CurrentPlayer;
         private IDisposable m_GenericGameMessageSubscriber { get; set; }
         private IDisposable m_GameMessageSubscriber { get; set; }
+        
+        private Pathing.PathFinder pathFinder;
 
         enum State { WaitingForPlayers, AllPlayersReady, GameStarted, PlayerTurn, Reconfigure };
         enum Trigger { AllPlayersReady, PlayerNotReady, CreatorPressedStart, GameStarted, PlayerLeft, PlayerTurn };
@@ -97,7 +100,7 @@ namespace BesiegedServer
                         m_PlayerTurnOrder.Enqueue(player);
                     }
                     GameState = new GameState(PlayerInfos);
-                    
+                    pathFinder = new PathFinder(GameState);
                     ConsoleLogger.Push(String.Format("Game {0} has been started", Name));
                     NotifyAllPlayers(new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.TransitionToLoadingState }.ToXml()); // switch all the players to loading while we send the gamestate
                     ClientGameStateMessage gamestate = new ClientGameStateMessage() { State = GameState };
