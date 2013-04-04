@@ -121,7 +121,7 @@ namespace BesiegedClient.Engine.State.InGameEngine
             }
             if (_selectedUnit == null) return;
             //overlay the units movement ability
-            DrawUnitMovementRangeState.OverlayTiles = PathFinder.FindRange(_xOriginal / 50, _yOriginal / 50, _selectedUnit.Movement);
+            DrawUnitMovementRangeState.OverlayTiles = PathFinder.FindRange(_xOriginal / 50, _yOriginal / 50, _selectedUnit.MovementLeft);
             InGameEngine.Get().ChangeState(DrawUnitMovementRangeState.Get());
             _preventAction = false;
             captured = true;
@@ -162,7 +162,7 @@ namespace BesiegedClient.Engine.State.InGameEngine
 
                     //check bounds on unit
 
-                    int movementRange = _selectedUnit.Movement;
+                    int movementRange = _selectedUnit.MovementLeft;
 
                     if (!Board.GameBoard.Tiles[nearestY/50][nearestX/50].IsPassable //the tile is impassable
                         || Board.Units.Any(unit => unit.X_Position == (nearestX/50) && unit.Y_Position == (nearestY/50)))
@@ -184,6 +184,7 @@ namespace BesiegedClient.Engine.State.InGameEngine
                         }
                         else
                         {
+                            _selectedUnit.MovementLeft -= path.TotalCost;
                             DrawUnitMovedPathState.OverlayTiles = path;
                             // update unit with its new place
                             _selectedUnit.Y_Position = nearestY/50;
@@ -206,6 +207,10 @@ namespace BesiegedClient.Engine.State.InGameEngine
 
         public void ActivateTurn()
         {
+            foreach (IUnit unit in Board.Units.Where(x => x.Owner == ClientGameEngine.Get().ClientID))
+            {
+                unit.MovementLeft = unit.Movement;
+            }
             _preventAction = false;
         }
         public void DeActivateTurn()

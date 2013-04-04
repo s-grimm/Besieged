@@ -19,6 +19,7 @@ namespace Framework.Unit
         int Movement { get;  }
         string Description { get; }
         string Owner { get; set; }
+        int MovementLeft { get; set; }
         object GetSprite();
     }
 }

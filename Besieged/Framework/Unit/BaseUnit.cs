@@ -35,5 +35,7 @@ namespace Framework.Unit
         {
             return SpriteFactory.GetSprite(this);
         }
+
+        public int MovementLeft { get; set; }
     }
 }

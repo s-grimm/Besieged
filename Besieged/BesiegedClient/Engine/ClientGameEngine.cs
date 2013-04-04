@@ -127,20 +127,14 @@ namespace BesiegedClient.Engine
                             }
                             else
                             {
-                                Action disbandedAction = () =>
-                                {
-                                    RenderMessageDialog.RenderMessage("The game creator has disbanded the game");
-                                };
+                                Action disbandedAction = () => RenderMessageDialog.RenderMessage("The game creator has disbanded the game");
                                 ChangeState(MultiplayerMenuState.Get(), disbandedAction);
                             }
                             IsGameCreator = false;
                             ResetLobby();
                             break;
                         case ClientMessage.ClientMessageEnum.GameNotFound:
-                            Action notFoundAction = () =>
-                            {
-                                RenderMessageDialog.RenderMessage("The game you are trying to reach was not found");
-                            };
+                            Action notFoundAction = () => RenderMessageDialog.RenderMessage("The game you are trying to reach was not found");
                             ChangeState(MultiplayerMenuState.Get(), notFoundAction);
                             break;
                         case ClientMessage.ClientMessageEnum.RemoveGame:
