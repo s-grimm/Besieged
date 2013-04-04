@@ -25,6 +25,10 @@ namespace Framework.Utilities.Xml
             {
                 try
                 {
+                    if (type.Name.Contains("EndMoveTurnMessage"))
+                    {
+                        string.Format("Hi");
+                    }
                     XmlSerializer xmlSerializer = new XmlSerializer(type);
                     FrameworkTypes.Add(type);
                     SerializerDictionary.Add(type.Name.ToString(), new XmlSerializer(type));
