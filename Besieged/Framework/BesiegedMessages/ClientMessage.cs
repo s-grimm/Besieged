@@ -71,6 +71,11 @@ namespace Framework.BesiegedMessages
         public string Contents { get; set; }
     }
 
+    public class UpdatedUnitPositionMessage : ClientMessage
+    {
+        public List<UnitMove> Moves { get; set; }
+    }
+
     public class GameInfoMessage : ClientMessage
     {
         public string Name { get; set; }

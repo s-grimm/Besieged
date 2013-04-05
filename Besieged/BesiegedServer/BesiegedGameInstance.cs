@@ -214,16 +214,30 @@ namespace BesiegedServer
                         EndMoveTurnMessage endMessage = message as EndMoveTurnMessage;
 
                         List<UnitMove> InvalidMoves = new List<UnitMove>();
-                        endMessage.Moves.ForEach(move => {
+                        endMessage.Moves.ForEach(move => 
+                        {
                             if (!ValidateMove(move)) InvalidMoves.Add(move);
                         });
 
+                        if (InvalidMoves.Count == 0)
+                        {
+                            endMessage.Moves.ForEach(move =>    // update the positions of all the units
+                            {
+                                BaseUnit selectedUnit = GameState.Units.FirstOrDefault(unit => unit.X_Position == move.StartCoordinate.XCoordinate && unit.Y_Position == move.StartCoordinate.YCoordinate);
+                                selectedUnit.X_Position = move.EndCoordinate.XCoordinate;
+                                selectedUnit.Y_Position = move.EndCoordinate.YCoordinate;
+                                selectedUnit.MovementLeft = selectedUnit.Movement;
 
-                        // Shane is a sexy beast
-
-                        GameState.Units.ForEach(unit => {
-                            unit.MovementLeft = unit.Movement;
-                        });
+                                Players.Where(x => x.ClientId != message.ClientId).ToList().ForEach(player =>
+                                {
+                                    player.Callback.SendMessage((new UpdatedUnitPositionMessage() { Moves = endMessage.Moves }).ToXml());
+                                });
+                            });
+                        }
+                        else
+                        {
+                            // we need to notify the client of invalid moves
+                        }
                     }
                 });
         }
