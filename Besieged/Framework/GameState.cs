@@ -53,39 +53,47 @@ namespace Framework
              * units at X+-4 and Y+-4
              * ****************************/
 
-            int x_movement, y_movement, x_start, y_start;
+            int x_movement, y_movement, x_start, y_start, x_pivot, y_pivot;
             switch (corner)
             {
                 case 1:
                     x_movement = 1;
-                    x_start = 6;
+                    x_start = 5;
+                    x_pivot = 9;
 
                     y_movement = 1;
-                    y_start = 6;
+                    y_start = 9;
+                    y_pivot = 7;
                     break;
 
                 case 2:
                     x_movement = -1;
                     x_start = 50;
+                    x_pivot = 54;
 
                     y_movement = -1;
-                    y_start = 50;
+                    y_start = 46;
+                    y_pivot = 44;
                     break;
 
                 case 3:
                     x_movement = -1;
                     x_start = 50;
+                    x_pivot = 54;
 
                     y_movement = 1;
-                    y_start = 7;
+                    y_start = 9;
+                    y_pivot = 7;
                     break;
 
                 case 4:
                     x_movement = 1;
-                    x_start = 7;
+                    x_start = 5;
+                    x_pivot = 9;
 
                     y_movement = -1;
-                    y_start = 50;
+                    y_start = 46;
+                    y_pivot = 44;
                     break;
 
                 default:
@@ -101,10 +109,11 @@ namespace Framework
 
             GamePlayer player = GamePlayers.First(p => p.PlayerID == playerID);
             IUnitFactory factory = player.Factory;
-            int x = x_start;
-            for (int i = 0; i < 4; i++)
+            int y = y_start;
+            for (int i = 0; i < 2; i++)
             {
-                int y = y_start;
+                int x = x_start;
+                //basic infantry
                 for (int j = 0; j < 4; j++)
                 {
                     IUnit tUnit = factory.GetBasicInfantry();
@@ -114,10 +123,54 @@ namespace Framework
                     tUnit.MovementLeft = tUnit.Movement;
                     Units.Add((BaseUnit)tUnit);
 
-                    y += y_movement;
+                    x += x_movement;
                 }
-                x += x_movement;
+                //basic ranged
+                for (int j = 0; j < 2; j++)
+                {
+                    IUnit tUnit = factory.GetBasicRanged();
+                    tUnit.Owner = playerID;
+                    tUnit.X_Position = x;
+                    tUnit.Y_Position = y;
+                    tUnit.MovementLeft = tUnit.Movement;
+                    Units.Add((BaseUnit)tUnit);
+
+                    x += x_movement;
+                }
+                y += y_movement;
             }
+                      
+            for (int i = 0; i < 2; i++)
+            {
+                
+                //basic ranged
+                for (int j = 0; j < 2; j++)
+                {
+                    IUnit tUnit = factory.GetBasicRanged();
+                    tUnit.Owner = playerID;
+                    tUnit.X_Position = x;
+                    tUnit.Y_Position = y;
+                    tUnit.MovementLeft = tUnit.Movement;
+                    Units.Add((BaseUnit)tUnit);
+
+                    x += x_movement;
+                }
+                //basic armoured
+                for (int j = 0; j < 2; j++)
+                {
+                    IUnit tUnit = factory.GetBasicMounted();
+                    tUnit.Owner = playerID;
+                    tUnit.X_Position = x;
+                    tUnit.Y_Position = y;
+                    tUnit.MovementLeft = tUnit.Movement;
+                    Units.Add((BaseUnit)tUnit);
+
+                    x += x_movement;
+                }
+                y += y_movement;
+            }
+            
+
         }
     }
 }
