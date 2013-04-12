@@ -118,6 +118,118 @@ namespace Framework.Unit
                 {
                     return "Border.png";
                 }
+                else if (drawableObject is ArcticBridge)
+                {
+                    return "ArcticBridge.png";
+                }
+                else if (drawableObject is ArcticRiver)
+                {
+                    return "ArcticRiver.png";
+                }
+                else if (drawableObject is ArcticRoad)
+                {
+                    return "ArcticRoad.png";
+                }
+                else if (drawableObject is Ash)
+                {
+                    return "Ash.png";
+                }
+                else if (drawableObject is Bush)
+                {
+                    return "Bush.png";
+                }
+                else if (drawableObject is DeepSnow)
+                {
+                    return "DeepSnow.png";
+                }
+                else if (drawableObject is DesertBridge)
+                {
+                    return "DesertBridge.png";
+                }
+                else if (drawableObject is DesertRiver)
+                {
+                    return "DesertRiver.png";
+                }
+                else if (drawableObject is DesertRoad)
+                {
+                    return "DesertRoad.png";
+                }
+                else if (drawableObject is DesolateBridge)
+                {
+                    return "DesolateBridge.png";
+                }
+                else if (drawableObject is DesolateRoad)
+                {
+                    return "DesolateRoad.png";
+                }
+                else if (drawableObject is Door)
+                {
+                    return "Door.png";
+                }
+                else if (drawableObject is DungeonBridge)
+                {
+                    return "DungeonBridge.png";
+                }
+                else if (drawableObject is DungeonRoad)
+                {
+                    return "DungeonRoad.png";
+                }
+                else if (drawableObject is DungeonRiver)
+                {
+                    return "DungeonRiver.png";
+                }
+                else if (drawableObject is GrasslandBridge)
+                {
+                    return "GrasslandBridge.png";
+                }
+                else if (drawableObject is Ice)
+                {
+                    return "Ice.png";
+                }
+                else if (drawableObject is Lava)
+                {
+                    return "Lava.png";
+                }
+                else if (drawableObject is Oasis)
+                {
+                    return "Oasis.png";
+                }
+                else if (drawableObject is Quicksand)
+                {
+                    return "Quicksand.png";
+                }
+                else if (drawableObject is Sand)
+                {
+                    return "Sand.png";
+                }
+                else if (drawableObject is Snow)
+                {
+                    return "Snow.png";
+                }
+                else if (drawableObject is Spikes)
+                {
+                    return "Spikes.png";
+                }
+                else if (drawableObject is StoneFloor)
+                {
+                    return "StoneFloor.png";
+                }
+                else if (drawableObject is Tree)
+                {
+                    return "Tree.png";
+                }
+                else if (drawableObject is WetlandBridge)
+                {
+                    return "WetlandBridge.png";
+                }
+                else if (drawableObject is WetlandRoad)
+                {
+                    return "WetlandRoad.png";
+                }
+                else if (drawableObject is WetlandRiver)
+                {
+                    return "WetlandRiver.png";
+                }
                 else
                 {
                     return string.Empty;

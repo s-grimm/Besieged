@@ -58,34 +58,34 @@ namespace Framework
             {
                 case 1:
                     x_movement = 1;
-                    x_start = 5;
-
-                    y_movement = 1;
-                    y_start = 5;
-                    break;
-
-                case 2:
-                    x_movement = -1;
-                    x_start = 51;
-
-                    y_movement = -1;
-                    y_start = 51;
-                    break;
-
-                case 3:
-                    x_movement = -1;
-                    x_start = 51;
+                    x_start = 6;
 
                     y_movement = 1;
                     y_start = 6;
                     break;
 
-                case 4:
-                    x_movement = 1;
-                    x_start = 6;
+                case 2:
+                    x_movement = -1;
+                    x_start = 50;
 
                     y_movement = -1;
-                    y_start = 51;
+                    y_start = 50;
+                    break;
+
+                case 3:
+                    x_movement = -1;
+                    x_start = 50;
+
+                    y_movement = 1;
+                    y_start = 7;
+                    break;
+
+                case 4:
+                    x_movement = 1;
+                    x_start = 7;
+
+                    y_movement = -1;
+                    y_start = 50;
                     break;
 
                 default:
