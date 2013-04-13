@@ -95,6 +95,11 @@ namespace BesiegedClient.Engine.State
             m_FadeStory.Children.Add(anii);
             m_FadeStory.Children.Add(aniii);
             //Execute Story
+            ClientGameEngine.Get().ExecuteOnUIThread(() =>
+                {
+                    ClientGameEngine.Get().MediaPlayer.PlayLooping();
+
+                });
             m_FadeStory.Begin();
         }
     }

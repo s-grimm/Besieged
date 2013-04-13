@@ -45,8 +45,12 @@ namespace BesiegedClient.Engine
         public ObservableCollection<string> ChatMessageCollection { get; set; }
         public bool IsGameCreator { get; set; }
         public string ClientID { get { return m_ClientId; } }
+
+        public System.Media.SoundPlayer MediaPlayer { get; set; }
+
         private ClientGameEngine() 
         {
+            MediaPlayer = new System.Media.SoundPlayer(@"resources/Audio/BesiegedIntro.wav");
             m_TcpBinding = new NetTcpBinding(SecurityMode.None,true)
                 {
                     ReliableSession = { InactivityTimeout = new TimeSpan(0, 2, 0) },

@@ -146,6 +146,7 @@ namespace BesiegedClient.Engine.State
 
         public void Render()
         {
+            ClientGameEngine.Get().MediaPlayer.Stop();
             ClientGameEngine.Get().m_CurrentWindow.WindowState = WindowState.Maximized;
             ClientGameEngine.Get().m_CurrentWindow.WindowStyle = WindowStyle.None;
             ClientGameEngine.Get().m_CurrentWindow.ResizeMode = ResizeMode.NoResize;

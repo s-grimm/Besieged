@@ -47,6 +47,8 @@ namespace BesiegedClient
             ClientGameEngine.Get().SetGameCanvas(cvsGameWindow);
             ClientGameEngine.Get().ChangeState(SplashScreenLogoState.Get());
 
+            //ClientGameEngine.Get().MediaPlayer.PlayLooping();
+
             DispatcherTimer dtimer = new DispatcherTimer();
             dtimer.Tick += (s, e) => {
                 dtimer.Stop();
