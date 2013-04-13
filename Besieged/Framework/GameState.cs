@@ -101,9 +101,11 @@ namespace Framework
                     //should never hit this line
                     x_movement = 1;
                     x_start = 6;
+                    x_pivot = 6;
 
                     y_movement = 1;
                     y_start = 6;
+                    y_pivot = 6;
                     break;
             }
 
@@ -116,7 +118,7 @@ namespace Framework
                 //basic infantry
                 for (int j = 0; j < 4; j++)
                 {
-                    IUnit tUnit = factory.GetBasicInfantry();
+                    IUnit tUnit = factory.GetBasicRanged();
                     tUnit.Owner = playerID;
                     tUnit.X_Position = x;
                     tUnit.Y_Position = y;
@@ -128,7 +130,7 @@ namespace Framework
                 //basic ranged
                 for (int j = 0; j < 2; j++)
                 {
-                    IUnit tUnit = factory.GetBasicRanged();
+                    IUnit tUnit = factory.GetBasicInfantry();
                     tUnit.Owner = playerID;
                     tUnit.X_Position = x;
                     tUnit.Y_Position = y;
@@ -139,14 +141,14 @@ namespace Framework
                 }
                 y += y_movement;
             }
-                      
+            y = y_pivot;          
             for (int i = 0; i < 2; i++)
             {
-                
+                int x = x_pivot;
                 //basic ranged
                 for (int j = 0; j < 2; j++)
                 {
-                    IUnit tUnit = factory.GetBasicRanged();
+                    IUnit tUnit = factory.GetBasicInfantry();
                     tUnit.Owner = playerID;
                     tUnit.X_Position = x;
                     tUnit.Y_Position = y;
