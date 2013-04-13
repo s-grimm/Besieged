@@ -230,6 +230,16 @@ namespace Framework.Unit
                 {
                     return "WetlandRiver.png";
                 }
+				else if (drawableObject is AllianceCastle) {
+                    return "AllianceCastle.png";
+                }
+                else if (drawableObject is BeastCastle) {
+                    return "BeastCastle.png";
+                }
+                else if (drawableObject is UndeadCastle) {
+                    return "UndeadCastle.png";
+                }
+
                 else
                 {
                     return string.Empty;
