@@ -1,20 +1,13 @@
 ﻿using BesiegedServer.Pathing;
 using Framework;
+using Framework.BesiegedMessages;
 using Framework.Unit;
-using System;
+using Framework.Utilities.Xml;
 using Stateless;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
-using System.Collections.Concurrent;
 using System.Reactive.Linq;
-using System.Reactive.PlatformServices;
-using System.Reactive.Concurrency;
-using Framework.Utilities.Xml;
-using Framework.ServiceContracts;
-using Framework.BesiegedMessages;
 using Utilities;
 
 namespace BesiegedServer
@@ -22,28 +15,39 @@ namespace BesiegedServer
     public class BesiegedGameInstance : IDisposable
     {
         public List<Player> Players { get; set; }
+
         public string GameId { get; set; }
+
         public string Name { get; set; }
+
         public int MaxPlayers { get; set; }
+
         public GameState GameState { get; set; }
+
         private string m_GameCreatorClientId { get; set; }
+
         public bool IsGameInstanceFull { get; set; }
+
         public string Password { get; set; }
+
         public Stack<PlayerColor.PlayerColorEnum> ColorPool { get; set; }
 
         private Queue<Player> m_PlayerTurnOrder = new Queue<Player>();
         private Player m_CurrentPlayer;
+
         private IDisposable m_GenericGameMessageSubscriber { get; set; }
+
         private IDisposable m_GameMessageSubscriber { get; set; }
-        
+
         private Pathing.PathFinder pathFinder;
 
-        enum State { WaitingForPlayers, AllPlayersReady, GameStarted, PlayerTurn, Reconfigure };
-        enum Trigger { AllPlayersReady, PlayerNotReady, CreatorPressedStart, GameStarted, PlayerLeft, PlayerTurn };
+        private enum State { WaitingForPlayers, AllPlayersReady, GameStarted, PlayerTurn, Reconfigure };
 
-        StateMachine<State, Trigger> m_GameMachine;
-        State m_CurrentState = State.WaitingForPlayers;
-        
+        private enum Trigger { AllPlayersReady, PlayerNotReady, CreatorPressedStart, GameStarted, PlayerLeft, PlayerTurn };
+
+        private StateMachine<State, Trigger> m_GameMachine;
+        private State m_CurrentState = State.WaitingForPlayers;
+
         public BesiegedGameInstance(string gameId, string name, int maxPlayers, string password, string creatorId)
         {
             GameId = gameId;
@@ -60,7 +64,6 @@ namespace BesiegedServer
 
         private void ConfigureMachine()
         {
-
             m_GameMachine = new StateMachine<State, Trigger>(() => m_CurrentState, newState => m_CurrentState = newState);
             ProcessMessages();
 
@@ -80,11 +83,10 @@ namespace BesiegedServer
                 .Ignore(Trigger.CreatorPressedStart);
 
             m_GameMachine.Configure(State.AllPlayersReady)
-                .OnEntry(x => 
+                .OnEntry(x =>
                 {
                     GenericClientMessage ready = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.AllPlayersReady };
                     LookupPlayerById(m_GameCreatorClientId).Callback.SendMessage(ready.ToXml());
-
                 })
                 .Permit(Trigger.PlayerNotReady, State.WaitingForPlayers)
                 .Permit(Trigger.PlayerLeft, State.WaitingForPlayers)
@@ -122,11 +124,13 @@ namespace BesiegedServer
                     // notify the current player that its their turn
                     m_CurrentPlayer = m_PlayerTurnOrder.Dequeue();
                     m_CurrentPlayer.Callback.SendMessage((new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.ActiveTurn }).ToXml());
+
                     // notify all other players that they have to wait
                     foreach (Player player in m_PlayerTurnOrder)
                     {
                         player.Callback.SendMessage((new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.WaitingForTurn }).ToXml());
                     }
+
                     // add the current player back on the queue
                     m_PlayerTurnOrder.Enqueue(m_CurrentPlayer);
                 });
@@ -165,13 +169,16 @@ namespace BesiegedServer
                         case GameMessage.GameMessageEnum.PlayerNotReady:
                             LookupPlayerById(message.ClientId).IsReady.Value = false;
                             break;
+
                         case GameMessage.GameMessageEnum.Start:
                             m_GameMachine.Fire(Trigger.CreatorPressedStart);
                             break;
+
                         case GameMessage.GameMessageEnum.PlayerLeft:
                             RemovePlayer(message.ClientId);
                             ConsoleLogger.Push(string.Format("Leave game command received from {0} Client Id {1} in game {2}", LookupPlayerName(message.ClientId), message.ClientId, Name));
                             break;
+
                         default:
                             break;
                     }
@@ -214,25 +221,27 @@ namespace BesiegedServer
                         EndMoveTurnMessage endMessage = message as EndMoveTurnMessage;
 
                         List<UnitMove> InvalidMoves = new List<UnitMove>();
-                        endMessage.Moves.ForEach(move => 
+                        endMessage.Moves.ForEach(move =>
                         {
                             if (!ValidateMove(move)) InvalidMoves.Add(move);
                         });
 
                         if (InvalidMoves.Count == 0)
                         {
-                            endMessage.Moves.ForEach(move =>    // update the positions of all the units
-                            {
-                                BaseUnit selectedUnit = GameState.Units.FirstOrDefault(unit => unit.X_Position == move.StartCoordinate.XCoordinate && unit.Y_Position == move.StartCoordinate.YCoordinate);
-                                selectedUnit.X_Position = move.EndCoordinate.XCoordinate;
-                                selectedUnit.Y_Position = move.EndCoordinate.YCoordinate;
-                                selectedUnit.MovementLeft = selectedUnit.Movement;
-
-                                Players.Where(x => x.ClientId != message.ClientId).ToList().ForEach(player =>
+                            endMessage.Moves.ForEach(move => // update the positions of all the units
                                 {
-                                    player.Callback.SendMessage((new UpdatedUnitPositionMessage() { Moves = endMessage.Moves }).ToXml());
+                                    BaseUnit selectedUnit =
+                                        GameState.Units.FirstOrDefault(
+                                            unit =>
+                                            unit.X_Position == move.StartCoordinate.XCoordinate &&
+                                            unit.Y_Position == move.StartCoordinate.YCoordinate);
+                                    if (selectedUnit == null) return;
+                                    selectedUnit.X_Position = move.EndCoordinate.XCoordinate;
+                                    selectedUnit.Y_Position = move.EndCoordinate.YCoordinate;
+                                    selectedUnit.MovementLeft = selectedUnit.Movement;
                                 });
-                            });
+                            Players.Where(x => x.ClientId != message.ClientId).ToList().ForEach(player => player.Callback.SendMessage((new UpdatedUnitPositionMessage() { Moves = endMessage.Moves }).ToXml()));
+                            
                         }
                         else
                         {
@@ -252,7 +261,6 @@ namespace BesiegedServer
             selectedUnit.MovementLeft -= totalMovementCost;
             return true;
         }
-
 
         private void CheckIfAllAreReady()
         {
@@ -275,14 +283,14 @@ namespace BesiegedServer
                 Player player = Players.FirstOrDefault(x => x.ClientId == clientId);
                 Players.Remove(player);
                 ConsoleLogger.Push(string.Format("{0} with ClientId {1} has left game {2}", player.Name, player.ClientId, Name));
-                
+
                 AggregateMessage aggregate = new AggregateMessage();
                 GenericClientMessage remove = new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.RemovePlayer, ClientId = player.ClientId };
                 ClientChatMessage chatMessage = new ClientChatMessage() { Contents = string.Format("* {0} has left the game *", player.Name) };
                 aggregate.MessageList.Add(remove);
                 aggregate.MessageList.Add(chatMessage);
                 NotifyAllPlayers(aggregate.ToXml());
-                
+
                 ColorPool.Push(player.PlayerColor);
                 player.Callback.SendMessage((new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.TransitionToMultiplayerMenuState }).ToXml());
                 player = null;
@@ -307,7 +315,7 @@ namespace BesiegedServer
                 };
 
                 NotifyAllPlayers(playerInfo.ToXml());
-                
+
                 if (to)
                 {
                     CheckIfAllAreReady();
