@@ -58,44 +58,44 @@ namespace Framework
             {
                 case 1:
                     x_movement = 1;
-                    x_start = 5;
+                    x_start = 3;
 
                     y_movement = 1;
-                    y_start = 5;
+                    y_start = 3;
                     break;
 
                 case 2:
                     x_movement = -1;
-                    x_start = 51;
+                    x_start = 53;
 
                     y_movement = -1;
-                    y_start = 51;
+                    y_start = 53;
                     break;
 
                 case 3:
                     x_movement = -1;
-                    x_start = 51;
+                    x_start = 53;
 
                     y_movement = 1;
-                    y_start = 6;
+                    y_start = 3;
                     break;
 
                 case 4:
                     x_movement = 1;
-                    x_start = 6;
+                    x_start = 3;
 
                     y_movement = -1;
-                    y_start = 51;
+                    y_start = 53;
                     break;
 
                 default:
 
                     //should never hit this line
                     x_movement = 1;
-                    x_start = 6;
+                    x_start = 3;
 
                     y_movement = 1;
-                    y_start = 6;
+                    y_start = 3;
                     break;
             }
 
@@ -107,7 +107,7 @@ namespace Framework
                 int y = y_start;
                 for (int j = 0; j < 4; j++)
                 {
-                    IUnit tUnit = factory.GetBasicInfantry();
+                    IUnit tUnit = factory.GetAdvancedInfantry();
                     tUnit.Owner = playerID;
                     tUnit.X_Position = x;
                     tUnit.Y_Position = y;
