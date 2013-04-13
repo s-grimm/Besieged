@@ -1,9 +1,6 @@
-﻿using BesiegedClient.Engine;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -32,6 +29,7 @@ namespace BesiegedClient.Engine.Dialog
             Image img;
             BitmapImage bimg = new BitmapImage();
             Dimensions signDimensions = new Dimensions();
+
             //"Modal" Background
             try
             {
@@ -39,7 +37,7 @@ namespace BesiegedClient.Engine.Dialog
                 rect.Width = m_Dimensions.Width;
                 rect.Height = m_Dimensions.Height;
                 rect.Opacity = 0.7;
-                Canvas.SetLeft(rect,0);
+                Canvas.SetLeft(rect, 0);
                 Canvas.SetTop(rect, 0);
                 rect.Fill = Utilities.Rendering.BlackBrush;
                 m_DialogComponents.Add(rect);
@@ -54,10 +52,10 @@ namespace BesiegedClient.Engine.Dialog
                 img.Source = bimg;
                 img.Width = bimg.PixelWidth * 2;
                 img.Height = bimg.PixelHeight * 2;
-                signDimensions.Width= bimg.PixelWidth * 2;
+                signDimensions.Width = bimg.PixelWidth * 2;
                 signDimensions.Height = bimg.PixelHeight * 2;
-                Canvas.SetLeft(img, m_Dimensions.Width / 2 - img.Width / 2);
-                Canvas.SetBottom(img, m_Dimensions.Height / 2 - img.Height / 2); //this should center this on the screen... I hope...
+                Canvas.SetLeft(img, m_Dimensions.Width / 2.0 - img.Width / 2);
+                Canvas.SetBottom(img, m_Dimensions.Height / 2.0 - img.Height / 2); //this should center this on the screen... I hope...
                 Canvas.SetZIndex(img, 1100); //range 1100 - 1200 for error dialogs
                 m_DialogComponents.Add(img);
             }
@@ -69,13 +67,13 @@ namespace BesiegedClient.Engine.Dialog
                 //Label
                 TextBlock textLabel = new TextBlock();
                 textLabel.Text = message;
-                textLabel.Width = bimg.PixelWidth*2 * 0.8;
-                textLabel.Height = bimg.PixelHeight*2 * 0.70;
+                textLabel.Width = bimg.PixelWidth * 2 * 0.8;
+                textLabel.Height = bimg.PixelHeight * 2 * 0.70;
                 textLabel.TextWrapping = TextWrapping.Wrap;
                 textLabel.FontFamily = new FontFamily("Papyrus");
                 textLabel.FontSize = 16.0;
-                Canvas.SetLeft(textLabel, (m_Dimensions.Width / 2) - (bimg.PixelWidth) + bimg.PixelWidth*0.10);
-                Canvas.SetBottom(textLabel, m_Dimensions.Height / 2 - bimg.PixelHeight ); //this should center this on the screen... I hope...
+                Canvas.SetLeft(textLabel, (m_Dimensions.Width / 2) - (bimg.PixelWidth) + bimg.PixelWidth * 0.10);
+                Canvas.SetBottom(textLabel, m_Dimensions.Height / 2 - bimg.PixelHeight); //this should center this on the screen... I hope...
                 Canvas.SetZIndex(textLabel, 1110); //range 1100 - 1200 for error dialogs
                 m_DialogComponents.Add(textLabel);
             }
@@ -91,7 +89,7 @@ namespace BesiegedClient.Engine.Dialog
                 img.Width = m_XImage.PixelWidth;
                 img.Height = m_XImage.PixelHeight;
                 Canvas.SetLeft(img, m_Dimensions.Width / 2 + signDimensions.Width * 0.30);
-                Canvas.SetBottom(img, m_Dimensions.Height / 2 +signDimensions.Height * 0.30); //this should center this on the screen... I hope...
+                Canvas.SetBottom(img, m_Dimensions.Height / 2 + signDimensions.Height * 0.30); //this should center this on the screen... I hope...
                 Canvas.SetZIndex(img, 1200); //range 1100 - 1200 for error dialogs
 
                 img.MouseDown += (s, e) =>
@@ -138,6 +136,7 @@ namespace BesiegedClient.Engine.Dialog
             Image img;
             BitmapImage bimg = new BitmapImage();
             Dimensions signDimensions = new Dimensions();
+
             //"Modal" Background
             try
             {
@@ -186,13 +185,14 @@ namespace BesiegedClient.Engine.Dialog
                     ClearDialog();
                 };
                 Canvas.SetLeft(textLabel, (m_Dimensions.Width / 2) - (bimg.PixelWidth) + 10);
-                Canvas.SetTop(textLabel, m_Dimensions.Height / 2 - bimg.PixelHeight * 0.85); 
+                Canvas.SetTop(textLabel, m_Dimensions.Height / 2 - bimg.PixelHeight * 0.85);
                 Canvas.SetZIndex(textLabel, 1110); //range 1100 - 1200 for error dialogs
                 m_DialogComponents.Add(textLabel);
             }
             catch (Exception)
             {
             }
+
             //text box
             TextBox tbox = new TextBox();
             try
@@ -222,7 +222,8 @@ namespace BesiegedClient.Engine.Dialog
                 textLabel.TextWrapping = TextWrapping.Wrap;
                 textLabel.FontFamily = new FontFamily("Papyrus");
                 textLabel.FontSize = 18.0;
-                textLabel.MouseEnter += (s, e) => {
+                textLabel.MouseEnter += (s, e) =>
+                {
                     textLabel.Foreground = Utilities.Rendering.RedBrush;
                 };
                 textLabel.MouseLeave += (s, e) =>
@@ -233,8 +234,8 @@ namespace BesiegedClient.Engine.Dialog
                 {
                     textChangedHandler(tbox.Text.Trim() != "" ? tbox.Text.Trim() : null, new EventArgs());
                     ClearDialog();
-                }; 
-                Canvas.SetLeft(textLabel, (m_Dimensions.Width / 2) - (bimg.PixelWidth * 0.25) );
+                };
+                Canvas.SetLeft(textLabel, (m_Dimensions.Width / 2) - (bimg.PixelWidth * 0.25));
                 Canvas.SetBottom(textLabel, m_Dimensions.Height / 2 - bimg.PixelHeight); //this should center this on the screen... I hope...
                 Canvas.SetZIndex(textLabel, 1110); //range 1100 - 1200 for error dialogs
                 m_DialogComponents.Add(textLabel);
@@ -264,7 +265,7 @@ namespace BesiegedClient.Engine.Dialog
                 {
                     textChangedHandler(null, new EventArgs());
                     ClearDialog();
-                }; 
+                };
                 Canvas.SetLeft(textLabel, (m_Dimensions.Width / 2) + (bimg.PixelWidth * 0.25));
                 Canvas.SetBottom(textLabel, m_Dimensions.Height / 2 - bimg.PixelHeight); //this should center this on the screen... I hope...
                 Canvas.SetZIndex(textLabel, 1110); //range 1100 - 1200 for error dialogs
@@ -280,15 +281,122 @@ namespace BesiegedClient.Engine.Dialog
             }
         }
 
+        public static void RenderButtons(string display, string[] buttonText, EventHandler textChangedHandler)
+        {
+            ClearDialog();
+            m_DialogComponents = new List<UIElement>();
+            foreach (UIElement el in ClientGameEngine.Get().Canvas.Children)
+            {
+                el.IsEnabled = false;
+            }
+            m_Dimensions = ClientGameEngine.Get().ClientDimensions;
+            const string UIComponentPath = "resources\\UI\\";
+            BitmapImage bimg = new BitmapImage();
+            Dimensions signDimensions = new Dimensions();
+
+            //"Modal" Background
+
+            Rectangle rect = new Rectangle { Width = m_Dimensions.Width, Height = m_Dimensions.Height, Opacity = 0.7 }; //create the rectangle
+            Canvas.SetLeft(rect, 0);
+            Canvas.SetTop(rect, 0);
+            rect.Fill = Utilities.Rendering.BlackBrush;
+            m_DialogComponents.Add(rect);
+
+            Image img = new Image();
+            bimg = new BitmapImage(new Uri(UIComponentPath + "WoodenSign.png", UriKind.RelativeOrAbsolute));
+            img.Source = bimg;
+            img.Width = bimg.PixelWidth * 2;
+            img.Height = bimg.PixelHeight * 2;
+            signDimensions.Width = bimg.PixelWidth * 2;
+            signDimensions.Height = bimg.PixelHeight * 2;
+            Canvas.SetLeft(img, m_Dimensions.Width / 2.0 - img.Width / 2);
+            Canvas.SetBottom(img, m_Dimensions.Height / 2.0 - img.Height / 2); //this should center this on the screen... I hope...
+            Canvas.SetZIndex(img, 1100); //range 1100 - 1200 for error dialogs
+            m_DialogComponents.Add(img);
+
+            //Label
+            TextBlock textLabel = new TextBlock
+                {
+                    Text = display,
+                    Width = bimg.PixelWidth * 2 * 0.8,
+                    Height = bimg.PixelHeight * 2 * 0.70,
+                    TextWrapping = TextWrapping.Wrap,
+                    FontFamily = new FontFamily("Papyrus"),
+                    FontSize = 16.0
+                };
+            Canvas.SetLeft(textLabel, (m_Dimensions.Width / 2.0) - (bimg.PixelWidth) + bimg.PixelWidth * 0.10);
+            Canvas.SetBottom(textLabel, m_Dimensions.Height / 2.0 - bimg.PixelHeight); //this should center this on the screen... I hope...
+            Canvas.SetZIndex(textLabel, 1110); //range 1100 - 1200 for error dialogs
+            m_DialogComponents.Add(textLabel);
+
+            //Label
+            textLabel = new TextBlock
+                {
+                    Text = buttonText[0],
+                    Width = 50,
+                    Height = 50,
+                    TextWrapping = TextWrapping.Wrap,
+                    FontFamily = new FontFamily("Papyrus"),
+                    FontSize = 18.0
+                };
+            textLabel.MouseEnter += (s, e) =>
+            {
+                textLabel.Foreground = Utilities.Rendering.RedBrush;
+            };
+            textLabel.MouseLeave += (s, e) =>
+            {
+                textLabel.Foreground = Utilities.Rendering.BlackBrush;
+            };
+            textLabel.MouseUp += (s, e) =>
+            {
+                textChangedHandler(buttonText[0], new EventArgs());
+                ClearDialog();
+            };
+            Canvas.SetLeft(textLabel, (m_Dimensions.Width / 2.0) - (bimg.PixelWidth * 0.25));
+            Canvas.SetBottom(textLabel, m_Dimensions.Height / 2 - bimg.PixelHeight); //this should center this on the screen... I hope...
+            Canvas.SetZIndex(textLabel, 1110); //range 1100 - 1200 for error dialogs
+            m_DialogComponents.Add(textLabel);
+
+            //Label
+            textLabel = new TextBlock
+                {
+                    Text = buttonText[1],
+                    Width = 75,
+                    Height = 50,
+                    TextWrapping = TextWrapping.Wrap,
+                    FontFamily = new FontFamily("Papyrus"),
+                    FontSize = 18.0
+                };
+            textLabel.MouseEnter += (s, e) =>
+            {
+                textLabel.Foreground = Utilities.Rendering.RedBrush;
+            };
+            textLabel.MouseLeave += (s, e) =>
+            {
+                textLabel.Foreground = Utilities.Rendering.BlackBrush;
+            };
+            textLabel.MouseUp += (s, e) =>
+            {
+                textChangedHandler(buttonText[1], new EventArgs());
+                ClearDialog();
+            };
+            Canvas.SetLeft(textLabel, (m_Dimensions.Width / 2.0) + (bimg.PixelWidth * 0.25));
+            Canvas.SetBottom(textLabel, m_Dimensions.Height / 2.0 - bimg.PixelHeight); //this should center this on the screen... I hope...
+            Canvas.SetZIndex(textLabel, 1110); //range 1100 - 1200 for error dialogs
+            m_DialogComponents.Add(textLabel);
+
+            foreach (UIElement obj in m_DialogComponents)
+            {
+                ClientGameEngine.Get().Canvas.Children.Add(obj);
+            }
+        }
+
         public static void ClearDialog()
         {
             if (m_DialogComponents == null) return;
-            foreach (UIElement obj in m_DialogComponents)
+            foreach (UIElement obj in m_DialogComponents.Where(obj => ClientGameEngine.Get().Canvas.Children.Contains(obj)))
             {
-                if (ClientGameEngine.Get().Canvas.Children.Contains(obj))
-                {
-                    ClientGameEngine.Get().Canvas.Children.Remove(obj);
-                }
+                ClientGameEngine.Get().Canvas.Children.Remove(obj);
             }
             foreach (UIElement el in ClientGameEngine.Get().Canvas.Children)
             {
