@@ -241,7 +241,6 @@ namespace BesiegedServer
                                     selectedUnit.MovementLeft = selectedUnit.Movement;
                                 });
                             Players.Where(x => x.ClientId != message.ClientId).ToList().ForEach(player => player.Callback.SendMessage((new UpdatedUnitPositionMessage() { Moves = endMessage.Moves }).ToXml()));
-                            
                         }
                         else
                         {
