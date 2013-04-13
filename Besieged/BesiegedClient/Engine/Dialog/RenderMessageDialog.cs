@@ -330,7 +330,7 @@ namespace BesiegedClient.Engine.Dialog
             m_DialogComponents.Add(textLabel);
 
             //Label
-            textLabel = new TextBlock
+            TextBlock btn1Label = new TextBlock
                 {
                     Text = buttonText[0],
                     Width = 50,
@@ -339,26 +339,26 @@ namespace BesiegedClient.Engine.Dialog
                     FontFamily = new FontFamily("Papyrus"),
                     FontSize = 18.0
                 };
-            textLabel.MouseEnter += (s, e) =>
+            btn1Label.MouseEnter += (s, e) =>
             {
-                textLabel.Foreground = Utilities.Rendering.RedBrush;
+                btn1Label.Foreground = Utilities.Rendering.RedBrush;
             };
-            textLabel.MouseLeave += (s, e) =>
+            btn1Label.MouseLeave += (s, e) =>
             {
-                textLabel.Foreground = Utilities.Rendering.BlackBrush;
+                btn1Label.Foreground = Utilities.Rendering.BlackBrush;
             };
-            textLabel.MouseUp += (s, e) =>
+            btn1Label.MouseUp += (s, e) =>
             {
                 textChangedHandler(buttonText[0], new EventArgs());
                 ClearDialog();
             };
-            Canvas.SetLeft(textLabel, (m_Dimensions.Width / 2.0) - (bimg.PixelWidth * 0.25));
-            Canvas.SetBottom(textLabel, m_Dimensions.Height / 2 - bimg.PixelHeight); //this should center this on the screen... I hope...
-            Canvas.SetZIndex(textLabel, 1110); //range 1100 - 1200 for error dialogs
-            m_DialogComponents.Add(textLabel);
+            Canvas.SetLeft(btn1Label, (m_Dimensions.Width / 2.0) - (bimg.PixelWidth * 0.25));
+            Canvas.SetBottom(btn1Label, m_Dimensions.Height / 2 - bimg.PixelHeight); //this should center this on the screen... I hope...
+            Canvas.SetZIndex(btn1Label, 1110); //range 1100 - 1200 for error dialogs
+            m_DialogComponents.Add(btn1Label);
 
             //Label
-            textLabel = new TextBlock
+            TextBlock btn2Label = new TextBlock
                 {
                     Text = buttonText[1],
                     Width = 75,
@@ -367,23 +367,23 @@ namespace BesiegedClient.Engine.Dialog
                     FontFamily = new FontFamily("Papyrus"),
                     FontSize = 18.0
                 };
-            textLabel.MouseEnter += (s, e) =>
+            btn2Label.MouseEnter += (s, e) =>
             {
-                textLabel.Foreground = Utilities.Rendering.RedBrush;
+                btn2Label.Foreground = Utilities.Rendering.RedBrush;
             };
-            textLabel.MouseLeave += (s, e) =>
+            btn2Label.MouseLeave += (s, e) =>
             {
-                textLabel.Foreground = Utilities.Rendering.BlackBrush;
+                btn2Label.Foreground = Utilities.Rendering.BlackBrush;
             };
-            textLabel.MouseUp += (s, e) =>
+            btn2Label.MouseUp += (s, e) =>
             {
                 textChangedHandler(buttonText[1], new EventArgs());
                 ClearDialog();
             };
-            Canvas.SetLeft(textLabel, (m_Dimensions.Width / 2.0) + (bimg.PixelWidth * 0.25));
-            Canvas.SetBottom(textLabel, m_Dimensions.Height / 2.0 - bimg.PixelHeight); //this should center this on the screen... I hope...
-            Canvas.SetZIndex(textLabel, 1110); //range 1100 - 1200 for error dialogs
-            m_DialogComponents.Add(textLabel);
+            Canvas.SetLeft(btn2Label, (m_Dimensions.Width / 2.0) + (bimg.PixelWidth * 0.25));
+            Canvas.SetBottom(btn2Label, m_Dimensions.Height / 2.0 - bimg.PixelHeight); //this should center this on the screen... I hope...
+            Canvas.SetZIndex(btn2Label, 1110); //range 1100 - 1200 for error dialogs
+            m_DialogComponents.Add(btn2Label);
 
             foreach (UIElement obj in m_DialogComponents)
             {

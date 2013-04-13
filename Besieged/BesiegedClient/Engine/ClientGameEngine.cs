@@ -175,6 +175,24 @@ namespace BesiegedClient.Engine
                         case ClientMessage.ClientMessageEnum.WaitingForTurn:
                             InGameEngine.Get().DeActivateTurn();
                             break;
+                        case ClientMessage.ClientMessageEnum.StartBattlePhase:
+
+                            Action startBattleAction =
+                                () => RenderMessageDialog.RenderButtons("Start a fight?", new[] {"Yes", "No"},
+                                                                        (s, e) =>
+                                                                            {
+                                                                                if (s.ToString() == "Yes")
+                                                                                {
+                                                                                    //start
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    //dont start
+                                                                                }
+                                                                            });
+
+                            ClientGameEngine.Get().ExecuteOnUIThread(startBattleAction);
+                            break;
                         default:
                             throw new Exception("Unhandled GenericClientMessage was received: " + genericMessage.MessageEnum.ToString());
                     }
