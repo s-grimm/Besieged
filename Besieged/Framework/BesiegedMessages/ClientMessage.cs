@@ -35,6 +35,8 @@ namespace Framework.BesiegedMessages
             ActiveTurn,
             [XmlEnum(Name = "WaitingForTurn")]
             WaitingForTurn,
+            [XmlEnum(Name = "StartBattlePhase")]
+            StartBattlePhase,
         };
     }
 

@@ -41,9 +41,9 @@ namespace BesiegedServer
 
         private Pathing.PathFinder pathFinder;
 
-        private enum State { WaitingForPlayers, AllPlayersReady, GameStarted, PlayerTurn, Reconfigure };
+        private enum State { WaitingForPlayers, AllPlayersReady, GameStarted, PlayerTurn, Reconfigure, BattlePhase };
 
-        private enum Trigger { AllPlayersReady, PlayerNotReady, CreatorPressedStart, GameStarted, PlayerLeft, PlayerTurn };
+        private enum Trigger { AllPlayersReady, PlayerNotReady, CreatorPressedStart, GameStarted, PlayerLeft, PlayerTurn, StartBattlePhase };
 
         private StateMachine<State, Trigger> m_GameMachine;
         private State m_CurrentState = State.WaitingForPlayers;
@@ -67,6 +67,7 @@ namespace BesiegedServer
             m_GameMachine = new StateMachine<State, Trigger>(() => m_CurrentState, newState => m_CurrentState = newState);
             ProcessMessages();
 
+            #region WaitingForPlayers
             m_GameMachine.Configure(State.WaitingForPlayers)
                 .Permit(Trigger.AllPlayersReady, State.AllPlayersReady)
                 .OnEntryFrom(Trigger.PlayerNotReady, x =>
@@ -81,7 +82,9 @@ namespace BesiegedServer
                 .PermitReentry(Trigger.PlayerLeft)
                 .Ignore(Trigger.PlayerNotReady)
                 .Ignore(Trigger.CreatorPressedStart);
+            #endregion
 
+            #region AllPlayersReady
             m_GameMachine.Configure(State.AllPlayersReady)
                 .OnEntry(x =>
                 {
@@ -91,7 +94,9 @@ namespace BesiegedServer
                 .Permit(Trigger.PlayerNotReady, State.WaitingForPlayers)
                 .Permit(Trigger.PlayerLeft, State.WaitingForPlayers)
                 .Permit(Trigger.CreatorPressedStart, State.GameStarted);
+            #endregion
 
+            #region GameStarted
             m_GameMachine.Configure(State.GameStarted)
                 .OnEntry(x =>
                 {
@@ -115,10 +120,13 @@ namespace BesiegedServer
                 })
                 .Permit(Trigger.GameStarted, State.PlayerTurn)
                 .Ignore(Trigger.PlayerNotReady);
+            #endregion
 
+            #region PlayerTurn
             m_GameMachine.Configure(State.PlayerTurn)
                 .PermitReentry(Trigger.PlayerTurn)
                 .Permit(Trigger.PlayerLeft, State.Reconfigure)
+                .Permit(Trigger.StartBattlePhase, State.BattlePhase)
                 .OnEntry(x =>
                 {
                     // notify the current player that its their turn
@@ -134,7 +142,15 @@ namespace BesiegedServer
                     // add the current player back on the queue
                     m_PlayerTurnOrder.Enqueue(m_CurrentPlayer);
                 });
+            #endregion
 
+            m_GameMachine.Configure(State.BattlePhase)
+                .OnEntry(x =>
+                {
+
+                });
+
+            #region Reconfigure
             m_GameMachine.Configure(State.Reconfigure)
                 .OnEntry(x =>
                 {
@@ -155,6 +171,7 @@ namespace BesiegedServer
                     }
                 })
                 .Permit(Trigger.PlayerTurn, State.PlayerTurn);
+            #endregion
         }
 
         private void ProcessMessages()
@@ -177,6 +194,10 @@ namespace BesiegedServer
                         case GameMessage.GameMessageEnum.PlayerLeft:
                             RemovePlayer(message.ClientId);
                             ConsoleLogger.Push(string.Format("Leave game command received from {0} Client Id {1} in game {2}", LookupPlayerName(message.ClientId), message.ClientId, Name));
+                            break;
+
+                        case GameMessage.GameMessageEnum.StartBattlePhase:
+
                             break;
 
                         default:
@@ -241,6 +262,7 @@ namespace BesiegedServer
                                     selectedUnit.MovementLeft = selectedUnit.Movement;
                                 });
                             Players.Where(x => x.ClientId != message.ClientId).ToList().ForEach(player => player.Callback.SendMessage((new UpdatedUnitPositionMessage() { Moves = endMessage.Moves }).ToXml()));
+                            LookupPlayerById(message.ClientId).Callback.SendMessage((new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.StartBattlePhase }).ToXml());
                         }
                         else
                         {
