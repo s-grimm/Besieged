@@ -1,5 +1,6 @@
 ﻿using Framework;
 using Framework.Map.Tile;
+using Framework.Unit;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -73,6 +74,33 @@ namespace BesiegedServer.Pathing
             return tiles;
         }
 
+        public List<Tuple<int, int>> GetHostileNeighbours(int x, int y)
+        {
+            List<Tuple<int, int>> tiles = new List<Tuple<int, int>>();
+
+            var map = Board.GameBoard;
+            var units = Board.Units;
+            if (x < 0 || x > map.MapLength || y < 0 || y > map.MapHeight) return tiles;
+
+            if (!(x - 1 < 0) && map.Tiles[y][x - 1].IsPassable)
+            {
+                tiles.Add(new Tuple<int, int>(y, x - 1));
+            }
+            if (!(x + 1 >= map.MapLength) && map.Tiles[y][x + 1].IsPassable)
+            {
+                tiles.Add(new Tuple<int, int>(y, x + 1));
+            }
+            if (!(y - 1 < 0) && map.Tiles[y - 1][x].IsPassable)
+            {
+                tiles.Add(new Tuple<int, int>(y - 1, x));
+            }
+            if (!(y + 1 >= map.MapHeight) && map.Tiles[y + 1][x].IsPassable)
+            {
+                tiles.Add(new Tuple<int, int>(y + 1, x));
+            }
+            return tiles;
+        }
+
         public int FindPath(int startX, int startY, int destinationX, int destinationY)
         {
             Tuple<int, int> start = new Tuple<int, int>(startY,startX);
@@ -97,6 +125,64 @@ namespace BesiegedServer.Pathing
                 }
             }
             return -1;
+        }
+
+        public bool FindAttackableTargets(IUnit unit)
+        {
+            Tuple<int, int> start = new Tuple<int, int>(unit.Y_Position, unit.X_Position);
+
+            var closed = new HashSet<Tuple<int, int>>();
+            var queue = new PriorityQueue<double, Path<Tuple<int, int>>>();
+
+            queue.Enqueue(0, new Path<Tuple<int, int>>(start));
+
+            while (!queue.IsEmpty)
+            {
+                var path = queue.Dequeue();
+                if (closed.Contains(path.LastStep))
+                    continue;
+
+                closed.Add(path.LastStep);
+                foreach (var n in GetHostileNeighbours(path.LastStep.Item2, path.LastStep.Item1))
+                {
+                    var newPath = path.AddStep(n, 1);
+                    if (newPath.TotalCost <= unit.Range)
+                    {
+                        queue.Enqueue(newPath.TotalCost, newPath);
+                    }
+                }
+            }
+
+            return (from t in closed let units = Board.Units where units.Any(u => u.X_Position == t.Item2 && u.Y_Position == t.Item1) select t).Any();
+        }
+
+        public bool IsWithinAttackableRange(IUnit Attacker, IUnit Defender)
+        {
+            Tuple<int, int> start = new Tuple<int, int>(Attacker.Y_Position, Attacker.X_Position);
+
+            var closed = new HashSet<Tuple<int, int>>();
+            var queue = new PriorityQueue<double, Path<Tuple<int, int>>>();
+
+            queue.Enqueue(0, new Path<Tuple<int, int>>(start));
+
+            while (!queue.IsEmpty)
+            {
+                var path = queue.Dequeue();
+                if (closed.Contains(path.LastStep))
+                    continue;
+
+                closed.Add(path.LastStep);
+                foreach (var n in GetHostileNeighbours(path.LastStep.Item2, path.LastStep.Item1))
+                {
+                    var newPath = path.AddStep(n, 1);
+                    if (newPath.TotalCost <= Attacker.Range)
+                    {
+                        queue.Enqueue(newPath.TotalCost, newPath);
+                    }
+                }
+            }
+
+            return closed.Any(t => t.Item2 == Defender.X_Position && t.Item1 == Defender.Y_Position);
         }
     }
 
