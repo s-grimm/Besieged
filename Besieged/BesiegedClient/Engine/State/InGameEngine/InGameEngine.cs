@@ -22,6 +22,8 @@ namespace BesiegedClient.Engine.State.InGameEngine
         private PathFinder _pathFinder;
         private static InGameEngine m_Instance = null;
 
+        public double UI_ScaleAdjustment { get; set; }
+
         public Canvas GameCanvas { get; private set; } //what to draw on
         public IUnit SelectedUnit { get; set; }
         //the following is ALL Virtual Canvas code
