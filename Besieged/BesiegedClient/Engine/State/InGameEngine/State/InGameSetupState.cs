@@ -30,7 +30,7 @@ namespace BesiegedClient.Engine.State.InGameEngine.State
             double mapHeight = map.MapHeight * TileHeight;
             double mapWidth = map.MapLength * TileWidth;
 
-            InGameEngine.Get().VirtualGameCanvas.Boundry = new System.Windows.Size(mapWidth, mapHeight + InGameEngine.Get().UI_ScaleAdjustment);
+            InGameEngine.Get().VirtualGameCanvas.Boundry = new System.Windows.Size(mapWidth, mapHeight + InGameEngine.Get().UI_ScaleAdjustment - 25);
 
             for (int i = 0; i < map.MapLength; i += 1)
             {
