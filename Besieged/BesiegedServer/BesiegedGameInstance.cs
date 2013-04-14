@@ -136,7 +136,7 @@ namespace BesiegedServer
                     // notify all other players that they have to wait
                     foreach (Player player in m_PlayerTurnOrder)
                     {
-                        player.Callback.SendMessage((new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.WaitingForTurn }).ToXml());
+                        player.Callback.SendMessage((new WaitingForTurnMessage() { ActivePlayerName = m_CurrentPlayer.Name }).ToXml());
                     }
 
                     // add the current player back on the queue
@@ -262,7 +262,14 @@ namespace BesiegedServer
                                     selectedUnit.MovementLeft = selectedUnit.Movement;
                                 });
                             Players.Where(x => x.ClientId != message.ClientId).ToList().ForEach(player => player.Callback.SendMessage((new UpdatedUnitPositionMessage() { Moves = endMessage.Moves }).ToXml()));
-                            LookupPlayerById(message.ClientId).Callback.SendMessage((new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.StartBattlePhase }).ToXml());
+                            if (pathFinder.IsAnyUnitWithinAttackableRange(message.ClientId))
+                            {
+                                LookupPlayerById(message.ClientId).Callback.SendMessage((new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.StartBattlePhase }).ToXml());
+                            }
+                            else
+                            {
+                                m_GameMachine.Fire(Trigger.PlayerTurn);
+                            }
                         }
                         else
                         {
