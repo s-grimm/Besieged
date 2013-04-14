@@ -20,6 +20,8 @@ namespace Framework.BesiegedMessages
             PlayerLeft,
             [XmlEnum(Name = "StartBattlePhase")]
             StartBattlePhase,
+            [XmlEnum(Name = "SkipBattlePhase")]
+            SkipBattlePhase,
         };
     }
 

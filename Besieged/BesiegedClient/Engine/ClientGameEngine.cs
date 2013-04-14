@@ -1,30 +1,26 @@
 ﻿using BesiegedClient.Engine.Dialog;
 using BesiegedClient.Engine.State;
+using BesiegedClient.Engine.State.InGameEngine;
 using Framework.BesiegedMessages;
 using Framework.ServiceContracts;
 using Framework.Utilities;
 using Framework.Utilities.Xml;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reactive.Linq;
-using System.Reactive.PlatformServices;
 using System.Reactive.Concurrency;
+using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.ServiceModel;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using BesiegedClient.Engine.State.InGameEngine;
 
 namespace BesiegedClient.Engine
 {
     public class ClientGameEngine
     {
-        
         private IGameState m_CurrentGameState;
         private IGameState m_PreviousGameState;
         private static ClientGameEngine m_Instance = null;
@@ -36,22 +32,31 @@ namespace BesiegedClient.Engine
         private string m_GameId;
 
         public MainWindow m_CurrentWindow { get; set; }
+
         public Dimensions ClientDimensions { get; set; }
+
         public Canvas Canvas { get; set; }
+
         public MonitoredValue<bool> IsServerConnected { get; set; }
+
         public MonitoredValue<bool> AllPlayersReady { get; set; }
+
         public ObservableCollection<GameInfoMessage> GamesCollection { get; set; }
+
         public ObservableCollection<PlayerInfoMessage> PlayerCollection { get; set; }
+
         public ObservableCollection<string> ChatMessageCollection { get; set; }
+
         public bool IsGameCreator { get; set; }
+
         public string ClientID { get { return m_ClientId; } }
 
         public System.Media.SoundPlayer MediaPlayer { get; set; }
 
-        private ClientGameEngine() 
+        private ClientGameEngine()
         {
             MediaPlayer = new System.Media.SoundPlayer(@"resources/Audio/BesiegedIntro.wav");
-            m_TcpBinding = new NetTcpBinding(SecurityMode.None,true)
+            m_TcpBinding = new NetTcpBinding(SecurityMode.None, true)
                 {
                     ReliableSession = { InactivityTimeout = new TimeSpan(0, 2, 0) },
                     SendTimeout = new TimeSpan(0, 2, 0),
@@ -114,9 +119,11 @@ namespace BesiegedClient.Engine
                             m_ClientId = genericMessage.ClientId;
                             IsServerConnected.Value = true;
                             break;
+
                         case ClientMessage.ClientMessageEnum.AllPlayersReady:
                             AllPlayersReady.Value = true;
                             break;
+
                         case ClientMessage.ClientMessageEnum.PlayerNotReady:
                             AllPlayersReady.Value = false;
                             break;
@@ -124,6 +131,7 @@ namespace BesiegedClient.Engine
                         case ClientMessage.ClientMessageEnum.StartGame:
                             ChangeState(PlayingGameState.Get());
                             break;
+
                         case ClientMessage.ClientMessageEnum.GameDisbanded:
                             if (IsGameCreator)
                             {
@@ -137,10 +145,12 @@ namespace BesiegedClient.Engine
                             IsGameCreator = false;
                             ResetLobby();
                             break;
+
                         case ClientMessage.ClientMessageEnum.GameNotFound:
                             Action notFoundAction = () => RenderMessageDialog.RenderMessage("The game you are trying to reach was not found");
                             ChangeState(MultiplayerMenuState.Get(), notFoundAction);
                             break;
+
                         case ClientMessage.ClientMessageEnum.RemoveGame:
                             Action removeGameAction = () =>
                             {
@@ -152,6 +162,7 @@ namespace BesiegedClient.Engine
                             };
                             ExecuteOnUIThread(removeGameAction);
                             break;
+
                         case ClientMessage.ClientMessageEnum.RemovePlayer:
                             Action removePlayerAction = () =>
                             {
@@ -163,40 +174,57 @@ namespace BesiegedClient.Engine
                             };
                             ExecuteOnUIThread(removePlayerAction);
                             break;
+
                         case ClientMessage.ClientMessageEnum.TransitionToLoadingState:
                             Action loadingAction = () => ClientGameEngine.Get().ChangeState(LoadingState.Get());
                             ExecuteOnUIThread(loadingAction);
                             break;
+
                         case ClientMessage.ClientMessageEnum.TransitionToMultiplayerMenuState:
                             IsGameCreator = false;
                             ResetLobby();
                             Action multiplayerAction = () => ClientGameEngine.Get().ChangeState(MultiplayerMenuState.Get());
                             ExecuteOnUIThread(multiplayerAction);
                             break;
+
                         case ClientMessage.ClientMessageEnum.ActiveTurn:
                             InGameEngine.Get().ActivateTurn();
                             break;
+
                         case ClientMessage.ClientMessageEnum.WaitingForTurn:
                             InGameEngine.Get().DeActivateTurn();
                             break;
+
                         case ClientMessage.ClientMessageEnum.StartBattlePhase:
 
                             Action startBattleAction =
-                                () => RenderMessageDialog.RenderButtons("Start a fight?", new[] {"Yes", "No"},
-                                                                        (s, e) =>
-                                                                            {
-                                                                                if (s.ToString() == "Yes")
-                                                                                {
-                                                                                    //start
-                                                                                }
-                                                                                else
-                                                                                {
-                                                                                    //dont start
-                                                                                }
-                                                                            });
+                                () => RenderMessageDialog.RenderButtons("Start a fight?", new[] { "Yes", "No" },
+                                                                        (s, e) => ClientGameEngine.Get()
+                                                                                                  .SendMessageToServer(
+                                                                                                      s.ToString() ==
+                                                                                                      "Yes"
+                                                                                                          ? new GenericGameMessage
+                                                                                                                ()
+                                                                                                              {
+                                                                                                                  MessageEnum
+                                                                                                                      =
+                                                                                                                      GameMessage
+                                                                                                                .GameMessageEnum
+                                                                                                                .StartBattlePhase
+                                                                                                              }
+                                                                                                          : new GenericGameMessage
+                                                                                                                ()
+                                                                                                              {
+                                                                                                                  MessageEnum
+                                                                                                                      =
+                                                                                                                      GameMessage
+                                                                                                                .GameMessageEnum
+                                                                                                                .SkipBattlePhase
+                                                                                                              }));
 
                             ClientGameEngine.Get().ExecuteOnUIThread(startBattleAction);
                             break;
+
                         default:
                             throw new Exception("Unhandled GenericClientMessage was received: " + genericMessage.MessageEnum.ToString());
                     }
@@ -272,9 +300,9 @@ namespace BesiegedClient.Engine
                         };
                         ExecuteOnUIThread(action);
                     }
-                }); 
+                });
         }
-        
+
         public static ClientGameEngine Get()
         {
             if (m_Instance == null)
@@ -293,7 +321,7 @@ namespace BesiegedClient.Engine
                 Width = (int)Canvas.Width
             };
         }
-       
+
         public void ChangeState(IGameState gameState)
         {
             Task.Factory.StartNew(() =>
