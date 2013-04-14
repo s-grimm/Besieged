@@ -15,7 +15,11 @@ namespace BesiegedClient.Engine.State.InGameEngine.State
         private List<Rectangle> _path;
         private const double TileWidth = 50;
         private const double TileHeight = 50;
-        public static IEnumerable<Tuple<int, int>> OverlayTiles { get; set; } 
+        public static IEnumerable<Tuple<int, int>> OverlayTiles { get; set; }
+
+        public void Cleanup()
+        {
+        }
 
         private DrawUnitMovementRangeState()
         {

@@ -18,6 +18,33 @@ namespace BesiegedClient.Engine.State.InGameEngine.State
         {
         }
 
+        public void Cleanup()
+        {
+            Canvas target = InGameEngine.Get().GameCanvas;
+            foreach (Image r in _units.Where(r => target.Children.Contains(r)))
+            {
+                target.Children.Remove(r);
+            }
+            //reset to new units
+            GameMap map = InGameEngine.Get().Board.GameBoard;
+            List<BaseUnit> units = InGameEngine.Get().Board.Units;
+
+            foreach (IUnit unit in units)
+            {
+                var sprite = unit.GetSprite();
+                Image rect = Utilities.Rendering.GetImageForUnit(sprite.ToString());
+                rect.Width = TileWidth;
+                rect.Height = TileHeight;
+
+
+
+                Canvas.SetLeft(rect, unit.X_Position * TileWidth);
+                Canvas.SetTop(rect, unit.Y_Position * TileHeight);
+                Canvas.SetZIndex(rect, 15);
+                _units.Add(rect);
+            }
+        }
+
         private const double TileWidth = 50;
         private const double TileHeight = 50;
         private List<Image> _units = new List<Image>();

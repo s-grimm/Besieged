@@ -11,6 +11,10 @@ namespace BesiegedClient.Engine.State.InGameEngine.State
 
         private static WaitingState m_Instance = null;
 
+        public void Cleanup()
+        {
+        }
+
         private WaitingState()
         {
         }

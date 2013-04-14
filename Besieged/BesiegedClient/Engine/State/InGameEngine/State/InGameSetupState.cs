@@ -18,6 +18,10 @@ namespace BesiegedClient.Engine.State.InGameEngine.State
         {
         }
 
+        public void Cleanup()
+        {
+        }
+
         private const double TileWidth = 50;
         private const double TileHeight = 50;
         private List<Rectangle> _rectangles = new List<Rectangle>();

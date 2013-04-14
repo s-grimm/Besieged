@@ -17,6 +17,10 @@ namespace BesiegedClient.Engine.State.InGameEngine.State
         private const double TileHeight = 50;
         public static IEnumerable<Tuple<int, int>> OverlayTiles { get; set; }
 
+        public void Cleanup()
+        {
+        }
+
         private DrawUnitMovedPathState()
         {
         }
