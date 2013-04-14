@@ -1,8 +1,11 @@
 ﻿using BesiegedClient.Engine.Dialog;
 using BesiegedClient.Engine.State;
 using BesiegedClient.Engine.State.InGameEngine;
+using BesiegedClient.Engine.State.InGameEngine.State;
+using Framework;
 using Framework.BesiegedMessages;
 using Framework.ServiceContracts;
+using Framework.Unit;
 using Framework.Utilities;
 using Framework.Utilities.Xml;
 using System;
@@ -305,6 +308,21 @@ namespace BesiegedClient.Engine
                         Action action = () => RenderMessageDialog.RenderMessage(string.Format("It is now {0}'s turn", (message as WaitingForTurnMessage).ActivePlayerName));
                         ExecuteOnUIThread(action);
                     }
+                    else if (message is UpdatedUnitPositionMessage)
+                    {
+                        UpdatedUnitPositionMessage m = message as UpdatedUnitPositionMessage;
+                        foreach (UnitMove move in m.Moves)
+                        {
+                            BaseUnit unit = InGameEngine.Get()
+                                               .Board.Units.FirstOrDefault(x => x.X_Position == move.StartCoordinate.XCoordinate &&
+                                                                              x.Y_Position == move.StartCoordinate.YCoordinate);
+                            if (unit == null) continue;
+                            unit.X_Position = move.EndCoordinate.XCoordinate;
+                            unit.Y_Position = move.EndCoordinate.YCoordinate;
+                        }
+                        DrawUnitState.Get().Cleanup(); //cleanup old
+                        InGameEngine.Get().ChangeState(DrawUnitState.Get()); //render new
+                }
                 });
         }
 
