@@ -189,10 +189,8 @@ namespace BesiegedClient.Engine
 
                         case ClientMessage.ClientMessageEnum.ActiveTurn:
                             InGameEngine.Get().ActivateTurn();
-                            break;
-
-                        case ClientMessage.ClientMessageEnum.WaitingForTurn:
-                            InGameEngine.Get().DeActivateTurn();
+                            Action action = () => RenderMessageDialog.RenderMessage("It is now your turn!");
+                            ExecuteOnUIThread(action);
                             break;
 
                         case ClientMessage.ClientMessageEnum.StartBattlePhase:
@@ -298,6 +296,13 @@ namespace BesiegedClient.Engine
                                 InGameEngine.Get().Board = mem.State;
                             }
                         };
+                        ExecuteOnUIThread(action);
+                    }
+
+                    else if (message is WaitingForTurnMessage)
+                    {
+                        InGameEngine.Get().DeActivateTurn();
+                        Action action = () => RenderMessageDialog.RenderMessage(string.Format("It is now {0}'s turn", (message as WaitingForTurnMessage).ActivePlayerName));
                         ExecuteOnUIThread(action);
                     }
                 });

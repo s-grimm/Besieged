@@ -127,7 +127,7 @@ namespace BesiegedServer.Pathing
             return -1;
         }
 
-        public bool FindAttackableTargets(IUnit unit)
+        public bool HasAttackableTargets(IUnit unit)
         {
             Tuple<int, int> start = new Tuple<int, int>(unit.Y_Position, unit.X_Position);
 
@@ -183,6 +183,19 @@ namespace BesiegedServer.Pathing
             }
 
             return closed.Any(t => t.Item2 == Defender.X_Position && t.Item1 == Defender.Y_Position);
+        }
+
+        public bool IsAnyUnitWithinAttackableRange(string playerId)
+        {
+            var units = Board.Units.Where(x => x.Owner == playerId).ToList();
+            foreach (var unit in units)
+            {
+                if(HasAttackableTargets(unit))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 

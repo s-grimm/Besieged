@@ -33,8 +33,6 @@ namespace Framework.BesiegedMessages
             TransitionToMultiplayerMenuState,
             [XmlEnum(Name = "ActiveTurn")]
             ActiveTurn,
-            [XmlEnum(Name = "WaitingForTurn")]
-            WaitingForTurn,
             [XmlEnum(Name = "StartBattlePhase")]
             StartBattlePhase,
         };
@@ -53,6 +51,11 @@ namespace Framework.BesiegedMessages
     public class ClientChatMessage : ClientMessage
     {
         public string Contents { get; set; }
+    }
+
+    public class WaitingForTurnMessage : ClientMessage
+    {
+        public string ActivePlayerName { get; set; }
     }
 
     public class PlayerInfoMessage : ClientMessage
