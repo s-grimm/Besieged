@@ -22,6 +22,13 @@ namespace Framework
             GamePlayers = new List<GamePlayer>();
         }
 
+        public GameState(GameState gameState)
+        {
+            Units = gameState.Units;
+            GameBoard = gameState.GameBoard;
+        }
+
+
         public GameState(List<KeyValuePair<string, Army.ArmyTypeEnum>> playerInfos)
         {
             Units = new List<BaseUnit>();

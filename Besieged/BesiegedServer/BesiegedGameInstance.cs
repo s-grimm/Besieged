@@ -241,26 +241,28 @@ namespace BesiegedServer
                         // we need to validate all of the users moves against the server's gamestate to make sure they are valid
                         EndMoveTurnMessage endMessage = message as EndMoveTurnMessage;
 
+                        GameState tempState = new GameState(GameState);
                         List<UnitMove> InvalidMoves = new List<UnitMove>();
                         endMessage.Moves.ForEach(move =>
                         {
-                            if (!ValidateMove(move)) InvalidMoves.Add(move);
-                        });
-
-                        if (InvalidMoves.Count == 0)
-                        {
-                            endMessage.Moves.ForEach(move => // update the positions of all the units
-                                {
-                                    BaseUnit selectedUnit =
+                            if (!ValidateMove(move)) 
+                                InvalidMoves.Add(move);
+                            else
+                            {
+                                BaseUnit selectedUnit =
                                         GameState.Units.FirstOrDefault(
                                             unit =>
                                             unit.X_Position == move.StartCoordinate.XCoordinate &&
                                             unit.Y_Position == move.StartCoordinate.YCoordinate);
-                                    if (selectedUnit == null) return;
-                                    selectedUnit.X_Position = move.EndCoordinate.XCoordinate;
-                                    selectedUnit.Y_Position = move.EndCoordinate.YCoordinate;
-                                    selectedUnit.MovementLeft = selectedUnit.Movement;
-                                });
+                                if (selectedUnit == null) return;
+                                selectedUnit.X_Position = move.EndCoordinate.XCoordinate;
+                                selectedUnit.Y_Position = move.EndCoordinate.YCoordinate;
+                                selectedUnit.MovementLeft = selectedUnit.Movement;
+                            }
+                        });
+
+                        if (InvalidMoves.Count == 0)
+                        {
                             Players.Where(x => x.ClientId != message.ClientId).ToList().ForEach(player => player.Callback.SendMessage((new UpdatedUnitPositionMessage() { Moves = endMessage.Moves }).ToXml()));
                             if (pathFinder.IsAnyUnitWithinAttackableRange(message.ClientId))
                             {
@@ -274,6 +276,7 @@ namespace BesiegedServer
                         else
                         {
                             // we need to notify the client of invalid moves
+                            GameState.Units = tempState.Units; // roll back the unit positions and movement
                         }
                     }
                 });
