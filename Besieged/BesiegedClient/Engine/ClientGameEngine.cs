@@ -197,31 +197,11 @@ namespace BesiegedClient.Engine
                             break;
 
                         case ClientMessage.ClientMessageEnum.StartBattlePhase:
-
                             Action startBattleAction =
                                 () => RenderMessageDialog.RenderButtons("Start a fight?", new[] { "Yes", "No" },
-                                                                        (s, e) => ClientGameEngine.Get()
-                                                                                                  .SendMessageToServer(
-                                                                                                      s.ToString() ==
-                                                                                                      "Yes"
-                                                                                                          ? new GenericGameMessage
-                                                                                                                ()
-                                                                                                              {
-                                                                                                                  MessageEnum
-                                                                                                                      =
-                                                                                                                      GameMessage
-                                                                                                                .GameMessageEnum
-                                                                                                                .StartBattlePhase
-                                                                                                              }
-                                                                                                          : new GenericGameMessage
-                                                                                                                ()
-                                                                                                              {
-                                                                                                                  MessageEnum
-                                                                                                                      =
-                                                                                                                      GameMessage
-                                                                                                                .GameMessageEnum
-                                                                                                                .SkipBattlePhase
-                                                                                                              }));
+                                    (s, e) => ClientGameEngine.Get().SendMessageToServer(
+                                        s.ToString() == "Yes" ? new GenericGameMessage() { MessageEnum = GameMessage.GameMessageEnum.StartBattlePhase }
+                                                              : new GenericGameMessage() { MessageEnum = GameMessage.GameMessageEnum.SkipBattlePhase }));
 
                             ClientGameEngine.Get().ExecuteOnUIThread(startBattleAction);
                             break;
