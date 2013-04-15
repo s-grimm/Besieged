@@ -153,7 +153,7 @@ namespace BesiegedServer.Pathing
                 }
             }
 
-            return (from t in closed let units = Board.Units where units.Any(u => u.X_Position == t.Item2 && u.Y_Position == t.Item1) select t).Any();
+            return (from t in closed let units = Board.Units where units.Any(u => u.X_Position == t.Item2 && u.Y_Position == t.Item1 && u.Owner != unit.Owner) select t).Any();
         }
 
         public bool IsWithinAttackableRange(IUnit Attacker, IUnit Defender)

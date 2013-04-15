@@ -68,8 +68,8 @@ namespace Framework
 
                 case 2:
                     x_movement = -1;
-                    x_start = 50;
-                    x_pivot = 54;
+                    x_start = 46;
+                    x_pivot = 44;
 
                     y_movement = -1;
                     y_start = 46;
@@ -78,8 +78,8 @@ namespace Framework
 
                 case 3:
                     x_movement = -1;
-                    x_start = 50;
-                    x_pivot = 54;
+                    x_start = 46;
+                    x_pivot = 44;
 
                     y_movement = 1;
                     y_start = 9;
