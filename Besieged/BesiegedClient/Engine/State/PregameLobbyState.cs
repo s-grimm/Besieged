@@ -151,6 +151,8 @@ namespace BesiegedClient.Engine.State
                         break;
                     case "LeaveEnabled":
                         {
+                            m_CurrentArmyLabel.Content = "No Army Selected";
+                            m_PlayerReadyMessage.ArmyType = Framework.Unit.Army.ArmyTypeEnum.None;
                             GenericGameMessage leave = new GenericGameMessage() { MessageEnum = GameMessage.GameMessageEnum.PlayerLeft };
                             ClientGameEngine.Get().SendMessageToServer(leave);
                         }

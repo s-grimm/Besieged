@@ -17,6 +17,7 @@ namespace Framework.Unit
             Alliance,
             [XmlEnum(Name = "Beast")]
             Beast,            
+            None
         };
 
     }

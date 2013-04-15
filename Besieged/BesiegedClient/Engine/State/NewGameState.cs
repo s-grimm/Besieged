@@ -110,11 +110,15 @@ namespace BesiegedClient.Engine.State
                             {
                                 CreateGameMessage createGame = new CreateGameMessage(m_GameName, 4);
                                 ClientGameEngine.Get().SendMessageToServer(createGame);
+                                m_GameNameBox.Text = "";
+                                m_PasswordBox.Text = "Optional";
                             }
                             else
                             {
                                 CreateGameMessage createGame = new CreateGameMessage(m_GameName, 4, m_Password);
                                 ClientGameEngine.Get().SendMessageToServer(createGame);
+                                m_GameNameBox.Text = "";
+                                m_PasswordBox.Text = "Optional";
                             }
                         }
                     }
