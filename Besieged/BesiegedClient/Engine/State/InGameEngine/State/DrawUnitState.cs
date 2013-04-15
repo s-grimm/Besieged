@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using Framework.Utilities.Xml;
 
 namespace BesiegedClient.Engine.State.InGameEngine.State
 {
@@ -28,7 +29,7 @@ namespace BesiegedClient.Engine.State.InGameEngine.State
             //reset to new units
             GameMap map = InGameEngine.Get().Board.GameBoard;
             List<BaseUnit> units = InGameEngine.Get().Board.Units;
-
+            _units.Clear();
             foreach (IUnit unit in units)
             {
                 var sprite = unit.GetSprite();
