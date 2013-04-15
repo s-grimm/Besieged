@@ -290,18 +290,26 @@ namespace BesiegedClient.Engine
                     }
                     else if (message is UpdatedUnitPositionMessage)
                     {
-                        UpdatedUnitPositionMessage m = message as UpdatedUnitPositionMessage;
-                        foreach (UnitMove move in m.Moves)
+                        Action action = () =>
                         {
-                            BaseUnit unit = InGameEngine.Get()
-                                               .Board.Units.FirstOrDefault(x => x.X_Position == move.StartCoordinate.XCoordinate &&
-                                                                              x.Y_Position == move.StartCoordinate.YCoordinate);
-                            if (unit == null) continue;
-                            unit.X_Position = move.EndCoordinate.XCoordinate;
-                            unit.Y_Position = move.EndCoordinate.YCoordinate;
-                        }
-                        DrawUnitState.Get().Cleanup(); //cleanup old
-                        InGameEngine.Get().ChangeState(DrawUnitState.Get()); //render new
+                            UpdatedUnitPositionMessage m = message as UpdatedUnitPositionMessage;
+                            foreach (UnitMove move in m.Moves)
+                            {
+                                BaseUnit unit = InGameEngine.Get()
+                                                            .Board.Units.FirstOrDefault(
+                                                                x =>
+                                                                x.X_Position == move.StartCoordinate.XCoordinate &&
+                                                                x.Y_Position == move.StartCoordinate.YCoordinate);
+                                if (unit == null) continue;
+                                InGameEngine.Get().Board.Units.Remove(unit);
+                                unit.X_Position = move.EndCoordinate.XCoordinate;
+                                unit.Y_Position = move.EndCoordinate.YCoordinate;
+                                InGameEngine.Get().Board.Units.Add(unit);
+                            }
+                            DrawUnitState.Get().Cleanup(); //cleanup old
+                            InGameEngine.Get().ChangeState(DrawUnitState.Get()); //render new
+                        };
+                        ExecuteOnUIThread(action);
                 }
                 });
         }

@@ -32,8 +32,8 @@ namespace BesiegedServer
 
         public Stack<PlayerColor.PlayerColorEnum> ColorPool { get; set; }
 
-        private Queue<Player> m_PlayerTurnOrder = new Queue<Player>();
-        private Player m_CurrentPlayer;
+        private Queue<string> m_PlayerTurnOrder = new Queue<string>();
+        private string m_CurrentPlayerId;
 
         private IDisposable m_GenericGameMessageSubscriber { get; set; }
 
@@ -104,7 +104,7 @@ namespace BesiegedServer
                     foreach (Player player in Players)
                     {
                         PlayerInfos.Add(new KeyValuePair<string, Army.ArmyTypeEnum>(player.ClientId, player.ArmyType));
-                        m_PlayerTurnOrder.Enqueue(player);
+                        m_PlayerTurnOrder.Enqueue(player.ClientId);
                     }
                     GameState = new GameState(PlayerInfos);
                     pathFinder = new PathFinder(GameState);
@@ -130,17 +130,18 @@ namespace BesiegedServer
                 .OnEntry(x =>
                 {
                     // notify the current player that its their turn
-                    m_CurrentPlayer = m_PlayerTurnOrder.Dequeue();
-                    LookupPlayerById(m_CurrentPlayer.ClientId).Callback.SendMessage((new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.ActiveTurn }).ToXml());
+                    m_CurrentPlayerId = m_PlayerTurnOrder.Dequeue();
+                    LookupPlayerById(m_CurrentPlayerId).Callback.SendMessage((new ClientChatMessage() { Contents = "Test" }).ToXml());
+                    LookupPlayerById(m_CurrentPlayerId).Callback.SendMessage((new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.ActiveTurn }).ToXml());
 
                     // notify all other players that they have to wait
-                    foreach (Player player in m_PlayerTurnOrder)
+                    foreach (string playerId in m_PlayerTurnOrder)
                     {
-                        player.Callback.SendMessage((new WaitingForTurnMessage() { ActivePlayerName = m_CurrentPlayer.Name }).ToXml());
+                        LookupPlayerById(playerId).Callback.SendMessage((new WaitingForTurnMessage() { ActivePlayerName = LookupPlayerById(m_CurrentPlayerId).Name }).ToXml());
                     }
 
                     // add the current player back on the queue
-                    m_PlayerTurnOrder.Enqueue(m_CurrentPlayer);
+                    m_PlayerTurnOrder.Enqueue(m_CurrentPlayerId);
                 });
             #endregion
 
@@ -155,12 +156,12 @@ namespace BesiegedServer
                 .OnEntry(x =>
                 {
                     // this state allows us to reconfigure the players involved in the game in case someone leaves or is defeated
-                    Queue<Player> tempPlayers = new Queue<Player>();
-                    foreach (Player player in m_PlayerTurnOrder)
+                    Queue<string> tempPlayers = new Queue<string>();
+                    foreach (string playerId in m_PlayerTurnOrder)
                     {
-                        if (Players.FirstOrDefault(p => p.ClientId == player.ClientId) != null)
+                        if (Players.FirstOrDefault(p => p.ClientId == playerId) != null)
                         {
-                            tempPlayers.Enqueue(player);
+                            tempPlayers.Enqueue(playerId);
                         }
                     }
                     if (tempPlayers.Count > 0)
@@ -263,7 +264,8 @@ namespace BesiegedServer
 
                         if (InvalidMoves.Count == 0)
                         {
-                            Players.Where(x => x.ClientId != message.ClientId).ToList().ForEach(player => player.Callback.SendMessage((new UpdatedUnitPositionMessage() { Moves = endMessage.Moves }).ToXml()));
+                            var waitingPlayers = Players.Where(x => x.ClientId != message.ClientId).ToList();
+                            waitingPlayers.ForEach(player => player.Callback.SendMessage((new UpdatedUnitPositionMessage() { Moves = endMessage.Moves }).ToXml()));
                             if (pathFinder.IsAnyUnitWithinAttackableRange(message.ClientId))
                             {
                                 LookupPlayerById(message.ClientId).Callback.SendMessage((new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.StartBattlePhase }).ToXml());
