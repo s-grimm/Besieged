@@ -49,4 +49,9 @@ namespace Framework.BesiegedMessages
     {
         public Army.ArmyTypeEnum ArmyType { get; set; }
     }
+
+    public class EndGameMessage : GameMessage
+    {
+        public string Winner { get; set; }
+    }
 }

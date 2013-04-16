@@ -64,9 +64,11 @@ namespace BesiegedClient.Engine.State
                 {
                     if (m_ChatMessageBox.Text.Trim() != string.Empty)
                     {
-                        if (m_ChatMessageBox.Text.Trim() == "All your base are belong to us")
+                        if (m_ChatMessageBox.Text.Trim() == "All your base are belong to us" 
+                            || m_ChatMessageBox.Text.Trim() == "There is no cow level" )
                         {
-
+                            EndGameMessage endGame = new EndGameMessage();
+                            ClientGameEngine.Get().SendMessageToServer(endGame);
                         }
                         else
                         {

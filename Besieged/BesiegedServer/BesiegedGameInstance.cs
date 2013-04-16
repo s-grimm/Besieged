@@ -30,6 +30,8 @@ namespace BesiegedServer
 
         public string Password { get; set; }
 
+        public string GameWinner { get; set; }
+
         public Stack<PlayerColor.PlayerColorEnum> ColorPool { get; set; }
 
         private Queue<string> m_PlayerTurnOrder = new Queue<string>();
@@ -41,9 +43,9 @@ namespace BesiegedServer
 
         private Pathing.PathFinder pathFinder;
 
-        private enum State { WaitingForPlayers, AllPlayersReady, GameStarted, PlayerTurn, Reconfigure, BattlePhase };
+        private enum State { WaitingForPlayers, AllPlayersReady, GameStarted, PlayerTurn, Reconfigure, BattlePhase, GameOver };
 
-        private enum Trigger { AllPlayersReady, PlayerNotReady, CreatorPressedStart, GameStarted, PlayerLeft, PlayerTurn, StartBattlePhase };
+        private enum Trigger { AllPlayersReady, PlayerNotReady, CreatorPressedStart, GameStarted, PlayerLeft, PlayerTurn, StartBattlePhase, GameEnded };
 
         private StateMachine<State, Trigger> m_GameMachine;
         private State m_CurrentState = State.WaitingForPlayers;
@@ -127,6 +129,7 @@ namespace BesiegedServer
                 .PermitReentry(Trigger.PlayerTurn)
                 .Permit(Trigger.PlayerLeft, State.Reconfigure)
                 .Permit(Trigger.StartBattlePhase, State.BattlePhase)
+                .Permit(Trigger.GameEnded, State.GameOver)
                 .OnEntry(x =>
                 {
                     // notify the current player that its their turn
@@ -143,6 +146,15 @@ namespace BesiegedServer
                     // add the current player back on the queue
                     m_PlayerTurnOrder.Enqueue(m_CurrentPlayerId);
                 });
+            #endregion
+
+            #region GameOver
+            m_GameMachine.Configure(State.GameOver)
+                .OnEntry(x =>
+                    {
+                        NotifyAllPlayers(new EndGameMessage() { Winner = GameWinner }.ToXml());
+                    });
+                    
             #endregion
 
             m_GameMachine.Configure(State.BattlePhase)
@@ -280,6 +292,12 @@ namespace BesiegedServer
                             // we need to notify the client of invalid moves
                             GameState.Units = tempState.Units; // roll back the unit positions and movement
                         }
+                    }
+
+                    else if (message is EndGameMessage)
+                    {
+                        GameWinner = LookupPlayerById(message.ClientId).Name;
+                        m_GameMachine.Fire(Trigger.GameEnded);
                     }
                 });
         }

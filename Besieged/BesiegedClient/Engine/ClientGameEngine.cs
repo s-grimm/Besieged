@@ -33,6 +33,7 @@ namespace BesiegedClient.Engine
         private DuplexChannelFactory<IBesiegedServer> m_DuplexChannelFactory;
         private string m_ClientId;
         private string m_GameId;
+        private string m_WinnerName;
 
         public MainWindow m_CurrentWindow { get; set; }
 
@@ -53,6 +54,8 @@ namespace BesiegedClient.Engine
         public bool IsGameCreator { get; set; }
 
         public string ClientID { get { return m_ClientId; } }
+
+        public string WinnerName { get { return m_WinnerName; } }
 
         public System.Media.SoundPlayer MediaPlayer { get; set; }
 
@@ -310,7 +313,17 @@ namespace BesiegedClient.Engine
                             InGameEngine.Get().ChangeState(DrawUnitState.Get()); //render new
                         };
                         ExecuteOnUIThread(action);
-                }
+                    }
+                    else if (message is EndGameMessage)
+                    {
+                        EndGameMessage endGameMessage = message as EndGameMessage;
+                        Action action = () =>
+                        {
+                            m_WinnerName = endGameMessage.Winner;
+                            ChangeState(GameOverState.Get());
+                        };
+                        ExecuteOnUIThread(action);
+                    }
                 });
         }
 
