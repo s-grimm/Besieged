@@ -26,9 +26,9 @@ namespace BesiegedClient.Engine.State
 
         private Button m_EndTurnButton;
     	private TextBox m_ChatMessageBox;
-        private Button m_SendButton;
         private Button m_MenuButton;
         private ListBox m_ChatMessagesListBox;
+        private GroupBox m_UnitStatsGroupBox;
 
         public static IGameState Get()
         {
@@ -68,21 +68,6 @@ namespace BesiegedClient.Engine.State
                         m_ChatMessageBox.Text = "";
                         ClientGameEngine.Get().SendMessageToServer(chat);
                     }
-                }
-            };
-
-            //Chat Message OK
-            m_SendButton = new Button();
-            m_SendButton.FontFamily = new FontFamily("Papyrus");
-            m_SendButton.FontSize = 18;
-            m_SendButton.Content = "Send";
-            m_SendButton.Click += (s, ev) =>
-            {
-                if (m_ChatMessageBox.Text.Trim() != string.Empty)
-                {
-                    GameChatMessage chat = new GameChatMessage() { Contents = m_ChatMessageBox.Text.Trim() };
-                    m_ChatMessageBox.Text = "";
-                    ClientGameEngine.Get().SendMessageToServer(chat);
                 }
             };
 
@@ -142,6 +127,13 @@ namespace BesiegedClient.Engine.State
                     m_ChatMessagesListBox.ScrollIntoView(ev.NewItems[0]);
                 }
             };
+
+            //unit stats
+            m_UnitStatsGroupBox = new GroupBox();
+            m_UnitStatsGroupBox.Opacity = 0.75;
+            m_UnitStatsGroupBox.FontFamily = new FontFamily("Papyrus");
+            m_UnitStatsGroupBox.FontSize = 12;
+
         }
 
         public void Render()
@@ -217,40 +209,40 @@ namespace BesiegedClient.Engine.State
 
             Dimensions dimensions = ClientGameEngine.Get().ClientDimensions;
 
-//chat text box
-            Canvas.SetLeft(m_ChatMessageBox, dimensions.Width * 0.01);
-            Canvas.SetBottom(m_ChatMessageBox, dimensions.Height * 0.01);
+            //chat text box
+            Canvas.SetLeft(m_ChatMessageBox, dimensions.Width * 0.04);
+            Canvas.SetBottom(m_ChatMessageBox, dimensions.Height * 0.07);
             Canvas.SetZIndex(m_ChatMessageBox, 1200);
             ClientGameEngine.Get().Canvas.Children.Add(m_ChatMessageBox);
             m_ChatMessageBox.Width = dimensions.Width * 0.35;
-            m_ChatMessageBox.Height = dimensions.Height * 0.05;
-
-            //chat send button
-            Canvas.SetBottom(m_SendButton, dimensions.Height * 0.01);
-            Canvas.SetLeft(m_SendButton, dimensions.Width * 0.36);
-            Canvas.SetZIndex(m_SendButton, 1200);
-            m_SendButton.Height = dimensions.Height * 0.05;
-            m_SendButton.Width = dimensions.Width * 0.10;
-            ClientGameEngine.Get().Canvas.Children.Add(m_SendButton);
+            m_ChatMessageBox.Height = dimensions.Height * 0.03;
 
             //chat list box
-            Canvas.SetLeft(m_ChatMessagesListBox, dimensions.Width * 0.01);
-            Canvas.SetBottom(m_ChatMessagesListBox, dimensions.Height * 0.07);
+            Canvas.SetLeft(m_ChatMessagesListBox, dimensions.Width * 0.04);
+            Canvas.SetBottom(m_ChatMessagesListBox, dimensions.Height * 0.11);
             Canvas.SetZIndex(m_ChatMessagesListBox, 1200);
             ClientGameEngine.Get().Canvas.Children.Add(m_ChatMessagesListBox);
-            m_ChatMessagesListBox.Height = dimensions.Height * 0.14;
+            m_ChatMessagesListBox.Height = dimensions.Height * 0.10;
             m_ChatMessagesListBox.Width = dimensions.Width * 0.35;
 
+            //unit stats box
+            Canvas.SetLeft(m_UnitStatsGroupBox, dimensions.Width * 0.41);
+            Canvas.SetBottom(m_UnitStatsGroupBox, dimensions.Height * 0.07);
+            Canvas.SetZIndex(m_UnitStatsGroupBox, 1200);
+            ClientGameEngine.Get().Canvas.Children.Add(m_UnitStatsGroupBox);
+            m_UnitStatsGroupBox.Height = dimensions.Height * 0.14;
+            m_UnitStatsGroupBox.Width = dimensions.Width * 0.35;
+
             //menu button
-            Canvas.SetBottom(m_MenuButton, dimensions.Height * 0.94);
-            Canvas.SetLeft(m_MenuButton, dimensions.Width * 0.89);
+            Canvas.SetBottom(m_MenuButton, dimensions.Height * 0.14);
+            Canvas.SetLeft(m_MenuButton, dimensions.Width * 0.8225);
             Canvas.SetZIndex(m_MenuButton, 1200);
             m_MenuButton.Height = dimensions.Height * 0.05;
             m_MenuButton.Width = dimensions.Width * 0.10;
             ClientGameEngine.Get().Canvas.Children.Add(m_MenuButton);
             
-
-            Canvas.SetBottom(m_EndTurnButton, dimensions.Height * 0.025);
+            //end turn button
+            Canvas.SetBottom(m_EndTurnButton, dimensions.Height * 0.07);
             Canvas.SetLeft(m_EndTurnButton, dimensions.Width * 0.8225);
             Canvas.SetZIndex(m_EndTurnButton, 2100);
             m_EndTurnButton.Height = dimensions.Height * 0.05;

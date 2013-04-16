@@ -80,7 +80,7 @@ namespace Framework.Unit
                 }
                 else if (drawableObject is Skeleton)
                 {
-                    return "Skeleton.png";
+                    return "SkeletonCaptain.png";
                 }
                 else if (drawableObject is SkeletonCaptain)
                 {
