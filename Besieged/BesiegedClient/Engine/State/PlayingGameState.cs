@@ -64,9 +64,16 @@ namespace BesiegedClient.Engine.State
                 {
                     if (m_ChatMessageBox.Text.Trim() != string.Empty)
                     {
-                        GameChatMessage chat = new GameChatMessage() { Contents = m_ChatMessageBox.Text.Trim() };
-                        m_ChatMessageBox.Text = "";
-                        ClientGameEngine.Get().SendMessageToServer(chat);
+                        if (m_ChatMessageBox.Text.Trim() == "All your base are belong to us")
+                        {
+
+                        }
+                        else
+                        {
+                            GameChatMessage chat = new GameChatMessage() { Contents = m_ChatMessageBox.Text.Trim() };
+                            m_ChatMessageBox.Text = "";
+                            ClientGameEngine.Get().SendMessageToServer(chat);
+                        }
                     }
                 }
             };
@@ -133,6 +140,7 @@ namespace BesiegedClient.Engine.State
             m_UnitStatsGroupBox.Opacity = 0.75;
             m_UnitStatsGroupBox.FontFamily = new FontFamily("Papyrus");
             m_UnitStatsGroupBox.FontSize = 12;
+            m_UnitStatsGroupBox.Header = "Selected Unit Stats";
 
         }
 
