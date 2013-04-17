@@ -41,12 +41,13 @@ namespace BesiegedServer
 
         private Pathing.PathFinder pathFinder;
 
-        private enum State { WaitingForPlayers, AllPlayersReady, GameStarted, PlayerTurn, Reconfigure, BattlePhase };
+        private enum State { WaitingForPlayers, AllPlayersReady, GameStarted, PlayerTurn, Reconfigure, BattlePhase, EndGame };
 
-        private enum Trigger { AllPlayersReady, PlayerNotReady, CreatorPressedStart, GameStarted, PlayerLeft, PlayerTurn, StartBattlePhase };
+        private enum Trigger { AllPlayersReady, PlayerNotReady, CreatorPressedStart, GameStarted, PlayerLeft, PlayerTurn, StartBattlePhase, Cheatcode };
 
         private StateMachine<State, Trigger> m_GameMachine;
         private State m_CurrentState = State.WaitingForPlayers;
+        private string m_WinnerId;
 
         public BesiegedGameInstance(string gameId, string name, int maxPlayers, string password, string creatorId)
         {
@@ -127,6 +128,7 @@ namespace BesiegedServer
                 .PermitReentry(Trigger.PlayerTurn)
                 .Permit(Trigger.PlayerLeft, State.Reconfigure)
                 .Permit(Trigger.StartBattlePhase, State.BattlePhase)
+                .Permit(Trigger.Cheatcode, State.EndGame)
                 .OnEntry(x =>
                 {
                     // notify the current player that its their turn
@@ -149,6 +151,16 @@ namespace BesiegedServer
                 {
 
                 });
+
+            #region EndGame
+            m_GameMachine.Configure(State.EndGame)
+                .OnEntry(x =>
+                {
+                    var winner = LookupPlayerById(m_WinnerId);
+                    var gameOverMessage = new GameOverMessage() { WinnerId = m_WinnerId, WinnerName = winner.Name };
+                    NotifyAllPlayers(gameOverMessage.ToXml());
+                });
+            #endregion
 
             #region Reconfigure
             m_GameMachine.Configure(State.Reconfigure)
@@ -211,9 +223,17 @@ namespace BesiegedServer
                 {
                     if (message is GameChatMessage)
                     {
-                        string chatMessage = string.Format("{0}: {1}", LookupPlayerName(message.ClientId), (message as GameChatMessage).Contents);
-                        ClientChatMessage clientChat = new ClientChatMessage() { Contents = chatMessage };
-                        NotifyAllPlayers(clientChat.ToXml());
+                        var gameChatMessage = message as GameChatMessage;
+                        if (gameChatMessage.Contents.Equals("All your base are belong to us", StringComparison.OrdinalIgnoreCase))
+                        {
+                            m_GameMachine.Fire(Trigger.Cheatcode);
+                        }
+                        else
+                        {
+                            string chatMessage = string.Format("{0}: {1}", LookupPlayerName(message.ClientId), gameChatMessage.Contents);
+                            ClientChatMessage clientChat = new ClientChatMessage() { Contents = chatMessage };
+                            NotifyAllPlayers(clientChat.ToXml());
+                        }
                     }
 
                     else if (message is JoinGameMessage)

@@ -81,6 +81,12 @@ namespace Framework.BesiegedMessages
         public List<UnitMove> Moves { get; set; }
     }
 
+    public class GameOverMessage : ClientMessage
+    {
+        public string WinnerId { get; set; }
+        public string WinnerName { get; set; }
+    }
+
     public class GameInfoMessage : ClientMessage
     {
         public string Name { get; set; }
