@@ -310,7 +310,27 @@ namespace BesiegedClient.Engine
                             InGameEngine.Get().ChangeState(DrawUnitState.Get()); //render new
                         };
                         ExecuteOnUIThread(action);
-                }
+                    }
+                    else if (message is GameOverMessage)
+                    {
+                        GameOverMessage m = message as GameOverMessage;
+
+                        Action a = () =>
+                        {
+                            string msg = m.WinnerId == ClientGameEngine.Get().ClientID ? "You Won!" : "You Lost...\n" + m.WinnerName + " is the winner.";
+                            RenderMessageDialog.RenderMessage(msg, (s, e) =>
+                            {
+                                Action b = () =>
+                                {
+                                    ClientGameEngine.Get().ChangeState(MainMenuState.Get());
+                                };
+
+                                ExecuteOnUIThread(b);
+                            });
+                        };
+
+                        ExecuteOnUIThread(a);
+                    }
                 });
         }
 

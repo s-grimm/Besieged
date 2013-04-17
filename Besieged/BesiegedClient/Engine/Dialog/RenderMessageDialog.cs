@@ -123,6 +123,114 @@ namespace BesiegedClient.Engine.Dialog
             }
         }
 
+        public static void RenderMessage(string message, EventHandler dialogClosedHandler)
+        {
+            ClearDialog();
+            m_DialogComponents = new List<UIElement>();
+            foreach (UIElement el in ClientGameEngine.Get().Canvas.Children)
+            {
+                el.IsEnabled = false;
+            }
+            m_Dimensions = ClientGameEngine.Get().ClientDimensions;
+            string UIComponentPath = "resources\\UI\\";
+            Image img;
+            BitmapImage bimg = new BitmapImage();
+            Dimensions signDimensions = new Dimensions();
+
+            //"Modal" Background
+            try
+            {
+                Rectangle rect = new Rectangle(); //create the rectangle
+                rect.Width = m_Dimensions.Width;
+                rect.Height = m_Dimensions.Height;
+                rect.Opacity = 0.7;
+                Canvas.SetLeft(rect, 0);
+                Canvas.SetTop(rect, 0);
+                rect.Fill = Utilities.Rendering.BlackBrush;
+                m_DialogComponents.Add(rect);
+            }
+            catch (Exception)
+            {
+            }
+            try
+            {
+                img = new Image();
+                bimg = new BitmapImage(new Uri(UIComponentPath + "WoodenSign.png", UriKind.RelativeOrAbsolute));
+                img.Source = bimg;
+                img.Width = bimg.PixelWidth * 2;
+                img.Height = bimg.PixelHeight * 2;
+                signDimensions.Width = bimg.PixelWidth * 2;
+                signDimensions.Height = bimg.PixelHeight * 2;
+                Canvas.SetLeft(img, m_Dimensions.Width / 2.0 - img.Width / 2);
+                Canvas.SetBottom(img, m_Dimensions.Height / 2.0 - img.Height / 2); //this should center this on the screen... I hope...
+                Canvas.SetZIndex(img, 1100); //range 1100 - 1200 for error dialogs
+                m_DialogComponents.Add(img);
+            }
+            catch (Exception)
+            {
+            }
+            try
+            {
+                //Label
+                TextBlock textLabel = new TextBlock();
+                textLabel.Text = message;
+                textLabel.Width = bimg.PixelWidth * 2 * 0.8;
+                textLabel.Height = bimg.PixelHeight * 2 * 0.70;
+                textLabel.TextWrapping = TextWrapping.Wrap;
+                textLabel.FontFamily = new FontFamily("Papyrus");
+                textLabel.FontSize = 16.0;
+                Canvas.SetLeft(textLabel, (m_Dimensions.Width / 2) - (bimg.PixelWidth) + bimg.PixelWidth * 0.10);
+                Canvas.SetBottom(textLabel, m_Dimensions.Height / 2 - bimg.PixelHeight); //this should center this on the screen... I hope...
+                Canvas.SetZIndex(textLabel, 1110); //range 1100 - 1200 for error dialogs
+                m_DialogComponents.Add(textLabel);
+            }
+            catch (Exception)
+            {
+            }
+
+            //Render Close
+            try
+            {
+                img = new Image();
+                img.Source = m_XImage;
+                img.Width = m_XImage.PixelWidth;
+                img.Height = m_XImage.PixelHeight;
+                Canvas.SetLeft(img, m_Dimensions.Width / 2 + signDimensions.Width * 0.30);
+                Canvas.SetBottom(img, m_Dimensions.Height / 2 + signDimensions.Height * 0.30); //this should center this on the screen... I hope...
+                Canvas.SetZIndex(img, 1200); //range 1100 - 1200 for error dialogs
+
+                img.MouseDown += (s, e) =>
+                {
+                    Image scopedImg = s as Image;
+                    scopedImg.Source = m_ClickedXImage;
+                };
+
+                img.MouseUp += (s, e) =>
+                {
+                    Image scopedImg = s as Image;
+                    scopedImg.Source = m_XImage;
+                    ClearDialog();
+                    dialogClosedHandler(true, new EventArgs());
+                };
+                img.MouseLeave += (s, e) =>
+                {
+                    Image scopedImg = s as Image;
+                    if (scopedImg.Source == m_ClickedXImage)
+                        scopedImg.Source = m_XImage;
+                };
+
+                m_DialogComponents.Add(img);
+            }
+            catch (Exception)
+            {
+            }
+
+            foreach (UIElement obj in m_DialogComponents)
+            {
+                ClientGameEngine.Get().Canvas.Children.Add(obj);
+            }
+        }
+
         public static void RenderInput(string display, EventHandler textChangedHandler)
         {
             ClearDialog();
