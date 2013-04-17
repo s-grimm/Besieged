@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using System.Windows.Input;
+using BesiegedClient.Engine.State.InGameEngine;
 
 namespace BesiegedClient
 {
@@ -52,6 +53,9 @@ namespace BesiegedClient
             DispatcherTimer dtimer = new DispatcherTimer();
             dtimer.Tick += (s, e) => {
                 dtimer.Stop();
+                //Fire up the ENGINE
+                Task.Factory.StartNew(() => { InGameEngine.Get(); }, CancellationToken.None, TaskCreationOptions.None, GlobalResources.m_TaskScheduler);
+
                 ClientGameEngine.Get().ChangeState(MainMenuState.Get());
             };
 
