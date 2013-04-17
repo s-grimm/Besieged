@@ -322,6 +322,17 @@ namespace BesiegedClient.Engine
                             {
                                 Action b = () =>
                                 {
+                                    ClientGameEngine.Get().MediaPlayer.PlayLooping();
+                                    ClientGameEngine.Get().m_CurrentWindow.WindowState = WindowState.Normal;
+
+                                    ClientGameEngine.Get().Canvas.Width = ClientSettings.Default.Width;
+                                    ClientGameEngine.Get().Canvas.Height = ClientSettings.Default.Height;
+                                    if (!ClientSettings.Default.Fullscreen)
+                                    {
+                                        Application.Current.MainWindow.Width = ClientSettings.Default.Width + 15;
+                                        Application.Current.MainWindow.Height = ClientSettings.Default.Height + 38;
+                                    }
+
                                     ClientGameEngine.Get().ChangeState(MainMenuState.Get());
                                 };
 
