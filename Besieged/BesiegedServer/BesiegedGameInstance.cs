@@ -131,7 +131,6 @@ namespace BesiegedServer
                 {
                     // notify the current player that its their turn
                     m_CurrentPlayerId = m_PlayerTurnOrder.Dequeue();
-                    LookupPlayerById(m_CurrentPlayerId).Callback.SendMessage((new ClientChatMessage() { Contents = "Test" }).ToXml());
                     LookupPlayerById(m_CurrentPlayerId).Callback.SendMessage((new GenericClientMessage() { MessageEnum = ClientMessage.ClientMessageEnum.ActiveTurn }).ToXml());
 
                     // notify all other players that they have to wait
