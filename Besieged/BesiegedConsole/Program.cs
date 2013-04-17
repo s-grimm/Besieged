@@ -40,14 +40,14 @@ namespace BesiegedConsole
                             },
                     };
 
-                svcHost = new ServiceHost(typeof(BesiegedServer.BesiegedServer), new Uri("net.tcp://172.21.72.79:31337/BesiegedServer/"));
+                svcHost = new ServiceHost(typeof(BesiegedServer.BesiegedServer), new Uri("net.tcp://172.21.72.122:31337/BesiegedServer/"));
                 svcHost.AddServiceEndpoint(typeof(Framework.ServiceContracts.IBesiegedServer), binding, "BesiegedMessage");
                 svcHost.Description.Behaviors.Add(new ServiceMetadataBehavior() { HttpGetEnabled = false });
                 svcHost.Open();
 
                 // Configure a client callback for the server itself to force start the process
                 m_ServerClient = new ServerClient();
-                EndpointAddress endpointAddress = new EndpointAddress("net.tcp://172.21.72.79:31337/BesiegedServer/BesiegedMessage");
+                EndpointAddress endpointAddress = new EndpointAddress("net.tcp://172.21.72.122:31337/BesiegedServer/BesiegedMessage");
                 DuplexChannelFactory<IBesiegedServer> duplexChannelFactory = new DuplexChannelFactory<IBesiegedServer>(m_ServerClient, new NetTcpBinding(SecurityMode.None, true), endpointAddress);
                 m_BesiegedServer = duplexChannelFactory.CreateChannel();
 

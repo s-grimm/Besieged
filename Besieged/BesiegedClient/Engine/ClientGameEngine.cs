@@ -327,6 +327,9 @@ namespace BesiegedClient.Engine
 
                                     ClientGameEngine.Get().Canvas.Width = ClientSettings.Default.Width;
                                     ClientGameEngine.Get().Canvas.Height = ClientSettings.Default.Height;
+                                    ClientGameEngine.Get().ClientDimensions.Width = ClientSettings.Default.Width;
+                                    ClientGameEngine.Get().ClientDimensions.Width = ClientSettings.Default.Height;
+
                                     if (!ClientSettings.Default.Fullscreen)
                                     {
                                         Application.Current.MainWindow.Width = ClientSettings.Default.Width + 15;

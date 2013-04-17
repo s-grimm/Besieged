@@ -73,7 +73,7 @@ namespace BesiegedClient {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("172.21.72.79")]
+        [global::System.Configuration.DefaultSettingValueAttribute("172.21.72.122")]
         public string ServerIP {
             get {
                 return ((string)(this["ServerIP"]));
