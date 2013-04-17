@@ -226,6 +226,7 @@ namespace BesiegedServer
                         var gameChatMessage = message as GameChatMessage;
                         if (gameChatMessage.Contents.Equals("All your base are belong to us", StringComparison.OrdinalIgnoreCase))
                         {
+                            m_WinnerId = message.ClientId;
                             m_GameMachine.Fire(Trigger.Cheatcode);
                         }
                         else
